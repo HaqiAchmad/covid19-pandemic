@@ -27,7 +27,7 @@ public class Database {
     
     public static final String KASUSCOVID_DUNIA = "kasuscovid_dunia", KASUSCOVID_INDO = "kasuscovid_indo", 
                                USERS = "users", ISLOGIN = "islogin";
-    
+        
     public void startConnection(){
         try{
             Class.forName(DRIVER);
@@ -40,6 +40,7 @@ public class Database {
                 JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
             }else if(ex.getMessage().contains("Communications link failure")){
                 JOptionPane.showMessageDialog(null, "MySQL anda belum diaktifkan!!", "Error", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
             }else if(ex.getMessage().contains("Unknown database")){
                 JOptionPane.showMessageDialog(null, "Tidak dapat menemukan database '" + DB_NAME + "'", "Error", JOptionPane.WARNING_MESSAGE);
                 restoreDatabase();
@@ -77,6 +78,11 @@ public class Database {
                 JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
                 restoreDatabase();
             }
+            // Mengecek apakah tabel yang ada didalam databaes kosong atau tidak
+            else if(isEmptyTabel(KASUSCOVID_DUNIA) || isEmptyTabel(KASUSCOVID_INDO) || isEmptyTabel(USERS)){
+                JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+                restoreDatabase();
+            }
             
             // Membackup tabel kasuscovid_dunia
             file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_dunia.haqi");
@@ -94,7 +100,7 @@ public class Database {
                     }
                     backup.newLine();
                 }
-            // backup.write("--- Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
+            backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
             
             // Membackup tabel kasuscovid_indo
@@ -105,7 +111,7 @@ public class Database {
             backup.write("INSERT INTO kasuscovid_indo VALUES \n");
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP kasuscovid_indo.haqi"
                 while(res.next()){
-                    values = "('" + res.getString("kode") + "', '" + res.getString("provinsi") + "', " + res.getString("kasus") + ", " + res.getString("sembuh") + ", " + res.getString("kematian") + ", " + res.getString("aktif") + ", " + res.getString("odp") + ", " + res.getString("pdp") + ", " + res.getString("otg") + res.getString("total_kab") + res.getString("kab_zonamerah") + ", " + res.getString("kab_zonaoranye") + ", " + res.getString("kab_zonahijau") + ", '" + res.getString("diubah") + "', '" + res.getString("lambang") + "')";
+                    values = "('" + res.getString("kode") + "', '" + res.getString("provinsi") + "', " + res.getString("kasus") + ", " + res.getString("sembuh") + ", " + res.getString("kematian") + ", " + res.getString("aktif") + ", " + res.getString("odp") + ", " + res.getString("pdp") + ", " + res.getString("otg") +", "+ res.getString("total_kab") +", "+ res.getString("kab_zonamerah") + ", " + res.getString("kab_zonaoranye") + ", " + res.getString("kab_zonahijau") + ", '" + res.getString("diubah") + "', '" + res.getString("lambang") + "')";
                     if(!res.isLast()){
                         backup.write(values + ",");
                     }else{
@@ -113,7 +119,7 @@ public class Database {
                     }
                     backup.newLine();
                 }
-            // backup.write("--- Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
+            backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
             
             // Membackup tabel users
@@ -132,7 +138,7 @@ public class Database {
                     }
                     backup.newLine();
                 }
-                // backup.write("--- Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
+                backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
                 backup.flush();
                 
             // Membackup tabel islogin
@@ -140,23 +146,20 @@ public class Database {
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM islogin");
             
-            if(res.next()){
-                backup.write("INSERT INTO islogin VALUES \n");
-                    // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP islogin.haqi"
-                    while(res.next()){
-                        values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("email") + "')";
-                        if(!res.isLast()){
-                            backup.write(values + ",");
-                        }else{
-                            backup.write(values + ";");
-                        }
-                        backup.newLine();
+            backup.write("INSERT INTO islogin VALUES \n");
+                // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP islogin.haqi"
+                while(res.next()){
+                    values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("email") + "')";
+                    if(!res.isLast()){
+                        backup.write(values + ",");
+                    }else{
+                        backup.write(values + ";");
                     }
-                    // backup.write("--- Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
-                    backup.flush();                
-            }
-                
-            
+                    backup.newLine();
+                }
+                backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
+                backup.flush();                
+
         }catch(SQLException | IOException ex){
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat membackup database!!\n\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -246,6 +249,14 @@ public class Database {
             
         }catch(SQLException ex){
             System.out.println("Terjadi kesalahan!!\n ERROR : " + ex.getMessage());
+            try{
+                // Menangani error jika terjadi exception 
+                stat.executeUpdate("DROP TABLE " + tabel); // menghapus tabel sebelumnya 
+                stat.executeUpdate(DefaultDatabase.getDefaultStructurTable(tabel)); // membuat tabel 
+                stat.executeUpdate(DefaultDatabase.getDefaultDataTable(tabel)); // memulihkan data
+            }catch(SQLException e){
+                System.out.println(e.getMessage());
+            }
         }
     }
     
@@ -284,7 +295,7 @@ public class Database {
             stat.executeQuery(sql);
             return true;
         }catch(SQLException ex){
-            System.out.println("\nTabel '" + tabel + "' tidak dapat ditemukan!");
+            System.out.println("Tabel '" + tabel + "' tidak dapat ditemukan!");
         }
         return false;
     }
@@ -295,7 +306,7 @@ public class Database {
             res = stat.executeQuery(sql);
             return !res.next();
         }catch(SQLException ex){
-            System.out.println("\nTabel '" + tabel + "' tidak dapat ditemukan!");
+            System.out.println("Tabel '" + tabel + "' tidak dapat ditemukan!");
         }
         return true;
     }
@@ -314,17 +325,12 @@ public class Database {
     
     public static void main(String[] args) {
         Database db = new Database();
-        db.startConnection();
-           
-        if(db.isEmptyTabel(KASUSCOVID_DUNIA) || db.isEmptyTabel(KASUSCOVID_INDO) || db.isEmptyTabel(USERS) || db.isEmptyTabel(ISLOGIN)){
-            db.restoreDatabase();
-        }
         
+        db.startConnection();
         db.backupDatabase();
         db.closeConnection();
     }
 }
-
 
 class DefaultDatabase{
     
@@ -649,7 +655,6 @@ class DefaultDatabase{
 
     protected static String getDefaultData_isLogin(){
         return 
-               "INSERT INTO `islogin` (`username`, `namalengkap`, `email`) VALUES\n" +
-               "('baihaqi', 'Achmad Baihaqi', 'hakiahmad756@gmail.com');";
+               "null";
     }
 }
