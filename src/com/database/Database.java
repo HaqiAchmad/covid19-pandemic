@@ -13,34 +13,92 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
+/**
+ * Class ini digunakan untuk menhubungkan dan memutuskan koneksi ke <strong>Database</strong>, membackup <strong>Database</strong> dan menangani masalah yang terjadi pada <strong>Database.</strong>
+ * Kondisi seperti <strong>CRUD</strong> tidak tersedia di class ini. Kondisi <strong>CRUD</strong> tersedia di class <code>Account</code> dan <code>CovidCases</code>.
+ * <BR><BR>
+ * <strong>Database</strong> pada aplikasi ini sebagian besar menggunakan <strong>MySQL Database</strong> dan sisanya menggunakan <strong>Database Text</strong>.
+ * <UL>
+ * <LI> <B>MySQL Database</B> digunakan untuk menyimpan data yang berhubungan dengan data Pengguna dan kasus Covid-19 di Indonesia maupun Dunia.
+ * <LI> <B>Database Text</B> digunakan untuk menyimpan backup dari data Pengguna dan kasus Covid-19 di Indonesia maupun Dunia dari Database MySQL.
+ * </UL>
+ * 
+ * Aplikasi ini sangat bergantung pada <strong>Database</strong> jika <strong>Database</strong> tidak ditemukan maka <strong>Database</strong> akan dibuat secara otomatis melalui method <code>restoreDatabase()</code>.
+ * 
+ * @author Achmad Baihaqi
+ * @since 2020-11-14
+ * @version 1.0
+ */
 public class Database {
     
+    /**
+     * Object ini digunakan untuk membangun koneksi dengan <B>Database</B>
+     */
     public Connection conn;
+    /**
+     * Digunakan untuk mengeksekusi query MySQL
+     */
     public Statement stat;
+    /**
+     * Digunakan untuk mengambil output dari eksekusi query
+     */
     public ResultSet res;
     
+    /**
+     * Attribute yang digunakan untuk menhubungkan Aplikasi ke <B>Database MySQL</B>
+     */
     private static final String DRIVER = "com.mysql.jdbc.Driver",
                                 DB_NAME = "app_covid19tester",
                                 URL = "jdbc:mysql://localhost/" + DB_NAME,
                                 USER = "root",
                                 PASS = "";
     
+    /**
+     * Nama tabel yang ada didalam <B>Database MySQL</B>
+     */
     public static final String KASUSCOVID_DUNIA = "kasuscovid_dunia", KASUSCOVID_INDO = "kasuscovid_indo", 
                                USERS = "users", ISLOGIN = "islogin";
         
+    /**
+     * Digunakan untuk menhubungkan aplikasi ke <B>Database</B>. 
+     * <BR>
+     * Pertama-tama method akan meregrister Driver yang dipakai.
+     * Driver yang dipakai di aplikasi ini adalah <B>MySQL Driver</B>. Selanjutnya method akan melakukan koneksi ke <B>Database</B>.
+     * Setelah berhasil terkoneksi ke <B>Database</B> method akan membuat object <code>Statement</code>
+     * <BR><BR>
+     * Terdapat dua exception yang mungkin akan terjadi di method ini yaitu <code>ClassNotFoundException</code> dan <code>SQLException</code>.
+     * Exception akan ditangani dengan mendapatkan pesan error dari method <code>getMessage</code> pada kedua exception tersebut.
+     * Beberapa pesan error yang dapat ditanggani di method ini antara lain: 
+     * <UL>
+     * <LI> <B>com.mysql.jdbc.Driver : </B> pesan error ini berarti aplikasi tidak dapat menemukan Driver yang akan dipakai untuk menkoneksikan aplikasi ke <B>Database</B>. 
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Communications link failure : </B> pesan error ini bearti MySQL pada Komputer user belum diaktifkan. 
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Access denied for user 'root'@'localhost' (using password: YES) : </B> pesan error ini bearti username atau password pada MySQL di komputer user tidak cocok dengan username dan password yang ada di Aplikasi ini.
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Unknown database" : </B> pesan error ini bearti bahwa database MySQL aplikasi ini tidak ada di komputer user. 
+     *      Method akan memulihkan database secara otomatis dengan method <code>restoreDatabase()</code> jika mendapatkan pesan error ini.
+     * </UL>
+     * <B>Note : </B> Jika pesan error tidak dikenali maka aplikasi akan keluar sendiri.
+     */
     public void startConnection(){
         try{
-            Class.forName(DRIVER);
-            conn = DriverManager.getConnection(URL, USER, PASS);
-            stat = conn.createStatement();
+            // Menghubungkan ke database
+            Class.forName(DRIVER); 
+            conn = DriverManager.getConnection(URL, USER, PASS); 
+            stat = conn.createStatement(); 
             System.out.println("Berhasil terhubung ke database '" + DB_NAME + "'\n");
         }catch(ClassNotFoundException | SQLException ex){
             
+            // Menanggani exception yang terjadi dengan cara mendapatkan pesan error dari exception tersebut.
             if(ex.getMessage().contains("com.mysql.jdbc.Driver")){
                 JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
             }else if(ex.getMessage().contains("Communications link failure")){
                 JOptionPane.showMessageDialog(null, "MySQL anda belum diaktifkan!!", "Error", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
+            }else if(ex.getMessage().contains("Access denied for user 'root'@'localhost' (using password: YES)")){
+                JOptionPane.showMessageDialog(null, "Sepertinya MySQL adan memiliki Password", "Error", JOptionPane.WARNING_MESSAGE);
             }else if(ex.getMessage().contains("Unknown database")){
                 JOptionPane.showMessageDialog(null, "Tidak dapat menemukan database '" + DB_NAME + "'", "Error", JOptionPane.WARNING_MESSAGE);
                 restoreDatabase();
@@ -50,14 +108,25 @@ public class Database {
         }
     }
     
+    /**
+     * Digunakan untuk menutup koneksi dari <B>Database</B> MySQL. 
+     * Koneksi dari <B>Database</B> perlu ditutup jika sudah tidak digunakan lagi.
+     * Sebelum menutup koneksi dari <B>Database</B> method akan mengecek apakah object 
+     * <code>Connection</code>, <code>Statement</code> dan <code>ResultSet</code> kosong atau tidak.
+     * Jika tidak maka koneksi dari <B>Database</B> akan ditutup. Jika tidak dicek kosong atau tidaknya objek maka saat objek kosong
+     * lalu dipaksa untuk menutup koneksi dari Database maka akan menimbulkan exception <code>NullPointerException</code>.
+     */
     public void closeConnection(){
         try{
+            // Mengecek apakah conn kosong atau tidak, jika tidak maka akan diclose
             if(conn != null){
                 conn.close();
             }
+            // Mengecek apakah stat kosong atau tidak, jika tidak maka akan diclose
             if(stat != null){
                 stat.close();
             }
+            // Mengecek apakah res koson atau tidak, jika tidak maka akan diclose
             if(res != null){
                 res.close();
             }
@@ -73,88 +142,100 @@ public class Database {
             BufferedWriter backup;
             String values;
             
-            // Mengecek apakah database dan tabel exist atau tidak!
+            // Mengecek apakah database dan tabel exist atau tidak!, jika database dan tabel tidak ditemukan maka database akan direstore
             if(!isExistDatabase() || !isExistTabel(KASUSCOVID_DUNIA) || !isExistTabel(KASUSCOVID_INDO) || !isExistTabel(USERS) || !isExistTabel(ISLOGIN)){
                 JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
-                restoreDatabase();
+                restoreDatabase(); // merestore database
             }
             // Mengecek apakah tabel yang ada didalam databaes kosong atau tidak
             else if(isEmptyTabel(KASUSCOVID_DUNIA) || isEmptyTabel(KASUSCOVID_INDO) || isEmptyTabel(USERS)){
                 JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
-                restoreDatabase();
+                restoreDatabase(); // merestore database
             }
             
             // Membackup tabel kasuscovid_dunia
-            file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_dunia.haqi");
+            file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_dunia.haqi"); // file backup tabel kasuscovid_dunia
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM kasuscovid_dunia");
            
             backup.write("INSERT INTO kasuscovid_dunia VALUES \n"); 
                 // membaca semua data yang ada di dalam tabel, lalu menuliskan datanya ke file "BACKUP kasuscovid_dunia.haqi"
                 while(res.next()){
+                    // mendapatkan data yang ada didalam tabel
                     values = "('" + res.getString("negara_idn") + "', '" + res.getString("negara_eng") + "', " + res.getString("kasus") + ", " + res.getString("kematian") + ", " + res.getString("sembuh") + ", " + res.getString("aktif") + ", " + res.getString("kritis") + ", " + res.getString("populasi") + ", '" + res.getString("diubah") + "', '" + res.getString("benua") + "', '" + res.getString("bendera") + "')";
+                    // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
                     }else{
                         backup.write(values + ";");
                     }
+                    // membuat baris baru di file backup
                     backup.newLine();
                 }
             backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
             
             // Membackup tabel kasuscovid_indo
-            file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_indo.haqi");
+            file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_indo.haqi"); // file backup tabel kasuscovid_indo
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM kasuscovid_indo");
             
             backup.write("INSERT INTO kasuscovid_indo VALUES \n");
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP kasuscovid_indo.haqi"
                 while(res.next()){
+                    // mendapatkan data yang ada didalam tabel
                     values = "('" + res.getString("kode") + "', '" + res.getString("provinsi") + "', " + res.getString("kasus") + ", " + res.getString("sembuh") + ", " + res.getString("kematian") + ", " + res.getString("aktif") + ", " + res.getString("odp") + ", " + res.getString("pdp") + ", " + res.getString("otg") +", "+ res.getString("total_kab") +", "+ res.getString("kab_zonamerah") + ", " + res.getString("kab_zonaoranye") + ", " + res.getString("kab_zonahijau") + ", '" + res.getString("diubah") + "', '" + res.getString("lambang") + "')";
+                    // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
                     }else{
                         backup.write(values + ";");
                     }
+                    // membuat baris baru di file backup
                     backup.newLine();
                 }
             backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
             
             // Membackup tabel users
-            file = new FileWriter("src\\com\\database\\backup\\BACKUP users.haqi");
+            file = new FileWriter("src\\com\\database\\backup\\BACKUP users.haqi"); // file backup tabel users
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM users");
             
             backup.write("INSERT INTO users VALUES \n");
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP users.haqi"
                 while(res.next()){
+                    // mendapatkan data yang ada didalam tabel
                     values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("namapanggilan") + "', '" + res.getString("email") + "', '" + res.getString("gender") + "', '" + res.getString("tgl_lahir") + "', '" + res.getString("perkerjaan") + "', '" + res.getString("alamat") + "', '" + res.getString("negara") + "', '" + res.getString("password") + "', '" + res.getString("tgl_dibuat") + "', '" + res.getString("fotoprofile") + "', '" + res.getString("type") + "')";
+                    // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
                     }else{
                         backup.write(values + ";");
                     }
+                    // membuat baris baru di file backup
                     backup.newLine();
                 }
                 backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
                 backup.flush();
                 
             // Membackup tabel islogin
-            file = new FileWriter("src\\com\\database\\backup\\BACKUP islogin.haqi");
+            file = new FileWriter("src\\com\\database\\backup\\BACKUP islogin.haqi"); // file backup tabel islogin
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM islogin");
             
             backup.write("INSERT INTO islogin VALUES \n");
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP islogin.haqi"
                 while(res.next()){
+                    // mendapatkan data yang ada didalam tabel
                     values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("email") + "')";
+                    // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
                     }else{
                         backup.write(values + ";");
                     }
+                    // membuat baris baru di file backup
                     backup.newLine();
                 }
                 backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
@@ -165,32 +246,45 @@ public class Database {
         }
     }
     
+    /**
+     * Digunakan untuk mengambil data backup dari tabel. 
+     * Method akan mengambil semua data yang ada dialam file backup. 
+     * Lalu datanya akan disimpan kedalam bentuk <code>String</code>.
+     * Setelah semua data yang ada didalam file backup diambil.
+     * Maka method akan mengembalikan data backup tersebut dalam bentuk <code>String</code>.
+     * 
+     * @param tabel tabel yang ingin diambil data backupnya 
+     * @return Data backup dari tabel dalam bentuk <code>String</code>.
+     *         Jika method gagal mengambil data dari file backup maka akan megembalikan nilai null.
+     */
     public String getBakcupDatabase(final String tabel){
         try{
             String filename = "BACKUP " + tabel + ".haqi", data = "", buffer;
-            FileReader file = new FileReader("src\\com\\database\\backup\\" + filename);
+            FileReader file = new FileReader("src\\com\\database\\backup\\" + filename); // file backup tabel
             BufferedReader getBck = new BufferedReader(file);
                 
-                while((buffer = getBck.readLine()) != null){
-                    data += buffer + "\n";
-                }
+            // Mengambil semua data yang ada didalam file backup
+            while((buffer = getBck.readLine()) != null){
+                data += buffer + "\n";
+            }
+            // Mengembalikan data
             return data;    
         }catch(IOException ex){
             System.out.println("Gagal mengambil backup data : " + ex.getMessage());
         }
-        return null;
+        return null; // akan mengembalikan nilai null jika gagal mengambil data dari file
     }
     
     public void restoreTabel(final String tabel){
         try{
-            File f;
-            int create; 
-            String fileBackup = "src\\com\\database\\backup\\BACKUP " + tabel + ".haqi";
+            File f; // untuk mengecek apakah file backup exist ata tidak
+            int create; // untuk mengecek apakah proses berhasil atau tidak
+            String fileBackup = "src\\com\\database\\backup\\BACKUP " + tabel + ".haqi"; // file backup 
             
             // Mengecek apakah tabel ada didalam database atau tidak, jika tidak maka tabel akan dibuat.
             if(!isExistTabel(tabel)){
                 // Membuat Tabel 
-                create = stat.executeUpdate(DefaultDatabase.getDefaultStructurTable(tabel));
+                create = stat.executeUpdate(DefaultDatabase.getStrukturTabel(tabel));
                 // Mengecek apakah tabel  berhasil dibuat atau tidak, jika berhasil maka data tabel akan dipulihkan
                 if(create == 0){
                     System.out.println("Tabel '" + tabel + "' berhasil dibuat!"); 
@@ -208,7 +302,7 @@ public class Database {
                          }
                      }else{
                          // proses memulihkan data tabel jika file backup tidak ada 
-                         create = stat.executeUpdate(DefaultDatabase.getDefaultDataTable(tabel));
+                         create = stat.executeUpdate(DefaultDatabase.getDefaultDataTabel(tabel));
                          // Mengecek apakah data berhasil dipulihkan atau tidak
                          if(create > 0){
                              System.out.println("Tabel '" + tabel + "' berhasil dipulihkan!\n");
@@ -217,14 +311,14 @@ public class Database {
                          }
                      }
                 }
-            }else{
+            }else{ // jika tabel ada didalam database
                 System.out.println("\nTabel '" + tabel + "' ditemukan!"); 
-                // Mengecek apakah tabel  kosong atau tidak, jika kosong maka data akan dipulihkan
+                // Mengecek apakah kosong atau tidak, jika kosong maka data akan dipulihkan
                 if(isEmptyTabel(tabel)){
                     System.out.println("Tabel '" + tabel + "' kosong!");
                     // Memulihkan data
                     f = new File(fileBackup);
-                    // Mengecek apakah file backup tabel  ada atau tidak
+                    // Mengecek apakah file backup tabel ada atau tidak
                     if(f.exists()){
                         // Proses memulihkan data jika file ada
                         create = stat.executeUpdate(this.getBakcupDatabase(tabel));
@@ -236,7 +330,7 @@ public class Database {
                         }
                     }else{
                         // Proses memulihkan data jika file backup tidak ada
-                        create = stat.executeUpdate(DefaultDatabase.getDefaultDataTable(tabel));
+                        create = stat.executeUpdate(DefaultDatabase.getDefaultDataTabel(tabel));
                         // Mengecek apakah data berhasil dipulihkan atau tidak
                         if(create > 0){
                             System.out.println("Tabel '" + tabel + "' berhasil dipulihkan!\n");
@@ -250,10 +344,10 @@ public class Database {
         }catch(SQLException ex){
             System.out.println("Terjadi kesalahan!!\n ERROR : " + ex.getMessage());
             try{
-                // Menangani error jika terjadi exception 
+                // Menangani exception yang terjadi
                 stat.executeUpdate("DROP TABLE " + tabel); // menghapus tabel sebelumnya 
-                stat.executeUpdate(DefaultDatabase.getDefaultStructurTable(tabel)); // membuat tabel 
-                stat.executeUpdate(DefaultDatabase.getDefaultDataTable(tabel)); // memulihkan data
+                stat.executeUpdate(DefaultDatabase.getStrukturTabel(tabel)); // membuat tabel 
+                stat.executeUpdate(DefaultDatabase.getDefaultDataTabel(tabel)); // memulihkan data
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
@@ -279,6 +373,7 @@ public class Database {
                 System.out.println("Database ditemukan");
             }
             
+            // Merestore tabel jika tabel tidak ditemukan atau kosong
             restoreTabel(KASUSCOVID_DUNIA);
             restoreTabel(KASUSCOVID_INDO);
             restoreTabel(USERS);
@@ -289,6 +384,16 @@ public class Database {
         }
     }
     
+    /**
+     * Untuk mengecek apakah sebuah tabel ada didalam <B>Database</B> atau tidak. 
+     * Method akan mengecek ada atau tidaknya tabel di dalam <B>Database</B> dengan cara
+     * mengambil semua data yang ada didalam tabel. 
+     * Jika terjadi exception maka tabel dinyatakan tidak ada. Jika tidak terjadi exception maka tabel dinyatakan ada. 
+     * 
+     * @param tabel tabel yang akan dicek ada atau tidaknya tabel tersebut di dalam <B>Database.</B>.
+     * @return Jika tabel ada didalam <B>Database</B> maka akan mengembalikan nilai <B>True</B>. 
+     *         Jika tabel tidak ada didalam <B>Database</B> maka akan mengembalikan nilai <B>False</B>.
+     */
     public boolean isExistTabel(final String tabel){
         try{
             String sql = "SELECT * FROM " + tabel;
@@ -300,17 +405,36 @@ public class Database {
         return false;
     }
     
+    /**
+     * Method akan mengecek kosong atau tidaknya tabel dengan cara mengambil semua data yang ada didalam tabel 
+     * menggunakan object <code>Statement</code> lalu outputnya akan disimpan pada object <code>ResultSet</code>. 
+     * Pada <code>ResultSet</code> ada method yang bernama <code>next()</code>. 
+     * Jika output dari method <code>next()</code> adalah <B>True</B> maka tabel tersebut tidak kosong.
+     * Jika output dari method <code>next()</code>  adalah <B>False</B> maka tabel tersebut kosong.
+     * 
+     * @param tabel tabel yang akan dicek kosong atau tidaknya tabel tersebut.
+     * @return Jika tabel kosong maka akan mengembalikan nilai <B>True</B>.
+     *         Jika tabel tidak kosong maka akan mengembalikan nilai <B>False</B>.
+     */
     public boolean isEmptyTabel(final String tabel){
         try{
             String sql = "SELECT * FROM " + tabel;
             res = stat.executeQuery(sql);
-            return !res.next();
+            return !res.next(); // jika tabel tidak kosong
         }catch(SQLException ex){
             System.out.println("Tabel '" + tabel + "' tidak dapat ditemukan!");
         }
-        return true;
+        return true; // jika tabel kosong
     }
     
+    /**
+     * Method akan mengecek ada atau tidaknya <B>Database</B> dengan cara mencoba menkoneksikan Aplikasi ke <B>Database</B>.
+     * Jika tidak terjadi exception maka <B>Database</B> dinyatakan ada. 
+     * Jika terjadi exception maka <B>Database</B> dinyatakan tidak ada. 
+     * 
+     * @return Jika <B>Database</B> ditemukan maka akan mengembalikan nilai <B>True</B>
+     *         Jika <B>Database</B> tidak ditemukan maka akan mengembalikan nilai <B>False</B>
+     */
     public boolean isExistDatabase(){
         try{
             Class.forName(DRIVER);
@@ -325,44 +449,62 @@ public class Database {
     
     public static void main(String[] args) {
         Database db = new Database();
-        
         db.startConnection();
         db.backupDatabase();
         db.closeConnection();
+        
     }
 }
 
+/**
+ * Class ini digunakan untuk mengatasi masalah jika file backup hilang 
+ * dan ada tabel di <B>Database</B> yang tidak ditemukan atau dalam kondisi kosong tanpa data. 
+ * Permasalah ini jelas akan menghasilkan error karena aplikasi tidak dapat mendapatkan data dari tabel yang ada didalam <B>Database</B>.
+ * <BR><BR>
+ * Semua method pada class ini outputnya akan menghasilkan query-query yang digunakan untuk 
+ * membuat tabel yang tidak ditemukan di <B>Database</B> dan berisi perintah <code>INSERT</code> yang digunakan untuk mengembalikan data pada tabel yang kosong.
+ * 
+ * @author Achmad Baihaqi
+ * @since 2020-11-15
+ * @version 1.0
+ */
 class DefaultDatabase{
     
-    protected static String getDefaultStructurTable(final String tabel){
+    /**
+     * Method ini akan megembalikan query untuk membuat tabel yang tidak ada didalam <B>Database</B>.
+     * Adapun input yang bisa dimasukan untuk mendapatkan query tabel antara lain: 
+     * <UL>
+     * <LI> <B>KASUSCOVID_DUNIA : </B> akan menghasilkan query untuk membuat tabel kasuscovid_dunia jika tabel tersebut tidak ditemukan. 
+     * <LI> <B>KASUSCOVID_INDO : </B> akan menghasilkan query untuk membuat tabel kasuscovid_indo jika tabel tersebut tidak ditemukan. 
+     * <LI> <B>USERS : </B> akan menghasilkan query untuk membuat tabel users jika tabel tersebut tidak ditemukan. 
+     * <LI> <B>ISLOGIN : </B> akan menghasilkan query untuk membuat tabel islogin jika tabel tersebut tidak ditemukan. 
+     * </UL>
+     * <B>Note : </B> Jika input yang dimasukan bukan pilihan diatas maka method akan mengembalikan nilai null.
+     * 
+     * @param tabel tabel yang ingin didapatkan query-nya
+     * @return akan mengembalikan query untuk membuat tabel
+     */
+    protected static String getStrukturTabel(final String tabel){
+        // Mengecek input dari user
         if(tabel.equalsIgnoreCase(Database.KASUSCOVID_DUNIA)){
-            return getDefaultTable_kasusCoviDunia();
+            return getStrukturTabel_kasusCoviDunia();
         }else if(tabel.equalsIgnoreCase(Database.KASUSCOVID_INDO)){
-            return getDefaultTable_kasusCovidIndo();
+            return getStrukturTabel_kasusCovidIndo();
         }else if(tabel.equalsIgnoreCase(Database.USERS)){
-            return getDefaultTable_users();
+            return getStrukturTabel_users();
         }else if(tabel.equalsIgnoreCase(Database.ISLOGIN)){
-            return getDefaultTable_isLogin();
+            return getStrukturTabel_isLogin();
         }else{
             return null;
         }
     }
     
-    protected static String getDefaultDataTable(final String tabel){
-        if(tabel.equalsIgnoreCase(Database.KASUSCOVID_DUNIA)){
-            return getDefaultData_kasusCovidDunia();
-        }else if(tabel.equalsIgnoreCase(Database.KASUSCOVID_INDO)){
-            return getDefaultData_kasusCovidIndo();
-        }else if(tabel.equalsIgnoreCase(Database.USERS)){
-            return getDefaultData_users();
-        }else if(tabel.equalsIgnoreCase(Database.ISLOGIN)){
-            return getDefaultData_isLogin();
-        }else{
-            return null;
-        }
-    }
-    
-    protected static String getDefaultTable_kasusCoviDunia(){
+    /**
+     * Digunakan untuk mendapatkan query untuk membuat tabel kasuscovid_dunia jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * 
+     * @return query untuk membuat tabel kasuscovid_dunia
+     */
+    protected static String getStrukturTabel_kasusCoviDunia(){
         return  "CREATE TABLE `kasuscovid_dunia` (\n" +
                 "  `negara_idn` varchar(35) NOT NULL,\n" +
                 "  `negara_eng` varchar(35) NOT NULL,\n" +
@@ -378,7 +520,12 @@ class DefaultDatabase{
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
-    protected static String getDefaultTable_kasusCovidIndo(){
+     /**
+     * Digunakan untuk mendapatkan query untuk membuat tabel kasuscovid_indo jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * 
+     * @return query untuk membuat tabel kasuscovid_indo
+     */
+    protected static String getStrukturTabel_kasusCovidIndo(){
         return  "CREATE TABLE `kasuscovid_indo` (\n" +
                 "  `kode` varchar(10) NOT NULL,\n" +
                 "  `provinsi` varchar(40) NOT NULL,\n" +
@@ -398,7 +545,12 @@ class DefaultDatabase{
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
-    protected static String getDefaultTable_users(){
+     /**
+     * Digunakan untuk mendapatkan query untuk membuat tabel users jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * 
+     * @return query untuk membuat tabel users
+     */
+    protected static String getStrukturTabel_users(){
         return  "CREATE TABLE `users` (\n" +
                 "  `username` varchar(30) NOT NULL,\n" +
                 "  `namalengkap` varchar(50) NOT NULL,\n" +
@@ -416,7 +568,12 @@ class DefaultDatabase{
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
-    protected static String getDefaultTable_isLogin(){
+     /**
+     * Digunakan untuk mendapatkan query untuk membuat tabel islogin jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * 
+     * @return query untuk membuat tabel islogin
+     */
+    protected static String getStrukturTabel_isLogin(){
         return  "CREATE TABLE `islogin` (\n" +
                 "  `username` varchar(30) NOT NULL,\n" +
                 "  `namalengkap` varchar(50) NOT NULL,\n" +
@@ -424,7 +581,41 @@ class DefaultDatabase{
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
-    protected static String getDefaultData_kasusCovidDunia(){
+    /**
+     * Method ini akan megembalikan query untuk mengisi tabel yang kosong dengan perintah <code>INSERT</code>.
+     * Adapun input yang bisa dimasukan untuk mendapatkan query antara lain : 
+     * <UL>
+     * <LI> <B>KASUSCOVID_DUNIA : </B> akan menghasilkan query untuk mengisi tabel kasuscovid_dunia jika tabel tersebut kosong tanpa data.
+     * <LI> <B>KASUSCOVID_INDO : </B> akan menghasilkan query untuk mengisi tabel kasuscovid_indo jika tabel tersebut kosong tanpa data. 
+     * <LI> <B>USERS : </B> akan menghasilkan query untuk mengisi tabel users jika tabel tersebut kosong tanpa data.
+     * <LI> <B>ISLOGIN : </B> akan menghasilkan query untuk mengisi tabel islogin jika tabel tersebut kosong tanpa data.
+     * </UL>
+     * <B>Note : </B> Jika input yang dimasukan bukan pilihan diatas maka method akan mengembalikan nilai null.
+     * 
+     * @param tabel tabel yang ingin didapatkan query-nya
+     * @return akan mengembalikan query untuk mengisi tabel yang kosong.
+     */
+    protected static String getDefaultDataTabel(final String tabel){
+        // Mengecek input dari user
+        if(tabel.equalsIgnoreCase(Database.KASUSCOVID_DUNIA)){
+            return getDefaultDataTabel_kasusCovidDunia();
+        }else if(tabel.equalsIgnoreCase(Database.KASUSCOVID_INDO)){
+            return getDefaultDataTabel_kasusCovidIndo();
+        }else if(tabel.equalsIgnoreCase(Database.USERS)){
+            return getDefaultDataTabel_users();
+        }else if(tabel.equalsIgnoreCase(Database.ISLOGIN)){
+            return getDefaultDataTabel_isLogin();
+        }else{
+            return null;
+        }
+    }
+    
+     /**
+     * Digunakan untuk mendapatkan query untuk mengisi tabel kasuscovid_dunia jika tabel tersebut kosong.
+     * 
+     * @return query untuk mengisi tabel kasuscovid_dunia
+     */
+    protected static String getDefaultDataTabel_kasusCovidDunia(){
         return  "INSERT INTO `kasuscovid_dunia` (`negara_idn`, `negara_eng`, `kasus`, `kematian`, `sembuh`, `aktif`, `kritis`, `populasi`, `diubah`, `benua`, `bendera`) VALUES\n" +
                 "('.Dunia.', '.World.', 32138014, 982722, 23708311, 7446981, 62385, 781423273, '2020-09-30', 'null', 'default'),\n" +
                 "('Afganistan', 'Afghanistan', 39170, 1451, 32619, 5100, 93, 39124705, '2020-09-30', 'Asia', 'bendera-afganistan.jpg'),\n" +
@@ -643,17 +834,32 @@ class DefaultDatabase{
                 "('Zimbabwe', 'Zimbabwe', 7752, 227, 6043, 1482, 0, 14912782, '2020-09-30', 'Afrika', 'bendera-zimbabwe1.jpg');";
     }
     
-    protected static String getDefaultData_kasusCovidIndo(){
+     /**
+     * Digunakan untuk mendapatkan query untuk mengisi tabel kasuscovid_indo jika tabel tersebut kosong.
+     * 
+     * @return query untuk mengisi tabel kasuscovid_indo
+     */
+    protected static String getDefaultDataTabel_kasusCovidIndo(){
         return  "INSERT INTO `kasuscovid_indo` (`kode`, `provinsi`, `kasus`, `sembuh`, `kematian`, `aktif`, `odp`, `pdp`, `otg`, `total_kab`, `kab_zonamerah`, `kab_zonaoranye`, `kab_zonahijau`, `diubah`, `lambang`) VALUES\n" +
                 "('Jatim', 'Jawa Timur', 32138014, 23708311, 982722, 7446981, 5454, 5435, 543, 35, 23, 12, 5, '2020-11-15', 'default');";
     }
     
-    protected static String getDefaultData_users(){
+     /**
+     * Digunakan untuk mendapatkan query untuk mengisi tabel users jika tabel tersebut kosong.
+     * 
+     * @return query untuk mengisi tabel users
+     */    
+    protected static String getDefaultDataTabel_users(){
         return  "INSERT INTO `users` (`username`, `namalengkap`, `namapanggilan`, `email`, `gender`, `tgl_lahir`, `perkerjaan`, `alamat`, `negara`, `password`, `tgl_dibuat`, `fotoprofile`, `type`) VALUES\n" +
                 "('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', '12345678', '2020-11-15', 'default', 'Admin');\n";
     }
 
-    protected static String getDefaultData_isLogin(){
+     /**
+     * Digunakan untuk mendapatkan query untuk mengisi tabel islogin jika tabel tersebut kosong.
+     * 
+     * @return query untuk mengisi tabel islogin
+     */    
+    protected static String getDefaultDataTabel_isLogin(){
         return 
                "null";
     }
