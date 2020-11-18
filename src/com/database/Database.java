@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
- * Class ini digunakan untuk menhubungkan dan memutuskan koneksi ke <strong>Database</strong>, membackup <strong>Database</strong> dan menangani masalah yang terjadi pada <strong>Database.</strong>
+ * Class ini digunakan untuk menghubungkan dan memutuskan koneksi ke <strong>Database</strong>, membackup <strong>Database</strong> dan menangani masalah yang terjadi pada <strong>Database.</strong>
  * Kondisi seperti <strong>CRUD</strong> tidak tersedia di class ini. Kondisi <strong>CRUD</strong> tersedia di class <code>Account</code> dan <code>CovidCases</code>.
  * <BR><BR>
  * <strong>Database</strong> pada aplikasi ini sebagian besar menggunakan <strong>MySQL Database</strong> dan sisanya menggunakan <strong>Database Text</strong>.
@@ -60,7 +60,7 @@ public class Database {
                                USERS = "users", ISLOGIN = "islogin";
         
     /**
-     * Digunakan untuk menhubungkan aplikasi ke <B>Database</B>. 
+     * Digunakan untuk menghubungkan aplikasi ke <B>Database</B>. 
      * <BR>
      * Pertama-tama method akan meregrister Driver yang dipakai.
      * Driver yang dipakai di aplikasi ini adalah <B>MySQL Driver</B>. Selanjutnya method akan melakukan koneksi ke <B>Database</B>.
@@ -136,6 +136,23 @@ public class Database {
         }
     }
     
+    /**
+     * Method ini digunakan untuk membackup data dari tabel yang ada di dalam <B>Database</B>. 
+     * Data hasil backup tersebut akan disimpan dalam bentuk sebuah file yang terletak di package <code>com.databaes.backup</code> dan memiliki format .haqi.
+     * Nama dari file backup selalu diawali dengan kata BACKUP dan dibelakang kata BACKUP tersebut adalah nama tabel yang akan dibackup.
+     * <BR>
+     * Contoh : BACKUP kasuscovid_dunia.haqi, BACKUP users.haqi
+     * <BR> <BR>
+     * Sebelum membackup data method akan mengecek terlebih dahulu apakah <B>Database</B> dan tabelnya ada atau tidak. 
+     * Jika <B>Database</B> dan tabelnya tidak ditemukan maka <B>Database</B> dan tabelnya akan dipulihkan terlebih dahulu dengan method <code>restoreDatabase()</code> untuk menghindari error saat membackup nanti.
+     * Method juga akan mengecek apakah tabel yang ada didalam <B>Database</B> kosong tanpa data atau tidak. Jika kosong maka akan dipulihkan terlebih dahulu dengan method <code>restoreDatabase()</code>.
+     * Jika <B>Database</B> dan tabelnya ditemukan dan tabel tersebut tidak kosong maka data akan dibakcup.
+     * <BR> <BR>
+     * Proses backup akan dilakukan dengan membaca cara semua data yang ada didalam tabel. Lalu data tersebut disimpan ke dalam sebuah <code>String</code>.
+     * Jika semua data yang ada didalam tabel sudah terbaca dan datanya disimpan kedalam bentuk <code>String</code>.
+     * Maka proses selanjutnya ada memasukan data tersebut ke dalam file backup.
+     * 
+     */
     public void backupDatabase(){
         try{
             FileWriter file;
@@ -257,7 +274,7 @@ public class Database {
      * @return Data backup dari tabel dalam bentuk <code>String</code>.
      *         Jika method gagal mengambil data dari file backup maka akan megembalikan nilai null.
      */
-    public String getBakcupDatabase(final String tabel){
+    public String getBakcupTabel(final String tabel){
         try{
             String filename = "BACKUP " + tabel + ".haqi", data = "", buffer;
             FileReader file = new FileReader("src\\com\\database\\backup\\" + filename); // file backup tabel
@@ -275,6 +292,29 @@ public class Database {
         return null; // akan mengembalikan nilai null jika gagal mengambil data dari file
     }
     
+    /**
+     * Method ini digunakan untuk memulihkan tabel yang tidak ditemukan dan tabel yang kosong tanpa data. 
+     * Method akan mengecek apakah tabel tersebut ada atau tidak melalui method <code>isExistTabel(final String tabel)</code>.
+     * <BR><BR>
+     * Jika output dari method tersebut adalah <B>True</B> maka tersebut tabel ada/ditemukan dan selanjutnya akan dicek apakah tabel tersebut kosong tanpa data atau tidak jika kosong maka akan dipulihkan.
+     * Tapi jika output dari method tersebut adalah <B>False</B> maka tabel tersebut tidak ditemukan dan tabel akan dibuat  
+     * dengan menggunakan object <code>Statement</code> dan query untuk membuat tabel didapat dari method <code>DefaultDatabase.getStrukturTabel(final String tabel)</code> 
+     * setelah berhasil membuat tabel maka data akan dipulihkan.
+     * <BR><BR>
+     * Setelah mengecek apakah tabel ada atau tidak didalam <B>Database</B> maka selanjutnya adalah 
+     * memulihkan data tabel yang kosong method akan mengecek apakah tabel tersebut kosong atau tidak dengan menggunakan method <code>isEmptyTabel(final String tabel)</code>. 
+     * Jika output dari method tersebut adalah <B>True</B> maka tabel tersebut kosong dan akan dilakukan pemulihan data tabel. 
+     * Jika output dari method tersebut adalah <B>False</B> maka proses pemulihan data akan dilewati.
+     * <BR><BR>
+     * Sebelum melakukan pemulihan data method akan mengecek apakah file backup pada tabel ada atau tidak. <BR>
+     * Jika ada maka method akan memanggil <code>getBakcupTabel(final String tabel)</code> yang digunakan 
+     * untuk mendapatkan query <code>INSERT</code> untuk mengisi tabel yang kosong. <BR>
+     * Jika file pada tabel tidak ditemukan maka method akan memanggil <code>DefaultDatabase.getDefaultData(final String tabel)</code> 
+     * untuk mendapatkan query <code>INSERT</code> untuk mengisi tabel yang kosong dengan data saat pertama kali aplikasi diinstall.
+     * 
+     * 
+     * @param tabel nama tabel yang akan dipulihkan 
+     */
     public void restoreTabel(final String tabel){
         try{
             File f; // untuk mengecek apakah file backup exist ata tidak
@@ -293,7 +333,7 @@ public class Database {
                      // Mengecek apakah file backup tabel ada atau tidak
                      if(f.exists()){ 
                          // proses memulihkan data tabel jika file backup ada 
-                         create = stat.executeUpdate(this.getBakcupDatabase(tabel));
+                         create = stat.executeUpdate(this.getBakcupTabel(tabel));
                          // Mengecek apakah data berhasil dipulihkan atau tidak
                          if(create > 0){
                              System.out.println("Tabel '" + tabel + "' berhasil dipulihkan!\n");
@@ -321,7 +361,7 @@ public class Database {
                     // Mengecek apakah file backup tabel ada atau tidak
                     if(f.exists()){
                         // Proses memulihkan data jika file ada
-                        create = stat.executeUpdate(this.getBakcupDatabase(tabel));
+                        create = stat.executeUpdate(this.getBakcupTabel(tabel));
                         // Mengecek apakah data berhasil dipulihkan atau tidak
                         if(create > 0){
                             System.out.println("Tabel '" + tabel + "' berhasil dipulihkan!\n");
@@ -354,6 +394,18 @@ public class Database {
         }
     }
     
+    /**
+     * Digunakan untuk memulihkan <B>Database</B> dan tabel jika tidak ditemukan atau tabel dalam kondisi kosong tanpa data.
+     * Pemulihan <B>Database</B> sangat penting untuk dilakukan karena Aplikasi ini sangat begantung pada <B>Database</B>.
+     * Jika <B>Database</B> dan tabel tidak ditemukan atau ada tabel yang kosong tanpa data maka menyebabkan error pada Aplikasi.
+     * <BR><BR>
+     * Untuk mengecek apakah <B>Database</B> ada atau tidak maka diperlukan method <code>isExistDatabase()</code>. 
+     * Jika output dari method tersebut adalah <strong>True</strong> maka <B>Database</B> tersebut ada/ditemukan. 
+     * Tapi jika output dari method tersebut adalah <strong>False</strong> maka <B>Database</B> tersebut tidak ditemukan 
+     * dan <B>Database</B> akan dibuat kembali. Jika <B>Database</B> berhasil dibuat maka langkah selanjutnya adalah 
+     * memulihkan tabel yang ada didalam <B>Database</B> dengan method <code>restoreTabel(final String tabel)</code>.
+     * 
+     */
     public void restoreDatabase(){
         try{
             // Mengecek apakah database ada atau tidak, jika tidak maka akan database dibuat
@@ -447,13 +499,6 @@ public class Database {
         return false;
     }
     
-    public static void main(String[] args) {
-        Database db = new Database();
-        db.startConnection();
-        db.backupDatabase();
-        db.closeConnection();
-        
-    }
 }
 
 /**
@@ -500,7 +545,7 @@ class DefaultDatabase{
     }
     
     /**
-     * Digunakan untuk mendapatkan query untuk membuat tabel kasuscovid_dunia jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * Akan mengembalikan sebuah query untuk membuat tabel kasuscovid_dunia jika tabel tersebut tidak ada didalam <B>Database</B>.
      * 
      * @return query untuk membuat tabel kasuscovid_dunia
      */
@@ -521,7 +566,7 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk membuat tabel kasuscovid_indo jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * Akan mengembalikan sebuah query untuk membuat tabel kasuscovid_indo jika tabel tersebut tidak ada didalam <B>Database</B>.
      * 
      * @return query untuk membuat tabel kasuscovid_indo
      */
@@ -546,7 +591,7 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk membuat tabel users jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * Akan mengembalikan sebuah query untuk membuat tabel users jika tabel tersebut tidak ada didalam <B>Database</B>.
      * 
      * @return query untuk membuat tabel users
      */
@@ -569,7 +614,7 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk membuat tabel islogin jika tabel tersebut tidak ada didalam <B>Database</B>.
+     * Akan mengembalikan sebuah query untuk membuat tabel islogin jika tabel tersebut tidak ada didalam <B>Database</B>.
      * 
      * @return query untuk membuat tabel islogin
      */
@@ -611,7 +656,7 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk mengisi tabel kasuscovid_dunia jika tabel tersebut kosong.
+     * Akan mengembalikan sebuah query untuk mengisi tabel kasuscovid_dunia jika tabel tersebut kosong.
      * 
      * @return query untuk mengisi tabel kasuscovid_dunia
      */
@@ -835,7 +880,7 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk mengisi tabel kasuscovid_indo jika tabel tersebut kosong.
+     * Akan mengembalikan sebuah query untuk mengisi tabel kasuscovid_indo jika tabel tersebut kosong.
      * 
      * @return query untuk mengisi tabel kasuscovid_indo
      */
@@ -845,22 +890,38 @@ class DefaultDatabase{
     }
     
      /**
-     * Digunakan untuk mendapatkan query untuk mengisi tabel users jika tabel tersebut kosong.
+     * Akan mengembalikan sebuah query untuk mengisi tabel users jika tabel tersebut kosong.
      * 
      * @return query untuk mengisi tabel users
      */    
     protected static String getDefaultDataTabel_users(){
         return  "INSERT INTO `users` (`username`, `namalengkap`, `namapanggilan`, `email`, `gender`, `tgl_lahir`, `perkerjaan`, `alamat`, `negara`, `password`, `tgl_dibuat`, `fotoprofile`, `type`) VALUES\n" +
-                "('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', '12345678', '2020-11-15', 'default', 'Admin');\n";
+                "('aderaihan', 'Ade Raihan Mahsa', 'Raihan', 'aderaihanacaaca@gmail.com', 'L', '2002-11-19', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'aderaihan', '2020-11-18', 'default', 'User'),\n" +
+                "('agung', 'Agung Tri Laksono', 'Agung', 'agungtrilaksono1287@gmail.com', 'L', '2003-12-13', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'agungtri', '2020-11-18', 'default', 'User'),\n" +
+                "('ananta', 'Ananta Eka Prayoga', 'Ananta', 'anantaprayoga25@gmail.com', 'L', '2002-01-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ananta1234', '2020-11-18', 'default', 'User'),\n" +
+                "('ansori', 'Ahmad Ansori', 'Ansori', 'aanblogme@gmail.com', 'L', '2002-05-01', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ansori1234', '2020-11-18', 'default', 'User'),\n" +
+                "('arifin', 'M. Arifin Mustofa', 'Arifin', 'arifinmmustofa173@gmail.com', 'L', '2003-10-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'arifin1234', '2020-11-18', 'default', 'User'),\n" +
+                "('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', '12345678', '2020-11-15', 'default', 'Admin'),\n" +
+                "('bima', 'Fahrezian Arya Bima', 'Bima', 'awal.in45@gmail.com', 'L', '2003-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'bima1234', '2020-11-18', 'default', 'User'),\n" +
+                "('chuenk', 'M. Nur Kholis Chu Enk Yunani', 'Chu Enk', 'chuenkaisyah15@gmail.com', 'L', '2003-05-02', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'chu1234', '2020-11-18', 'default', 'User'),\n" +
+                "('david', 'David Aldian Hidayat', 'David', 'davidaldian15@gmail.com', 'L', '2002-05-17', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'davidaldian', '2020-11-18', 'default', 'User'),\n" +
+                "('deky', 'Deky Reza Saputra', 'Deky', 'dekyreza8787@gmail.com', 'L', '2002-11-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'dekyreza', '2020-11-18', 'default', 'User'),\n" +
+                "('dhinno', 'Dhinno Haryasena', 'Dhinno', 'dhinosena@gmail.com', 'L', '2001-10-06', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'dhinno1234', '2020-11-18', 'default', 'User'),\n" +
+                "('didin', 'Didin Rakfil Beniafan', 'Didin', 'rakfildidin@gmail.com', 'L', '2002-10-27', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'didin1234', '2020-11-18', 'default', 'User'),\n" +
+                "('fatur', 'Fatur Riandy', 'Fatur', 'riyandifatur868@gmail.com', 'L', '2002-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'faturiandy', '2020-11-18', 'default', 'User'),\n" +
+                "('halim', 'Halim Bagus Perdana', 'Halim', 'halimpaijo1@gmail.com', 'L', '2002-11-09', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'halimbagus', '2020-11-18', 'default', 'User'),\n" +
+                "('maul', 'Ilham Maulana', 'Ilham', 'im285281@gmail.com', 'L', '2002-06-16', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'mauldesu', '2020-11-18', 'default', 'User'),\n" +
+                "('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User');";
     }
 
      /**
-     * Digunakan untuk mendapatkan query untuk mengisi tabel islogin jika tabel tersebut kosong.
+     * Akan mengembalikan sebuah query untuk mengosongkan tabel islogin.
+     * Karena pada dasarnya tabel islogin kosong saat aplikasi baru pertama kali diinstall
      * 
      * @return query untuk mengisi tabel islogin
      */    
     protected static String getDefaultDataTabel_isLogin(){
         return 
-               "null";
+               "TRUNCATE islogin;";
     }
 }
