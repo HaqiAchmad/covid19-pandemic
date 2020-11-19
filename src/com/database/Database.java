@@ -223,7 +223,7 @@ public class Database {
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP users.haqi"
                 while(res.next()){
                     // mendapatkan data yang ada didalam tabel
-                    values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("namapanggilan") + "', '" + res.getString("email") + "', '" + res.getString("gender") + "', '" + res.getString("tgl_lahir") + "', '" + res.getString("perkerjaan") + "', '" + res.getString("alamat") + "', '" + res.getString("negara") + "', '" + res.getString("password") + "', '" + res.getString("tgl_dibuat") + "', '" + res.getString("fotoprofile") + "', '" + res.getString("type") + "')";
+                    values = "('" + res.getString("username") + "', '" + res.getString("namalengkap") + "', '" + res.getString("namapanggilan") + "', '" + res.getString("email") + "', '" + res.getString("gender") + "', '" + res.getString("tgl_lahir") + "', '" + res.getString("pekerjaan") + "', '" + res.getString("alamat") + "', '" + res.getString("negara") + "', '" + res.getString("password") + "', '" + res.getString("tgl_dibuat") + "', '" + res.getString("fotoprofile") + "', '" + res.getString("type") + "')";
                     // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
@@ -603,7 +603,7 @@ class DefaultDatabase{
                 "  `email` varchar(40) NOT NULL,\n" +
                 "  `gender` enum('L','P') NOT NULL,\n" +
                 "  `tgl_lahir` date NOT NULL,\n" +
-                "  `perkerjaan` varchar(30) NOT NULL,\n" +
+                "  `pekerjaan` varchar(30) NOT NULL,\n" +
                 "  `alamat` varchar(35) NOT NULL,\n" +
                 "  `negara` varchar(35) NOT NULL,\n" +
                 "  `password` varchar(30) NOT NULL,\n" +
@@ -895,7 +895,7 @@ class DefaultDatabase{
      * @return query untuk mengisi tabel users
      */    
     protected static String getDefaultDataTabel_users(){
-        return  "INSERT INTO `users` (`username`, `namalengkap`, `namapanggilan`, `email`, `gender`, `tgl_lahir`, `perkerjaan`, `alamat`, `negara`, `password`, `tgl_dibuat`, `fotoprofile`, `type`) VALUES\n" +
+        return  "INSERT INTO `users` (`username`, `namalengkap`, `namapanggilan`, `email`, `gender`, `tgl_lahir`, `pekerjaan`, `alamat`, `negara`, `password`, `tgl_dibuat`, `fotoprofile`, `type`) VALUES\n" +
                 "('aderaihan', 'Ade Raihan Mahsa', 'Raihan', 'aderaihanacaaca@gmail.com', 'L', '2002-11-19', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'aderaihan', '2020-11-18', 'default', 'User'),\n" +
                 "('agung', 'Agung Tri Laksono', 'Agung', 'agungtrilaksono1287@gmail.com', 'L', '2003-12-13', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'agungtri', '2020-11-18', 'default', 'User'),\n" +
                 "('ananta', 'Ananta Eka Prayoga', 'Ananta', 'anantaprayoga25@gmail.com', 'L', '2002-01-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ananta1234', '2020-11-18', 'default', 'User'),\n" +
