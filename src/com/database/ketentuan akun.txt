@@ -1,0 +1,31 @@
+/*
+Ketentuan username
+    - username harus diantara 4-20 karakter
+    - username tidak boleh mengandung spasi
+    - simbol yang boleh digunakan untuk username antara lain  . _ , ' &
+    - username harus belum ada yang memakai
+Ketentuan nama lengkap
+    - nama lengkap panjangnya harus diantara 5-50 karakter
+    - nama lengkap tidak boleh menggandung angka
+    - simbol yang dapat digunakan untuk nama lengkap antara lain  . # / & - : ; ,
+Ketentuan nama panggilan 
+    - nama panggilan panjangnya harus diantara 4-15
+    - nama panggilan tidak boleh menggandung angka
+    - nama panggilan tidak boleh menggunakan simbol
+Ketentuan email
+     - jenis email yang didukung hanyalah Gmail saja 
+     - panjang username gmail harus diantara 6-30 karakter
+     - simbol yang dapat digunakan pada gmail adalah . saja
+     - email harus belum ada yang memakai
+Ketentuan password
+    - panjang password harus diantara 8-30 karakter
+Ketentuan umur
+    - umur minimum untuk membuat akun adalah umur 5 tahun 
+    - umur maximum untuk membuat akun adalah umur 200 tahun
+Kententuan SignUp
+    - username atau email harus belum terdaftar
+    - username, nama lengkap, nama panggilan dan password harus memenuhi kriteria yang berlaku
+Ketentuan SignIn 
+    - username atau email harus sudah terdaftar
+    - password harus cocok 
+*/

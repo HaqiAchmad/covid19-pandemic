@@ -601,7 +601,7 @@ class DefaultDatabase{
                 "  `namalengkap` varchar(50) NOT NULL,\n" +
                 "  `namapanggilan` varchar(20) NOT NULL,\n" +
                 "  `email` varchar(40) NOT NULL,\n" +
-                "  `gender` enum('L','P') NOT NULL,\n" +
+                "  `gender` enum('L','P','N') NOT NULL,\n" +
                 "  `tgl_lahir` date NOT NULL,\n" +
                 "  `pekerjaan` varchar(30) NOT NULL,\n" +
                 "  `alamat` varchar(35) NOT NULL,\n" +
@@ -609,7 +609,7 @@ class DefaultDatabase{
                 "  `password` varchar(30) NOT NULL,\n" +
                 "  `tgl_dibuat` date NOT NULL,\n" +
                 "  `fotoprofile` text NOT NULL,\n" +
-                "  `type` enum('Admin','User') NOT NULL\n" +
+                "  `type` enum('Admin','User', 'Guest') NOT NULL\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
