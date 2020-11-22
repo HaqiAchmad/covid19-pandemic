@@ -488,7 +488,7 @@ public class Account extends Database{
         Account acc = new Account();
         
         System.out.println(acc.loginAsGuest());
-        
+//        acc.logout();
         acc.backupDatabase();
         acc.closeConnection();
         
