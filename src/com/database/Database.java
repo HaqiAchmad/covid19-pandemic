@@ -437,6 +437,56 @@ public class Database {
     }
     
     /**
+     * Digunakan untuk mengecek apakah sebuah field ada didalam tabel atau tidak. 
+     * Method akan mengecek ada atau tidak field didalam tabel dengan cara melakukan perulangan terhadap array yang 
+     * berisi field dari tabel. Jika field tersebut ditemukan didalam array tersebut maka field tersebut dinyatakan ada.
+     * 
+     * @param tabel tabel dari field yang ingin dicek ada atau tidaknya field tersebut
+     * @param field field yang ingin dicek ada atau tidaknya
+     * @return Jika field ditemukan maka akan mengembalikan nilai <B>True</B>.
+     *         Tapi jika field tidak ditemukan maka akan mengembalikan niali <B>False</B>
+     */
+    public boolean isExistField(final String tabel, final String field){
+        // daftar field yang ada dialam tabel kasuscovid_dunia, kasuscovid_indo, users dan islogin
+        String fieldDunia[] = new String[]{"negara_idn", "negara_eng", "kasus", "kematian", "sembuh", "aktif", "kritis", "populasi", "diubah", "benua", "bendera"},
+               fieldIndo[] = new String[]{"kode", "provinsi", "kasus", "sembuh", "kematian", "aktif", "odp", "pdp", "otg", "total_kab", "kab_zonamerah", "kab_zonaoranye", "kab_zonahijau", "diubah", "lambang"},
+               fieldUsers[] = new String[]{"username", "namalengkap", "namapanggilan", "email", "gender", "tgl_lahir", "pekerjaan", "alamat", "negara", "password", "tgl_dibuat", "fotoprofile", "type"},
+               fieldIslogin[] = new String[]{"username", "namalengkap", "email"};
+        
+        // mengecek apakah field ada atau tidak didalam tabel kasuscovid_dunia
+        if(tabel.equalsIgnoreCase(KASUSCOVID_DUNIA)){
+            for (String cari : fieldDunia) {
+                if (field.equalsIgnoreCase(cari)) {
+                    return true;
+                }
+            }
+        // mengecek apakah field ada atau tidak didalam tabel kasuscovid_dunia
+        }else if(tabel.equalsIgnoreCase(KASUSCOVID_INDO)){
+            for (String cari : fieldIndo) {
+                if (field.equalsIgnoreCase(cari)) {
+                    return true;
+                }
+            }
+        // mengecek apakah field ada atau tidak didalam tabel kasuscovid_dunia    
+        }else if(tabel.equalsIgnoreCase(USERS)){
+            for(String cari : fieldUsers){
+                if(field.equalsIgnoreCase(cari)){
+                    return true;
+                }
+            }
+        // mengecek apakah field ada atau tidak didalam tabel kasuscovid_dunia    
+        }else if(tabel.equalsIgnoreCase(ISLOGIN)){
+            for(String cari : fieldIslogin){
+                if(field.equalsIgnoreCase(cari)){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
      * Untuk mengecek apakah sebuah tabel ada didalam <B>Database</B> atau tidak. 
      * Method akan mengecek ada atau tidaknya tabel di dalam <B>Database</B> dengan cara
      * mengambil semua data yang ada didalam tabel. 
