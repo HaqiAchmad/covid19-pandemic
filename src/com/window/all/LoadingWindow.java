@@ -40,9 +40,13 @@ public class LoadingWindow extends javax.swing.JFrame {
                     }else{
                         JOptionPane.showMessageDialog(null, "NOT");
                     }
+                    
+                    dispose();
+                    new com.database.users.TesTable().setVisible(true);
+                    
                     dbase.closeConnection();
                     acc.closeConnection();
-                    System.exit(0);
+//                    System.exit(0);
                 }catch(InterruptedException iex){
                     System.out.println(iex.getMessage());
                 }
