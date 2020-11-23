@@ -21,10 +21,6 @@ public class TesTable extends javax.swing.JFrame{
         }
     }
     
-    public void getData(JTable tabel, String[] fields, String key){
-        String feild = covid.getMultipeFields(fields);
-        
-    }
 
     public void data() throws java.sql.SQLException{
         DefaultTableModel def = new DefaultTableModel();
@@ -35,9 +31,9 @@ public class TesTable extends javax.swing.JFrame{
         def.addColumn("Kematian");
         
            tabel.setModel(new javax.swing.table.DefaultTableModel(
-                covid.getData(""),
+                covid.getData(new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN}),
                 new String [] {
-                    "No", "Negara", "Positif", "Sembuh", "Kematian"
+                    "Negara", "Positif", "Sembuh", "Kematian"
                 }
             ) {
                 boolean[] canEdit = new boolean [] {
@@ -59,9 +55,17 @@ public class TesTable extends javax.swing.JFrame{
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        inpKey = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -78,9 +82,9 @@ public class TesTable extends javax.swing.JFrame{
         ));
         jScrollPane1.setViewportView(tabel);
 
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+        inpKey.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextField1KeyTyped(evt);
+                inpKeyKeyTyped(evt);
             }
         });
 
@@ -89,17 +93,17 @@ public class TesTable extends javax.swing.JFrame{
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(335, 335, 335)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inpKey, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inpKey, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -119,11 +123,12 @@ public class TesTable extends javax.swing.JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+    private void inpKeyKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpKeyKeyTyped
         this.tabel.setModel(new DefaultTableModel(null, new String[]{"Negara", "Positif", "Sembuh", "Kematian"}));
-        
+        System.out.println("baihaqi searching for '" + inpKey.getText() + "'");
+        System.out.println("result : " + covid.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ inpKey.getText() +"%' OR negara_eng LIKE '%"+ inpKey.getText() +"%' OR benua LIKE '%"+ inpKey.getText() +"%' ORDER BY kasus DESC;"));
         tabel.setModel(new javax.swing.table.DefaultTableModel(
-                covid.getData(new String[]{CovidCases.NEGARA_ENG, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN}, this.jTextField1.getText()),
+                covid.getData(new String[]{CovidCases.NEGARA_ENG, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN}, this.inpKey.getText()),
                 new String [] {
                     "Negara", "Positif", "Sembuh", "Kematian"
                 }
@@ -137,7 +142,16 @@ public class TesTable extends javax.swing.JFrame{
                 return canEdit [columnIndex];
             }
         });
-    }//GEN-LAST:event_jTextField1KeyTyped
+    }//GEN-LAST:event_inpKeyKeyTyped
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("closes");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        covid.backupDatabase();
+        covid.closeConnection();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -175,9 +189,9 @@ public class TesTable extends javax.swing.JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField inpKey;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }
