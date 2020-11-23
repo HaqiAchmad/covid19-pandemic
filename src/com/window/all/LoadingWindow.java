@@ -36,14 +36,12 @@ public class LoadingWindow extends javax.swing.JFrame {
                         Thread.sleep(56);
                     }
                     if(acc.isLogin()){
-                        JOptionPane.showMessageDialog(null, "IS LOGIN");
+                        dispose();
+                        new com.database.users.TesTable().setVisible(true);
                     }else{
-                        JOptionPane.showMessageDialog(null, "NOT");
-                    }
-                    
-                    dispose();
-                    new com.database.users.TesTable().setVisible(true);
-                    
+                        dispose();
+                        new com.window.all.SignIn().setVisible(true);
+                    }                    
                     dbase.closeConnection();
                     acc.closeConnection();
 //                    System.exit(0);
