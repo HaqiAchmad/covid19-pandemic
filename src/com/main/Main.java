@@ -1,5 +1,10 @@
 package com.main;
 
+/**
+ * 
+ * @author Achmad Baihaqi
+ * @since 2020-11-14
+ */
 public class Main {
     
     public static void main(String[] args) {
