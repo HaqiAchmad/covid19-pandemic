@@ -1,3 +1,5 @@
 INSERT INTO kasuscovid_indo VALUES 
-('Jatim', 'Jawa Timur', 32138014, 23708311, 982722, 7446981, 5454, 5435, 543, 35, 23, 12, 5, '2020-11-15', 'default');
+('Jatim', 'Jawa Timur', 32138014, 23708311, 982722, 7446981, 5454, 5435, 543, 35, 23, 12, 5, '2020-11-15', 'default'),
+('Jateng', 'Jawa Tengah', 132345, 35252, 53555, 5325, 34, 55, 535, 53, 5, 23, 34, '2020-11-23', 'default'),
+('Jabar', 'Jawa Barat', 3424444, 243, 423, 432, 432, 324, 5436, 8, 56, 75, 7, '2020-11-17', 'default');
 # Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
