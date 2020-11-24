@@ -1,5 +1,7 @@
 package com.database;
 
+import com.media.audio.Audio;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -89,7 +91,7 @@ public class Database {
             stat = conn.createStatement(); 
             System.out.println("Berhasil terhubung ke database '" + DB_NAME + "'\n");
         }catch(ClassNotFoundException | SQLException ex){
-            
+            Audio.play(Audio.SOUND_ERROR);
             // Menanggani exception yang terjadi dengan cara mendapatkan pesan error dari exception tersebut.
             if(ex.getMessage().contains("com.mysql.jdbc.Driver")){
                 JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
@@ -130,8 +132,9 @@ public class Database {
             if(res != null){
                 res.close();
             }
-            System.out.println("Berhasil memutus koneksi database '" + DB_NAME + "'");
+            System.out.println("Berhasil memutus koneksi database '" + DB_NAME + "'\n");
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : "+ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -259,6 +262,7 @@ public class Database {
                 backup.flush();                
 
         }catch(SQLException | IOException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat membackup database!!\n\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -382,6 +386,7 @@ public class Database {
             }
             
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             System.out.println("Terjadi kesalahan!!\n ERROR : " + ex.getMessage());
             try{
                 // Menangani exception yang terjadi
@@ -432,6 +437,7 @@ public class Database {
             restoreTabel(ISLOGIN);
             
         }catch(ClassNotFoundException | SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan!\n\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -712,7 +718,7 @@ class DefaultDatabase{
      */
     protected static String getDefaultDataTabel_kasusCovidDunia(){
         return  "INSERT INTO `kasuscovid_dunia` (`negara_idn`, `negara_eng`, `kasus`, `kematian`, `sembuh`, `aktif`, `kritis`, `populasi`, `diubah`, `benua`, `bendera`) VALUES\n" +
-                "('.Dunia.', '.World.', 32138014, 982722, 23708311, 7446981, 62385, 781423273, '2020-09-30', 'null', 'default'),\n" +
+                "('Dunia', 'World', 32138014, 982722, 23708311, 7446981, 62385, 781423273, '2020-09-30', 'null', 'default'),\n" +
                 "('Afganistan', 'Afghanistan', 39170, 1451, 32619, 5100, 93, 39124705, '2020-09-30', 'Asia', 'bendera-afganistan.jpg'),\n" +
                 "('Afrika Selatan', 'South Africa', 667049, 16283, 595916, 54850, 539, 59481669, '2020-09-30', 'Afrika', 'bendera-afrika-selatan.png'),\n" +
                 "('Albania', 'Albania', 12787, 370, 7139, 5278, 18, 2877060, '2020-09-30', 'Eropa', 'bendera-albania.jpg'),\n" +
@@ -784,7 +790,7 @@ class DefaultDatabase{
                 "('Hong Kong', 'Hong Kong', 5057, 104, 4758, 195, 13, 7511174, '2020-09-30', 'Asia', 'bendera-hong_kong.svg.png'),\n" +
                 "('Hungaria', 'Hungary', 21200, 709, 4818, 15673, 32, 9654581, '2020-09-30', 'Eropa', 'bendera-hongaria.jpg'),\n" +
                 "('India', 'India', 5816103, 92317, 4752991, 970795, 8944, 1383159972, '2020-09-30', 'Asia', 'bendera-india.png'),\n" +
-                "('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, 0, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),\n" +
+                "('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, -1, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),\n" +
                 "('Iran', 'Iran', 436319, 25015, 367829, 43475, 3957, 84241549, '2020-09-30', 'Asia', 'bendera-iran.jpg'),\n" +
                 "('Iraq', 'Iraq', 337106, 8799, 268761, 59546, 527, 40427156, '2020-09-30', 'Asia', 'bendera-irak.jpg'),\n" +
                 "('Irlandia', 'Ireland', 33675, 1794, 23364, 8517, 16, 4950431, '2020-09-30', 'Eropa', 'bendera-irlandia.png'),\n" +
