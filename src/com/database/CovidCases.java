@@ -1,5 +1,7 @@
 package com.database;
 
+import com.media.audio.Audio;
+
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
@@ -12,8 +14,8 @@ import javax.swing.JOptionPane;
 public class CovidCases extends Database{
 
     private final LocalDateTime lc = LocalDateTime.now();
-    private String sql;
     private final String TABEL_SELECTED;
+    private String sql;
     
     public static final String KASUS_DUNIA = "kasuscovid_dunia",
                                KASUS_INDO = "kasuscovid_indo";
@@ -23,6 +25,7 @@ public class CovidCases extends Database{
                                ZONA_ORANYE = "kab_zonaoranye", ZONA_HIJAU = "kab_zonahijau", DIUBAH = "diubah", BENUA = "benua", LAMBANG = "lambang", BENDERA = "bendera";
     
     public CovidCases(final String tabel){
+        // jika input yang dimasukan bukan kasus_dunia maupun kasus_indo secara default tabel akan diatur ke kasus_dunia
         if(!tabel.equalsIgnoreCase(KASUS_DUNIA) && !tabel.equalsIgnoreCase(KASUS_INDO)){
             TABEL_SELECTED = KASUS_DUNIA;
         }else{
@@ -59,17 +62,25 @@ public class CovidCases extends Database{
                 return true;
             }
         }catch(SQLException ex){
-            this.restoreDatabase();
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat akan menambahkan data\n " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreDatabase();
         }
         return false;
     }
     
+    /**
+     * digunakan untuk mendapatkan fields yang berasal dari param field pada method getData
+     * 
+     * @param fields
+     * @return 
+     */
     private String getMultipleFields(String fields[]){
         String field = "";
         for (String buff : fields) {
             field += buff + ", ";
         }
+        // membuang tanda koma diakhir String
         return field.substring(0, field.length()-2);
     }
     
@@ -82,10 +93,12 @@ public class CovidCases extends Database{
                     sql = "SELECT * FROM kasuscovid_dunia WHERE negara_idn = '"+ key +"' OR negara_eng = '"+ key +"'";
                 }
             }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
+                // mengecek apakah data/field ada didalam tabel ada atau tidak, jika ada maka query akan dibuat
                 if(isExistField(KASUS_INDO, field)){
                     sql = "SELECT * FROM kasuscovid_indo WHERE kode = '"+ key +"' OR provinsi = '" +key+ "'";
                 }
             }
+            System.out.println("Mengambil data "+ field +" dari tabel '" + TABEL_SELECTED + "' dengan keyword = '"+ key +"'");
             // mengeksekusi query yang barusan dibuat untuk mendapatkan data
             res = stat.executeQuery(sql);
             // mengecek apakah data yang dicari ada atau tidak
@@ -95,15 +108,47 @@ public class CovidCases extends Database{
                 this.restoreTabel(TABEL_SELECTED);
             }
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
         }
         return "Gagal Mendapatkan Data";
     }
     
+    public int getDataNumber(final String field, final String key){
+        try{
+            // membuat query yang digunakan untuk mendapatkan data berdasarkan tabel yang dipilih
+            if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
+                // mengecek apakah data/field ada didalam tabel ada atau tidak, jika ada maka query akan dibuat
+                if(isExistField(KASUS_DUNIA, field)){
+                    sql = "SELECT * FROM kasuscovid_dunia WHERE negara_idn = '"+ key +"' OR negara_eng = '"+ key +"'";
+                }
+            }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
+                // mengecek apakah data/field ada didalam tabel ada atau tidak, jika ada maka query akan dibuat
+                if(isExistField(KASUS_INDO, field)){
+                    sql = "SELECT * FROM kasuscovid_indo WHERE kode = '"+ key +"' OR provinsi = '" +key+ "'";
+                }
+            }
+            System.out.println("Mengambil data "+ field +" dari tabel '" + TABEL_SELECTED + "' dengan keyword = '"+ key +"'");
+            // mengeksekusi query yang barusan dibuat untuk mendapatkan data
+            res = stat.executeQuery(sql);
+            // mengecek apakah data yang dicari ada atau tidak
+            if(res.next()){
+                return Integer.parseInt(res.getString(field));
+            }else{
+                this.restoreTabel(TABEL_SELECTED);
+            }
+        }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
+        }
+        return -2;
+    }
+    
     public Object[][] getData(final String[] fields){
         try{
-            Object[][] obj;
+            Object[][] obj; // digunakan untuk menyimpan data yang berasal dari tabel
             int rows = 0;
             // membuat query yang digunakan untuk mendapatkan data berdasarkan tabel yang dipilih
             if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
@@ -126,8 +171,8 @@ public class CovidCases extends Database{
             }
             return obj;
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
         }
         
         return null;
@@ -158,8 +203,9 @@ public class CovidCases extends Database{
             }
             return obj;
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
         }
         return null;
     }
@@ -192,8 +238,9 @@ public class CovidCases extends Database{
                 this.restoreTabel(TABEL_SELECTED);
             }
         }catch(Exception ex){
-            this.restoreTabel(TABEL_SELECTED);
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat akan mengedit data\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
         }
         return false;
     }
@@ -221,8 +268,9 @@ public class CovidCases extends Database{
             }
             
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat akan menghapus data!\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
         }
         return false;
     }
@@ -242,8 +290,8 @@ public class CovidCases extends Database{
             return res.next();
             
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
             System.out.println("Terjadi kesalahan saat akan mengecek ada atau tidaknya data \nError : " + ex.getMessage());
+            this.restoreTabel(TABEL_SELECTED);
         }
         return false;
     }
@@ -275,8 +323,8 @@ public class CovidCases extends Database{
                 }
             }
         }catch(SQLException ex){
-            this.restoreTabel(TABEL_SELECTED);
             System.out.println("Terjadi kesalahan saat akan mendapatkan peringkat : " + ex.getMessage());
+            this.restoreTabel(TABEL_SELECTED);
         }
         return -1;
     }
@@ -327,25 +375,26 @@ public class CovidCases extends Database{
     
     public String addDelim(final int num){
         // menambahkan delimetri
-        return String.format("%,d", num);
+        if(num >= 0){
+            return String.format("%,d", num);
+        }else if(num == -1){
+            return "N/A";
+        }else{
+            return "Terjadi Error";
+        }
+            
     }
     
-    public static void main(String[] args) throws SQLException {
-        CovidCases caseDunia = new CovidCases(KASUS_DUNIA);
-        CovidCases caseIndo = new CovidCases(KASUS_INDO);
-        int sembuh = Integer.parseInt(caseDunia.getData(SEMBUH, ".Dunia.")),
-            kematian = Integer.parseInt(caseDunia.getData(KEMATIAN, ".Dunia."));
-        
+    public String addDelim(final long num){
+        // menambahkan delimetri
+        if(num >= 0){
+            return String.format("%,d", num);
+        }else if(num == -1){
+            return "N/A";
+        }else{
+            return "Terjadi Error";
+        }
+            
+    }
 
-        System.out.println(caseIndo.getRows("select * from kasuscovid_indo"));
-        
-        
-//        caseIndo.show(caseIndo.getData());
-        
-        caseDunia.backupDatabase();
-        caseDunia.closeConnection();
-        caseIndo.closeConnection();
-    }
- 
-    
 }
