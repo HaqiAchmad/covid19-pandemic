@@ -1,5 +1,7 @@
 package com.database;
 
+import com.media.audio.Audio;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -85,6 +87,7 @@ public class Account extends Database{
             }
             
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat membuat akun!!\n\n Error : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
         }
@@ -125,14 +128,17 @@ public class Account extends Database{
                         return true;
                     }
                 }else{
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Password tidak cocok", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 // memulihkan tabel jika tabel bermasalah
                 this.restoreTabel(USERS);
                 JOptionPane.showMessageDialog(null, "Username tersebut belum terdaftar!", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat login\n\nError: " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
             this.restoreTabel(ISLOGIN);
@@ -151,6 +157,7 @@ public class Account extends Database{
                create = stat.executeUpdate("INSERT INTO users VALUES ('guest', 'achmad baihaqi', 'baihaqi', 'abc', 'L', '2003-08-04', 'android developer', 'jawa timur', 'indonesia', '#', '1234-05-06', 'default', 'Guest')");
                //  mengecek apakah akun sukses dibuat atau tidak
                if(create == 0){
+                   Audio.play(Audio.SOUND_INFO);
                    JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mencoba masuk sebagai tamu!!", "Info", JOptionPane.INFORMATION_MESSAGE);
                }
             }
@@ -159,6 +166,7 @@ public class Account extends Database{
            return true;
             
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat melakukan login\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
@@ -175,6 +183,7 @@ public class Account extends Database{
                 return true;
             }
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat logout\n\nError : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(ISLOGIN);
         }
@@ -210,6 +219,7 @@ public class Account extends Database{
                 this.backupDatabase();
             }
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengedit akun\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
         }
@@ -220,6 +230,7 @@ public class Account extends Database{
         try{
             // mengecek apakah akun ada didalam database atau tidak
             if(isExistUser(user)){
+                System.out.println("Mendapatkan data " + data + " dari akun dengan username '" + user + "'");
                 // mendapatkan data
                 res = stat.executeQuery("SELECT * FROM users WHERE username = '"+ user +"' OR email = '"+ user +"'");
                 // mengecek apakah data berhasil diambil atau tidak
@@ -232,6 +243,7 @@ public class Account extends Database{
                 this.backupDatabase();
             }
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data!\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
         }
@@ -242,7 +254,7 @@ public class Account extends Database{
         try{
             // mendapatkan semua data yang ada didalam tabel islogin
             res = stat.executeQuery("SELECT * FROM islogin");
-            // mengecek apakah islogin kosong atau tidak
+            // mengecek apakah tabel islogin kosong atau tidak
             if(res.next()){
                 return res.getString("username"); // mengembalikan data
             }
@@ -272,6 +284,7 @@ public class Account extends Database{
             }
             return false;
         }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menghapus akun!\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
             this.restoreTabel(ISLOGIN);
@@ -285,7 +298,8 @@ public class Account extends Database{
             res = stat.executeQuery("SELECT * FROM islogin");
             return res.next();
         }catch(SQLException ex){
-            System.out.println("Terjadi kesalahan saat mengecek user sudah login atau belum : " + ex.getMessage());
+            Audio.play(Audio.SOUND_ERROR);
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengecek user sudah login atau belum : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(ISLOGIN);
         }
         return false;
@@ -315,6 +329,14 @@ public class Account extends Database{
         return false;
     }
     
+    /**
+     * digunakan untuk mengecek apakah didalam sebuah kata/kalimat mengandung karakter yang tidak diperbolehkan untuk dipakai.
+     * 
+     * @param text
+     * @param blokChar
+     * @return Jika terdapat kata yang tidak diperbolehkan maka akan mengembalikan nilai <code>True</code>
+     *         Tapi jika tidak ada maka akan mengembalikan nilai <code>False</code>
+     */
     public boolean isValidText(final String text, final String blokChar){
         for(int i = 0; i < text.length(); i++){
             for(int k = 0; k < blokChar.length(); k++){
@@ -346,18 +368,23 @@ public class Account extends Database{
                         if(!isExistUser(username)){
                             return true;
                         }else{
+                            Audio.play(Audio.SOUND_INFO);
                             JOptionPane.showMessageDialog(null, "'" + username + "' Username tersebut sudah digunakan!", "Info", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }else{
+                        Audio.play(Audio.SOUND_INFO);
                         JOptionPane.showMessageDialog(null, "Simbol yang diizinkan hanyalah : . _ , ' &", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }                
                 }else{
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Username tidak diizinkan untuk memakai spasi", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }                
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 JOptionPane.showMessageDialog(null, username + " - kata tersebut dilarang digunakan untuk username", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Panjang dari username harus diantara 4-20 karakter!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
@@ -379,12 +406,15 @@ public class Account extends Database{
                 if(isValidText(nama, blokChar)){
                     return true;
                 }else{
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Simbol yang bisa digunakan hanyalah  . # / & - : ;", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }                
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 JOptionPane.showMessageDialog(null, "Nama Lengkap tidak boleh mengandung angka!\n ", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Nama Lengkap harus diantara 5-50 karakter!!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
@@ -403,9 +433,11 @@ public class Account extends Database{
             if(isValidText(nama, blokChar)){
                 return true;
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 JOptionPane.showMessageDialog(null, "Nama Panggilan tidak boleh menggunakan angka ataupun simbol", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Nama Panggilan harus diantara 4-15 karakter!!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
@@ -432,15 +464,19 @@ public class Account extends Database{
                     if(!isExistUser(email)){
                         return true;
                     }else{
+                        Audio.play(Audio.SOUND_INFO);
                         JOptionPane.showMessageDialog(null, "Email tersebut sudah terdaftar!", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }else{
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Simbol yang didukung hanya .", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 JOptionPane.showMessageDialog(null, "Panjang username email harus diantara 6-30 karakter", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Saat ini hanya mendukung Gmail saja", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
@@ -455,6 +491,7 @@ public class Account extends Database{
         if(password.length() >= 8 && password.length() <= 30){
             return true;
         }else{
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Panjang password harus berkisar antara 8-30 karakter!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
@@ -474,6 +511,7 @@ public class Account extends Database{
             if(umur >= 5 && umur <= 200){
                 return true;
             }else{
+                Audio.play(Audio.SOUND_INFO);
                 JOptionPane.showMessageDialog(null, "Umur anda tidak diperbolehkan untuk mendaftar akun pada aplikasi ini\n Umur anda : " + umur, "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }catch(NumberFormatException ex){
@@ -482,15 +520,4 @@ public class Account extends Database{
         return false;
     }
     
-    public static void main(String[] args) {
-        
-        String email = "hakiahmad@gmail.com";
-        Account acc = new Account();
-        
-        System.out.println(acc.loginAsGuest());
-//        acc.logout();
-        acc.backupDatabase();
-        acc.closeConnection();
-        
-    }
 }
