@@ -4,6 +4,7 @@ INSERT INTO users VALUES
 ('ananta', 'Ananta Eka Prayoga', 'Ananta', 'anantaprayoga25@gmail.com', 'L', '2002-01-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ananta1234', '2020-11-18', 'default', 'User'),
 ('ansori', 'Ahmad Ansori', 'Ansori', 'aanblogme@gmail.com', 'L', '2002-05-01', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ansori1234', '2020-11-18', 'default', 'User'),
 ('arifin', 'M. Arifin Mustofa', 'Arifin', 'arifinmmustofa173@gmail.com', 'L', '2003-10-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'arifin1234', '2020-11-18', 'default', 'User'),
+('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', '12345678', '2020-11-15', 'default', 'Admin'),
 ('bima', 'Fahrezian Arya Bima', 'Bima', 'awal.in45@gmail.com', 'L', '2003-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'bima1234', '2020-11-18', 'default', 'User'),
 ('chuenk', 'M. Nur Kholis Chu Enk Yunani', 'Chu Enk', 'chuenkaisyah15@gmail.com', 'L', '2003-05-02', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'chu1234', '2020-11-18', 'default', 'User'),
 ('david', 'David Aldian Hidayat', 'David', 'davidaldian15@gmail.com', 'L', '2002-05-17', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'davidaldian', '2020-11-18', 'default', 'User'),
@@ -13,12 +14,5 @@ INSERT INTO users VALUES
 ('fatur', 'Fatur Riandy', 'Fatur', 'riyandifatur868@gmail.com', 'L', '2002-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'faturiandy', '2020-11-18', 'default', 'User'),
 ('halim', 'Halim Bagus Perdana', 'Halim', 'halimpaijo1@gmail.com', 'L', '2002-11-09', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'halimbagus', '2020-11-18', 'default', 'User'),
 ('maul', 'Ilham Maulana', 'Ilham', 'im285281@gmail.com', 'L', '2002-06-16', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'mauldesu', '2020-11-18', 'default', 'User'),
-('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User'),
-('tsukasa', 'tsukuyomi tsukasa', 'tsukasa', 'tsukasachan@gmail.com', 'P', '2004-04-03', 'ibu rumah tangga', 'tokyo', 'japan', 'loveanime', '2020-11-19', 'default', 'Admin'),
-('bot_baihaqi', 'achmad baihaqi', 'baihaqi', 'hakiahmad756@gmail.com', 'L', '0001-01-01', '', 'jawa timur', 'indonesia', 'androidev2020', '2020-11-20', 'default', 'Admin'),
-('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad@gmail.com', 'L', '0001-01-01', '', 'jawa timur', 'indonesia', 'Androidev2020', '2020-11-20', 'default', 'Admin'),
-('haqi', 'achmad baihaqi', 'baihaqi', 'baihaqi.myapps@gmail.com', 'L', '0001-01-01', '', 'jawa timur', 'indonesia', 'MyPass20', '2020-11-20', 'default', 'Admin'),
-('bai9', 'yuzaki nasa', 'nasa', 'nasayuzaki@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'tsukasachan16', '2020-11-20', 'default', 'User'),
-('yuzaki', 'yuzaki', 'nasa', 'nasakun@gmail.com', 'L', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'abcDEF123', '2020-11-20', 'default', 'Admin'),
-('guest', 'achmad baihaqi', 'baihaqi', 'baihaqi@gmail.com', 'L', '2003-08-04', 'android developer', 'jawa timur', 'indonesia', '#', '1234-05-06', 'default', 'Guest');
+('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User');
 # Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
