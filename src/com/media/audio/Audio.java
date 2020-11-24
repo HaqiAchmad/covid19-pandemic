@@ -82,13 +82,8 @@ public class Audio {
     
     public static void main(String[] args) {
         
-        new Thread(new Runnable(){
-            
-            @Override
-            public void run(){
-                Audio.play("sample-1.mp3");
-            }
-        }).start();
+        Audio.play("sample-1.mp3");
+        System.out.println("thread");
     
     }
 }
