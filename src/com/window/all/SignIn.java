@@ -1,5 +1,6 @@
 package com.window.all;
 
+import com.media.gambar.Gambar;
 import java.awt.Color;
 
 /**
@@ -12,20 +13,22 @@ public class SignIn extends javax.swing.JFrame {
     
     public SignIn() {
         initComponents();
-        
-        this.setResizable(false);
+
         this.setLocationRelativeTo(null);
+        this.setIconImage(Gambar.getWindowIcon());
         this.btnSignIn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_WHITE));
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_WHITE));
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlLeft = new javax.swing.JPanel();
+        pnlMain = new javax.swing.JPanel();
         lblVirus = new javax.swing.JLabel();
         lblApp = new javax.swing.JLabel();
-        pnlMain = new javax.swing.JPanel();
+        pnlRight = new javax.swing.JPanel();
         lblTop = new javax.swing.JLabel();
         lblUsername = new javax.swing.JLabel();
         inpUsername = new javax.swing.JTextField();
@@ -38,17 +41,16 @@ public class SignIn extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlLeft.setBackground(new java.awt.Color(33, 33, 37));
-        pnlLeft.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+        pnlMain.setBackground(new java.awt.Color(33, 33, 37));
+        pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
-                pnlLeftMouseDragged(evt);
+                pnlMainMouseDragged(evt);
             }
         });
-        pnlLeft.addMouseListener(new java.awt.event.MouseAdapter() {
+        pnlMain.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                pnlLeftMousePressed(evt);
+                pnlMainMousePressed(evt);
             }
         });
 
@@ -60,29 +62,7 @@ public class SignIn extends javax.swing.JFrame {
         lblApp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblApp.setText("Covid-19 Pandemic Data Tracker");
 
-        javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
-        pnlLeft.setLayout(pnlLeftLayout);
-        pnlLeftLayout.setHorizontalGroup(
-            pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblVirus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLeftLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlLeftLayout.setVerticalGroup(
-            pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlLeftLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(lblVirus, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(pnlLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 400));
-
-        pnlMain.setBackground(new java.awt.Color(21, 20, 20));
+        pnlRight.setBackground(new java.awt.Color(21, 20, 20));
 
         lblTop.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblTop.setForeground(new java.awt.Color(44, 119, 238));
@@ -129,7 +109,7 @@ public class SignIn extends javax.swing.JFrame {
 
         lblClose.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-closewhite.png"))); // NOI18N
+        lblClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-close-white.png"))); // NOI18N
         lblClose.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCloseMouseClicked(evt);
@@ -144,7 +124,7 @@ public class SignIn extends javax.swing.JFrame {
 
         lblMinimaze.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblMinimaze.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblMinimaze.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-minimazewhite.png"))); // NOI18N
+        lblMinimaze.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-minimaze-white.png"))); // NOI18N
         lblMinimaze.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinimazeMouseClicked(evt);
@@ -179,39 +159,39 @@ public class SignIn extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
-        pnlMain.setLayout(pnlMainLayout);
-        pnlMainLayout.setHorizontalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlRightLayout = new javax.swing.GroupLayout(pnlRight);
+        pnlRight.setLayout(pnlRightLayout);
+        pnlRightLayout.setHorizontalGroup(
+            pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lblPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRightLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+                .addGroup(pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRightLayout.createSequentialGroup()
                         .addComponent(lblMinimaze, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(3, 3, 3))
                     .addComponent(lblSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlMainLayout.createSequentialGroup()
+            .addGroup(pnlRightLayout.createSequentialGroup()
+                .addGroup(pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlRightLayout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(btnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addGroup(pnlRightLayout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(inpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlMainLayout.createSequentialGroup()
+                    .addGroup(pnlRightLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
                         .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        pnlMainLayout.setVerticalGroup(
-            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        pnlRightLayout.setVerticalGroup(
+            pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRightLayout.createSequentialGroup()
+                .addGroup(pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblClose, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(lblMinimaze, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(19, 19, 19)
@@ -231,22 +211,55 @@ public class SignIn extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 390, 400));
+        javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
+        pnlMain.setLayout(pnlMainLayout);
+        pnlMainLayout.setHorizontalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblVirus, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlMainLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblApp)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        pnlMainLayout.setVerticalGroup(
+            pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainLayout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(lblVirus, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(pnlRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pnlLeftMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlLeftMousePressed
+    private void pnlMainMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMousePressed
         x = evt.getX();
         y = evt.getY();
-    }//GEN-LAST:event_pnlLeftMousePressed
+    }//GEN-LAST:event_pnlMainMousePressed
 
-    private void pnlLeftMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlLeftMouseDragged
+    private void pnlMainMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMouseDragged
         int xx = evt.getXOnScreen(),
         yy = evt.getYOnScreen();
 
         this.setLocation(xx-x, yy-y);
-    }//GEN-LAST:event_pnlLeftMouseDragged
+    }//GEN-LAST:event_pnlMainMouseDragged
 
     private void lblSignUpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseExited
         this.lblSignUp.setText("<html><p style=\"text-decoration: none; color:rgb(255,255,255);\">Belum punya akun? Daftar.</></html>");
@@ -257,15 +270,25 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSignUpMouseEntered
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
-
+        dispose();
+        SignUp signUp = new SignUp();
+        signUp.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                signUp.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_lblSignUpMouseClicked
 
     private void lblMinimazeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseExited
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_WHITE));
     }//GEN-LAST:event_lblMinimazeMouseExited
 
     private void lblMinimazeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseEntered
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_ENTERED));
     }//GEN-LAST:event_lblMinimazeMouseEntered
 
     private void lblMinimazeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseClicked
@@ -273,11 +296,11 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimazeMouseClicked
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_WHITE));
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_ENTERED));
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
@@ -342,7 +365,7 @@ public class SignIn extends javax.swing.JFrame {
     private javax.swing.JLabel lblTop;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JLabel lblVirus;
-    private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlMain;
+    private javax.swing.JPanel pnlRight;
     // End of variables declaration//GEN-END:variables
 }

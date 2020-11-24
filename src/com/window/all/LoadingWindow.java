@@ -2,7 +2,8 @@ package com.window.all;
 
 import com.database.Account;
 import com.database.Database;
-import javax.swing.JOptionPane;
+import com.media.gambar.Gambar;
+import java.util.Random;
 
 /**
  * 
@@ -12,42 +13,93 @@ import javax.swing.JOptionPane;
  */
 public class LoadingWindow extends javax.swing.JFrame {
 
-    private final Account acc = new Account();
-    private final Database dbase = new Database();
-    private int value = 0;
+    private Random rand = new Random(100);
+    private Database db = new Database();
+    private Account acc;
+    private int value = 0, delay = 50;
     
     public LoadingWindow() {
        initComponents();
+       
+       this.setIconImage(Gambar.getWindowIcon());
        this.setLocationRelativeTo(null);
-       dbase.startConnection();
+       
+        System.out.println("\n\n---------> COVID-19 PANDEMIC");
+        System.out.println("---------> Covid-19 Data Tracker Application");
+        System.out.println("---------> Copyright © 2020. Achmad Baihaqi.");
+        System.out.println("---------> All Rights Reserved.");
+        System.out.println("-->\n-->\n-->\n-->\n\n\n");
+       
        this.loading();
     }
 
     private void loading(){
+
         new Thread(new Runnable(){
             
             @Override
             public void run(){
                 try{
-                    while(value <= 100){
+                    while(value < 100){
+                        if(value >= 0 && value < 15){
+                            lblInfo.setText("  Memulai Aplikasi...");
+                            delay = 80;
+                        }else if(value >= 15 && value < 30){
+                            lblInfo.setText("  Mengecek Database...");
+                            delay = 40;
+                        }else if(value >= 30 && value < 45){
+                            lblInfo.setText("  Menghubungkan ke Database...");
+                            db.startConnection();
+                            value = 45;
+                            delay = 60;
+                        }else if(value >= 45 && value < 60){
+                            lblInfo.setText("  Memulihkan Database...");
+                            db.restoreDatabase();
+                            value = 60;
+                            delay = 30;
+                        }else if(value >= 60 && value < 70){
+                            lblInfo.setText("  Mengecek Akun...");
+                            acc = new Account();
+                            value = 70;
+                            delay = 45;
+                        }else if(value >= 70 && value < 80){
+                            lblInfo.setText("  Memulai Aplikasi...");
+                            delay = 58;
+                        }else if(value >= 80 && value < 100){
+                            lblInfo.setText("  Membuka Covid-19 Pandemic...");
+                            delay = 80;
+                        }
+                        System.out.println("LOADING PROCESSED : " + value + "%/100%");
                         value++;
                         load.setValue(value);
-                        lblValueLoad.setText("" + value + " %");
-                        Thread.sleep(56);
+                        lblValueLoad.setText("" + value + " %  ");
+                        Thread.sleep(delay);
                     }
-                    if(acc.isLogin()){
+                    
+                     if(acc.isLogin()){
                         dispose();
-                        new com.database.users.TesTable().setVisible(true);
+                        java.awt.EventQueue.invokeLater(new Runnable(){
+
+                            @Override
+                            public void run(){
+                                new com.window.all.Beranda().setVisible(true);
+                            }
+                        });
                     }else{
                         dispose();
-                        new com.window.all.SignIn().setVisible(true);
-                    }                    
-                    dbase.closeConnection();
-                    acc.closeConnection();
-//                    System.exit(0);
+                        java.awt.EventQueue.invokeLater(new Runnable(){
+
+                            @Override
+                            public void run(){
+                                new com.window.all.SignIn().setVisible(true);
+                            }
+                        });
+                    }
                 }catch(InterruptedException iex){
                     System.out.println(iex.getMessage());
                 }
+                db.closeConnection();
+                acc.closeConnection();
             }
         }).start();
     }
@@ -102,11 +154,11 @@ public class LoadingWindow extends javax.swing.JFrame {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblApp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblCovid, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
                 .addComponent(lblIconVirus, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                 .addComponent(lblInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblValueLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlMainLayout.setVerticalGroup(
@@ -188,3 +240,10 @@ public class LoadingWindow extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
 }
+
+/*
+ * Memulai Aplikasi...
+ * Mengecek Database...
+ * Menghubungkan Ke Database
+ *
+ */
