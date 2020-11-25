@@ -386,7 +386,6 @@ public class Database {
             }
             
         }catch(SQLException ex){
-            Audio.play(Audio.SOUND_ERROR);
             System.out.println("Terjadi kesalahan!!\n ERROR : " + ex.getMessage());
             try{
                 // Menangani exception yang terjadi
