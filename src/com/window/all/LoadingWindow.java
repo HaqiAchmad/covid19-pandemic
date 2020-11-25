@@ -69,7 +69,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                             lblInfo.setText("  Membuka Covid-19 Pandemic...");
                             delay = 80;
                         }
-                        System.out.println("LOADING PROCESSED : " + value + "%/100%");
+                        System.out.println("LOADING COMPLETE : " + value + "/100%");
                         value++;
                         load.setValue(value);
                         lblValueLoad.setText("" + value + " %  ");

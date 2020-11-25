@@ -1,7 +1,11 @@
 package com.window.all;
 
+import com.database.Account;
+import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  * @author Achmad Baihaqi
@@ -9,6 +13,9 @@ import java.awt.Color;
  */
 public class SignIn extends javax.swing.JFrame {
 
+    private final Account acc = new Account();
+    private String user, password;
+    private boolean cekLogin;
     private int x = 0, y = 0;
     
     public SignIn() {
@@ -38,9 +45,18 @@ public class SignIn extends javax.swing.JFrame {
         lblMinimaze = new javax.swing.JLabel();
         inpPassword = new javax.swing.JPasswordField();
         lblSignUp = new javax.swing.JLabel();
+        lblLupaPass = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(33, 33, 37));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -159,6 +175,22 @@ public class SignIn extends javax.swing.JFrame {
             }
         });
 
+        lblLupaPass.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        lblLupaPass.setForeground(new java.awt.Color(255, 255, 255));
+        lblLupaPass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLupaPass.setText("Lupa password akun?");
+        lblLupaPass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLupaPassMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblLupaPassMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblLupaPassMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlRightLayout = new javax.swing.GroupLayout(pnlRight);
         pnlRight.setLayout(pnlRightLayout);
         pnlRightLayout.setHorizontalGroup(
@@ -178,14 +210,17 @@ public class SignIn extends javax.swing.JFrame {
             .addGroup(pnlRightLayout.createSequentialGroup()
                 .addGroup(pnlRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlRightLayout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(btnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlRightLayout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(inpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlRightLayout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRightLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(btnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRightLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lblLupaPass, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlRightLayout.setVerticalGroup(
@@ -206,9 +241,11 @@ public class SignIn extends javax.swing.JFrame {
                 .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(btnSignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(lblSignUp)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLupaPass)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
@@ -270,15 +307,13 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSignUpMouseEntered
 
     private void lblSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignUpMouseClicked
+        System.out.println("Membuka Window SignUp");
         dispose();
-        SignUp signUp = new SignUp();
-        signUp.setLocation(this.getX(), this.getY());
-        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                signUp.setVisible(true);
+                new SignUp().setVisible(true);
             }
         });
     }//GEN-LAST:event_lblSignUpMouseClicked
@@ -308,7 +343,24 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
-
+        user = this.inpUsername.getText();
+        password = this.inpPassword.getText();
+        cekLogin = acc.login(user, password);
+        
+        // mengecek apakah login berhasil atau tidak
+        if(cekLogin){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Hi, " + user + "\nLogin anda telah berhasil! \nKlik OK untuk melanjutkan Aplikasi!\n--\nCopyright © 2020. Achmad Baihaqi.\n--", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            java.awt.EventQueue.invokeLater(new Runnable(){
+                
+                @Override
+                public void run(){
+                    dispose();
+                    new Beranda().setVisible(true);
+                }
+            });
+        }
+        
     }//GEN-LAST:event_btnSignInActionPerformed
 
     private void btnSignInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignInMouseExited
@@ -318,6 +370,28 @@ public class SignIn extends javax.swing.JFrame {
     private void btnSignInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignInMouseEntered
         this.btnSignIn.setBackground(new Color(0, 0, 0));
     }//GEN-LAST:event_btnSignInMouseEntered
+
+    private void lblLupaPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseClicked
+        
+    }//GEN-LAST:event_lblLupaPassMouseClicked
+
+    private void lblLupaPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseEntered
+        this.lblLupaPass.setText("<html><p style=\"text-decoration:underline; color:rgb(250,55,55)\">Lupa password akun?</p></html>");
+    }//GEN-LAST:event_lblLupaPassMouseEntered
+
+    private void lblLupaPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseExited
+        this.lblLupaPass.setText("<html><p style=\"text-decoration:none; color:rgb(255,255,255);\">Lupa password akun?</p></html>");
+    }//GEN-LAST:event_lblLupaPassMouseExited
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        acc.closeConnection();
+        System.out.println("Menutup Window SignIn");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        acc.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
 
     public static void main(String args[]) {
@@ -359,6 +433,7 @@ public class SignIn extends javax.swing.JFrame {
     private javax.swing.JTextField inpUsername;
     private javax.swing.JLabel lblApp;
     private javax.swing.JLabel lblClose;
+    private javax.swing.JLabel lblLupaPass;
     private javax.swing.JLabel lblMinimaze;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblSignUp;

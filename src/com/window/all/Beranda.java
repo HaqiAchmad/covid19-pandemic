@@ -4,7 +4,7 @@ import com.database.Account;
 import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
-import java.awt.Cursor;
+import java.awt.Color;
 
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -39,12 +39,12 @@ public class Beranda extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setIconImage(Gambar.getWindowIcon());
         this.lblLastUpdate.setText("Terakhir diupdate : " + kasus.dateToString(lastUpdate));
+        this.btnBeranda.setBackground(new Color(22,108,190));
         this.btnBeranda.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnInfoApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         
-        if(tipeAkun.equals("Admin")){
-            this.btnInfoApp.setEnabled(true);
-        }else{
-//            this.btnInfoApp.setVisible(false);
+        if(tipeAkun.equalsIgnoreCase("User")){
+            this.btnInfoApp.setText("");
             this.btnInfoApp.setEnabled(false);
         }
         
@@ -62,7 +62,7 @@ public class Beranda extends javax.swing.JFrame {
             this.lblLokasi.setText(lokasi.substring(0, 40) + "...");
         }
         
-        JButton[] btns = new JButton[]{this.btnApaCovid, this.btnGejala, this.btnPencegahan, this.btnPenanganan, this.btnBahaya, this.btnCovidDunia, this.btnCovidIndo, this.btnTentangApp};
+        JButton[] btns = new JButton[]{this.btnApaCovid, this.btnGejala, this.btnBahaya, this.btnPencegahan, this.btnPenanganan, this.btnCovidDunia, this.btnCovidIndo, this.btnTentangApp};
         for(JButton btn : btns){
             
             btn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -87,7 +87,7 @@ public class Beranda extends javax.swing.JFrame {
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    btn.setBackground(new java.awt.Color(19,101,162));
+                    btn.setBackground(new java.awt.Color(19,94,174));
                 }
 
                 @Override
@@ -98,9 +98,6 @@ public class Beranda extends javax.swing.JFrame {
             });
 
         }
-        
-        acc.closeConnection();
-        kasus.closeConnection();
     }
     
     private void getKasusDunia(){
@@ -117,7 +114,6 @@ public class Beranda extends javax.swing.JFrame {
         this.valAktif_Dunia.setText(kasus.addDelim(aktifDunia));
         this.valKritis_Dunia.setText(kasus.addDelim(kritisDunia));
         this.valPopulasi_Dunia.setText(kasus.addDelim(populasiDunia*10L));
-
     }
     
     private void getKasusIndonesia(){
@@ -198,6 +194,14 @@ public class Beranda extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.setMaximumSize(new java.awt.Dimension(1002, 586));
@@ -215,7 +219,7 @@ public class Beranda extends javax.swing.JFrame {
         pnlLeft.setBackground(new java.awt.Color(49, 144, 215));
         pnlLeft.setMaximumSize(new java.awt.Dimension(218, 555));
 
-        btnBeranda.setBackground(new java.awt.Color(54, 166, 248));
+        btnBeranda.setBackground(new java.awt.Color(49, 144, 215));
         btnBeranda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBeranda.setForeground(new java.awt.Color(255, 255, 255));
         btnBeranda.setText("Beranda");
@@ -899,27 +903,93 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimazeMouseClicked
 
     private void btnBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBerandaActionPerformed
+        System.out.println("Membuka Window Beranda");
+        Beranda beranda = new Beranda();
+        beranda.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                beranda.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnBerandaActionPerformed
 
     private void btnApaCovidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApaCovidActionPerformed
+        System.out.println("Membuka Window ApaCovid");
+        ApaCovid apaCovid = new ApaCovid();
+        apaCovid.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                apaCovid.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnApaCovidActionPerformed
 
     private void btnGejalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGejalaActionPerformed
+        System.out.println("Membuka Window GejalaCovid");
+        GejalaCovid gejala = new GejalaCovid();
+        gejala.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                gejala.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnGejalaActionPerformed
 
     private void btnBahayaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBahayaActionPerformed
+        System.out.println("Membuka Window BahayaCovid");
+        BahayaCovid bahaya = new BahayaCovid();
+        bahaya.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                bahaya.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnBahayaActionPerformed
 
     private void btnPencegahanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPencegahanActionPerformed
+        System.out.println("Membuka Window PencegahanCovid");
+        PencegahanCovid pencegahan = new PencegahanCovid();
+        pencegahan.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                pencegahan.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnPencegahanActionPerformed
 
     private void btnPenangananActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPenangananActionPerformed
+        System.out.println("Membuka Window PenangananCovid");
+        PenangananCovid penanganan = new PenangananCovid();
+        penanganan.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                penanganan.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnPenangananActionPerformed
 
     private void btnCovidDuniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCovidDuniaActionPerformed
@@ -935,15 +1005,17 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTentangAppActionPerformed
 
     private void btnInfoAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoAppActionPerformed
-        System.out.println("aku di klik");
+
     }//GEN-LAST:event_btnInfoAppActionPerformed
 
     private void btnInfoAppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseEntered
-        
+        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        this.btnInfoApp.setBackground(new Color(19,94,174));
     }//GEN-LAST:event_btnInfoAppMouseEntered
 
     private void btnInfoAppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseExited
-        
+        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        this.btnInfoApp.setBackground(new Color(33,114,175));
     }//GEN-LAST:event_btnInfoAppMouseExited
 
     private void lblPhotoProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhotoProfileMouseClicked
@@ -951,7 +1023,15 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPhotoProfileMouseClicked
 
     private void lblEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseClicked
-        
+        acc.logout();
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                dispose();
+                new SignIn().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_lblEditProfileMouseClicked
 
     private void lblEditProfileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseEntered
@@ -1033,6 +1113,18 @@ public class Beranda extends javax.swing.JFrame {
         this.lblCopyright.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         this.lblCopyright.setText("<html><p style=\"text-decoration:none;\">Copyright © 2020. Achmad Baihaqi</p></html>");
     }//GEN-LAST:event_lblCopyrightMouseExited
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        acc.closeConnection();
+        kasus.closeConnection();
+        System.out.println("Menutup Window Beranda");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        acc.closeConnection();
+        kasus.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

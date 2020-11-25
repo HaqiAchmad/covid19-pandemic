@@ -10,6 +10,10 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -60,60 +64,40 @@
                   <Component id="lblSignIn" max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lblTop" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="btnSignUp" min="-2" pref="99" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblUsername" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpUsername" min="-2" pref="220" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblNamaLengkap" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpNamaLengkap" min="-2" pref="220" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblEmail" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpEmail" min="-2" pref="220" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblPassword" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpPassword" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="lblKonfirmasi" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpKonfirmasi" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="lblNamaLengkap1" min="-2" pref="138" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="inpNamaLengkap1" min="-2" pref="220" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="btnSignUp" min="-2" pref="99" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="viewKonn" min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="viewPass" min="-2" pref="32" max="-2" attributes="0"/>
+                              <Component id="lblNamaPanggilan" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblUsername" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblNamaLengkap" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblEmail" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblPassword" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="lblKonfirmasi" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="inpUsername" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Component id="inpNamaLengkap" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Component id="inpEmail" alignment="0" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Component id="inpPassword" alignment="0" max="32767" attributes="0"/>
+                              <Component id="inpKonfirmasi" alignment="0" max="32767" attributes="0"/>
+                              <Component id="inpNamaPanggilan" alignment="1" min="-2" pref="220" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="viewKonn" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="viewPass" min="-2" pref="32" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
               </Group>
+              <Component id="lblTop" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -128,45 +112,40 @@
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblUsername" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="inpUsername" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblUsername" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblNamaLengkap" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="inpNamaLengkap" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblNamaLengkap" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblNamaLengkap1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="inpNamaLengkap1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblNamaPanggilan" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblEmail" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="inpEmail" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblEmail" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblPassword" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="inpPassword" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblPassword" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="inpKonfirmasi" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                              <Component id="lblKonfirmasi" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblKonfirmasi" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="viewPass" min="-2" pref="34" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="viewKonn" min="-2" pref="34" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="inpUsername" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="inpNamaLengkap" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="inpNamaPanggilan" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="inpEmail" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="inpPassword" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="inpKonfirmasi" min="-2" pref="34" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="btnSignUp" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="35" max="32767" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
                   <Component id="lblSignIn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
@@ -447,19 +426,19 @@
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblSignInMouseExited"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblNamaLengkap1">
+        <Component class="javax.swing.JLabel" name="lblNamaPanggilan">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f2" red="f3" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/media/gambar/icons/ic-signup-nama.png"/>
+              <Image iconType="3" name="/com/media/gambar/icons/ic-signup-namapanggilan.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nama Panggilan"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="inpNamaLengkap1">
+        <Component class="javax.swing.JTextField" name="inpNamaPanggilan">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="27" green="25" red="24" type="rgb"/>

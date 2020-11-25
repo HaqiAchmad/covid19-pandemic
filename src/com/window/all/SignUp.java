@@ -1,7 +1,11 @@
 package com.window.all;
 
+import com.database.Account;
+import com.media.audio.Audio;
+import com.media.gambar.Gambar;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -10,6 +14,8 @@ import javax.swing.ImageIcon;
  */
 public class SignUp extends javax.swing.JFrame {
 
+    private final Account acc = new Account();
+    private String username, namalengkap, namapanggilan, email, password, konpass;
     private int x, y;
     
     public SignUp() {
@@ -42,12 +48,20 @@ public class SignUp extends javax.swing.JFrame {
         viewPass = new javax.swing.JLabel();
         btnSignUp = new javax.swing.JButton();
         lblSignIn = new javax.swing.JLabel();
-        lblNamaLengkap1 = new javax.swing.JLabel();
-        inpNamaLengkap1 = new javax.swing.JTextField();
+        lblNamaPanggilan = new javax.swing.JLabel();
+        inpNamaPanggilan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(21, 20, 20));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -205,16 +219,16 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        lblNamaLengkap1.setForeground(new java.awt.Color(243, 242, 246));
-        lblNamaLengkap1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblNamaLengkap1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-signup-nama.png"))); // NOI18N
-        lblNamaLengkap1.setText("Nama Panggilan");
+        lblNamaPanggilan.setForeground(new java.awt.Color(243, 242, 246));
+        lblNamaPanggilan.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNamaPanggilan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-signup-namapanggilan.png"))); // NOI18N
+        lblNamaPanggilan.setText("Nama Panggilan");
 
-        inpNamaLengkap1.setBackground(new java.awt.Color(36, 37, 39));
-        inpNamaLengkap1.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpNamaLengkap1.setForeground(new java.awt.Color(255, 255, 255));
-        inpNamaLengkap1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 230)));
-        inpNamaLengkap1.setCaretColor(new java.awt.Color(255, 255, 255));
+        inpNamaPanggilan.setBackground(new java.awt.Color(36, 37, 39));
+        inpNamaPanggilan.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpNamaPanggilan.setForeground(new java.awt.Color(255, 255, 255));
+        inpNamaPanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 223, 230)));
+        inpNamaPanggilan.setCaretColor(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -229,46 +243,33 @@ public class SignUp extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblSignIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlMainLayout.createSequentialGroup()
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpPassword))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpKonfirmasi))
-                                    .addGroup(pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblNamaLengkap1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(inpNamaLengkap1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 6, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(viewKonn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(viewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16)))
-                .addContainerGap())
+                            .addComponent(lblNamaPanggilan, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(inpUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inpNamaLengkap, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inpEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inpPassword, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inpKonfirmasi, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(inpNamaPanggilan, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(viewKonn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
+            .addComponent(lblTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,36 +282,36 @@ public class SignUp extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inpNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNamaLengkap1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inpNamaLengkap1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblNamaPanggilan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(inpKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lblKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(viewPass, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(viewKonn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(viewKonn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlMainLayout.createSequentialGroup()
+                        .addComponent(inpUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inpNamaLengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inpNamaPanggilan, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inpEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inpPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(inpKonfirmasi, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addComponent(btnSignUp)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(lblSignIn)
                 .addGap(32, 32, 32))
         );
@@ -342,7 +343,21 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
-
+        username = this.inpUsername.getText();
+        namalengkap = this.inpNamaLengkap.getText();
+        namapanggilan = this.inpNamaPanggilan.getText();
+        email = this.inpEmail.getText();
+        password = this.inpPassword.getText();
+        konpass = this.inpKonfirmasi.getText();
+        
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(
+                null, "Hi, "+ namalengkap +".\nSelamat akun anda telah berhasil dibuat!\nSilahkan login kembali dengan akun yang barusan anda buat!\n\n"
+                      + "Username : " + username + "\nNama Lengkap : "+ namalengkap +"\nNama Panggilan : "+ namapanggilan +"\nEmail : " + email + "\nPassword : •••••••••••\n\n--\nCopyright © 2020. Achmad Baihaqi.\n--", 
+                "Informasi", JOptionPane.INFORMATION_MESSAGE                                                                                                                                                                        
+        );                                                                                                                                                                                                                                                                                                          
+//        if(acc.createAccount(username, namalengkap, namapanggilan, email, password, "User")){
+//        }
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnSignUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseEntered
@@ -354,15 +369,15 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignUpMouseExited
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
-    System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_ENTERED));
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_WHITE));
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void lblMinimazeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseClicked
@@ -370,14 +385,15 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimazeMouseClicked
 
     private void lblMinimazeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseEntered
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_ENTERED));
     }//GEN-LAST:event_lblMinimazeMouseEntered
 
     private void lblMinimazeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseExited
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_WHITE));
     }//GEN-LAST:event_lblMinimazeMouseExited
 
     private void lblSignInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSignInMouseClicked
+        System.out.println("Membuka Window SignIn");
         this.dispose();
         java.awt.EventQueue.invokeLater(new Runnable(){
             
@@ -398,23 +414,33 @@ public class SignUp extends javax.swing.JFrame {
 
     private void viewPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewPassMouseEntered
         this.inpPassword.setEchoChar((char)0);
-        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/icons/ic-eye-open.png")));
+        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-open.png")));
     }//GEN-LAST:event_viewPassMouseEntered
 
     private void viewPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewPassMouseExited
         this.inpPassword.setEchoChar('•');
-        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/icons/ic-eye-close.png")));
+        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-close.png")));
     }//GEN-LAST:event_viewPassMouseExited
 
     private void viewKonnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewKonnMouseEntered
         this.inpKonfirmasi.setEchoChar((char)0);
-        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/icons/ic-eye-open.png")));
+        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-open.png")));
     }//GEN-LAST:event_viewKonnMouseEntered
 
     private void viewKonnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewKonnMouseExited
         this.inpKonfirmasi.setEchoChar('•');
-        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/icons/ic-eye-close.png")));
+        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-close.png")));
     }//GEN-LAST:event_viewKonnMouseExited
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        acc.closeConnection();
+        System.out.println("Menutup Window SignIn");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        acc.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
 
     public static void main(String args[]) {
@@ -435,8 +461,6 @@ public class SignUp extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -451,7 +475,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JTextField inpEmail;
     private javax.swing.JPasswordField inpKonfirmasi;
     private javax.swing.JTextField inpNamaLengkap;
-    private javax.swing.JTextField inpNamaLengkap1;
+    private javax.swing.JTextField inpNamaPanggilan;
     private javax.swing.JPasswordField inpPassword;
     private javax.swing.JTextField inpUsername;
     private javax.swing.JLabel lblClose;
@@ -459,7 +483,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel lblKonfirmasi;
     private javax.swing.JLabel lblMinimaze;
     private javax.swing.JLabel lblNamaLengkap;
-    private javax.swing.JLabel lblNamaLengkap1;
+    private javax.swing.JLabel lblNamaPanggilan;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblSignIn;
     private javax.swing.JLabel lblTop;
