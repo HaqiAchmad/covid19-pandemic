@@ -40,7 +40,7 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Chad', 'Chad', 1171, 82, 1003, 86, 0, 16531324, '2020-09-30', 'Afrika', 'bendera-chad.png'),
 ('Chili', 'Chile', 449903, 12345, 425165, 12393, 907, 19154009, '2020-09-30', 'Amerika Selatan', 'bendera-chili.jpg'),
 ('Cina', 'China', 85322, 4634, 80522, 166, 4, 1439323776, '2020-09-30', 'Asia', 'bendera-republik-rakyat-china.jpg'),
-('CuraÃ§ao', 'CuraÃ§ao', 301, 1, 104, 196, 1, 164249, '2020-09-30', 'Amerika Utara', 'bendera-curacao.svg.png'),
+('Curaçao', 'Curaçao', 301, 1, 104, 196, 1, 164249, '2020-09-30', 'Amerika Utara', 'bendera-curacao.svg.png'),
 ('Denmark', 'Denmark', 24916, 645, 18646, 5625, 14, 5796947, '2020-09-30', 'Eropa', 'bendera-denmark.jpg'),
 ('Djibouti', 'Djibouti', 5407, 61, 5339, 7, 0, 991311, '2020-09-30', 'Afrika', 'bendera-djibouti.png'),
 ('Dominika', 'Dominica', 24, 0, 18, 6, 0, 72028, '2020-09-30', 'Amerika Utara', 'bendera-dominika.png'),
@@ -71,7 +71,7 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Hong Kong', 'Hong Kong', 5057, 104, 4758, 195, 13, 7511174, '2020-09-30', 'Asia', 'bendera-hong_kong.svg.png'),
 ('Hungaria', 'Hungary', 21200, 709, 4818, 15673, 32, 9654581, '2020-09-30', 'Eropa', 'bendera-hongaria.jpg'),
 ('India', 'India', 5816103, 92317, 4752991, 970795, 8944, 1383159972, '2020-09-30', 'Asia', 'bendera-india.png'),
-('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, 0, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),
+('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, -1, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),
 ('Iran', 'Iran', 436319, 25015, 367829, 43475, 3957, 84241549, '2020-09-30', 'Asia', 'bendera-iran.jpg'),
 ('Iraq', 'Iraq', 337106, 8799, 268761, 59546, 527, 40427156, '2020-09-30', 'Asia', 'bendera-irak.jpg'),
 ('Irlandia', 'Ireland', 33675, 1794, 23364, 8517, 16, 4950431, '2020-09-30', 'Eropa', 'bendera-irlandia.png'),
@@ -158,12 +158,12 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Republik Ceko', 'Czechia', 55464, 555, 26709, 28200, 120, 10713617, '2020-09-30', 'Eropa', 'bendera-republik-ceko.jpg'),
 ('Republik Demokratik Kongo', 'DRC', 10555, 271, 10051, 233, 0, 90168360, '2020-09-30', 'Afrika', 'bendera-demokratik-republik-kongo.jpg'),
 ('Republik Dominika', 'Dominican Republic', 109737, 2074, 83434, 24229, 208, 10872904, '2020-09-30', 'Amerika Utara', 'bendera-republik-dominika.png'),
-('RÃ©union', 'RÃ©union', 3501, 11, 2482, 1008, 0, 896806, '2020-09-30', 'Afrika', 'bendera-reounion.png'),
+('Réunion', 'Réunion', 3501, 11, 2482, 1008, 0, 896806, '2020-09-30', 'Afrika', 'bendera-reounion.png'),
 ('Romania', 'Romania', 118054, 4591, 94877, 18586, 506, 19207285, '2020-09-30', 'Eropa', 'bendera-rumania.jpg'),
 ('Rusia', 'Russia', 1128836, 19948, 929829, 179059, 2300, 145949102, '2020-09-30', 'Eropa', 'bendera-rusia.jpg'),
 ('Rwanda', 'Rwanda', 4789, 27, 3050, 1712, 0, 13024661, '2020-09-30', 'Afrika', 'bendera-rwanda.png'),
 ('Sahara Barat', 'Western Sahara', 10, 1, 8, 1, 0, 600654, '2020-09-30', 'Afrika', 'bendera-sahara barat.png'),
-('Saint BarthÃ©lemy', 'St. Barth', 45, 0, 25, 20, 0, 9884, '2020-09-30', 'Amerika Utara', 'bendera-saint_barthelemy_(local).svg.png'),
+('Saint Barthélemy', 'St. Barth', 45, 0, 25, 20, 0, 9884, '2020-09-30', 'Amerika Utara', 'bendera-saint_barthelemy_(local).svg.png'),
 ('Saint Kitts dan Nevis', 'Saint Kitts and Nevis', 19, 0, 17, 2, 0, 53286, '2020-09-30', 'Amerika Utara', 'bendera-saint-kitts-dan-nevis.jpg'),
 ('Saint Lucia', 'Saint Lucia', 27, 0, 26, 1, 0, 183822, '2020-09-30', 'Amerika Utara', 'bendera-saint-lucia.png'),
 ('Saint Martin', 'Saint Martin', 367, 8, 273, 86, 11, 38815, '2020-09-30', 'Amerika Utara', 'bendera-saint-vincent-and-the-grenadines.png'),
@@ -214,4 +214,4 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Yunani', 'Greece', 16286, 357, 9989, 5940, 73, 10411029, '2020-09-30', 'Eropa', 'bendera-yunani.jpg'),
 ('Zambia', 'Zambia', 14491, 332, 13643, 516, 0, 18499324, '2020-09-30', 'Afrika', 'bendera-zambia.png'),
 ('Zimbabwe', 'Zimbabwe', 7752, 227, 6043, 1482, 0, 14912782, '2020-09-30', 'Afrika', 'bendera-zimbabwe1.jpg');
-# Copyright Â© 2020. Achmad Baihaqi. All Rights Reserved.
+# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
