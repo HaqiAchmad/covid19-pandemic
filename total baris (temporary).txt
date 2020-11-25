@@ -1,9 +1,0 @@
-com.main.Main 				22
-com.database.Database			984
-com.database.Account			523
-com.database.CovidCases			320
-com.media.audio.Audio			90
-com.media.gambar.Gambar			94
-com.window.all.LoadingWindow		194
-com.window.all.SignIn			372
-com.window.all.SignUp			472
