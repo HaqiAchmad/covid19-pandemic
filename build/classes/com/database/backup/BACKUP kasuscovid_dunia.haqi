@@ -71,7 +71,7 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Hong Kong', 'Hong Kong', 5057, 104, 4758, 195, 13, 7511174, '2020-09-30', 'Asia', 'bendera-hong_kong.svg.png'),
 ('Hungaria', 'Hungary', 21200, 709, 4818, 15673, 32, 9654581, '2020-09-30', 'Eropa', 'bendera-hongaria.jpg'),
 ('India', 'India', 5816103, 92317, 4752991, 970795, 8944, 1383159972, '2020-09-30', 'Asia', 'bendera-india.png'),
-('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, 0, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),
+('Indonesia', 'Indonesia', 262022, 10105, 191853, 60064, -1, 274195355, '2020-09-30', 'Asia', 'bendera-indonesia.jpg'),
 ('Iran', 'Iran', 436319, 25015, 367829, 43475, 3957, 84241549, '2020-09-30', 'Asia', 'bendera-iran.jpg'),
 ('Iraq', 'Iraq', 337106, 8799, 268761, 59546, 527, 40427156, '2020-09-30', 'Asia', 'bendera-irak.jpg'),
 ('Irlandia', 'Ireland', 33675, 1794, 23364, 8517, 16, 4950431, '2020-09-30', 'Eropa', 'bendera-irlandia.png'),
