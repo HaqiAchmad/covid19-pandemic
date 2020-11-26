@@ -117,6 +117,7 @@ public class Database {
      * <code>Connection</code>, <code>Statement</code> dan <code>ResultSet</code> kosong atau tidak.
      * Jika tidak maka koneksi dari <B>Database</B> akan ditutup. Jika tidak dicek kosong atau tidaknya objek maka saat objek kosong
      * lalu dipaksa untuk menutup koneksi dari Database maka akan menimbulkan exception <code>NullPointerException</code>.
+     * Setalah koneksi dari <B>Database</B> berhasil diputus maka <b>Database</b> akan dibackup.
      */
     public void closeConnection(){
         try{
@@ -133,6 +134,7 @@ public class Database {
                 res.close();
             }
             System.out.println("Berhasil memutus koneksi database '" + DB_NAME + "'\n");
+            backupDatabase();
         }catch(SQLException ex){
             Audio.play(Audio.SOUND_ERROR);
             JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : "+ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
@@ -162,18 +164,22 @@ public class Database {
             BufferedWriter backup;
             String values;
             
+            System.out.println("\n--> Membackup Database!!");
             // Mengecek apakah database dan tabel exist atau tidak!, jika database dan tabel tidak ditemukan maka database akan direstore
             if(!isExistDatabase() || !isExistTabel(KASUSCOVID_DUNIA) || !isExistTabel(KASUSCOVID_INDO) || !isExistTabel(USERS) || !isExistTabel(ISLOGIN)){
                 JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Database corrupt!");
                 restoreDatabase(); // merestore database
             }
             // Mengecek apakah tabel yang ada didalam databaes kosong atau tidak
             else if(isEmptyTabel(KASUSCOVID_DUNIA) || isEmptyTabel(KASUSCOVID_INDO) || isEmptyTabel(USERS)){
                 JOptionPane.showMessageDialog(null, "Database Corrupt!!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Database corrupt!");
                 restoreDatabase(); // merestore database
             }
             
             // Membackup tabel kasuscovid_dunia
+            System.out.println("Membackup data kasus Covid-19 Dunia...");
             file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_dunia.haqi"); // file backup tabel kasuscovid_dunia
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM kasuscovid_dunia");
@@ -194,8 +200,10 @@ public class Database {
                 }
             backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
+            System.out.println("Data kasus Covid-19 Dunia berhasil dibackup...");
             
             // Membackup tabel kasuscovid_indo
+            System.out.println("Membackup data kasus Covid-19 Indonesia...");
             file = new FileWriter("src\\com\\database\\backup\\BACKUP kasuscovid_indo.haqi"); // file backup tabel kasuscovid_indo
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM kasuscovid_indo");
@@ -216,8 +224,10 @@ public class Database {
                 }
             backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
             backup.flush();
+            System.out.println("Data kasus Covid-19 Indonesia berhasil dibackup...");
             
             // Membackup tabel users
+            System.out.println("Membackup data dari pengguna Aplikasi...");
             file = new FileWriter("src\\com\\database\\backup\\BACKUP users.haqi"); // file backup tabel users
             backup = new BufferedWriter(file);
             res = stat.executeQuery("SELECT * FROM users");
@@ -238,6 +248,7 @@ public class Database {
                 }
                 backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
                 backup.flush();
+                System.out.println("Data dari pengguna aplikasi berhasil dibackup...");
                 
             // Membackup tabel islogin
             file = new FileWriter("src\\com\\database\\backup\\BACKUP islogin.haqi"); // file backup tabel islogin
@@ -245,6 +256,7 @@ public class Database {
             res = stat.executeQuery("SELECT * FROM islogin");
             
             backup.write("INSERT INTO islogin VALUES \n");
+            System.out.println("Membackup data user login...");
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP islogin.haqi"
                 while(res.next()){
                     // mendapatkan data yang ada didalam tabel
@@ -259,7 +271,10 @@ public class Database {
                     backup.newLine();
                 }
                 backup.write("# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.");
-                backup.flush();                
+                backup.flush();   
+                System.out.println("Data user login berhasil dibackup...");
+                
+                System.out.println("--> Database berhasil dibackup!!\n");
 
         }catch(SQLException | IOException ex){
             Audio.play(Audio.SOUND_ERROR);
@@ -283,11 +298,13 @@ public class Database {
             String filename = "BACKUP " + tabel + ".haqi", data = "", buffer;
             FileReader file = new FileReader("src\\com\\database\\backup\\" + filename); // file backup tabel
             BufferedReader getBck = new BufferedReader(file);
-                
+            System.out.println("\nMendapatkan data yang dibackup dari tabel " + tabel);
+            
             // Mengambil semua data yang ada didalam file backup
             while((buffer = getBck.readLine()) != null){
                 data += buffer + "\n";
             }
+            System.out.println("Data backup dari tabel " + tabel + " berhasil diambil\n");
             // Mengembalikan data
             return data;    
         }catch(IOException ex){
@@ -325,9 +342,12 @@ public class Database {
             int create; // untuk mengecek apakah proses berhasil atau tidak
             String fileBackup = "src\\com\\database\\backup\\BACKUP " + tabel + ".haqi"; // file backup 
             
+            System.out.println("\nMemulihkan tabel " + tabel);
+            System.out.println("Mengecek tabel ada atau tidak!");
             // Mengecek apakah tabel ada didalam database atau tidak, jika tidak maka tabel akan dibuat.
             if(!isExistTabel(tabel)){
                 // Membuat Tabel 
+                System.out.println("Tabel " + tabel + " tidak ditemukan!");
                 create = stat.executeUpdate(DefaultDatabase.getStrukturTabel(tabel));
                 // Mengecek apakah tabel  berhasil dibuat atau tidak, jika berhasil maka data tabel akan dipulihkan
                 if(create == 0){
@@ -384,7 +404,7 @@ public class Database {
                     }
                 }
             }
-            
+            System.out.println("Tabel " + tabel +" berhasil dipulihkan\n");
         }catch(SQLException ex){
             System.out.println("Terjadi kesalahan!!\n ERROR : " + ex.getMessage());
             try{
@@ -412,8 +432,11 @@ public class Database {
      */
     public void restoreDatabase(){
         try{
+            System.out.println("\nMemulikan Database");
+            System.out.println("Mengecek database ada atau tidak!");
             // Mengecek apakah database ada atau tidak, jika tidak maka akan database dibuat
             if(!isExistDatabase()){
+                System.out.println("Database tidak ditemukan!");
                 // Membuat database
                 Class.forName(DRIVER);
                 conn = DriverManager.getConnection("jdbc:mysql://localhost/", USER, PASS);
@@ -434,6 +457,8 @@ public class Database {
             restoreTabel(KASUSCOVID_INDO);
             restoreTabel(USERS);
             restoreTabel(ISLOGIN);
+            
+            System.out.println("Database berhasil dipulihkan!");
             
         }catch(ClassNotFoundException | SQLException ex){
             Audio.play(Audio.SOUND_ERROR);
