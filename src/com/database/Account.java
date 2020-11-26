@@ -46,11 +46,12 @@ public class Account extends Database{
      * @param namaPanggilan input nama panggilan
      * @param email input email
      * @param password input password
+     * @param konfirmasi input konfirmasi password
      * @param tipe input tipe akun
      * @return Jika akun berhasil dibuat maka akan mengembalikan nilai <B>True</B>. 
      *         Tapi jika akun gagal dibuat maka akan mengembalikan nilai <B>False</B>
      */
-    public boolean createAccount(final String username, final String namaLengkap, final String namaPanggilan, final String email, final String password, final String tipe){
+    public boolean createAccount(final String username, final String namaLengkap, final String namaPanggilan, final String email, final String password, final String konfirmasi, final String tipe){
         try{
             // digunakan untuk mengecek apakah akun berhail dibuat atau tidak
             int create;
@@ -67,18 +68,26 @@ public class Account extends Database{
                         if(isValidEmail(email)){
                             // mengecek apakah password valid atau tidak
                             if(isValidPassword(password)){
-                                // membuat akun
-                                create = stat.executeUpdate("INSERT INTO users VALUES ('"+username+"', '"+namaLengkap+"', '"+namaPanggilan+"', '"+email+"', 'N', '0000-01-01', 'null', 'jawa timur', 'indonesia', '"+password+"', '"+tanggal+"', 'default', '"+tipe+"')");
-                                // mengecek akun berhasil dibuat atau tidak
-                                if(create > 0){
-                                    //membuat folder baru yang digunakan untuk menyimpan data user
-                                    file = new File("src\\com\\database\\users\\" + email + "\\profile");
-                                    file.mkdirs();
-                                    // membackup database
-                                    this.backupDatabase();
-                                    return true;
+                                // mengecek apakah password dan konfirmasi cocok atau tidak
+                                if(password.equals(konfirmasi)){
+                                    // membuat akun
+                                    System.out.println("Membuat akun dengan username = '"+username+"'\n");
+                                    create = stat.executeUpdate("INSERT INTO users VALUES ('"+username+"', '"+namaLengkap+"', '"+namaPanggilan+"', '"+email+"', 'N', '0000-01-01', 'null', 'jawa timur', 'indonesia', '"+password+"', '"+tanggal+"', 'default', '"+tipe+"')");
+                                    // mengecek akun berhasil dibuat atau tidak
+                                    if(create > 0){
+                                        System.out.println("Akun sukses dibuat!\n");
+                                        //membuat folder baru yang digunakan untuk menyimpan data user
+                                        file = new File("src\\com\\database\\users\\" + email + "\\profile");
+                                        file.mkdirs();
+                                        // membackup database
+                                        this.backupDatabase();
+                                        return true;
+                                    }else{
+                                        System.out.println("Gagal membuat akun\n");
+                                    }                                    
                                 }else{
-                                    System.out.println("Gagal membuat akun");
+                                    Audio.play(Audio.SOUND_INFO);
+                                    JOptionPane.showMessageDialog(null, "Password dan Konfirmasi Password anda tidak cocok!!", "Info", JOptionPane.INFORMATION_MESSAGE);
                                 }
                             }
                         }
@@ -88,7 +97,7 @@ public class Account extends Database{
             
         }catch(SQLException ex){
             Audio.play(Audio.SOUND_ERROR);
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat membuat akun!!\n\n Error : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat akan membuat akun!!\n\n Error : " + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             this.restoreTabel(USERS);
         }
         return false;
@@ -107,6 +116,7 @@ public class Account extends Database{
             // digunakan untuk mengecek apakah user berhasil login atau tidak
             int login;
 
+            System.out.println("\nMencoba login dengan akun " + user);
             // mengecek user sebelumnya sudah login atau belum, jika sudah maka akan dilogout
             if(isLogin()){
                 logout(); // melogout
@@ -118,6 +128,7 @@ public class Account extends Database{
                     login = stat.executeUpdate("INSERT INTO islogin VALUES ('"+getDataAccount(user, Account.USERNAME)+"', '"+getDataAccount(user, Account.NAMA_LENGKAP)+"', '"+getDataAccount(user, Account.EMAIL)+"')");
                     // mengecek apakah login berhasil atau tidak
                     if(login > 0){
+                        System.out.println("Login dengan akun " + user + " berhasil dilakukan!\n");
                         // mengecek apakah folder penyimpanan data akun ada atau tidak, jika tidak maka akan dibuat
                         file = new File("src\\com\\database\\users\\" + getDataAccount(user, Account.EMAIL) + "\\profile");
                         if(!file.exists()){
@@ -129,13 +140,13 @@ public class Account extends Database{
                     }
                 }else{
                     Audio.play(Audio.SOUND_INFO);
-                    JOptionPane.showMessageDialog(null, "Password tidak cocok", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Password yang anda masukan tidak cocok!!\n\nNote :\nSilahkan klik tombol 'Lupa password akun?' jika anda melupakan password akun.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
-                Audio.play(Audio.SOUND_INFO);
                 // memulihkan tabel jika tabel bermasalah
+                Audio.play(Audio.SOUND_INFO);
+                JOptionPane.showMessageDialog(null, "'"+user+"'\nUsername / Email tersebut belum terdaftar di Database!!\n\nNote : \nJika anda belum memiliki akun silahkan klik tombol 'Belum punya akun? Daftar.' dibawah tombol SignIn.", "Info", JOptionPane.INFORMATION_MESSAGE);
                 this.restoreTabel(USERS);
-                JOptionPane.showMessageDialog(null, "Username tersebut belum terdaftar!", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }catch(SQLException ex){
             Audio.play(Audio.SOUND_ERROR);
@@ -369,19 +380,19 @@ public class Account extends Database{
                             return true;
                         }else{
                             Audio.play(Audio.SOUND_INFO);
-                            JOptionPane.showMessageDialog(null, "'" + username + "' Username tersebut sudah digunakan!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "'" + username + "' \nUsername tersebut sudah digunakan oleh pengguna lain!", "Info", JOptionPane.INFORMATION_MESSAGE);
                         }
                     }else{
                         Audio.play(Audio.SOUND_INFO);
-                        JOptionPane.showMessageDialog(null, "Simbol yang diizinkan hanyalah : . _ , ' &", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Simbol yang diizinkan untuk username hanyalah . _ , ' &", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }                
                 }else{
                     Audio.play(Audio.SOUND_INFO);
-                    JOptionPane.showMessageDialog(null, "Username tidak diizinkan untuk memakai spasi", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Username tidak diizinkan untuk memakai spasi!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }                
             }else{
                 Audio.play(Audio.SOUND_INFO);
-                JOptionPane.showMessageDialog(null, username + " - kata tersebut dilarang digunakan untuk username", "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "'"+ username + "'\nKata tersebut dilarang digunakan untuk username", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }else{
             Audio.play(Audio.SOUND_INFO);
@@ -407,7 +418,7 @@ public class Account extends Database{
                     return true;
                 }else{
                     Audio.play(Audio.SOUND_INFO);
-                    JOptionPane.showMessageDialog(null, "Simbol yang bisa digunakan hanyalah  . # / & - : ;", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Simbol yang boleh digunakan untuk nama lengkap hanyalah  . # / & - : ;", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }                
             }else{
                 Audio.play(Audio.SOUND_INFO);
@@ -426,7 +437,7 @@ public class Account extends Database{
             return false;
         }
         // karakter yang tidak diperbolehkan untuk membuat nama panggilan
-        String blokChar = "`~!@#$%^&*()_-+=\\|{[]}:;'\"<>?/,.";
+        String blokChar = "1234567890`~!@#$%^&*()_-+=\\|{[]}:;'\"<>?/,.";
         // nama panggilan harus diantara 4-15 karakter
         if(nama.length() >= 4 && nama.length() <= 15){
             // nama panggilan tidak boleh menggunakan karakter yang tidak diperbolehkan
@@ -465,11 +476,11 @@ public class Account extends Database{
                         return true;
                     }else{
                         Audio.play(Audio.SOUND_INFO);
-                        JOptionPane.showMessageDialog(null, "Email tersebut sudah terdaftar!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Email tersebut sudah digunakan untuk pengguna lain!", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }else{
                     Audio.play(Audio.SOUND_INFO);
-                    JOptionPane.showMessageDialog(null, "Simbol yang didukung hanya .", "Info", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Simbol yang didukung untuk username email hanyalah .", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
                 Audio.play(Audio.SOUND_INFO);
