@@ -3,6 +3,7 @@ package com.window.all;
 import com.database.Account;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ public class SignUp extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
+        this.setIconImage(Gambar.getWindowIcon());
         this.btnSignUp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         
     }
@@ -338,26 +340,39 @@ public class SignUp extends javax.swing.JFrame {
     private void pnlMainMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMouseDragged
         int xx = evt.getXOnScreen(),
             yy = evt.getYOnScreen();
-        
         this.setLocation(xx-x, yy-y);
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
-        username = this.inpUsername.getText();
-        namalengkap = this.inpNamaLengkap.getText();
-        namapanggilan = this.inpNamaPanggilan.getText();
-        email = this.inpEmail.getText();
+        // mendapatkan data dari user lalu data tersebut diubah kedalam bentuk lowercase
+        username = this.inpUsername.getText().toLowerCase();
+        namalengkap = this.inpNamaLengkap.getText().toLowerCase();
+        namapanggilan = this.inpNamaPanggilan.getText().toLowerCase();
+        email = this.inpEmail.getText().toLowerCase();
         password = this.inpPassword.getText();
         konpass = this.inpKonfirmasi.getText();
         
-        Audio.play(Audio.SOUND_INFO);
-        JOptionPane.showMessageDialog(
-                null, "Hi, "+ namalengkap +".\nSelamat akun anda telah berhasil dibuat!\nSilahkan login kembali dengan akun yang barusan anda buat!\n\n"
-                      + "Username : " + username + "\nNama Lengkap : "+ namalengkap +"\nNama Panggilan : "+ namapanggilan +"\nEmail : " + email + "\nPassword : •••••••••••\n\n--\nCopyright © 2020. Achmad Baihaqi.\n--", 
-                "Informasi", JOptionPane.INFORMATION_MESSAGE                                                                                                                                                                        
-        );                                                                                                                                                                                                                                                                                                          
-//        if(acc.createAccount(username, namalengkap, namapanggilan, email, password, "User")){
-//        }
+        // mengecek apakah pendaftaran akun memenuhi persyaratan atau tidak
+        if(acc.createAccount(username, namalengkap, namapanggilan, email, password, konpass, "User")){
+            // menampilkan pesan jika akun berhasil dibuat
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(
+                    null, "Hi, "+ namalengkap +".\nSelamat akun anda telah berhasil dibuat!\nSilahkan login kembali dengan akun yang barusan anda buat!\n\n"
+                          + "Username : " + username + "\nNama Lengkap : "+ namalengkap +"\nNama Panggilan : "+ namapanggilan +"\nEmail : " + email + "\nPassword : •••••••••••\n\n--\nCopyright © 2020. Achmad Baihaqi.\n--", 
+                    "Informasi", JOptionPane.INFORMATION_MESSAGE                                                                                                                                                                        
+            );
+            
+            // membuka window login saat akun berhasil dibuat
+            System.out.println("Membuka Window SignIn");
+            dispose();
+            java.awt.EventQueue.invokeLater(new Runnable(){
+                
+                @Override
+                public void run(){
+                    new SignIn().setVisible(true);
+                }
+            });
+        }
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void btnSignUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignUpMouseEntered
@@ -414,22 +429,22 @@ public class SignUp extends javax.swing.JFrame {
 
     private void viewPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewPassMouseEntered
         this.inpPassword.setEchoChar((char)0);
-        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-open.png")));
+        this.viewPass.setIcon(Gambar.getIcon("ic-eye-open.png"));
     }//GEN-LAST:event_viewPassMouseEntered
 
     private void viewPassMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewPassMouseExited
         this.inpPassword.setEchoChar('•');
-        this.viewPass.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-close.png")));
+        this.viewPass.setIcon(Gambar.getIcon("ic-eye-close.png"));
     }//GEN-LAST:event_viewPassMouseExited
 
     private void viewKonnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewKonnMouseEntered
         this.inpKonfirmasi.setEchoChar((char)0);
-        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-open.png")));
+        this.viewKonn.setIcon(Gambar.getIcon("ic-eye-open.png"));
     }//GEN-LAST:event_viewKonnMouseEntered
 
     private void viewKonnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewKonnMouseExited
         this.inpKonfirmasi.setEchoChar('•');
-        this.viewKonn.setIcon(new ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-eye-close.png")));
+        this.viewKonn.setIcon(Gambar.getIcon("ic-eye-close.png"));
     }//GEN-LAST:event_viewKonnMouseExited
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

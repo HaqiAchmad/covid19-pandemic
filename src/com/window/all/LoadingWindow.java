@@ -3,7 +3,6 @@ package com.window.all;
 import com.database.Account;
 import com.database.Database;
 import com.media.gambar.Gambar;
-import java.util.Random;
 
 /**
  * 
@@ -13,8 +12,8 @@ import java.util.Random;
  */
 public class LoadingWindow extends javax.swing.JFrame {
 
-    private Random rand = new Random(100);
-    private Database db = new Database();
+
+    private final Database db = new Database();
     private Account acc;
     private int value = 0, delay = 50;
     
@@ -240,10 +239,3 @@ public class LoadingWindow extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables
 }
-
-/*
- * Memulai Aplikasi...
- * Mengecek Database...
- * Menghubungkan Ke Database
- *
- */

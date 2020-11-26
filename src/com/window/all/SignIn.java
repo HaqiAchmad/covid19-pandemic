@@ -8,6 +8,8 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
+ * Digunakan untuk login bagi user/admin
+ * 
  * @author Achmad Baihaqi
  * @since 22-11-2020
  */
@@ -15,7 +17,6 @@ public class SignIn extends javax.swing.JFrame {
 
     private final Account acc = new Account();
     private String user, password;
-    private boolean cekLogin;
     private int x = 0, y = 0;
     
     public SignIn() {
@@ -343,24 +344,27 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
+        // mendapatkan input dari user
         user = this.inpUsername.getText();
         password = this.inpPassword.getText();
-        cekLogin = acc.login(user, password);
         
         // mengecek apakah login berhasil atau tidak
-        if(cekLogin){
+        if(acc.login(user, password)){
+            // akan menampilkan pesan jika login berhasil dibuka
             Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Hi, " + user + "\nLogin anda telah berhasil! \nKlik OK untuk melanjutkan Aplikasi!\n--\nCopyright © 2020. Achmad Baihaqi.\n--", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            
+            // membuka window beranda
+            System.out.println("Membuka Window Beranda");
             java.awt.EventQueue.invokeLater(new Runnable(){
                 
                 @Override
                 public void run(){
-                    dispose();
                     new Beranda().setVisible(true);
                 }
             });
+            dispose();
         }
-        
     }//GEN-LAST:event_btnSignInActionPerformed
 
     private void btnSignInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSignInMouseExited
