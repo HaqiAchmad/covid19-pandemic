@@ -97,7 +97,6 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Kolombia', 'Colombia', 784268, 24746, 662277, 97245, 863, 51007347, '2020-09-30', 'Amerika Selatan', 'bendera-kolumbia.png'),
 ('Komoro', 'Comoros', 474, 7, 453, 14, 0, 873811, '2020-09-30', 'Afrika', 'bendera-komoro.png'),
 ('Kongo', 'Congo', 5005, 89, 3887, 1029, 0, 5548744, '2020-09-30', 'Afrika', 'bendera-republik-kongo.png'),
-('Korea Selatan', 'North Korea', 0, 0, 0, 0, 0, -1, '2020-11-15', 'Asia', 'default'),
 ('Korea Selatan', 'S. Korea', 23455, 395, 20978, 2082, 128, 51279620, '2020-09-30', 'Asia', 'bendera-korea.jpg'),
 ('Kosta Rika', 'Costa Rica', 68059, 781, 26136, 41142, 249, 5104825, '2020-09-30', 'Amerika Utara', 'bendera-kostarika.jpg'),
 ('Kroasia', 'Croatia', 15572, 261, 14111, 1200, 24, 4099274, '2020-09-30', 'Eropa', 'bendera-krosia.jpg'),
