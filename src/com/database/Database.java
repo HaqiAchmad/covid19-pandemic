@@ -212,7 +212,7 @@ public class Database {
                 // membaca semua data yang ada didalam tabel, lalu menuliskan datanya ke file "BACKUP kasuscovid_indo.haqi"
                 while(res.next()){
                     // mendapatkan data yang ada didalam tabel
-                    values = "('" + res.getString("kode") + "', '" + res.getString("provinsi") + "', " + res.getString("kasus") + ", " + res.getString("sembuh") + ", " + res.getString("kematian") + ", " + res.getString("aktif") + ", " + res.getString("odp") + ", " + res.getString("pdp") + ", " + res.getString("otg") +", "+ res.getString("total_kab") +", "+ res.getString("kab_zonamerah") + ", " + res.getString("kab_zonaoranye") + ", " + res.getString("kab_zonahijau") + ", '" + res.getString("diubah") + "', '" + res.getString("lambang") + "')";
+                    values = "('" + res.getString("kode") + "', '" + res.getString("provinsi") + "', " + res.getString("kasus") + ", " + res.getString("sembuh") + ", " + res.getString("kematian") + ", " + res.getString("aktif") + ", " + res.getString("total_kab") +", "+ res.getString("kab_zonamerah") + ", " + res.getString("kab_zonaoranye") + ", " + res.getString("kab_zonahijau") + ", '" + res.getString("kasus_pertama") + "', '" +  res.getString("diubah") + "', '" + res.getString("website") + "', '" + res.getString("lambang") + "')";
                     // menuliskan data yang ada didalam tabel ke file backup
                     if(!res.isLast()){
                         backup.write(values + ",");
@@ -658,14 +658,13 @@ class DefaultDatabase{
                 "  `sembuh` int(11) NOT NULL,\n" +
                 "  `kematian` int(11) NOT NULL,\n" +
                 "  `aktif` int(11) NOT NULL,\n" +
-                "  `odp` int(11) NOT NULL,\n" +
-                "  `pdp` int(11) NOT NULL,\n" +
-                "  `otg` int(11) NOT NULL,\n" +
                 "  `total_kab` int(5) NOT NULL,\n" +
                 "  `kab_zonamerah` int(5) NOT NULL,\n" +
                 "  `kab_zonaoranye` int(5) NOT NULL,\n" +
                 "  `kab_zonahijau` int(5) NOT NULL,\n" +
+                "  `kasus_pertama` date NOT NULL,\n" +
                 "  `diubah` date NOT NULL,\n" +
+                "  `website` varchar(50) NOT NULL,\n" +
                 "  `lambang` text NOT NULL\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
@@ -965,8 +964,41 @@ class DefaultDatabase{
      * @return query untuk mengisi tabel kasuscovid_indo
      */
     protected static String getDefaultDataTabel_kasusCovidIndo(){
-        return  "INSERT INTO `kasuscovid_indo` (`kode`, `provinsi`, `kasus`, `sembuh`, `kematian`, `aktif`, `odp`, `pdp`, `otg`, `total_kab`, `kab_zonamerah`, `kab_zonaoranye`, `kab_zonahijau`, `diubah`, `lambang`) VALUES\n" +
-                "('Jatim', 'Jawa Timur', 32138014, 23708311, 982722, 7446981, 5454, 5435, 543, 35, 23, 12, 5, '2020-11-15', 'default');";
+        return  "INSERT INTO `kasuscovid_indo` (`kode`, `provinsi`, `kasus`, `sembuh`, `kematian`, `aktif`, `total_kab`, `kab_zonamerah`, `kab_zonaoranye`, `kab_zonahijau`, `kasus_pertama`, `diubah`, `website`, `lambang`) VALUES\n" +
+                "('Aceh', 'Aceh', 8244, 6580, 318, 1346, 18, 0, 0, 0, '2020-03-26', '2020-11-27', 'covid19.acehprov.go.id', 'lambang-aceh.png'),\n" +
+                "('Babel', 'Kep. Bangka Belitung', 944, 784, 12, 148, 6, 0, 0, 0, '2020-03-30', '2020-11-27', 'covid19.babelprov.go.id', 'lambang-bangka-belitung.png'),\n" +
+                "('Bali', 'Bali', 13500, 12267, 419, 814, 8, 0, 0, 0, '2020-03-10', '2020-11-27', 'infocorona.baliprov.go.id', 'lambang-bali.png'),\n" +
+                "('Banten', 'Banten', 12223, 8396, 318, 3509, 4, 0, 0, 0, '2020-03-08', '2020-11-27', 'infocorona.bantenprov.go.id', 'lambang-banten.png'),\n" +
+                "('Bengkulu', 'Bengkulu', 1665, 1287, 73, 305, 9, 0, 0, 0, '2020-03-31', '2020-11-27', 'covid19.bengkuluprov.go.id', 'lambang-bengkulu.png'),\n" +
+                "('DIY', 'DI Yogyakarta', 5556, 4200, 137, 1219, 4, 0, 0, 0, '2020-03-13', '2020-11-27', 'corona.jogjaprov.go.id', 'lambang-yogyakarta.png'),\n" +
+                "('Gorontalo', 'Gorontalo', 3073, 2956, 89, 28, 5, 0, 0, 0, '2020-04-09', '2020-11-27', 'covid-19.gorontaloprov.go.id', 'lambang-gorontalo.jpeg'),\n" +
+                "('Jabar', 'Jawa Barat', 50482, 41932, 882, 7668, 18, 0, 0, 0, '2020-03-02', '2020-11-27', 'pikobar.jabarprov.go.id', 'lambang-jawa-barat.png'),\n" +
+                "('Jakarta', 'DKI Jakarta', 131525, 120194, 2592, 8739, 1, 0, 0, 0, '2020-03-02', '2020-11-27', 'corona.jakarta.go.id', 'lambang-jakarta.png'),\n" +
+                "('Jambi', 'Jambi', 1774, 1263, 36, 475, 9, 0, 0, 0, '2020-03-23', '2020-11-27', 'corona.jambiprov.go.id', 'lambang-jambi.jpeg'),\n" +
+                "('Jateng', 'Jawa Tengah', 50880, 36681, 2197, 12002, 29, 0, 0, 0, '2020-03-09', '2020-11-27', 'corona.jatengprov.go.id', 'lambang-jawa-tengah.png'),\n" +
+                "('Jatim', 'Jawa Timur', 60190, 53131, 4275, 2784, 29, 0, 0, 0, '2020-03-17', '2020-11-27', 'infocovid19.jatimprov.go.id', 'lambang-jawa-timur.png'),\n" +
+                "('Kalbar', 'Kalimanan Barat', 2322, 1825, 22, 475, 12, 0, 0, 0, '2020-03-10', '2020-11-27', 'covid19.kalbarprov.go.id', 'lambang-kalimantan-barat.png'),\n" +
+                "('Kalsel', 'Kalimantan Selatan', 13047, 11859, 522, 666, 11, 0, 0, 0, '2020-03-22', '2020-11-27', 'corona.kalselprov.go.id', 'lambang-kalimantan-selatan.gif'),\n" +
+                "('Kaltara', 'Kalimantan Utara', 1320, 921, 17, 382, 4, 0, 0, 0, '2020-03-28', '2020-11-27', 'coronainfo.kaltaraprov.go.id', 'lambang-kalimantan-utara.png'),\n" +
+                "('Kalteng', 'Kalimantan Tengah', 5603, 4526, 185, 892, 13, 0, 0, 0, '2020-03-20', '2020-11-27', 'corona.kalteng.go.id', 'lambang-kalimantan-tengah.png'),\n" +
+                "('Kaltim', 'Kalimantan Timur', 18916, 16255, 577, 2084, 7, 0, 0, 0, '2020-03-18', '2020-11-17', 'covid19.kaltimprov.go.id', 'lambang-kalimantan-timur.png'),\n" +
+                "('Kepri', 'Kepulauan Riau', 5304, 3998, 133, 1173, 5, 0, 0, 0, '2020-03-17', '2020-11-27', 'corona.kepriprov.go.id', 'lambang-kepulauan-riau.png'),\n" +
+                "('Lampung', 'Lampung', 3340, 1757, 135, 1448, 13, 0, 0, 0, '2020-03-18', '2020-11-27', 'covid19.lampungprov.go.id', 'lambang-lampung.png'),\n" +
+                "('Maluku', 'Maluku', 4428, 3755, 60, 613, 9, 0, 0, 0, '2020-03-22', '2020-11-17', 'corona.malukuprov.go.id', 'lambang-maluku.png'),\n" +
+                "('Malut', 'Maluku Utara', 2356, 1971, 81, 304, 8, 0, 0, 0, '2020-03-23', '2020-11-27', 'corona.malutprov.go.id', 'lambang-maluku-utara.png'),\n" +
+                "('NTB', 'Nusa Tenggara Barat', 4577, 3687, 237, 653, 8, 0, 0, 0, '2020-03-24', '2020-11-27', 'corona.ntbprov.go.id', 'lambang-nusa-tenggara-barat.png'),\n" +
+                "('NTT', 'Nusa Tenggara Timur', 1077, 663, 17, 397, 21, 0, 0, 0, '2020-04-09', '2020-11-27', 'covid19.nttprov.go.id', 'lambang-nusa-tenggara-timur.png'),\n" +
+                "('Pabar', 'Papua Barat', 5204, 4513, 82, 609, 12, 0, 0, 0, '2020-03-27', '2020-11-27', 'dinkes.papuabaratprov.go.id', 'lambang-papua-barat.png'),\n" +
+                "('Papua', 'Papua', 9934, 5007, 137, 4790, 28, 0, 0, 0, '2020-03-22', '2020-11-27', 'covid19.papua.go.id', 'lambang-papua.png'),\n" +
+                "('Riau', 'Riau', 19335, 16769, 428, 2138, 10, 0, 0, 0, '2020-03-18', '2020-11-27', 'corona.riau.go.id', 'lambang-riau.png'),\n" +
+                "('Sulbar', 'Sulawesi Barat', 1404, 1241, 21, 142, 6, 0, 0, 0, '2020-03-29', '2020-11-27', 'dinkes.sulbarprov.go.id', 'lambang-sulawesi-barat.png'),\n" +
+                "('Sulsel', 'Sulawesi Selatan', 20206, 18208, 490, 1508, 21, 0, 0, 0, '2020-03-19', '2020-11-27', 'covid19.sulselprov.go.id', 'lambang-sulawesi-selatan.png'),\n" +
+                "('Sulteng', 'Sulawesi Tengah', 1700, 1016, 68, 616, 12, 0, 0, 0, '2020-03-26', '2020-11-27', 'dinkes.sultengprov.go.id', 'lambang-sulawesi-tengah.png'),\n" +
+                "('Sultra', 'Sulawesi Tenggara', 6265, 5057, 97, 1111, 15, 0, 0, 0, '2020-03-19', '2020-11-27', 'dinkes.sultraprov.go.id', 'lambang-sulawesi-tenggara.png'),\n" +
+                "('Sulut', 'Sulawesi Utara', 6594, 5211, 239, 1144, 11, 0, 0, 0, '2020-03-14', '2020-11-27', 'corona.sulutprov.go.id', 'lambang-sulawesi-utara.png'),\n" +
+                "('Sumbar', 'Sumatra Barat', 19251, 15638, 363, 3250, 12, 0, 0, 0, '2020-03-26', '2020-11-27', 'corona.sumbarprov.go.id', 'lambang-sumatra-barat.png'),\n" +
+                "('Sumsel', 'Sumatra Selatan', 9300, 7504, 494, 1302, 13, 0, 0, 0, '2020-03-24', '2020-11-27', 'corona.sumselprov.go.id', 'lambang-sumatra-selatan.png'),\n" +
+                "('Sumut', 'Sumatra Utara', 15235, 12601, 600, 2034, 25, 0, 0, 0, '2020-03-18', '2020-11-27', 'corona.sulutprov.go.id', 'lambang-sumatra-utara.png');";
     }
     
      /**
