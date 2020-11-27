@@ -21,8 +21,8 @@ public class CovidCases extends Database{
                                KASUS_INDO = "kasuscovid_indo";
     
     public static final String NEGARA_IDN = "negara_idn", NEGARA_ENG = "negara_eng", KODE_PROV = "kode", PROVINSI = "provinsi", KASUS = "kasus", KEMATIAN = "kematian", SEMBUH = "sembuh", 
-                               AKTIF = "aktif", KRITIS = "kritis", POPULASI = "populasi", ODP = "odp", PDP = "pdp", OTG = "otg", TOTAL_KAB = "total_kab", ZONA_MERAH = "kab_zonamerah",
-                               ZONA_ORANYE = "kab_zonaoranye", ZONA_HIJAU = "kab_zonahijau", DIUBAH = "diubah", BENUA = "benua", LAMBANG = "lambang", BENDERA = "bendera";
+                               AKTIF = "aktif", KRITIS = "kritis", POPULASI = "populasi", TOTAL_KAB = "total_kab", ZONA_MERAH = "kab_zonamerah",
+                               ZONA_ORANYE = "kab_zonaoranye", ZONA_HIJAU = "kab_zonahijau", DIUBAH = "diubah", KASUS_PERTAMA = "kasus_pertama", WEBSITE = "website", BENUA = "benua", LAMBANG = "lambang", BENDERA = "bendera";
     
     public CovidCases(final String tabel){
         // jika input yang dimasukan bukan kasus_dunia maupun kasus_indo secara default tabel akan diatur ke kasus_dunia
