@@ -2,8 +2,7 @@ package com.window.all;
 
 import com.database.CovidCases;
 import com.media.gambar.Gambar;
-import java.awt.event.KeyEvent;
-import javax.swing.table.DefaultTableModel;
+import com.sun.glass.events.KeyEvent;
 
 /**
  * 
@@ -12,83 +11,112 @@ import javax.swing.table.DefaultTableModel;
  */
 public class KasusCovidDunia extends javax.swing.JFrame {
 
+    /**
+     * Digunakan untuk mendapatkan semua data kasus Covid-19 di Dunia yang ada didalam Database.
+     */
     private final CovidCases kasus = new CovidCases(CovidCases.KASUS_DUNIA);
-    private int positif, sembuh, kematian, aktif, kritis, populasi, tingkatKematian, tingkatKesembuhan, peringkatKasus;
-    private int x, y, rowMax = kasus.getRows("SELECT * FROM kasuscovid_dunia"), rows = 0;
-    private String keyword, negara = "Dunia", benua, diubah, bendera;
-    private final String[] fields = new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    /**
+     * Berfungsi untuk menyimpan nilai dari input cari negara dari user yang digunakan memfilter negara apa saja yang akan ditampilkan ke dalam tabel 
+     */
+    private String keyword = "";
+    /**
+     * Digunakan untuk menyimpan data kasus covid yang berbentuk String
+     */
+    private String negara = "Dunia", benua, diubah, bendera;
+    /**
+     * Fields/data yang akan ditampilkan ke dalam tabel
+     */
+    private String[] fields = new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    /**
+     * Mendapatkan jumlah total semua data yang ada didalam tabel kasuscovid_dunia 
+     */
+    private final int rowMax = kasus.getRows("SELECT * FROM kasuscovid_dunia") - 1; // mendapatkan total semua data yang ada ditabel kasuscovid_dunia
+    /**
+     * Digunakan untuk menyimpan data kasus covid yang berbentuk Integer
+     */
+    private int positif, sembuh, kematian, aktif, kritis, populasi, tingkatKesembuhan, tingkatKematian, peringkatKasus;
+    /**
+     * Digunakan untuk mengatur posisi dari window
+     */
+    private int x, y;
     
     public KasusCovidDunia() {
         initComponents();
-
+        
         this.setLocationRelativeTo(null);
+        this.setIconImage(Gambar.getWindowIcon());
         this.tabelKasus.getTableHeader().remove(0);
         this.tabelKasus.setRowHeight(29);
         this.tabelKasus.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelKasus.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
         
-        dataTabel(this.fields, "");
         showCovidData();
+        updateTabel();
     }
     
-    
-    
+    /**
+     * Digunakan untuk mendapatkan data Covid-19 yang ada didalam database melalui class CovidCases. 
+     * Lalu datanya akan ditampilkan ke dalam window
+     */
     private void showCovidData(){
-        
-        System.out.println("\nMendapatkan data kasus Covid-19 dari Negara " + negara);
+        // mendapatkan data kasus covid berdasarkan negara yang sedang dipilih
         positif = kasus.getDataNumber(CovidCases.KASUS, negara);
         sembuh = kasus.getDataNumber(CovidCases.SEMBUH, negara);
         kematian = kasus.getDataNumber(CovidCases.KEMATIAN, negara);
         aktif = kasus.getDataNumber(CovidCases.AKTIF, negara);
         kritis = kasus.getDataNumber(CovidCases.KRITIS, negara);
         populasi = kasus.getDataNumber(CovidCases.POPULASI, negara);
-        tingkatKematian = (int)kasus.getPresentase(kematian, sembuh);
         tingkatKesembuhan = (int)kasus.getPresentase(sembuh, kematian);
+        tingkatKematian = (int)kasus.getPresentase(kematian, sembuh);
         peringkatKasus = kasus.getPeringkat(negara);
         benua = kasus.getData(CovidCases.BENUA, negara);
-        bendera = kasus.getData(CovidCases.BENDERA, negara);
         diubah = kasus.getData(CovidCases.DIUBAH, negara);
+        bendera = kasus.getData(CovidCases.BENDERA, negara);
         
+        // tampilan dari data kasus dunia dan data kasus negara akan berbeda
         if(negara.equalsIgnoreCase("Dunia")){
-            this.lblTop.setText("Kasus Covid-19 di Dunia");
-            this.valInfoPopulasi.setText(kasus.addDelim(populasi*10L));
+            this.lblTop.setText("Data Kasus Covid-19");
+            this.lblInfoNegara.setText("Data di");
+            this.valInfoPopulasi.setText(": " + kasus.addDelim(populasi * 10L));
         }else{
-            this.lblTop.setText("Kasus Covid-19 di Negara");
-            this.valInfoPopulasi.setText(kasus.addDelim(populasi));
+            this.lblTop.setText("Kasus Covid-19 di Negara ");
+            this.lblInfoNegara.setText("Negara");
+            this.valInfoPopulasi.setText(": " + kasus.addDelim(populasi));
         }
         
-        this.lblBenderaNegara.setIcon(Gambar.getFlag(bendera));
-        this.lblBenderaNegara.setText(negara);
+        // menampilkan data kasus covid ke window
+        this.lblNegara.setIcon(Gambar.getFlag(bendera));
+        this.lblNegara.setText(negara);
         this.valTotalKasus.setText(kasus.addDelim(positif));
         this.valTotalSembuh.setText(kasus.addDelim(sembuh));
         this.valTotalKematian.setText(kasus.addDelim(kematian));
-        this.valInfoNegara.setText(negara);
-        this.valInfoPositif.setText(kasus.addDelim(positif));
-        this.valInfoSembuh.setText(kasus.addDelim(positif));
-        this.valInfoKematian.setText(kasus.addDelim(kematian));
-        this.valInfoAktif.setText(kasus.addDelim(aktif));
-        this.valInfoKritis.setText(kasus.addDelim(kritis));
-        this.valInfoTingkatKesembuhan.setText(""+tingkatKesembuhan + "%");
-        this.valInfoTingkatKematian.setText(""+tingkatKematian + "%");
-        this.valInfoPeringkatKasus.setText("" + peringkatKasus + " dari " + rowMax + " negara");
-        this.valInfoBenua.setText(benua);
-        this.valInfoTerakhirDiubah.setText(diubah);
-        System.out.println("Data berhasil diambil\n");
         
+        this.valInfoNegara.setText(": " + negara);
+        this.valInfoPositif.setText(": " + kasus.addDelim(positif));
+        this.valInfoSembuh.setText(": " + kasus.addDelim(sembuh));
+        this.valInfoKematian.setText(": " + kasus.addDelim(kematian));
+        this.valInfoAktif.setText(": " + kasus.addDelim(aktif));
+        this.valInfoKritis.setText(": " + kasus.addDelim(kritis));
+        this.valInfoBenua.setText(": " + benua);
+        this.valInfoTingkatKesembuhan.setText(": " + tingkatKesembuhan + "%");
+        this.valInfoTingkatKematian.setText(": " + tingkatKematian + "%");
+        this.valInfoPeringkatKasus.setText(": " + peringkatKasus);
+        this.valInfoTerakhirDiubah.setText(": " + diubah);
     }
-    
-    private void dataTabel(String[] fields, String key){
+    //Saint Kitts dan Nevis
+    //Antigua dan Barbuda
+    //Saint Pierre dan Miquelon
+    //Guinea Khatulistiwa
+    //Trinidad dan Tobago
+    //Kepulauan Channel
+    private void updateTabel(){
         tabelKasus.setModel(new javax.swing.table.DefaultTableModel(
-            kasus.getData(fields, key),
-            new String [] {
-                "Negara", "Positif", "Sembuh", "Kematian"
-            }
+            kasus.getData(fields, keyword), fields
         ) {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -138,7 +166,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         lblTextKeyword = new javax.swing.JLabel();
         lblTabelKasus = new javax.swing.JLabel();
         lblTop = new javax.swing.JLabel();
-        lblBenderaNegara = new javax.swing.JLabel();
+        lblNegara = new javax.swing.JLabel();
         lblTotalKasus = new javax.swing.JLabel();
         valTotalKasus = new javax.swing.JLabel();
         valTotalSembuh = new javax.swing.JLabel();
@@ -209,7 +237,15 @@ public class KasusCovidDunia extends javax.swing.JFrame {
             new String [] {
                 "Negara", "Positif", "Sembuh", "Kematian"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelKasus.setGridColor(new java.awt.Color(0, 0, 0));
         tabelKasus.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelKasus.setSelectionForeground(new java.awt.Color(250, 246, 246));
@@ -432,11 +468,11 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         lblTop.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTop.setText("Kasus Covid-19 di Negara ");
 
-        lblBenderaNegara.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
-        lblBenderaNegara.setForeground(new java.awt.Color(20, 19, 19));
-        lblBenderaNegara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBenderaNegara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-bendera-sementara.png"))); // NOI18N
-        lblBenderaNegara.setText("Jepang");
+        lblNegara.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
+        lblNegara.setForeground(new java.awt.Color(20, 19, 19));
+        lblNegara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNegara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-bendera-sementara.png"))); // NOI18N
+        lblNegara.setText("Jepang");
 
         lblTotalKasus.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblTotalKasus.setForeground(new java.awt.Color(212, 42, 42));
@@ -504,7 +540,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblBenderaNegara, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNegara, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(linePemisah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,7 +598,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblTop, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblBenderaNegara)
+                                .addComponent(lblNegara)
                                 .addGap(21, 21, 21)
                                 .addComponent(lblTotalKasus, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -653,31 +689,36 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_lblKembaliMouseClicked
 
     private void tabelKasusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKasusMouseClicked
-        negara = this.tabelKasus.getValueAt(this.tabelKasus.getSelectedRow(), 0).toString();
+        // mendapatkan negara yang dipilih user
+        negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow(), 0).toString();
+        // menampilkan data dari negara yg dipilih user
         showCovidData();
     }//GEN-LAST:event_tabelKasusMouseClicked
 
     private void tabelKasusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelKasusKeyPressed
+        // menangkap event jika user menekan tombol arah atas dan arah bawah
         if(evt.getKeyCode() == KeyEvent.VK_UP){
-            if(tabelKasus.getSelectedRow() >= 0){
-                negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow()-1, 0).toString();
-                showCovidData();
-            }
+            // mendapatkan negara yang sedang dipilih
+            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() - 1, 0).toString();
+            // mereset data kasus covid yang ditampilkan diwindow
+            showCovidData();
         }else if(evt.getKeyCode() == KeyEvent.VK_DOWN){
-            if(tabelKasus.getSelectedRow() <= rowMax){
-                negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow()+1, 0).toString();
-                showCovidData();
-            }
+            // mendapatkan negara yang sedang dipilih
+            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() + 1, 0).toString();
+            // mereset data kasus covid yang ditampilkan diwindow
+            showCovidData();
         }
     }//GEN-LAST:event_tabelKasusKeyPressed
 
     private void searchKeywordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeywordKeyTyped
-        keyword = searchKeyword.getText();
-        rows = kasus.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+keyword+"%' OR negara_eng LIKE '%"+keyword+"%' OR benua LIKE '%"+keyword+"%'");
-        this.lblShowKeyword.setText("Menampilkan "+rows+" data dengan keyword = \""+keyword+"\"");
-        
-        tabelKasus.setModel(new DefaultTableModel(null, new String[]{"Negara", "Positif", "Sembuh", "Kematian"}));
-        dataTabel(fields, keyword);
+        // mendapatkan negara yang dicari oleh user
+        keyword = this.searchKeyword.getText();
+        // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
+        int row = kasus.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ keyword +"%' OR negara_eng LIKE '%"+ keyword +"%' OR benua LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
+        // mereset lbl show keyword
+        this.lblShowKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
+        // mereset tabel
+        updateTabel();
     }//GEN-LAST:event_searchKeywordKeyTyped
 
     private void lblCopyrightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseClicked
@@ -737,7 +778,6 @@ public class KasusCovidDunia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblBenderaNegara;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblCopyright;
     private javax.swing.JLabel lblInfo;
@@ -754,6 +794,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     private javax.swing.JLabel lblInfoTingkatKesembuhan;
     private javax.swing.JLabel lblKembali;
     private javax.swing.JLabel lblMinimaze;
+    private javax.swing.JLabel lblNegara;
     private javax.swing.JLabel lblShowKeyword;
     private javax.swing.JLabel lblTabelKasus;
     private javax.swing.JLabel lblTerakhirDiubah;

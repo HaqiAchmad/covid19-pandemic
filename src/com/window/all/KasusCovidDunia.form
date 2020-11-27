@@ -74,7 +74,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblBenderaNegara" min="-2" pref="516" max="-2" attributes="0"/>
+                          <Component id="lblNegara" min="-2" pref="516" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -149,7 +149,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="lblTop" min="-2" pref="36" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="lblBenderaNegara" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNegara" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                                   <Component id="lblTotalKasus" min="-2" pref="38" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -214,10 +214,10 @@
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Negara" type="java.lang.Object"/>
-                    <Column editable="true" title="Positif" type="java.lang.Object"/>
-                    <Column editable="true" title="Sembuh" type="java.lang.Object"/>
-                    <Column editable="true" title="Kematian" type="java.lang.Object"/>
+                    <Column editable="false" title="Negara" type="java.lang.Object"/>
+                    <Column editable="false" title="Positif" type="java.lang.Object"/>
+                    <Column editable="false" title="Sembuh" type="java.lang.Object"/>
+                    <Column editable="false" title="Kematian" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -602,7 +602,7 @@
             <Property name="text" type="java.lang.String" value="Kasus Covid-19 di Negara "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblBenderaNegara">
+        <Component class="javax.swing.JLabel" name="lblNegara">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="19" style="1"/>
