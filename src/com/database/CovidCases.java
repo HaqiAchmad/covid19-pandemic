@@ -186,7 +186,7 @@ public class CovidCases extends Database{
             if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
                 sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ key +"%' OR negara_eng LIKE '%"+ key +"%' OR benua LIKE '%"+ key +"%' ORDER BY kasus DESC;";
             }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
-                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_indo WHERE kode = '"+ key +"' OR provinsi = '"+ key +"' ORDER BY kasus DESC;";
+                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_indo WHERE kode LIKE '%"+ key +"%' OR provinsi LIKE '%"+ key +"%' ORDER BY kasus DESC;";
             }
             
             // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
