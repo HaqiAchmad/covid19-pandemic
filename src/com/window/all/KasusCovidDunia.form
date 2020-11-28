@@ -285,7 +285,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="11" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Copyright &#xa9; 2020. Achmad Baihaqi"/>
+                <Property name="text" type="java.lang.String" value="Copyright &#xa9; 2020. Achmad Baihaqi."/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseClicked"/>

@@ -443,7 +443,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoODP">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total ODP"/>
+                    <Property name="text" type="java.lang.String" value="Presentase Kasus"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoProvinsi">
@@ -538,12 +538,12 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoPDP">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total PDP"/>
+                    <Property name="text" type="java.lang.String" value="Kasus Pertama"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoPDP">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=": 2,433"/>
+                    <Property name="text" type="java.lang.String" value=": 17 Maret 2020"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoPeringkat">
@@ -558,12 +558,12 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoOTG">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Total OTG"/>
+                    <Property name="text" type="java.lang.String" value="Website"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoOTG">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=": 1.433"/>
+                    <Property name="text" type="java.lang.String" value=": infocovid19.jatimprov.."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoTerakhirDiubah">

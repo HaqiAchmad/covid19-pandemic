@@ -26,7 +26,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     /**
      * Fields/data yang akan ditampilkan ke dalam tabel
      */
-    private String[] fields = new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    private final String[] fields = new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
     /**
      * Mendapatkan jumlah total semua data yang ada didalam tabel kasuscovid_dunia 
      */
@@ -75,13 +75,20 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         
         // tampilan dari data kasus dunia dan data kasus negara akan berbeda
         if(negara.equalsIgnoreCase("Dunia")){
-            this.lblTop.setText("Data Kasus Covid-19");
+            this.lblTop.setText("Data Kasus Covid-19 Di ");
             this.lblInfoNegara.setText("Data di");
             this.valInfoPopulasi.setText(": " + kasus.addDelim(populasi * 10L));
+            this.valInfoNegara.setText(": " + negara);
         }else{
             this.lblTop.setText("Kasus Covid-19 di Negara ");
             this.lblInfoNegara.setText("Negara");
             this.valInfoPopulasi.setText(": " + kasus.addDelim(populasi));
+            // jika nama negara > 18 karakter maka nama negara tersebut akan diambil sebagian, jika nama negara terlalu panjang maka akan merubah susunan window
+            if(negara.length() > 18){
+                this.valInfoNegara.setText(": " + negara.substring(0, 18) +"...");
+            }else{
+                this.valInfoNegara.setText(": " + negara);
+            }
         }
         
         // menampilkan data kasus covid ke window
@@ -90,33 +97,32 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         this.valTotalKasus.setText(kasus.addDelim(positif));
         this.valTotalSembuh.setText(kasus.addDelim(sembuh));
         this.valTotalKematian.setText(kasus.addDelim(kematian));
-        
-        this.valInfoNegara.setText(": " + negara);
+        // menampilknan data kasus covid ke panel info selengkapnya
         this.valInfoPositif.setText(": " + kasus.addDelim(positif));
         this.valInfoSembuh.setText(": " + kasus.addDelim(sembuh));
         this.valInfoKematian.setText(": " + kasus.addDelim(kematian));
         this.valInfoAktif.setText(": " + kasus.addDelim(aktif));
         this.valInfoKritis.setText(": " + kasus.addDelim(kritis));
-        this.valInfoBenua.setText(": " + benua);
         this.valInfoTingkatKesembuhan.setText(": " + tingkatKesembuhan + "%");
         this.valInfoTingkatKematian.setText(": " + tingkatKematian + "%");
-        this.valInfoPeringkatKasus.setText(": " + peringkatKasus);
-        this.valInfoTerakhirDiubah.setText(": " + diubah);
+        this.valInfoPeringkatKasus.setText(": " + kasus.addDelim(peringkatKasus));
+        this.valInfoBenua.setText(": " + benua);
+        this.valInfoTerakhirDiubah.setText(": " + kasus.dateToString(diubah));
     }
-    //Saint Kitts dan Nevis
-    //Antigua dan Barbuda
-    //Saint Pierre dan Miquelon
-    //Guinea Khatulistiwa
-    //Trinidad dan Tobago
-    //Kepulauan Channel
+
+    /**
+     * Digunakan untuk mereset tampilan pada tabel jika user sedang mencari suatu negara tertentu
+     */
     private void updateTabel(){
         tabelKasus.setModel(new javax.swing.table.DefaultTableModel(
-            kasus.getData(fields, keyword), fields
+            kasus.getData(fields, keyword), 
+                new String[]{"Negara", "Positif", "Sembuh", "Kematian"}
         ) {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -266,7 +272,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         pnlBoxInfo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         lblCopyright.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
-        lblCopyright.setText("Copyright © 2020. Achmad Baihaqi");
+        lblCopyright.setText("Copyright © 2020. Achmad Baihaqi.");
         lblCopyright.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblCopyrightMouseClicked(evt);
@@ -696,15 +702,15 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelKasusMouseClicked
 
     private void tabelKasusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelKasusKeyPressed
-        // menangkap event jika user menekan tombol arah atas dan arah bawah
+        // menangkap event jika user menekan tombol arah atas atau arah bawah
         if(evt.getKeyCode() == KeyEvent.VK_UP){
             // mendapatkan negara yang sedang dipilih
-            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() - 1, 0).toString();
+            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() - 1, 0).toString(); // -1 artinya berpindah mundur dari index dari negara sebelumnya ke index negara saat ini
             // mereset data kasus covid yang ditampilkan diwindow
             showCovidData();
         }else if(evt.getKeyCode() == KeyEvent.VK_DOWN){
             // mendapatkan negara yang sedang dipilih
-            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() + 1, 0).toString();
+            negara = this.tabelKasus.getValueAt(tabelKasus.getSelectedRow() + 1, 0).toString(); // +1 artinya berpindah maju dari index dari negara sebelumnya ke index negara saat ini
             // mereset data kasus covid yang ditampilkan diwindow
             showCovidData();
         }
@@ -726,11 +732,11 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCopyrightMouseClicked
 
     private void lblCopyrightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseEntered
-        
+        this.lblCopyright.setText("<html><p style=\"text-decoration:underline; color:rgb(11,113,233);\">Copyright © 2020. Achmad Baihaqi.</p></html>");
     }//GEN-LAST:event_lblCopyrightMouseEntered
 
     private void lblCopyrightMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseExited
-        
+        this.lblCopyright.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Copyright © 2020. Achmad Baihaqi.</p></html>");
     }//GEN-LAST:event_lblCopyrightMouseExited
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

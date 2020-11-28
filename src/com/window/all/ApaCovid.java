@@ -666,7 +666,18 @@ public class ApaCovid extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCovidIndoActionPerformed
 
     private void btnTentangAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTentangAppActionPerformed
+        System.out.println("Membuka Window AboutApp");
+        AboutApp tentang = new AboutApp();
+        tentang.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                tentang.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnTentangAppActionPerformed
 
     private void btnInfoAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoAppActionPerformed

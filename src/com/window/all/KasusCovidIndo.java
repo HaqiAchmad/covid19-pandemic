@@ -1,5 +1,6 @@
 package com.window.all;
 
+import com.database.CovidCases;
 import com.media.gambar.Gambar;
 
 /**
@@ -9,18 +10,54 @@ import com.media.gambar.Gambar;
  */
 public class KasusCovidIndo extends javax.swing.JFrame {
 
+    /**
+     * Digunakan untuk mendapatkan data kasus covid dunia yang ada didalam database
+     */
+    private final CovidCases kasus = new CovidCases(CovidCases.KASUS_INDO);
+    /**
+     * Digunakan untuk menyimpan input dari user saat user sedang mencari provisi tertentu
+     */
+    private String keyword = "";
+    /**
+     * Fields/data yang akan ditampilkan ke dalam tabel
+     */
+    private final String[] fields = new String[]{CovidCases.PROVINSI, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    
     private int x, y;
     
     public KasusCovidIndo() {
         initComponents();
         
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
         this.tabelKasus.getTableHeader().remove(0);
         this.tabelKasus.setRowHeight(29);
         this.tabelKasus.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelKasus.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
+        
+        updateTabel();
     }
 
+    
+    /**
+     * Digunakan untuk mereset tampilan pada tabel jika user sedang mencari suatu provinsi tertentu
+     */
+    private void updateTabel(){
+        tabelKasus.setModel(new javax.swing.table.DefaultTableModel(
+            kasus.getData(fields, keyword), 
+                new String[]{"Provisi", "Positif", "Sembuh", "Kematian"}
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -166,7 +203,7 @@ public class KasusCovidIndo extends javax.swing.JFrame {
 
         lblInfoAktif.setText("Kasus Aktif");
 
-        lblInfoODP.setText("Total ODP");
+        lblInfoODP.setText("Presentase Kasus");
 
         valInfoProvinsi.setText(": Jawa Timur");
 
@@ -204,17 +241,17 @@ public class KasusCovidIndo extends javax.swing.JFrame {
 
         valInfoTingkatKematian.setText(": 2.8%");
 
-        lblInfoPDP.setText("Total PDP");
+        lblInfoPDP.setText("Kasus Pertama");
 
-        valInfoPDP.setText(": 2,433");
+        valInfoPDP.setText(": 17 Maret 2020");
 
         lblInfoPeringkat.setText("Kasus Terbanyak Ke");
 
         valInfoPeringkat.setText(": 3 dari 34 Provinsi");
 
-        lblInfoOTG.setText("Total OTG");
+        lblInfoOTG.setText("Website");
 
-        valInfoOTG.setText(": 1.433");
+        valInfoOTG.setText(": infocovid19.jatimprov..");
 
         lblInfoTerakhirDiubah.setText("Terakhir Diubah");
 
