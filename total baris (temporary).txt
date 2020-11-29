@@ -1,9 +1,21 @@
 com.main.Main 				22
-com.database.Database			984
-com.database.Account			523
-com.database.CovidCases			320
+com.database.Database			1040
+com.database.Account			535
+com.database.CovidCases			401
 com.media.audio.Audio			90
-com.media.gambar.Gambar			94
-com.window.all.LoadingWindow		194
-com.window.all.SignIn			372
-com.window.all.SignUp			472
+com.media.gambar.Gambar			95
+com.window.all.LoadingWindow		242
+com.window.all.SignIn			451
+com.window.all.SignUp			511
+com.window.all.Beranda			1253
+com.window.all.ApaCovid			810
+com.window.all.BahayaCovid			810
+com.window.all.GejalaCovid			810
+com.window.all.PenangananCovid		810
+com.window.all.Pencegahan.Covid		810
+com.window.all.KasusCovidDunia		859
+com.window.all.KasusCovidIndo		974
+com.window.all.AboutApp			1210
+
+22+1040+535+401+90+95+242+451+511+1253+(810*5)+859+974+1210 = 11457 baris
+11733
