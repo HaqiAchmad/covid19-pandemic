@@ -9,6 +9,10 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -131,7 +135,7 @@
                           <Component id="lblShowKeyword" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="linePemisah" min="-2" pref="680" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
@@ -139,11 +143,11 @@
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="lblTop" min="-2" pref="36" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="lblProvinsi" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                  <Component id="lblProvinsi" min="-2" pref="57" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lblTotalKasus" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="valTotalKasus" min="-2" pref="37" max="-2" attributes="0"/>
@@ -155,7 +159,7 @@
                   <Component id="lblTotalKematian" min="-2" pref="38" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="valTotalKematian" min="-2" pref="29" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Component id="pnlBoxInfo" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -221,6 +225,10 @@
                   <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelKasusMouseClicked"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tabelKasusKeyPressed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -270,6 +278,11 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Copyright &#xa9; 2020. Achmad Baihaqi"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseExited"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JPanel" name="pnlInfo">
               <Properties>
@@ -290,14 +303,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="lblInfoOTG" max="32767" attributes="0"/>
-                              <Component id="lblInfoPDP" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblInfoWebsite" max="32767" attributes="0"/>
+                              <Component id="lblInfoKasusPertama" alignment="1" max="32767" attributes="0"/>
                               <Component id="lblInfoProvinsi" alignment="0" max="32767" attributes="0"/>
                               <Component id="lblInfoPositif" alignment="0" pref="93" max="32767" attributes="0"/>
                               <Component id="lblInfoSembuh" alignment="0" max="32767" attributes="0"/>
                               <Component id="lblInfoKematian" alignment="0" max="32767" attributes="0"/>
                               <Component id="lblInfoAktif" alignment="0" max="32767" attributes="0"/>
-                              <Component id="lblInfoODP" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoPresentase" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -306,9 +319,9 @@
                               <Component id="valInfoKematian" alignment="0" max="32767" attributes="0"/>
                               <Component id="valInfoSembuh" alignment="0" max="32767" attributes="0"/>
                               <Component id="valInfoPositif" alignment="0" max="32767" attributes="0"/>
-                              <Component id="valInfoODP" max="32767" attributes="0"/>
-                              <Component id="valInfoPDP" max="32767" attributes="0"/>
-                              <Component id="valInfoOTG" max="32767" attributes="0"/>
+                              <Component id="valInfoPresentase" max="32767" attributes="0"/>
+                              <Component id="valInfoKasusPertama" max="32767" attributes="0"/>
+                              <Component id="valInfoWebsite" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -377,24 +390,26 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblInfoODP" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="valInfoODP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoPresentase" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoPresentase" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblInfoTingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="valInfoTingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblInfoPDP" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="valInfoPDP" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoKasusPertama" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKasusPertama" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblInfoPeringkat" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="valInfoPeringkat" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="lblInfoOTG" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="valInfoOTG" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblInfoTerakhirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="valInfoTerahirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="valInfoWebsite" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblInfoWebsite" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblInfoTerakhirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="valInfoTerahirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
                       </Group>
@@ -441,7 +456,7 @@
                     <Property name="text" type="java.lang.String" value="Kasus Aktif"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblInfoODP">
+                <Component class="javax.swing.JLabel" name="lblInfoPresentase">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Presentase Kasus"/>
                   </Properties>
@@ -471,7 +486,7 @@
                     <Property name="text" type="java.lang.String" value=": 5.983"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="valInfoODP">
+                <Component class="javax.swing.JLabel" name="valInfoPresentase">
                   <Properties>
                     <Property name="text" type="java.lang.String" value=": 166"/>
                   </Properties>
@@ -536,12 +551,12 @@
                     <Property name="text" type="java.lang.String" value=": 2.8%"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblInfoPDP">
+                <Component class="javax.swing.JLabel" name="lblInfoKasusPertama">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Kasus Pertama"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="valInfoPDP">
+                <Component class="javax.swing.JLabel" name="valInfoKasusPertama">
                   <Properties>
                     <Property name="text" type="java.lang.String" value=": 17 Maret 2020"/>
                   </Properties>
@@ -556,15 +571,23 @@
                     <Property name="text" type="java.lang.String" value=": 3 dari 34 Provinsi"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="lblInfoOTG">
+                <Component class="javax.swing.JLabel" name="lblInfoWebsite">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Website"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="valInfoOTG">
+                <Component class="javax.swing.JLabel" name="valInfoWebsite">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value=": infocovid19.jatimprov.."/>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="c8" green="52" red="8" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value=": infocovid19.jatimprov..."/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseClicked"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseExited"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoTerakhirDiubah">
                   <Properties>
@@ -593,7 +616,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Menampilkan data dengan keyword = &quot;Jatim&quot;"/>
+            <Property name="text" type="java.lang.String" value="Menampilkan data dengan keyword = &quot;&quot;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="searchKeyword">
@@ -602,6 +625,9 @@
               <Font name="Dialog" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchKeywordKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblCariProvinsi">
           <Properties>
@@ -636,7 +662,7 @@
               <Color blue="13" green="13" red="14" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Kasus Covid-19 di Provinsi "/>
+            <Property name="text" type="java.lang.String" value="Kasus Covid-19 di Provinsi  "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblProvinsi">

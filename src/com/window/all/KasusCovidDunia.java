@@ -1,8 +1,11 @@
 package com.window.all;
 
 import com.database.CovidCases;
+import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import com.sun.glass.events.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -728,7 +731,29 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_searchKeywordKeyTyped
 
     private void lblCopyrightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseClicked
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(null, "Copyright © 2020. Achmad Baihaqi. All Rights Reserved.", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+        new Thread(new Runnable(){
         
+            @Override
+            public void run(){
+                try{
+                    String text = "Copyright © 2020. Achmad Baihaqi. All Rights Reserved.";
+                    int loop = 0;
+                    while(loop <= text.length()){
+                        lblCopyright.setText(text.substring(0, loop));
+                        loop++;
+                        Thread.sleep(60);
+                    }
+                    lblCopyright.setForeground(new java.awt.Color(255,0,0));
+                    Thread.sleep(600);
+                    lblCopyright.setForeground(new java.awt.Color(0,0,0));
+                    lblCopyright.setText("Copyright © 2020. Achmad Baihaqi.");
+                }catch(InterruptedException ex){
+                    System.out.println("Terjadi kesalahan saat memainkan efek copyright : " + ex.getMessage());
+                }
+            }
+        }).start(); 
     }//GEN-LAST:event_lblCopyrightMouseClicked
 
     private void lblCopyrightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseEntered

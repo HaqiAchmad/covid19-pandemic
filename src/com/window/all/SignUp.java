@@ -5,7 +5,6 @@ import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 
 import java.awt.Color;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
