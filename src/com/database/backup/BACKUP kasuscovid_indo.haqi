@@ -5,10 +5,10 @@ INSERT INTO kasuscovid_indo VALUES
 ('Banten', 'Banten', 12223, 8396, 318, 3509, 4, 0, 0, 0, '2020-03-08', '2020-11-27', 'infocorona.bantenprov.go.id', 'lambang-banten.png'),
 ('Bengkulu', 'Bengkulu', 1665, 1287, 73, 305, 9, 0, 0, 0, '2020-03-31', '2020-11-27', 'covid19.bengkuluprov.go.id', 'lambang-bengkulu.png'),
 ('DIY', 'DI Yogyakarta', 5556, 4200, 137, 1219, 4, 0, 0, 0, '2020-03-13', '2020-11-27', 'corona.jogjaprov.go.id', 'lambang-yogyakarta.png'),
-('Gorontalo', 'Gorontalo', 3073, 2956, 89, 28, 5, 0, 0, 0, '2020-04-09', '2020-11-27', 'covid-19.gorontaloprov.go.id', 'lambang-gorontalo.jpeg'),
+('Gorontalo', 'Gorontalo', 3073, 2956, 89, 28, 5, 0, 0, 0, '2020-04-09', '2020-11-27', 'covid-19.gorontaloprov.go.id', 'lambang-gorontalo.jpg'),
 ('Jabar', 'Jawa Barat', 50482, 41932, 882, 7668, 18, 0, 0, 0, '2020-03-02', '2020-11-27', 'pikobar.jabarprov.go.id', 'lambang-jawa-barat.png'),
 ('Jakarta', 'DKI Jakarta', 131525, 120194, 2592, 8739, 1, 0, 0, 0, '2020-03-02', '2020-11-27', 'corona.jakarta.go.id', 'lambang-jakarta.png'),
-('Jambi', 'Jambi', 1774, 1263, 36, 475, 9, 0, 0, 0, '2020-03-23', '2020-11-27', 'corona.jambiprov.go.id', 'lambang-jambi.jpeg'),
+('Jambi', 'Jambi', 1774, 1263, 36, 475, 9, 0, 0, 0, '2020-03-23', '2020-11-27', 'corona.jambiprov.go.id', 'lambang-jambi.jpg'),
 ('Jateng', 'Jawa Tengah', 50880, 36681, 2197, 12002, 29, 0, 0, 0, '2020-03-09', '2020-11-27', 'corona.jatengprov.go.id', 'lambang-jawa-tengah.png'),
 ('Jatim', 'Jawa Timur', 60190, 53131, 4275, 2784, 29, 0, 0, 0, '2020-03-17', '2020-11-27', 'infocovid19.jatimprov.go.id', 'lambang-jawa-timur.png'),
 ('Kalbar', 'Kalimanan Barat', 2322, 1825, 22, 475, 12, 0, 0, 0, '2020-03-10', '2020-11-27', 'covid19.kalbarprov.go.id', 'lambang-kalimantan-barat.png'),
@@ -33,4 +33,4 @@ INSERT INTO kasuscovid_indo VALUES
 ('Sumbar', 'Sumatra Barat', 19251, 15638, 363, 3250, 12, 0, 0, 0, '2020-03-26', '2020-11-27', 'corona.sumbarprov.go.id', 'lambang-sumatra-barat.png'),
 ('Sumsel', 'Sumatra Selatan', 9300, 7504, 494, 1302, 13, 0, 0, 0, '2020-03-24', '2020-11-27', 'corona.sumselprov.go.id', 'lambang-sumatra-selatan.png'),
 ('Sumut', 'Sumatra Utara', 15235, 12601, 600, 2034, 25, 0, 0, 0, '2020-03-18', '2020-11-27', 'corona.sulutprov.go.id', 'lambang-sumatra-utara.png');
-# Copyright Â© 2020. Achmad Baihaqi. All Rights Reserved.
+# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
