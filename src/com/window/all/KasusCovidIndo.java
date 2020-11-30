@@ -69,7 +69,7 @@ public class KasusCovidIndo extends javax.swing.JFrame {
      * 
      * @return user tersambung ke inernet atau tidak
      */
-    public static boolean isConnectInternet(){
+    private static boolean isConnectInternet(){
         Socket s = new Socket();
         InetSocketAddress inet = new InetSocketAddress("www.google.com", 80);
         

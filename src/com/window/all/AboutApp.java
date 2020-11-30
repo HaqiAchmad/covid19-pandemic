@@ -1,11 +1,24 @@
 package com.window.all;
 
 import com.database.Account;
+import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JProgressBar;
+
 
 /**
  * 
@@ -14,11 +27,31 @@ import javax.swing.JButton;
  */
 public class AboutApp extends javax.swing.JFrame {
 
+    private final Desktop desktop = Desktop.getDesktop();
+    
     private final Account acc = new Account();
     
+    /**
+     * Digunakan untuk menyimpan data dari user seperti nama, tipe akun dan foto profile
+     */
     private final String namaUser = acc.getDataAccount(acc.getActivedUser(), Account.NAMA_PANGGILAN), 
                          fotoProfile = acc.getDataAccount(acc.getActivedUser(), Account.FOTO_PROFILE),
                          tipeAkun = acc.getDataAccount(acc.getActivedUser(), Account.TYPE);
+    /**
+     * Digunakan untuk menyimpan nilai dari ratting yang diberikan user
+     */
+    private int ratting = 0;
+    /**
+     * Digunakan untuk menyimpan data dari total ratting
+     */
+    private int ratting1 = 3735, ratting2 = 9425, ratting3 = 6579, ratting4 = 32894, ratting5 = 74287, 
+                totalRatting = (ratting1 + ratting2 + ratting3 + ratting4 + ratting5);
+    /**
+     * Digunakan untuk mendapatkan presentase dari total ratting yang akan digunakan untuk mengatur value dari progress bar
+     */
+    private int persenRatting1 = (int)getPesentaseRatting(ratting1), persenRatting2 = (int)getPesentaseRatting(ratting2),
+                persenRatting3 = (int)getPesentaseRatting(ratting3), persenRatting4 = (int)getPesentaseRatting(ratting4),
+                persenRatting5 = (int)getPesentaseRatting(ratting5);
 
     private int x, y;
 
@@ -31,6 +64,18 @@ public class AboutApp extends javax.swing.JFrame {
         this.btnTentangApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnKirimRatting.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnInfoApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        // menampilkan data dari ratting yang diberikan user
+        this.proRatting5.setValue(persenRatting5);
+        this.valRatting5.setText(String.format("%,d user memberi ratting 5", ratting5));
+        this.proRatting4.setValue(persenRatting4);
+        this.valRatting4.setText(String.format("%,d user memberi ratting 4", ratting4));
+        this.proRatting3.setValue(persenRatting3);
+        this.valRatting3.setText(String.format("%,d user memberi ratting 3", ratting3));
+        this.proRatting2.setValue(persenRatting2);
+        this.valRatting2.setText(String.format("%,d user memberi ratting 2", ratting2));
+        this.proRatting1.setValue(persenRatting1);
+        this.valRatting1.setText(String.format("%,d user memberi ratting 1", ratting1));
+        
         
         if(tipeAkun.equalsIgnoreCase("User")){
             this.btnInfoApp.setText("");
@@ -84,7 +129,130 @@ public class AboutApp extends javax.swing.JFrame {
         }
         
     }
+    
+    private int getTotalRatting(final int ratting){
+        switch(ratting){
+            case 1: return ratting1; 
+            case 2: return ratting2;
+            case 3: return ratting3;
+            case 4: return ratting4;
+            case 5: return ratting5;
+            default: return -1;
+        }
+    }
+    
+    private double getPesentaseRatting(final int ratting){
+        System.out.println(ratting / totalRatting * 100);
+        return (double) ratting / totalRatting * 100;
+    }
+    
+    private void setChooseRatting(final int ratting){
+        this.ratting = ratting;
+        
+        switch(ratting){
+            case 1:
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                break;
+            case 2:
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                break;
+            case 3: 
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                break;
+            case 4: 
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                break;
+            case 5: 
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                break;
+            default:
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                break;
+        }
+    }
 
+    private void updateRatting(JProgressBar pro, final int ratting){
+            new Thread(new Runnable(){
+                
+                @Override
+                public void run(){
+                    for(int i = 0; i <= (int)getPesentaseRatting(getTotalRatting(5)); i++){
+                        pro.setValue(i);
+                        try {
+                            Thread.sleep(80);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(AboutApp.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }                    
+                }                
+            }).start();
+            
+    }
+    
+    /**
+     * Digunakan untuk mengecek apakah user tersambung ke inernet atau tidak
+     * 
+     * @return user tersambung ke inernet atau tidak
+     */
+    private boolean isConnectInternet(){
+        Socket s = new Socket();
+        InetSocketAddress inet = new InetSocketAddress("www.google.com", 80);
+        
+            try{
+                s.connect(inet, 1000);
+                return true;
+            }catch(Exception ex){
+                return false;
+            }finally{
+                try{
+                    s.close();
+                }catch(Exception ex){ 
+                    Audio.play(Audio.SOUND_ERROR);
+                    JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengecek koneksi Internet!", "Fatal Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+    }
+    
+    private void openLink(final String link){
+        
+        if(isConnectInternet()){
+            try {
+                desktop.browse(new URI(link));
+            } catch (IOException | URISyntaxException ex) {
+                Audio.play(Audio.SOUND_ERROR); 
+                JOptionPane.showMessageDialog(null, "Gagal membuka link dari " + link, "Error", JOptionPane.WARNING_MESSAGE);
+            }            
+        }else{
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Internet lu mati anjir!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+        
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -184,7 +352,7 @@ public class AboutApp extends javax.swing.JFrame {
         pnlLeft.setBackground(new java.awt.Color(49, 144, 215));
 
         btnBeranda.setBackground(new java.awt.Color(49, 144, 215));
-        btnBeranda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBeranda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBeranda.setForeground(new java.awt.Color(255, 255, 255));
         btnBeranda.setText("Beranda");
         btnBeranda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -233,8 +401,8 @@ public class AboutApp extends javax.swing.JFrame {
                 .addComponent(lblPhotoProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEditProfile, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                    .addComponent(lblNamaUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblEditProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblNamaUser, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
                 .addGap(4, 4, 4))
         );
         pnlAccountLayout.setVerticalGroup(
@@ -249,7 +417,7 @@ public class AboutApp extends javax.swing.JFrame {
         );
 
         btnApaCovid.setBackground(new java.awt.Color(49, 144, 215));
-        btnApaCovid.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnApaCovid.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnApaCovid.setForeground(new java.awt.Color(255, 255, 255));
         btnApaCovid.setText("Apa itu Covid-19");
         btnApaCovid.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -260,7 +428,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnGejala.setBackground(new java.awt.Color(49, 144, 215));
-        btnGejala.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnGejala.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnGejala.setForeground(new java.awt.Color(255, 255, 255));
         btnGejala.setText("Gejala Covid-19");
         btnGejala.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -271,7 +439,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnBahaya.setBackground(new java.awt.Color(49, 144, 215));
-        btnBahaya.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnBahaya.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBahaya.setForeground(new java.awt.Color(255, 255, 255));
         btnBahaya.setText("Bahaya Covid-19");
         btnBahaya.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -282,7 +450,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnPencegahan.setBackground(new java.awt.Color(49, 144, 215));
-        btnPencegahan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnPencegahan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPencegahan.setForeground(new java.awt.Color(255, 255, 255));
         btnPencegahan.setText("Pencegahan Covid-19");
         btnPencegahan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -293,7 +461,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnCovidDunia.setBackground(new java.awt.Color(49, 144, 215));
-        btnCovidDunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCovidDunia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCovidDunia.setForeground(new java.awt.Color(255, 255, 255));
         btnCovidDunia.setText("Covid-19 di Dunia");
         btnCovidDunia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -339,7 +507,7 @@ public class AboutApp extends javax.swing.JFrame {
         );
 
         btnPenanganan.setBackground(new java.awt.Color(49, 144, 215));
-        btnPenanganan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnPenanganan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnPenanganan.setForeground(new java.awt.Color(255, 255, 255));
         btnPenanganan.setText("Penanganan Covid-19");
         btnPenanganan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -350,7 +518,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnCovidIndo.setBackground(new java.awt.Color(49, 144, 215));
-        btnCovidIndo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnCovidIndo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCovidIndo.setForeground(new java.awt.Color(255, 255, 255));
         btnCovidIndo.setText("Covid-19 di Indonesia");
         btnCovidIndo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -361,7 +529,7 @@ public class AboutApp extends javax.swing.JFrame {
         });
 
         btnTentangApp.setBackground(new java.awt.Color(49, 144, 215));
-        btnTentangApp.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        btnTentangApp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnTentangApp.setForeground(new java.awt.Color(255, 255, 255));
         btnTentangApp.setText("Tentang Aplikasi");
         btnTentangApp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -377,15 +545,15 @@ public class AboutApp extends javax.swing.JFrame {
             pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnBeranda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnApaCovid, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(btnApaCovid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnGejala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnBahaya, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(btnBahaya, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnPencegahan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCovidDunia, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(btnCovidDunia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlLeftBottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnPenanganan, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-            .addComponent(btnCovidIndo, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-            .addComponent(btnTentangApp, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+            .addComponent(btnPenanganan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnCovidIndo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnTentangApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftLayout.setVerticalGroup(
             pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,27 +646,81 @@ public class AboutApp extends javax.swing.JFrame {
 
         chooseRatting1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chooseRatting1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseRatting1.setText("1");
+        chooseRatting1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-star.png"))); // NOI18N
+        chooseRatting1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseRatting1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chooseRatting1MouseEntered(evt);
+            }
+        });
 
         btnKirimRatting.setText("Kirim");
+        btnKirimRatting.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        btnKirimRatting.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnKirimRattingMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnKirimRattingMouseExited(evt);
+            }
+        });
+        btnKirimRatting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKirimRattingActionPerformed(evt);
+            }
+        });
 
         lineRattingApp.setBackground(new java.awt.Color(0, 0, 0));
 
         chooseRatting2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chooseRatting2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseRatting2.setText("2");
+        chooseRatting2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-star.png"))); // NOI18N
+        chooseRatting2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseRatting2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chooseRatting2MouseEntered(evt);
+            }
+        });
 
         chooseRatting3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chooseRatting3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseRatting3.setText("3");
+        chooseRatting3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-star.png"))); // NOI18N
+        chooseRatting3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseRatting3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chooseRatting3MouseEntered(evt);
+            }
+        });
 
         chooseRatting4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chooseRatting4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseRatting4.setText("4");
+        chooseRatting4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-star.png"))); // NOI18N
+        chooseRatting4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseRatting4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chooseRatting4MouseEntered(evt);
+            }
+        });
 
         chooseRatting5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         chooseRatting5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        chooseRatting5.setText("5");
+        chooseRatting5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-star.png"))); // NOI18N
+        chooseRatting5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chooseRatting5MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                chooseRatting5MouseEntered(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRattingLayout = new javax.swing.GroupLayout(pnlRatting);
         pnlRatting.setLayout(pnlRattingLayout);
@@ -628,41 +850,110 @@ public class AboutApp extends javax.swing.JFrame {
         lblKontak.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblIconGmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconGmail.setText("ic gmail");
+        lblIconGmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-gmail.png"))); // NOI18N
+        lblIconGmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconGmailMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblIconGmailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblIconGmailMouseExited(evt);
+            }
+        });
 
+        lblGmail.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         lblGmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGmail.setText("Gmail");
+        lblGmail.setText("Pesan Gmail");
+        lblGmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGmailMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblGmailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblGmailMouseExited(evt);
+            }
+        });
 
         lblIconWA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconWA.setText("ic wa");
+        lblIconWA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-whatsapp.png"))); // NOI18N
+        lblIconWA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconWAMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblIconWAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblIconWAMouseExited(evt);
+            }
+        });
 
+        lblWA.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         lblWA.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblWA.setText("Whatsapp");
+        lblWA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblWAMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblWAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblWAMouseExited(evt);
+            }
+        });
 
         lblIconIG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblIconIG.setText("ic ig");
+        lblIconIG.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-aboutapp-instagram.png"))); // NOI18N
+        lblIconIG.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIconIGMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblIconIGMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblIconIGMouseExited(evt);
+            }
+        });
 
+        lblIG.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         lblIG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIG.setText("Instagram");
+        lblIG.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblIGMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblIGMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblIGMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlKontakLayout = new javax.swing.GroupLayout(pnlKontak);
         pnlKontak.setLayout(pnlKontakLayout);
         pnlKontakLayout.setHorizontalGroup(
             pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblKontak, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE)
+            .addComponent(lblKontak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlKontakLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblIconWA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblWA, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblIG, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
-                    .addComponent(lblIconIG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblIconIG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIG, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlKontakLayout.setVerticalGroup(
@@ -670,16 +961,16 @@ public class AboutApp extends javax.swing.JFrame {
             .addGroup(pnlKontakLayout.createSequentialGroup()
                 .addComponent(lblKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblIconWA, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
-                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblIconIG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblIconWA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIconIG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGmail)
                     .addComponent(lblWA)
                     .addComponent(lblIG))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(7, 7, 7))
         );
 
         lblMinimaze.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -732,17 +1023,17 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblDirilis.setText("   Dirilis pada");
 
-        valDirilis.setText(": 10 Oktober 2020");
+        valDirilis.setText(": 14 November 2020");
 
         lblDiupdate.setText("   Diupdate pada");
 
-        valDiupdate.setText(": 28 Oktober 2020");
+        valDiupdate.setText(": 1 Desember 2020");
 
         lblBahasa.setText("   Bahasa pemrograman");
 
         valBahasa.setText(": Java");
 
-        lblDatabase.setText("   Database yang dipakai");
+        lblDatabase.setText("   Database Aplikasi");
 
         valDatabase.setText(": MySQL");
 
@@ -867,17 +1158,17 @@ public class AboutApp extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(lblTop, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlKontak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlKontak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(pnlRatting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblKetApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblKetApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1096,6 +1387,171 @@ public class AboutApp extends javax.swing.JFrame {
     private void lblEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseClicked
         
     }//GEN-LAST:event_lblEditProfileMouseClicked
+
+    private void btnKirimRattingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKirimRattingActionPerformed
+        JLabel[] rattings = new JLabel[]{chooseRatting1, chooseRatting2, chooseRatting3, chooseRatting4, chooseRatting5};
+        // mengecek apakah user sudah memberi ratting atau belum
+        if(ratting <= 0){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Anda belum memilih ratting!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            for(JLabel choose : rattings){
+                choose.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+            }
+        }else{
+            updateRatting(proRatting5, 1);
+        }
+    }//GEN-LAST:event_btnKirimRattingActionPerformed
+
+    private void btnKirimRattingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKirimRattingMouseEntered
+        // jika ratting belum dipilih maka icon pada button kirimRatting akan menampilkan icon berbentuk x 
+        // tapi jika user sudah memilih ratting maka icon pada buton kirimRattin akan menampikna icn berbentuk ceklist
+        if(ratting <= 0){
+            this.btnKirimRatting.setIcon(Gambar.getIcon("ic-aboutapp-ratting-fail.png"));
+        }else{
+            this.btnKirimRatting.setIcon(Gambar.getIcon("ic-aboutapp-ratting-ok.png"));
+        }
+    }//GEN-LAST:event_btnKirimRattingMouseEntered
+
+    private void btnKirimRattingMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKirimRattingMouseExited
+        this.btnKirimRatting.setIcon(null);
+    }//GEN-LAST:event_btnKirimRattingMouseExited
+
+    private void chooseRatting1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting1MouseClicked
+        // jika ratting yang diklik user adalah 1 maka ratting akan direset ke 0
+        if(ratting == 1){
+            setChooseRatting(0); // mereset ratting
+        }else{
+            setChooseRatting(1);
+        }
+    }//GEN-LAST:event_chooseRatting1MouseClicked
+
+    private void chooseRatting1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting1MouseEntered
+//        setChooseRatting(1);
+    }//GEN-LAST:event_chooseRatting1MouseEntered
+
+    private void chooseRatting2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting2MouseClicked
+        // jika ratting yang diklik user adalah 2 maka ratting akan direset ke 0
+        if(ratting == 2){
+            setChooseRatting(0); // mereset ratting
+        }else{
+            setChooseRatting(2);
+        }
+    }//GEN-LAST:event_chooseRatting2MouseClicked
+
+    private void chooseRatting2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting2MouseEntered
+//        setChooseRatting(2);
+    }//GEN-LAST:event_chooseRatting2MouseEntered
+
+    private void chooseRatting3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting3MouseClicked
+        // jika ratting yang diklik user adalah 3 maka ratting akan direset ke 0
+        if(ratting == 3){
+            setChooseRatting(0); // mereset ratting
+        }else{
+            setChooseRatting(3);
+        }
+    }//GEN-LAST:event_chooseRatting3MouseClicked
+
+    private void chooseRatting3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting3MouseEntered
+//        setChooseRatting(3);
+    }//GEN-LAST:event_chooseRatting3MouseEntered
+
+    private void chooseRatting4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting4MouseClicked
+        // jika ratting yang diklik user adalah 4 maka ratting akan direset ke 0
+        if(ratting == 4){
+            setChooseRatting(0); // mereset ratting
+        }else{
+            setChooseRatting(4);
+        }
+    }//GEN-LAST:event_chooseRatting4MouseClicked
+
+    private void chooseRatting4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting4MouseEntered
+//        setChooseRatting(4);
+    }//GEN-LAST:event_chooseRatting4MouseEntered
+
+    private void chooseRatting5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting5MouseClicked
+        // jika ratting yang diklik user adalah 5 maka ratting akan direset ke 0
+        if(ratting == 5){
+            setChooseRatting(0); // mereset ratting
+        }else{
+            setChooseRatting(5);
+        }
+    }//GEN-LAST:event_chooseRatting5MouseClicked
+
+    private void chooseRatting5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting5MouseEntered
+//        setChooseRatting(5);
+    }//GEN-LAST:event_chooseRatting5MouseEntered
+
+    private void lblIconGmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseClicked
+        
+    }//GEN-LAST:event_lblIconGmailMouseClicked
+
+    private void lblIconGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseEntered
+        this.lblIconGmail.setIcon(Gambar.getIcon("ic-aboutapp-gmail-entered.png"));
+    }//GEN-LAST:event_lblIconGmailMouseEntered
+
+    private void lblIconGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseExited
+        this.lblIconGmail.setIcon(Gambar.getIcon("ic-aboutapp-gmail.png"));
+    }//GEN-LAST:event_lblIconGmailMouseExited
+
+    private void lblIconWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseClicked
+        
+    }//GEN-LAST:event_lblIconWAMouseClicked
+
+    private void lblIconWAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseEntered
+        this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp-entered.png"));
+    }//GEN-LAST:event_lblIconWAMouseEntered
+
+    private void lblIconWAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseExited
+        this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp.png"));
+    }//GEN-LAST:event_lblIconWAMouseExited
+
+    private void lblIconIGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseClicked
+         
+    }//GEN-LAST:event_lblIconIGMouseClicked
+
+    private void lblIconIGMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseEntered
+         this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram-entered.png"));
+    }//GEN-LAST:event_lblIconIGMouseEntered
+
+    private void lblIconIGMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseExited
+       this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram.png"));
+    }//GEN-LAST:event_lblIconIGMouseExited
+
+    private void lblGmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseClicked
+        
+    }//GEN-LAST:event_lblGmailMouseClicked
+
+    private void lblGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseEntered
+        
+    }//GEN-LAST:event_lblGmailMouseEntered
+
+    private void lblGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseExited
+        
+    }//GEN-LAST:event_lblGmailMouseExited
+
+    private void lblWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseClicked
+        
+    }//GEN-LAST:event_lblWAMouseClicked
+
+    private void lblWAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseEntered
+        
+    }//GEN-LAST:event_lblWAMouseEntered
+
+    private void lblWAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseExited
+        
+    }//GEN-LAST:event_lblWAMouseExited
+
+    private void lblIGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseClicked
+        
+    }//GEN-LAST:event_lblIGMouseClicked
+
+    private void lblIGMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseEntered
+        
+    }//GEN-LAST:event_lblIGMouseEntered
+
+    private void lblIGMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseExited
+        
+    }//GEN-LAST:event_lblIGMouseExited
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

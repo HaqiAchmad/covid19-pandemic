@@ -94,20 +94,20 @@
                   <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                   <Component id="lblTop" min="-2" pref="33" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="pnlInfo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnlKontak" min="-2" max="-2" attributes="0"/>
+                          <Component id="pnlKontak" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="pnlRatting" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="lblApp" min="-2" pref="29" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="lblKetApp" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="lblKetApp" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -126,15 +126,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnBeranda" max="32767" attributes="0"/>
                   <Component id="pnlAccount" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnApaCovid" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnApaCovid" max="32767" attributes="0"/>
                   <Component id="btnGejala" max="32767" attributes="0"/>
-                  <Component id="btnBahaya" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnBahaya" max="32767" attributes="0"/>
                   <Component id="btnPencegahan" max="32767" attributes="0"/>
-                  <Component id="btnCovidDunia" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnCovidDunia" max="32767" attributes="0"/>
                   <Component id="pnlLeftBottom" alignment="0" max="32767" attributes="0"/>
-                  <Component id="btnPenanganan" pref="218" max="32767" attributes="0"/>
-                  <Component id="btnCovidIndo" pref="218" max="32767" attributes="0"/>
-                  <Component id="btnTentangApp" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnPenanganan" max="32767" attributes="0"/>
+                  <Component id="btnCovidIndo" max="32767" attributes="0"/>
+                  <Component id="btnTentangApp" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -172,7 +172,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -202,8 +202,8 @@
                           <Component id="lblPhotoProfile" min="-2" pref="82" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblEditProfile" pref="122" max="32767" attributes="0"/>
-                              <Component id="lblNamaUser" max="32767" attributes="0"/>
+                              <Component id="lblEditProfile" max="32767" attributes="0"/>
+                              <Component id="lblNamaUser" pref="122" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                       </Group>
@@ -275,7 +275,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -297,7 +297,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -319,7 +319,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -341,7 +341,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -363,7 +363,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -435,7 +435,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -457,7 +457,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -479,7 +479,7 @@
                   <Color blue="d7" green="90" red="31" type="rgb"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="14" style="1"/>
+                  <Font name="Tahoma" size="14" style="1"/>
                 </Property>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -784,13 +784,25 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="1"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-star.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting1MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting1MouseEntered"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnKirimRatting">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Kirim"/>
+                <Property name="horizontalTextPosition" type="int" value="2"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnKirimRattingMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnKirimRattingMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKirimRattingActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="lineRattingApp">
               <Properties>
@@ -805,8 +817,14 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="2"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-star.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting2MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting2MouseEntered"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="chooseRatting3">
               <Properties>
@@ -814,8 +832,14 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="3"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-star.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting3MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting3MouseEntered"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="chooseRatting4">
               <Properties>
@@ -823,8 +847,14 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="4"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-star.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting4MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting4MouseEntered"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="chooseRatting5">
               <Properties>
@@ -832,8 +862,14 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="5"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-star.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting5MouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chooseRatting5MouseEntered"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -873,22 +909,22 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblKontak" alignment="0" pref="328" max="32767" attributes="0"/>
+                  <Component id="lblKontak" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblGmail" alignment="0" max="32767" attributes="0"/>
-                          <Component id="lblIconGmail" alignment="0" pref="79" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblIconGmail" max="32767" attributes="0"/>
+                          <Component id="lblGmail" pref="92" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblIconWA" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblWA" alignment="0" pref="92" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblIG" alignment="0" pref="76" max="32767" attributes="0"/>
-                          <Component id="lblIconIG" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblIconIG" max="32767" attributes="0"/>
+                          <Component id="lblIG" pref="88" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -899,18 +935,18 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="lblKontak" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="lblIconWA" alignment="0" pref="47" max="32767" attributes="0"/>
-                          <Component id="lblIconGmail" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblIconWA" alignment="0" max="32767" attributes="0"/>
                           <Component id="lblIconIG" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblIconGmail" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblGmail" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblWA" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblIG" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                      <EmptySpace min="7" pref="7" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -933,38 +969,83 @@
             <Component class="javax.swing.JLabel" name="lblIconGmail">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="ic gmail"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-gmail.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconGmailMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconGmailMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconGmailMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblGmail">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Gmail"/>
+                <Property name="text" type="java.lang.String" value="Pesan Gmail"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGmailMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGmailMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblGmailMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIconWA">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="ic wa"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-whatsapp.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconWAMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconWAMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconWAMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblWA">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Whatsapp"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblWAMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblWAMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblWAMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIconIG">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="ic ig"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/com/media/gambar/icons/ic-aboutapp-instagram.png"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconIGMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconIGMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIconIGMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblIG">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Instagram"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIGMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIGMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblIGMouseExited"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1174,7 +1255,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDirilis">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 10 Oktober 2020"/>
+                <Property name="text" type="java.lang.String" value=": 14 November 2020"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDiupdate">
@@ -1184,7 +1265,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDiupdate">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 28 Oktober 2020"/>
+                <Property name="text" type="java.lang.String" value=": 1 Desember 2020"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblBahasa">
@@ -1199,7 +1280,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblDatabase">
               <Properties>
-                <Property name="text" type="java.lang.String" value="   Database yang dipakai"/>
+                <Property name="text" type="java.lang.String" value="   Database Aplikasi"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="valDatabase">
