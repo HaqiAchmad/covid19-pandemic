@@ -24,4 +24,4 @@ INSERT INTO users VALUES
 ('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User'),
 ('tesaja', 'baihaqi', 'baihaqi', 'baihaqi.myapps@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'appjava20', '2020-11-26', 'default', 'User'),
 ('tester', 'aku hanya ikan', 'hanya ikan', 'ikanlele@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'HANYA IKAN', '2020-11-26', 'default', 'User');
-# Copyright Â© 2020. Achmad Baihaqi. All Rights Reserved.
+# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
