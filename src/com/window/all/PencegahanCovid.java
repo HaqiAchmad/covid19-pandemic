@@ -35,13 +35,17 @@ public class PencegahanCovid extends javax.swing.JFrame {
         this.lblTop.setText("<html><p style=\"text-decoration:underline;\">"+lblTop.getText()+"</p></html>");
         this.btnPencegahan.setBackground(new Color(22,108,190));
         this.btnPencegahan.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnInfoApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.btnDataApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         
+        // jika akun yang login memiliki tipe akun 'user' maka button dataApp akan tidak terlihat
         if(tipeAkun.equalsIgnoreCase("User")){
-            this.btnInfoApp.setText("");
-            this.btnInfoApp.setEnabled(false);
+            this.btnDataApp.setText("");
+            this.btnDataApp.setEnabled(false);
         }
         
+        /* jika panjang dari nama panggilan user lebih dari 17 maka nama panggilan tersebut akan dipotong,
+           tampilan window akan berubah jika nama panggilan dari user terlalu panjang
+        */
         if(namaUser.length() <= 10){
             this.lblNamaUser.setText("Hi, " + namaUser);
         }else if(namaUser.length() > 17){
@@ -162,7 +166,7 @@ public class PencegahanCovid extends javax.swing.JFrame {
         btnPencegahan = new javax.swing.JButton();
         btnCovidDunia = new javax.swing.JButton();
         pnlLeftBottom = new javax.swing.JPanel();
-        btnInfoApp = new javax.swing.JButton();
+        btnDataApp = new javax.swing.JButton();
         btnPenanganan = new javax.swing.JButton();
         btnCovidIndo = new javax.swing.JButton();
         btnTentangApp = new javax.swing.JButton();
@@ -325,22 +329,22 @@ public class PencegahanCovid extends javax.swing.JFrame {
 
         pnlLeftBottom.setBackground(new java.awt.Color(33, 114, 175));
 
-        btnInfoApp.setBackground(new java.awt.Color(33, 114, 175));
-        btnInfoApp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnInfoApp.setForeground(new java.awt.Color(255, 255, 255));
-        btnInfoApp.setText("Lihat Data Aplikasi");
-        btnInfoApp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnInfoApp.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDataApp.setBackground(new java.awt.Color(33, 114, 175));
+        btnDataApp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnDataApp.setForeground(new java.awt.Color(255, 255, 255));
+        btnDataApp.setText("Lihat Data Aplikasi");
+        btnDataApp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDataApp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnInfoAppMouseEntered(evt);
+                btnDataAppMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnInfoAppMouseExited(evt);
+                btnDataAppMouseExited(evt);
             }
         });
-        btnInfoApp.addActionListener(new java.awt.event.ActionListener() {
+        btnDataApp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInfoAppActionPerformed(evt);
+                btnDataAppActionPerformed(evt);
             }
         });
 
@@ -348,13 +352,13 @@ public class PencegahanCovid extends javax.swing.JFrame {
         pnlLeftBottom.setLayout(pnlLeftBottomLayout);
         pnlLeftBottomLayout.setHorizontalGroup(
             pnlLeftBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnInfoApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDataApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftBottomLayout.setVerticalGroup(
             pnlLeftBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLeftBottomLayout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(btnInfoApp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDataApp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
 
@@ -680,19 +684,36 @@ public class PencegahanCovid extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnTentangAppActionPerformed
 
-    private void btnInfoAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoAppActionPerformed
+    private void btnDataAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataAppActionPerformed
+        System.out.println("Membuka Window DataAplikasi");
+        com.window.admin.DataAplikasi data = new com.window.admin.DataAplikasi();
+        data.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                data.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataAppActionPerformed
 
-    }//GEN-LAST:event_btnInfoAppActionPerformed
+    private void btnDataAppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataAppMouseEntered
+        // jika tipe akun yg login adalah admin maka event entered akan dilakukan
+        if(tipeAkun.equalsIgnoreCase("Admin")){
+            this.btnDataApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            this.btnDataApp.setBackground(new Color(19,94,174));            
+        }
+    }//GEN-LAST:event_btnDataAppMouseEntered
 
-    private void btnInfoAppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseEntered
-        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        this.btnInfoApp.setBackground(new Color(19,94,174));
-    }//GEN-LAST:event_btnInfoAppMouseEntered
-
-    private void btnInfoAppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseExited
-        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        this.btnInfoApp.setBackground(new Color(33,114,175));
-    }//GEN-LAST:event_btnInfoAppMouseExited
+    private void btnDataAppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataAppMouseExited
+        // jika tipe akun yg login adalah admin maka event exited akan dilakukan
+        if(tipeAkun.equalsIgnoreCase("Admin")){
+            this.btnDataApp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            this.btnDataApp.setBackground(new Color(33,114,175));            
+        }
+    }//GEN-LAST:event_btnDataAppMouseExited
 
     private void lblPhotoProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhotoProfileMouseClicked
         
@@ -787,8 +808,8 @@ public class PencegahanCovid extends javax.swing.JFrame {
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCovidDunia;
     private javax.swing.JButton btnCovidIndo;
+    private javax.swing.JButton btnDataApp;
     private javax.swing.JButton btnGejala;
-    private javax.swing.JButton btnInfoApp;
     private javax.swing.JButton btnPenanganan;
     private javax.swing.JButton btnPencegahan;
     private javax.swing.JButton btnTentangApp;

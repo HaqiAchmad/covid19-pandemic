@@ -12,13 +12,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
-
 
 /**
  * 
@@ -27,10 +24,14 @@ import javax.swing.JProgressBar;
  */
 public class AboutApp extends javax.swing.JFrame {
 
+    /**
+     * Object yang digunakan untuk membuka link
+     */
     private final Desktop desktop = Desktop.getDesktop();
-    
+    /**
+     * Digunakan untuk mendapatkan data dari akun
+     */
     private final Account acc = new Account();
-    
     /**
      * Digunakan untuk menyimpan data dari user seperti nama, tipe akun dan foto profile
      */
@@ -38,22 +39,40 @@ public class AboutApp extends javax.swing.JFrame {
                          fotoProfile = acc.getDataAccount(acc.getActivedUser(), Account.FOTO_PROFILE),
                          tipeAkun = acc.getDataAccount(acc.getActivedUser(), Account.TYPE);
     /**
-     * Digunakan untuk menyimpan nilai dari ratting yang diberikan user
+     * Digunakan untuk menyimpan data info app yang berbentuk String
+     */
+    private final String NAMA_APP = "Covid-19 Pandemic", VERSI_APP = "1.0", UKURAN_APP = "17 Mb", RILIS = "14 November 2020", 
+                         UPDATE = "1 Desember 2020", BAHASA = "Java", DATABASE = "MySQL", DEVELOPER = "Achmad Baihaqi";
+    
+    private int totalDownload = 14565346, penggunaOnline = 75654;
+    /**
+     * Digunakan untuk menyimpan nilai dari ratting yang diberikan oleh user nilai dari ratting terdiri dari
+     * 1, 2, 3, 4 dan 5 scr default nilai dari ratting adalah 0
      */
     private int ratting = 0;
     /**
-     * Digunakan untuk menyimpan data dari total ratting
+     * Ratting yang diberikan oleh user 
      */
-    private int ratting1 = 3735, ratting2 = 9425, ratting3 = 6579, ratting4 = 32894, ratting5 = 74287, 
-                totalRatting = (ratting1 + ratting2 + ratting3 + ratting4 + ratting5);
+    private int ratting5 = 982330, ratting4 = 604517, ratting3 = 150451, ratting2 = 123440, ratting1 = 51749, 
+                totalRatting = (ratting5 + ratting4 + ratting3 + ratting2 + ratting1);
     /**
-     * Digunakan untuk mendapatkan presentase dari total ratting yang akan digunakan untuk mengatur value dari progress bar
+     * Digunakan untuk mendapatkan presentase dari ratting yang diberikan oleh user
      */
-    private int persenRatting1 = (int)getPesentaseRatting(ratting1), persenRatting2 = (int)getPesentaseRatting(ratting2),
-                persenRatting3 = (int)getPesentaseRatting(ratting3), persenRatting4 = (int)getPesentaseRatting(ratting4),
-                persenRatting5 = (int)getPesentaseRatting(ratting5);
-
+    private int pRatting5 = (int)getPresentaseRatting(ratting5), pRatting4 = (int)getPresentaseRatting(ratting4), 
+                pRatting3 = (int)getPresentaseRatting(ratting3), pRatting2 = (int)getPresentaseRatting(ratting3), 
+                pRatting1 = (int)getPresentaseRatting(ratting1);
+    /**
+     * Digunakan untuk mengatur posisi dari window
+     */
     private int x, y;
+    /**
+     * digunakan untuk mengecek apakah efek update dari ratting sedang berjalan atau tidak
+    */
+    private boolean isPlay = false;
+    /**
+     * Digunakan untuk memainkan efek random dari penggunaOnline dan totalDownlad
+     */
+    private boolean isVisible = true;
 
     public AboutApp() {
         initComponents();
@@ -63,25 +82,34 @@ public class AboutApp extends javax.swing.JFrame {
         this.btnTentangApp.setBackground(new Color(22,108,190));
         this.btnTentangApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnKirimRatting.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnInfoApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        // menampilkan data dari ratting yang diberikan user
-        this.proRatting5.setValue(persenRatting5);
+        this.btnDataApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
+     
+        // menampilkan data dari ratting ke window
         this.valRatting5.setText(String.format("%,d user memberi ratting 5", ratting5));
-        this.proRatting4.setValue(persenRatting4);
         this.valRatting4.setText(String.format("%,d user memberi ratting 4", ratting4));
-        this.proRatting3.setValue(persenRatting3);
         this.valRatting3.setText(String.format("%,d user memberi ratting 3", ratting3));
-        this.proRatting2.setValue(persenRatting2);
         this.valRatting2.setText(String.format("%,d user memberi ratting 2", ratting2));
-        this.proRatting1.setValue(persenRatting1);
         this.valRatting1.setText(String.format("%,d user memberi ratting 1", ratting1));
+        this.proRatting5.setValue(pRatting5);
+        this.proRatting4.setValue(pRatting4);
+        this.proRatting3.setValue(pRatting3);
+        this.proRatting2.setValue(pRatting2);
+        this.proRatting1.setValue(pRatting1);
         
+        infoAppEfek();
+        randomPenggunaOnline();
+        updateTotalDownload();
         
+        // jika akun yang login memiliki tipe akun 'user' maka button dataApp akan tidak terlihat
         if(tipeAkun.equalsIgnoreCase("User")){
-            this.btnInfoApp.setText("");
-            this.btnInfoApp.setEnabled(false);
+            this.btnDataApp.setText("");
+            this.btnDataApp.setEnabled(false);
         }
         
+        /* jika panjang dari nama panggilan user lebih dari 17 maka nama panggilan tersebut akan dipotong,
+           tampilan window akan berubah jika nama panggilan dari user terlalu panjang
+        */
         if(namaUser.length() <= 10){
             this.lblNamaUser.setText("Hi, " + namaUser);
         }else if(namaUser.length() > 17){
@@ -130,87 +158,302 @@ public class AboutApp extends javax.swing.JFrame {
         
     }
     
-    private int getTotalRatting(final int ratting){
-        switch(ratting){
-            case 1: return ratting1; 
-            case 2: return ratting2;
-            case 3: return ratting3;
-            case 4: return ratting4;
-            case 5: return ratting5;
-            default: return -1;
-        }
-    }
-    
-    private double getPesentaseRatting(final int ratting){
-        System.out.println(ratting / totalRatting * 100);
+    /**
+     * Digunakan untuk mendapatkan presentase dari ratting 1, 2, 3, 4, atau 5.
+     * Method akan menghitun presentase ratting dengan cara mendapatkan total ratting yang diinputkan 
+     * lalu dibagi dengan total keseluruhan ratting dan hasilnya dikali dengan 100
+     * <i>'ratting \ totalRatting * 100'</i>
+     * 
+     * @param ratting ratting yang akan dihitung presentase-nya
+     * @return presentase dari ratting
+     */
+    private double getPresentaseRatting(final int ratting){
         return (double) ratting / totalRatting * 100;
     }
     
+    /**
+     * Digunakan untuk menampilkan icon ratting(star) ke window sesuai tombol ratting mana yang dilik.
+     * Jika tombol ratting yang dilik adalah chooseRatting5 maka icon tombol chooseRatting1 smp 5 akan diset dengan icon ratting(star).
+     * Method ini juga digunakan untuk mendapatkan nilai dari ratting misalnya jika user menekan tombol chooseRatting4 maka nilai 
+     * dari ratting adaalh 4
+     * 
+     * @param ratting tombol ratting mana yang diklik, tombol ratting terdiri dari ratting 1, 2, 3, 4 dan 5
+     */
     private void setChooseRatting(final int ratting){
         this.ratting = ratting;
-        
+        // mengatur tombol chooseRatting 1 smp 5 ke icon star sesuai dengan tombol ratting mana yang diklik
         switch(ratting){
-            case 1:
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+            case 1: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 break;
-            case 2:
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+            case 2: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 break;
-            case 3: 
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+            case 3: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 break;
-            case 4: 
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+            case 4: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 break;
-            case 5: 
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+            case 5: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star-filled.png"));
                 break;
-            default:
-                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
-                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+            default: this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                    this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 break;
+                    
         }
     }
-
-    private void updateRatting(JProgressBar pro, final int ratting){
-            new Thread(new Runnable(){
-                
-                @Override
-                public void run(){
-                    for(int i = 0; i <= (int)getPesentaseRatting(getTotalRatting(5)); i++){
-                        pro.setValue(i);
-                        try {
-                            Thread.sleep(80);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(AboutApp.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }                    
-                }                
-            }).start();
+    
+    /**
+     * Digunakan untuk memberi efek ketika user menenkan tombol ratting. Sebelum memainkan efek
+     * method akan mengupdate total ratting dan presentase ratting terlebih dalulu. Proses update dilakukan 
+     * sesuai dengan ratting yang dipilih user. Jika ratting yang dipilih user maka yang akan diupdate adalah 
+     * total ratting 5 dan preentase ratting 5. Setelah proses update selesai maka selanjutnya adalah memainkan efek
+     * update ratting. JProgressBar nilainya akan direset ke 0 lalu akan dilakukan for loop dari nilai 0 ke nilali dari presentase 
+     * ratting degan delay 30 milis delay akan bertambah setiap nilai dari JProgressBar bertambah 1. Jika efek sudah selesai 
+     * maka ratting nilainy akan direset ke 0;
+     * 
+     */
+    private void updateRatting(){
+        // memberi nilai true pada isPlay
+        isPlay = true;
+        // mengupdate total ratting dan presentase ratting sesuai dengan nilai ratting yang diberikan oleh user
+        totalRatting++;
+        switch(ratting){
+            case 1: ratting1++; pRatting1 = (int)getPresentaseRatting(ratting1);
+                break;
+            case 2: ratting2++; pRatting2 = (int)getPresentaseRatting(ratting2);
+                break;
+            case 3: ratting3++; pRatting3 = (int)getPresentaseRatting(ratting3);
+                break;
+            case 4: ratting4++; pRatting4 = (int)getPresentaseRatting(ratting4);
+                break;
+            case 5: ratting5++; pRatting5 = (int)getPresentaseRatting(ratting5);
+                break;
+        }
+        // memainkan efek update ratting
+        new Thread(new Runnable(){
             
+            @Override
+            public void run(){
+            // jeda waktu saat memainkan efek
+            int delay = 30;
+                try{
+                    while(isPlay){
+                        // memainkan efek update ratting sesuai dengan nilai ratting yang diberikan oleh user
+                        switch(ratting){
+                            case 1: 
+                                // mereset nilai dari ProgressBar ke 0
+                                proRatting1.setValue(0);
+                                Thread.sleep(250);
+                                // merubah warna ProgressBar ke warna biru
+                                proRatting1.setForeground(new Color(0,148,255));
+                                // memberi efek pada JProgressBar ratting 1
+                                for(int i = 0; i < pRatting1; i++){
+                                    proRatting1.setValue(i);
+                                    Thread.sleep(delay);
+                                    delay=+(int)getPresentaseRatting(ratting5) / 2;
+                                }
+                                // mereset warna dari ProgressBar
+                                Thread.sleep(200);
+                                proRatting1.setForeground(new Color(51,255,0));
+                                valRatting1.setText(String.format("%,d user memberi ratting 1", ratting1));
+                                break;
+                            case 2: 
+                                // mereset nilai dari ProgressBar ke 0
+                                proRatting2.setValue(0);
+                                Thread.sleep(250);
+                                // merubah warna ProgressBar ke warna biru
+                                proRatting2.setForeground(new Color(0,148,255));
+                                // memberi efek pada JProgressBar ratting 2
+                                for(int i = 0; i < pRatting2; i++){
+                                    proRatting2.setValue(i);
+                                    Thread.sleep(delay);
+                                    delay=+(int)getPresentaseRatting(ratting5) / 2;
+                                }
+                                // mereset warna dari ProgressBar
+                                Thread.sleep(200);
+                                proRatting2.setForeground(new Color(51,255,0));
+                                valRatting2.setText(String.format("%,d user memberi ratting 2", ratting2));
+                                break;
+                            case 3: 
+                                // mereset nilai dari ProgressBar ke 0
+                                proRatting3.setValue(0);
+                                Thread.sleep(250);
+                                // merubah warna ProgressBar ke warna biru
+                                proRatting3.setForeground(new Color(0,148,255));
+                                // memberi efek pada JProgressBar ratting 3
+                                for(int i = 0; i < pRatting3; i++){
+                                    proRatting3.setValue(i);
+                                    Thread.sleep(delay);
+                                    delay=+(int)getPresentaseRatting(ratting5) / 2;
+                                }
+                                // mereset warna dari ProgressBar
+                                Thread.sleep(200);
+                                proRatting3.setForeground(new Color(51,255,0));
+                                valRatting3.setText(String.format("%,d user memberi ratting 3", ratting3));
+                                break;
+                            case 4: 
+                                // mereset nilai dari ProgressBar ke 0
+                                proRatting4.setValue(0);
+                                Thread.sleep(250);
+                                // merubah warna ProgressBar ke warna biru
+                                proRatting4.setForeground(new Color(0,148,255));
+                                // memberi efek pada JProgressBar ratting 4
+                                for(int i = 0; i < pRatting4; i++){
+                                    proRatting4.setValue(i);
+                                    Thread.sleep(delay);
+                                    delay=+(int)getPresentaseRatting(ratting5) / 2;
+                                }
+                                // mereset warna dari ProgressBar
+                                Thread.sleep(200);
+                                proRatting4.setForeground(new Color(51,255,0));
+                                valRatting4.setText(String.format("%,d user memberi ratting 4", ratting4));
+                                break;
+                            case 5: 
+                                // mereset nilai dari ProgressBar ke 0
+                                proRatting5.setValue(0);
+                                Thread.sleep(250);
+                                // merubah warna ProgressBar ke warna biru
+                                proRatting5.setForeground(new Color(0,148,255));
+                                // memberi efek pada JProgressBar ratting 5
+                                for(int i = 0; i < pRatting5; i++){
+                                    proRatting5.setValue(i);
+                                    Thread.sleep(delay);
+                                    delay=+(int)getPresentaseRatting(ratting5) / 2;
+                                }
+                                // mereset warna dari ProgressBar
+                                Thread.sleep(200);
+                                proRatting5.setForeground(new Color(51,255,0));
+                                valRatting5.setText(String.format("%,d user memberi ratting 5", ratting5));
+                                break;
+                        }
+                       isPlay = false; // mereset isPlay ke false jika efek sudah selesai
+                       ratting = 0; // mereset nilai dari ratting
+                    }
+                }catch(InterruptedException iex){
+                    System.out.println("Terjadi kesalahan : " + iex.getMessage());
+                    isPlay = false; // mereset isPlay ke false jika terjadi error
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * Digunakan untuk merandom pengguna yang sedang online
+     */
+    private void randomPenggunaOnline(){
+        // untuk merandom angka
+        Random rand = new Random();
+        new Thread(new Runnable(){
+            
+            @Override
+            public void run(){
+                try{
+                    // digunakan untuk merandom apakah pengguna online berkurang atau bertambah
+                    int num;
+                    while(isVisible){
+                        // merandom nilai num
+                        num = rand.nextInt(500);
+                        // jika nilai num adalh genap maka pengguna online akan bertambah, tapi jika nilai num ganjil makan pengguna online berkurang
+                        if((num % 2) == 0){
+                            penggunaOnline += rand.nextInt(5000); // pengguna online bertambah
+                        }else{
+                            penggunaOnline -= rand.nextInt(5500); // pengguna online berkurang
+                        }
+                        // jika nilai dari pengguna online < dari 0 maka jumlah pengguna online akan ditambah dengan angka random dari 0 smp 1000
+                        if(penggunaOnline <= 0){
+                            penggunaOnline += rand.nextInt(10000);
+                        }
+                        Thread.sleep(400 + rand.nextInt(5000));
+                        // menampilkan data pengguna online ke window
+                        valPengguna.setText(String.format(": %,d Pengguna", penggunaOnline));
+                    }
+                }catch(InterruptedException iex){
+                    System.out.println("Error guys : " + iex.getMessage());
+                }
+            }
+        }).start();
+    }
+    
+    /**
+     * Digunakan untuk merandom dari total download aplikasi
+     */
+    private void updateTotalDownload(){
+        // untuk merandom angka
+        Random rand = new Random();
+        new Thread(new Runnable(){
+            
+            @Override
+            public void run(){
+                try{
+                    while(isVisible){
+                        // merandom total download
+                        totalDownload += rand.nextInt(50);
+                        Thread.sleep(rand.nextInt(rand.nextInt(7000)));
+                        // menampilkan data total download ke window
+                        valTotalDonwload.setText(String.format(": %,d Downloads", totalDownload));
+                    }
+                }catch(InterruptedException iex){
+                    System.out.println("Error guys : " + iex.getMessage());
+                }
+            }
+        }).start();
+    }
+    
+    private void infoAppEfek(){
+        JLabel lbls[] = new JLabel[]{
+            this.valBahasa, this.valDatabase, this.valDeveloper, this.valDirilis, this.valDiupdate, this.valNamaApp, this.valPengguna, this.valTotalDonwload, this.valUkuran, this.valVersi
+        };
+        
+        for(JLabel lbl : lbls){
+            lbl.addMouseListener(new java.awt.event.MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    lbl.setForeground(new java.awt.Color(16,69,222));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    lbl.setForeground(new java.awt.Color(0, 0, 0));
+                }
+            });
+        }
     }
     
     /**
@@ -237,16 +480,26 @@ public class AboutApp extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * Digunakan untuk membuka suatu link tertentu sebelum membuka link method akan mengecek apakah user 
+     * terhubungke Internet atau tidak jika user tidak terhubung ke Internet maka akan menampilkan pesan error 
+     * tapi jika user terhubung ke Internet maka link akan dibuka.
+     * 
+     * @param link alamat link yang ingin dibuka 
+     */
     private void openLink(final String link){
         
+        // mengecek user terhubung ke Internet atau tidak
         if(isConnectInternet()){
             try {
+                // membuka link
                 desktop.browse(new URI(link));
             } catch (IOException | URISyntaxException ex) {
                 Audio.play(Audio.SOUND_ERROR); 
                 JOptionPane.showMessageDialog(null, "Gagal membuka link dari " + link, "Error", JOptionPane.WARNING_MESSAGE);
             }            
         }else{
+            // menampilkan pesan saat user tidak terhubung ke internet
             Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Internet lu mati anjir!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -270,7 +523,7 @@ public class AboutApp extends javax.swing.JFrame {
         btnPencegahan = new javax.swing.JButton();
         btnCovidDunia = new javax.swing.JButton();
         pnlLeftBottom = new javax.swing.JPanel();
-        btnInfoApp = new javax.swing.JButton();
+        btnDataApp = new javax.swing.JButton();
         btnPenanganan = new javax.swing.JButton();
         btnCovidIndo = new javax.swing.JButton();
         btnTentangApp = new javax.swing.JButton();
@@ -336,6 +589,14 @@ public class AboutApp extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -473,22 +734,22 @@ public class AboutApp extends javax.swing.JFrame {
 
         pnlLeftBottom.setBackground(new java.awt.Color(33, 114, 175));
 
-        btnInfoApp.setBackground(new java.awt.Color(33, 114, 175));
-        btnInfoApp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnInfoApp.setForeground(new java.awt.Color(255, 255, 255));
-        btnInfoApp.setText("Lihat Data Aplikasi");
-        btnInfoApp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btnInfoApp.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnDataApp.setBackground(new java.awt.Color(33, 114, 175));
+        btnDataApp.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnDataApp.setForeground(new java.awt.Color(255, 255, 255));
+        btnDataApp.setText("Lihat Data Aplikasi");
+        btnDataApp.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btnDataApp.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnInfoAppMouseEntered(evt);
+                btnDataAppMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnInfoAppMouseExited(evt);
+                btnDataAppMouseExited(evt);
             }
         });
-        btnInfoApp.addActionListener(new java.awt.event.ActionListener() {
+        btnDataApp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInfoAppActionPerformed(evt);
+                btnDataAppActionPerformed(evt);
             }
         });
 
@@ -496,13 +757,13 @@ public class AboutApp extends javax.swing.JFrame {
         pnlLeftBottom.setLayout(pnlLeftBottomLayout);
         pnlLeftBottomLayout.setHorizontalGroup(
             pnlLeftBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnInfoApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDataApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlLeftBottomLayout.setVerticalGroup(
             pnlLeftBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLeftBottomLayout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(btnInfoApp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDataApp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
         );
 
@@ -577,7 +838,7 @@ public class AboutApp extends javax.swing.JFrame {
                 .addComponent(btnCovidIndo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnTentangApp, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(pnlLeftBottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -961,16 +1222,17 @@ public class AboutApp extends javax.swing.JFrame {
             .addGroup(pnlKontakLayout.createSequentialGroup()
                 .addComponent(lblKontak, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblIconWA, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIconIG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblIconGmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIconWA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblIconIG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(11, 11, 11)
-                .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblGmail)
-                    .addComponent(lblWA)
-                    .addComponent(lblIG))
-                .addGap(7, 7, 7))
+                    .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblWA)
+                        .addComponent(lblIG)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         lblMinimaze.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -1011,7 +1273,7 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblTotalDownload.setText("   Total Download");
 
-        valTotalDonwload.setText(": 14.565.346 Download");
+        valTotalDonwload.setText(": 14.565.346 Downloads");
 
         lblPengguna.setText("   Pengguna saat ini");
 
@@ -1158,18 +1420,18 @@ public class AboutApp extends javax.swing.JFrame {
                 .addGap(1, 1, 1)
                 .addComponent(lblTop, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(pnlInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlKontak, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(pnlKontak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addComponent(pnlRatting, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblKetApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(lblApp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblKetApp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1198,6 +1460,7 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
+        acc.closeConnection();
         System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
@@ -1356,19 +1619,36 @@ public class AboutApp extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnTentangAppActionPerformed
 
-    private void btnInfoAppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseEntered
-        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        this.btnInfoApp.setBackground(new Color(19,94,174));
-    }//GEN-LAST:event_btnInfoAppMouseEntered
+    private void btnDataAppMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataAppMouseEntered
+        // jika tipe akun yg login adalah admin maka event entered akan dilakukan
+        if(tipeAkun.equalsIgnoreCase("Admin")){
+            this.btnDataApp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            this.btnDataApp.setBackground(new Color(19,94,174));            
+        }
+    }//GEN-LAST:event_btnDataAppMouseEntered
 
-    private void btnInfoAppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInfoAppMouseExited
-        this.btnInfoApp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        this.btnInfoApp.setBackground(new Color(33,114,175));
-    }//GEN-LAST:event_btnInfoAppMouseExited
+    private void btnDataAppMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataAppMouseExited
+        // jika tipe akun yg login adalah admin maka event exited akan dilakukan
+        if(tipeAkun.equalsIgnoreCase("Admin")){
+            this.btnDataApp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            this.btnDataApp.setBackground(new Color(33,114,175));            
+        }
+    }//GEN-LAST:event_btnDataAppMouseExited
 
-    private void btnInfoAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoAppActionPerformed
+    private void btnDataAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataAppActionPerformed
+        System.out.println("Membuka Window DataAplikasi");
+        com.window.admin.DataAplikasi data = new com.window.admin.DataAplikasi();
+        data.setLocation(this.getX(), this.getY());
         
-    }//GEN-LAST:event_btnInfoAppActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                data.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataAppActionPerformed
 
     private void lblPhotoProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhotoProfileMouseClicked
         
@@ -1389,27 +1669,39 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_lblEditProfileMouseClicked
 
     private void btnKirimRattingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKirimRattingActionPerformed
-        JLabel[] rattings = new JLabel[]{chooseRatting1, chooseRatting2, chooseRatting3, chooseRatting4, chooseRatting5};
-        // mengecek apakah user sudah memberi ratting atau belum
-        if(ratting <= 0){
-            Audio.play(Audio.SOUND_INFO);
-            JOptionPane.showMessageDialog(null, "Anda belum memilih ratting!", "Info", JOptionPane.INFORMATION_MESSAGE);
-            for(JLabel choose : rattings){
-                choose.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+        // mengecek apakah aplikasi sedang memainkan efek updateRatting atau tidak, jika tidak maka ratting akan diupdate
+        if(!isPlay){
+            /* mengecek apakah user sudah memilih ratting atau belum jika belum maka akan menampilkan pesan dan icon
+               pada chooseRatting1 smp 5 akan di set ke icon star error 
+               jika user sudah memilih ratting maka ratting akan diupdate
+            */
+            if(ratting > 0){
+               // mereset tombol chooseRatting1 smp 5 ke star kosong
+                chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+               // memainkan efek dari update ratting
+                updateRatting();
+            }else{
+                Audio.play(Audio.SOUND_INFO);
+                JOptionPane.showMessageDialog(null, "Anda belum memilih ratting!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                this.chooseRatting1.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+                this.chooseRatting2.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+                this.chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+                this.chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
+                this.chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star-error.png"));
             }
+            
         }else{
-            updateRatting(proRatting5, 1);
+                Audio.play(Audio.SOUND_INFO);
+                JOptionPane.showMessageDialog(null, "Tunggu sebentar anjay!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnKirimRattingActionPerformed
 
     private void btnKirimRattingMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKirimRattingMouseEntered
-        // jika ratting belum dipilih maka icon pada button kirimRatting akan menampilkan icon berbentuk x 
-        // tapi jika user sudah memilih ratting maka icon pada buton kirimRattin akan menampikna icn berbentuk ceklist
-        if(ratting <= 0){
-            this.btnKirimRatting.setIcon(Gambar.getIcon("ic-aboutapp-ratting-fail.png"));
-        }else{
-            this.btnKirimRatting.setIcon(Gambar.getIcon("ic-aboutapp-ratting-ok.png"));
-        }
+        
     }//GEN-LAST:event_btnKirimRattingMouseEntered
 
     private void btnKirimRattingMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKirimRattingMouseExited
@@ -1417,10 +1709,10 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKirimRattingMouseExited
 
     private void chooseRatting1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting1MouseClicked
-        // jika ratting yang diklik user adalah 1 maka ratting akan direset ke 0
+        // jika nilai dari ratting adalah 1 dan user menekan tombol chooseRatting1 makan icon pada tombol chooseRating akan diset ke star
         if(ratting == 1){
-            setChooseRatting(0); // mereset ratting
-        }else{
+            setChooseRatting(0);
+        }else{ // jika nilai dari ratting bukan 1 maka icon pada chooseRatting akan diset ke star filled
             setChooseRatting(1);
         }
     }//GEN-LAST:event_chooseRatting1MouseClicked
@@ -1430,10 +1722,10 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseRatting1MouseEntered
 
     private void chooseRatting2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting2MouseClicked
-        // jika ratting yang diklik user adalah 2 maka ratting akan direset ke 0
+        // jika nilai dari ratting adalah 2 dan user menekan tombol chooseRatting2 makan icon pada tombol chooseRating akan diset ke star
         if(ratting == 2){
-            setChooseRatting(0); // mereset ratting
-        }else{
+            setChooseRatting(0);
+        }else{ // jika nilai dari ratting bukan 2 maka icon pada chooseRatting akan diset ke star filled
             setChooseRatting(2);
         }
     }//GEN-LAST:event_chooseRatting2MouseClicked
@@ -1443,10 +1735,10 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseRatting2MouseEntered
 
     private void chooseRatting3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting3MouseClicked
-        // jika ratting yang diklik user adalah 3 maka ratting akan direset ke 0
+        // jika nilai dari ratting adalah 3 dan user menekan tombol chooseRatting3 makan icon pada tombol chooseRating akan diset ke star
         if(ratting == 3){
-            setChooseRatting(0); // mereset ratting
-        }else{
+            setChooseRatting(0);
+        }else{ // jika nilai dari ratting bukan 3 maka icon pada chooseRatting akan diset ke star filled
             setChooseRatting(3);
         }
     }//GEN-LAST:event_chooseRatting3MouseClicked
@@ -1456,10 +1748,10 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseRatting3MouseEntered
 
     private void chooseRatting4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting4MouseClicked
-        // jika ratting yang diklik user adalah 4 maka ratting akan direset ke 0
+        // jika nilai dari ratting adalah 4 dan user menekan tombol chooseRatting4 makan icon pada tombol chooseRating akan diset ke star
         if(ratting == 4){
-            setChooseRatting(0); // mereset ratting
-        }else{
+            setChooseRatting(0);
+        }else{ // jika nilai dari ratting bukan 4 maka icon pada chooseRatting akan diset ke star filled
             setChooseRatting(4);
         }
     }//GEN-LAST:event_chooseRatting4MouseClicked
@@ -1469,10 +1761,10 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseRatting4MouseEntered
 
     private void chooseRatting5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chooseRatting5MouseClicked
-        // jika ratting yang diklik user adalah 5 maka ratting akan direset ke 0
+        // jika nilai dari ratting adalah 5 dan user menekan tombol chooseRatting5 makan icon pada tombol chooseRating akan diset ke star
         if(ratting == 5){
-            setChooseRatting(0); // mereset ratting
-        }else{
+            setChooseRatting(0);
+        }else{ // jika nilai dari ratting bukan 5 maka icon pada chooseRatting akan diset ke star filled
             setChooseRatting(5);
         }
     }//GEN-LAST:event_chooseRatting5MouseClicked
@@ -1482,76 +1774,99 @@ public class AboutApp extends javax.swing.JFrame {
     }//GEN-LAST:event_chooseRatting5MouseEntered
 
     private void lblIconGmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseClicked
-        
+        this.openLink("https://mailto:hakiahmad756@gmail.com");
     }//GEN-LAST:event_lblIconGmailMouseClicked
 
     private void lblIconGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseEntered
-        this.lblIconGmail.setIcon(Gambar.getIcon("ic-aboutapp-gmail-entered.png"));
+        this.lblGmail.setForeground(new java.awt.Color(255,0,0));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 35, 25));
     }//GEN-LAST:event_lblIconGmailMouseEntered
 
     private void lblIconGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseExited
-        this.lblIconGmail.setIcon(Gambar.getIcon("ic-aboutapp-gmail.png"));
+        this.lblGmail.setForeground(new java.awt.Color(0, 0, 0));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
     }//GEN-LAST:event_lblIconGmailMouseExited
 
     private void lblIconWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseClicked
-        
+        this.openLink("https://api.whatsapp.com/send?phone=6285655864624");
     }//GEN-LAST:event_lblIconWAMouseClicked
 
     private void lblIconWAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseEntered
+        this.lblWA.setForeground(new java.awt.Color(255,0,0));
         this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp-entered.png"));
     }//GEN-LAST:event_lblIconWAMouseEntered
 
     private void lblIconWAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseExited
+        this.lblWA.setForeground(new java.awt.Color(0, 0, 0));
         this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp.png"));
     }//GEN-LAST:event_lblIconWAMouseExited
 
     private void lblIconIGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseClicked
-         
+         this.openLink("https://instagram.com/xirpl1_smeksaker");
     }//GEN-LAST:event_lblIconIGMouseClicked
 
     private void lblIconIGMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseEntered
-         this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram-entered.png"));
+        this.lblIG.setForeground(new java.awt.Color(255,0,0)); 
+        this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram-entered.png"));
     }//GEN-LAST:event_lblIconIGMouseEntered
 
     private void lblIconIGMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconIGMouseExited
-       this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram.png"));
+        this.lblIG.setForeground(new java.awt.Color(0, 0, 0));
+        this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram.png"));
     }//GEN-LAST:event_lblIconIGMouseExited
 
     private void lblGmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseClicked
-        
+        this.openLink("https://mailto:hakiahmad756@gmail.com");
     }//GEN-LAST:event_lblGmailMouseClicked
 
     private void lblGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseEntered
-        
+        this.lblGmail.setForeground(new java.awt.Color(255,0,0));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 35, 25));
     }//GEN-LAST:event_lblGmailMouseEntered
 
     private void lblGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseExited
-        
+        this.lblGmail.setForeground(new java.awt.Color(0, 0, 0));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
     }//GEN-LAST:event_lblGmailMouseExited
 
     private void lblWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseClicked
-        
+        this.openLink("https://api.whatsapp.com/send?phone=6285655864624");
     }//GEN-LAST:event_lblWAMouseClicked
 
     private void lblWAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseEntered
-        
+        this.lblWA.setForeground(new java.awt.Color(255,0,0));
+        this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp-entered.png"));
     }//GEN-LAST:event_lblWAMouseEntered
 
     private void lblWAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseExited
-        
+        this.lblWA.setForeground(new java.awt.Color(0, 0, 0));
+        this.lblIconWA.setIcon(Gambar.getIcon("ic-aboutapp-whatsapp.png"));
     }//GEN-LAST:event_lblWAMouseExited
 
     private void lblIGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseClicked
-        
+        this.openLink("https://instagram.com/xirpl1_smeksaker");
     }//GEN-LAST:event_lblIGMouseClicked
 
     private void lblIGMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseEntered
-        
+        this.lblIG.setForeground(new java.awt.Color(255,0,0)); 
+        this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram-entered.png"));
     }//GEN-LAST:event_lblIGMouseEntered
 
     private void lblIGMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIGMouseExited
-        
+        this.lblIG.setForeground(new java.awt.Color(0, 0, 0));
+        this.lblIconIG.setIcon(Gambar.getIcon("ic-aboutapp-instagram.png"));
     }//GEN-LAST:event_lblIGMouseExited
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        isVisible = false;
+        acc.closeConnection();
+        System.out.println("Keluar dari Window AboutApp");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        acc.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1590,8 +1905,8 @@ public class AboutApp extends javax.swing.JFrame {
     private javax.swing.JButton btnBeranda;
     private javax.swing.JButton btnCovidDunia;
     private javax.swing.JButton btnCovidIndo;
+    private javax.swing.JButton btnDataApp;
     private javax.swing.JButton btnGejala;
-    private javax.swing.JButton btnInfoApp;
     private javax.swing.JButton btnKirimRatting;
     private javax.swing.JButton btnPenanganan;
     private javax.swing.JButton btnPencegahan;
