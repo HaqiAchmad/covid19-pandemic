@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="undecorated" type="boolean" value="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="pnlMain" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="pnlMain" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="pnlMain">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="pnlMainMouseDragged"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlMainMousePressed"/>
+      </Events>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="pnlLeft" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblMinimaze" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblClose" min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="lblKetApp" alignment="1" min="-2" pref="428" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="lblAppName" min="-2" pref="348" max="-2" attributes="0"/>
+                                          <EmptySpace min="80" pref="80" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="lblCopyright" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblTop" max="32767" attributes="0"/>
+                                  <EmptySpace min="13" pref="13" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="pnlDataUser" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="pnlDataCovidDunia" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="pnlDataCovidIndo" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="pnlLeft" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lblClose" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="lblMinimaze" alignment="0" min="-2" pref="30" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblTop" min="-2" pref="37" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="pnlDataCovidDunia" alignment="0" max="32767" attributes="0"/>
+                      <Component id="pnlDataCovidIndo" alignment="1" max="32767" attributes="0"/>
+                      <Component id="pnlDataUser" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <Component id="lblAppName" min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="lblKetApp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblCopyright" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="pnlLeft">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="d7" green="90" red="31" type="rgb"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnBeranda" max="32767" attributes="0"/>
+                  <Component id="pnlAccount" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnApaCovid" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnGejala" max="32767" attributes="0"/>
+                  <Component id="btnBahaya" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnPencegahan" max="32767" attributes="0"/>
+                  <Component id="btnCovidDunia" pref="218" max="32767" attributes="0"/>
+                  <Component id="pnlLeftBottom" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnPenanganan" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnCovidIndo" pref="218" max="32767" attributes="0"/>
+                  <Component id="btnTentangApp" pref="218" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="pnlAccount" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btnBeranda" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnApaCovid" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnGejala" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnBahaya" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnPencegahan" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnPenanganan" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnCovidDunia" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnCovidIndo" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnTentangApp" min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
+                      <Component id="pnlLeftBottom" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JButton" name="btnBeranda">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Beranda"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBerandaActionPerformed"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JPanel" name="pnlAccount">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="af" green="72" red="21" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblPhotoProfile" min="-2" pref="82" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblEditProfile" pref="122" max="32767" attributes="0"/>
+                              <Component id="lblNamaUser" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lblPhotoProfile" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblNamaUser" min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblEditProfile" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="25" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblPhotoProfile">
+                  <Properties>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/com/media/gambar/icons/ic-profile.png"/>
+                    </Property>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblNamaUser">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="11" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Achmad Baihaqi"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblEditProfile">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="10" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Informasi Akun"/>
+                    <Property name="verticalAlignment" type="int" value="1"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="btnApaCovid">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Apa Itu Covid-19"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApaCovidActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnGejala">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Gejala Covid-19"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGejalaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnBahaya">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Bahaya Covid-19"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBahayaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnPencegahan">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Pencegahan Covid-19"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPencegahanActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnCovidDunia">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Covid-19 di Dunia"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCovidDuniaActionPerformed"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JPanel" name="pnlLeftBottom">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="af" green="72" red="21" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnDataApp" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
+                          <Component id="btnDataApp" min="-2" pref="32" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="btnDataApp">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="af" green="72" red="21" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Lihat Data Aplikasi"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                        <EmptyBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDataAppMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDataAppMouseExited"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDataAppActionPerformed"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JButton" name="btnPenanganan">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Penanganan Covid-19"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPenangananActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnCovidIndo">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Covid-19 di Indonesia"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCovidIndoActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnTentangApp">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="d7" green="90" red="31" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Tentang Aplikasi"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                    <EmptyBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTentangAppActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="lblClose">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-close-black.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseExited"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblMinimaze">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-minimaze-black.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseExited"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTop">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="text" type="java.lang.String" value="Data Aplikasi Covid-19 Pandemic"/>
+          </Properties>
+        </Component>
+        <Container class="javax.swing.JPanel" name="pnlDataUser">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblDataUser" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="lblDataUser_tipeUser" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_tipeAdmin" alignment="1" pref="136" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_rata2Umur" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_userLuarNegeri" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_userIndo" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_genderWanita" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_genderPria" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataUser_totalUser" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="valDataUser_totalUser" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_userPria" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_userWanita" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_userIndo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_userLuarNegeri" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_rata2Umur" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_tipeAdmin" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataUser_tipeUser" alignment="0" pref="132" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="lblLinkDataUser" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblDataUser" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_totalUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_totalUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_genderPria" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_userPria" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_genderWanita" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_userWanita" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_userIndo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_userIndo" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_userLuarNegeri" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_userLuarNegeri" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_rata2Umur" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_rata2Umur" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataUser_tipeAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataUser_tipeAdmin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="valDataUser_tipeUser" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDataUser_tipeUser" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblLinkDataUser" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblDataUser">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Lihat Data User"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_totalUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total User"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_totalUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 4"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_genderPria">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total User Laki-Laki"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_userPria">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_genderWanita">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total User Perempuan"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_userWanita">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 1"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_userIndo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="User Dari Indonesia"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_userIndo">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 3"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_userLuarNegeri">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="User Dari Luar Negeri"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_userLuarNegeri">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 1"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_rata2Umur">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rata-Rata Umur User"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_rata2Umur">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 2"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_tipeAdmin">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Akun DenganTipe Admin"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_tipeAdmin">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 2"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataUser_tipeUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Akun Dengan Tipe User"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataUser_tipeUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 17"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblLinkDataUser">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="18" green="0" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Update Data User"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="pnlDataCovidDunia">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblDataCovidDunia" alignment="0" max="32767" attributes="0"/>
+                  <Component id="lblLinkDataCovidDunia" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblDataCovidDunia_diubah" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_totalNegara" alignment="1" pref="152" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_tingkatKematian" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_tingkatSembuh" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_populasi" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_aktif" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_kritis" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_kematian" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_sembuh" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidDunia_positif" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="valDataCovidDunia_positif" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_sembuh" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_kematian" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_kritis" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_aktif" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_populasi" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_tingkatSembuh" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_tingkatKematian" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_totalNegara" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidDunia_diubah" alignment="0" pref="116" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblDataCovidDunia" min="-2" pref="30" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_positif" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_positif" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_sembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_sembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_kematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_kematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_kritis" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_kritis" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_aktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_aktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_populasi" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_populasi" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_tingkatSembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_tingkatSembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_tingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_tingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_totalNegara" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_totalNegara" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidDunia_diubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidDunia_diubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblLinkDataCovidDunia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Lihat Data Covid-19 Dunia"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblLinkDataCovidDunia">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="18" green="0" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Update Data Covid-19 Dunia"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_positif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 32.138.014"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_positif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Positif"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_sembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Sembuh"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_sembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 23.708.311"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_kematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kematian "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_kematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 982.722"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_kritis">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kasus Kritis"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_kritis">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 7.446.981"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_aktif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kasus Aktif"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_aktif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 62.385"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_populasi">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Populasi"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_populasi">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 7.814.232.739"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_tingkatSembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Tingkat Kesembuhan"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_tingkatSembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 98.5%"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_tingkatKematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Tingkat Kematian "/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_tingkatKematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 2.5%"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_totalNegara">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Negara Terdampak Covid-19"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_totalNegara">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 216"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidDunia_diubah">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Terakhir Diubah"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidDunia_diubah">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 05 November 2020"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="pnlDataCovidIndo">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblDataCovidIndo" alignment="0" pref="298" max="32767" attributes="0"/>
+                  <Component id="lblLinkDataCovidIndonesia" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblDataCovidIndo_zonaHijau" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_ZonaOren" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_zonaMerah" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_totalKab" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_otg" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_pdp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_odp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_aktif" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_kematian" alignment="1" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_sembuh" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblDataCovidIndo_positif" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="valDataCovidIndo_positif" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_sembuh" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_kematian" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_aktif" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_odp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_pdp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_otg" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_totalKab" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaMerah" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaOren" alignment="0" max="32767" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaHijau" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="lblDataCovidIndo" min="-2" pref="31" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_positif" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_positif" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_sembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_sembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_kematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_kematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_aktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_aktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_odp" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_odp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_pdp" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_pdp" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_otg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_otg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_totalKab" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_totalKab" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_zonaMerah" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaMerah" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_ZonaOren" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaOren" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblDataCovidIndo_zonaHijau" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="valDataCovidIndo_zonaHijau" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <Component id="lblLinkDataCovidIndonesia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="14" style="1"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Lihat Data Covid-19 Indonesia"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblLinkDataCovidIndonesia">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="18" green="0" red="ff" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="Update Data Covid-19 Indonesia"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_positif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 262.022"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_positif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Positif"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_sembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Sembuh"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_sembuh">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 191.853"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_kematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kematian"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_kematian">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 1.545"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_aktif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kasus Aktif"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_aktif">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 5.983"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_odp">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total ODP"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_odp">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 756.545"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_pdp">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total PDP"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_pdp">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 453.644"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_otg">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total OTG"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_otg">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 90.434"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_totalKab">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Total Kabupaten"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_totalKab">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 4.345"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_zonaMerah">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Kab. Zona Merah"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_zonaMerah">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 1.458"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_ZonaOren">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Kab.Zona Oranye"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_zonaOren">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 2.434"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDataCovidIndo_zonaHijau">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Kab. Zona Hijau"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="valDataCovidIndo_zonaHijau">
+              <Properties>
+                <Property name="text" type="java.lang.String" value=": 574"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="lblAppName">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="15" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Covid-19 Pandemic"/>
+            <Property name="verticalAlignment" type="int" value="3"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblKetApp">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Aplikasi pemantauan Covid-19 di Dunia dan Indonesia"/>
+            <Property name="verticalAlignment" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblCopyright">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="11" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Copyright &#xa9; 2020. Achmad Baihaqi"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
