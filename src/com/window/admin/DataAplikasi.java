@@ -1,6 +1,8 @@
 package com.window.admin;
 
 import com.database.Account;
+import com.database.CovidCases;
+import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.AboutApp;
 import com.window.all.ApaCovid;
@@ -13,8 +15,12 @@ import com.window.all.PenangananCovid;
 import com.window.all.PencegahanCovid;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -28,12 +34,29 @@ public class DataAplikasi extends javax.swing.JFrame {
      */
     private final Account acc = new Account();
     /**
+     * Digunakan untuk mendapatkan data dari kasus covid dunia
+     */
+    private final CovidCases caseDunia = new CovidCases(CovidCases.KASUS_DUNIA);
+    /**
+     * Digunakan untuk mendapatka data dari kasus covid indo
+     */
+    private final CovidCases caseIndo = new CovidCases(CovidCases.KASUS_INDO);
+    /**
      * Digunakan untuk menyimpan data dari user seperti nama, tipe akun dan foto profile
      */
     private final String namaUser = acc.getDataAccount(acc.getActivedUser(), Account.NAMA_PANGGILAN), 
                          fotoProfile = acc.getDataAccount(acc.getActivedUser(), Account.FOTO_PROFILE),
                          tipeAkun = acc.getDataAccount(acc.getActivedUser(), Account.TYPE);
+    /**
+     * Data yang akan ditampilkan ke window
+     */
+    private int totalUser = 14565346, totalPria = 8634971, totalWanita = 5940370, userIndo = 11542654, 
+                userLuar = 3022692, akunUser = 14565130, online = 75454;
     private int x, y;
+    /**
+     * Digunakan untuk merandom data dari user
+     */
+    private boolean isPlay = true;
     
     public DataAplikasi() {
         initComponents();
@@ -49,6 +72,10 @@ public class DataAplikasi extends javax.swing.JFrame {
         this.btnTentangApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnDataApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         
+        dataEnteredExited();
+        getDataUser();
+        getDataCovidDunia();
+        getDataCovidIndo();
         
         /* jika panjang dari nama panggilan user lebih dari 17 maka nama panggilan tersebut akan dipotong,
            tampilan window akan berubah jika nama panggilan dari user terlalu panjang
@@ -99,7 +126,161 @@ public class DataAplikasi extends javax.swing.JFrame {
         }
         
     }
+    //
+    private void dataEnteredExited(){
+        // jlabel yang akan diatur mouse event-nya
+        JLabel[] lbls = new JLabel[]{
+            this.valDataUser_online, this.valDataUser_rata2Umur, this.valDataUser_tipeAdmin, this.valDataUser_tipeUser, this.valDataUser_userIndo, this.valDataUser_userLuar, this.valDataUser_userPria, this.valDataUser_userWanita, this.valDataUser_totalUser,
+            this.valDataCovidDunia_aktif, this.valDataCovidDunia_diubah, this.valDataCovidDunia_kematian, this.valDataCovidDunia_kritis, this.valDataCovidDunia_populasi, this.valDataCovidDunia_positif, this.valDataCovidDunia_sembuh, this.valDataCovidDunia_tingkatKematian, this.valDataCovidDunia_tingkatSembuh, this.valDataCovidDunia_totalNegara,
+            this.valDataCovidIndo_aktif, this.valDataCovidIndo_diubah, this.valDataCovidIndo_kasusPertama, this.valDataCovidIndo_kematian, this.valDataCovidIndo_positif, this.valDataCovidIndo_presentase, this.valDataCovidIndo_sembuh, this.valDataCovidIndo_totalKab, this.valDataCovidIndo_zonaHijau, this.valDataCovidIndo_zonaMerah, this.valDataCovidIndo_zonaOranye
+        };
+        for(JLabel lbl : lbls){
+            lbl.addMouseListener(new java.awt.event.MouseListener() {
 
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    Audio.play(Audio.SOUND_INFO);
+                    JOptionPane.showMessageDialog(null, lbl.getText().substring(2));
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    lbl.setForeground(new Color(200,110,20));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                    lbl.setForeground(new Color(0, 0, 0));
+                }
+            });
+        }
+    }
+    /**
+     * Digunakan untuk menampilkan data dari user seperti total user, total user dengan gende laki2/perempuan, dll
+     * Data yang ditampilkan tidaklah asli seperti kenyataan-nya. kerana data akan ditampilkan secara random
+     */
+    private void getDataUser(){
+        // digunakan untuk merandom data
+        Random rand = new Random();
+        
+        // merandom data diatas
+        new Thread(new Runnable(){
+            
+            @Override
+            public void run(){
+                try{
+                    // num digunakan untuk merandom data dari pengguna online
+                    // getRand digunakan untuk mendapatkan angka dari hasil random
+                    int num, getRand;
+                    // akan merandom data jika window masih dibuka
+                    while(isPlay){
+                        // merandom angka
+                        getRand = rand.nextInt(100);
+                        // jika hasil dari angka yg dirandom < 0 maka getRand akan scr default diatur ke 10
+                        if(getRand >= 0){
+                            getRand = 10;
+                        }
+                        // mengupdate data dengan menambahkan getRand
+                        totalUser  += getRand;
+                        totalPria += getRand / 2;
+                        totalWanita += getRand / 2;
+                        userIndo += getRand / 2;
+                        userLuar += getRand / 2;
+                        akunUser += getRand;
+                        
+                        // merandom pengguna online
+                        num = rand.nextInt(5000);
+                        // jika num adalah genap maka pengguna online akan bertambah 
+                        // jika num adalah ganjil maka pengguna online akan bekurang
+                        if((num % 2) == 0){
+                            online += rand.nextInt(6000) + getRand;
+                        }else {
+                            online -= rand.nextInt(5000);
+                        }
+                        // merandom delay yg dilakukan
+                        Thread.sleep(500 + rand.nextInt(5000));
+                        
+                        // menampilkan data ke winow
+                        valDataUser_totalUser.setText(String.format(": %,d User", totalUser));
+                        valDataUser_userPria.setText(String.format(": %,d User", totalPria));
+                        valDataUser_userWanita.setText(String.format(": %,d User", totalWanita));
+                        valDataUser_userIndo.setText(String.format(": %,d", userIndo));
+                        valDataUser_userLuar.setText(String.format(": %,d", userLuar));
+                        valDataUser_rata2Umur.setText(String.format(": %,d.%,d Tahun", 34, rand.nextInt(10)));
+                        valDataUser_tipeUser.setText(String.format(": %,d", akunUser));
+                        valDataUser_tipeAdmin.setText(String.format(": %,d", 216));
+                        valDataUser_online.setText(String.format(": %,d", online));
+                    }
+                }catch(InterruptedException iex){
+                    System.out.println("Tejadji kesalahan saat merandom data : " + iex.getMessage());
+                }
+            }
+        }).start();
+    }
+    /**
+     * Digunakan untuk menampilkan data dari kasus covid Dunia ke widow, Data yang akan ditampilkan ke window
+     * didapatkan dengan menggunakan object dari class <code>CovidCases</code>. Method akan mendapatkan data terlebih dahulu dari object
+     * tersebut setelah proses penggambilan data selesai maka data akan ditampilkan ke window
+     */
+    private void getDataCovidDunia(){
+        // digunakan untuk mendapatkan data dari kasus covid dunia
+        int positif = caseDunia.getDataNumber(CovidCases.KASUS, "Dunia"), sembuh = caseDunia.getDataNumber(CovidCases.SEMBUH, "Dunia"),
+            kematian = caseDunia.getDataNumber(CovidCases.KEMATIAN, "Dunia"), aktif = caseDunia.getDataNumber(CovidCases.AKTIF, "Dunia"),
+            kritis = caseDunia.getDataNumber(CovidCases.KRITIS, "Dunia"), populasi = caseDunia.getDataNumber(CovidCases.POPULASI, "Dunia"),
+            tingkatKesembuhan = (int)caseDunia.getPresentase(sembuh, kematian), tingkatKematian = (int)caseDunia.getPresentase(kematian, sembuh),
+            totalNegara = caseDunia.getRows("SELECT * FROM kasuscovid_dunia");
+        
+        // menampilkan data dari kasus covid ke window
+        this.valDataCovidDunia_positif.setText(": " + caseDunia.addDelim(positif));
+        this.valDataCovidDunia_sembuh.setText(": " + caseDunia.addDelim(sembuh));
+        this.valDataCovidDunia_kematian.setText(": " + caseDunia.addDelim(kematian));
+        this.valDataCovidDunia_aktif.setText(": " + caseDunia.addDelim(aktif));
+        this.valDataCovidDunia_kritis.setText(": " + caseDunia.addDelim(kritis));
+        this.valDataCovidDunia_populasi.setText(": " + caseDunia.addDelim((long)populasi * 10L));
+        this.valDataCovidDunia_tingkatSembuh.setText(": " + caseDunia.addDelim(tingkatKesembuhan) + "%");
+        this.valDataCovidDunia_tingkatKematian.setText(": " + caseDunia.addDelim(tingkatKematian) + "%");
+        this.valDataCovidDunia_totalNegara.setText(": " + caseDunia.addDelim(totalNegara) + " Negara");
+        this.valDataCovidDunia_diubah.setText(": " + caseDunia.dateToString(caseDunia.getData(CovidCases.DIUBAH, "Dunia")));
+    }
+    /**
+     * Digunakan untuk menampilkan data dari kasus covid Indo ke window, Data yang akan ditampilkan ke window
+     * didapatkan dengan menggunakan object dari class <code>CovidCases</code>. Method akan mendapatkan data terlebih dahulu dari object
+     * tersebut setelah proses penggambilan data selesai maka data akan ditampilkan ke window
+     */
+    private void getDataCovidIndo(){
+        // digunakan untuk mendapatkan data dari kasus covid indo
+        int positif = caseIndo.getTotalData(CovidCases.KASUS), sembuh = caseIndo.getTotalData(CovidCases.SEMBUH),
+            kematian = caseIndo.getTotalData(CovidCases.KEMATIAN), aktif = caseIndo.getTotalData(CovidCases.AKTIF),
+            totalKab = caseIndo.getTotalData(CovidCases.TOTAL_KAB), zonaMerah = caseIndo.getTotalData(CovidCases.ZONA_MERAH),
+            zonaOren = caseIndo.getTotalData(CovidCases.ZONA_ORANYE), zonaHijau = caseIndo.getTotalData(CovidCases.ZONA_HIJAU),
+            presentase = (int)caseIndo.getPresentase(caseIndo.getTotalData(CovidCases.KASUS), caseDunia.getDataNumber(CovidCases.KASUS, "Dunia"));
+    
+        // menampilkan data ke window
+        this.valDataCovidIndo_positif.setText(": " + caseIndo.addDelim(positif));
+        this.valDataCovidIndo_sembuh.setText(": " + caseIndo.addDelim(sembuh));
+        this.valDataCovidIndo_kematian.setText(": " + caseIndo.addDelim(kematian));
+        this.valDataCovidIndo_aktif.setText(": " + caseIndo.addDelim(aktif));
+        this.valDataCovidIndo_totalKab.setText(": " + caseIndo.addDelim(totalKab) + " Kabupaten");
+        this.valDataCovidIndo_zonaMerah.setText(": " + caseIndo.addDelim(zonaMerah) + " Kabupaten");
+        this.valDataCovidIndo_zonaOranye.setText(": " + caseIndo.addDelim(zonaOren) + " Kabupaten");
+        this.valDataCovidIndo_zonaHijau.setText(": " + caseIndo.addDelim(zonaHijau) + " Kabupaten");
+        this.valDataCovidIndo_presentase.setText(": " + caseIndo.addDelim(presentase) + "%");
+        this.valDataCovidIndo_kasusPertama.setText(": 2 Maret 2020");
+        this.valDataCovidIndo_diubah.setText(": " + caseIndo.dateToString(caseDunia.getData(CovidCases.DIUBAH, "Indonesia")));
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -135,7 +316,7 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblDataUser_userIndo = new javax.swing.JLabel();
         valDataUser_userIndo = new javax.swing.JLabel();
         lblDataUser_userLuarNegeri = new javax.swing.JLabel();
-        valDataUser_userLuarNegeri = new javax.swing.JLabel();
+        valDataUser_userLuar = new javax.swing.JLabel();
         lblDataUser_rata2Umur = new javax.swing.JLabel();
         valDataUser_rata2Umur = new javax.swing.JLabel();
         lblDataUser_tipeAdmin = new javax.swing.JLabel();
@@ -143,6 +324,8 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblDataUser_tipeUser = new javax.swing.JLabel();
         valDataUser_tipeUser = new javax.swing.JLabel();
         lblLinkDataUser = new javax.swing.JLabel();
+        lblDataUser_online = new javax.swing.JLabel();
+        valDataUser_online = new javax.swing.JLabel();
         pnlDataCovidDunia = new javax.swing.JPanel();
         lblDataCovidDunia = new javax.swing.JLabel();
         lblLinkDataCovidDunia = new javax.swing.JLabel();
@@ -177,26 +360,34 @@ public class DataAplikasi extends javax.swing.JFrame {
         valDataCovidIndo_kematian = new javax.swing.JLabel();
         lblDataCovidIndo_aktif = new javax.swing.JLabel();
         valDataCovidIndo_aktif = new javax.swing.JLabel();
-        lblDataCovidIndo_odp = new javax.swing.JLabel();
-        valDataCovidIndo_odp = new javax.swing.JLabel();
-        lblDataCovidIndo_pdp = new javax.swing.JLabel();
-        valDataCovidIndo_pdp = new javax.swing.JLabel();
-        lblDataCovidIndo_otg = new javax.swing.JLabel();
-        valDataCovidIndo_otg = new javax.swing.JLabel();
         lblDataCovidIndo_totalKab = new javax.swing.JLabel();
         valDataCovidIndo_totalKab = new javax.swing.JLabel();
         lblDataCovidIndo_zonaMerah = new javax.swing.JLabel();
         valDataCovidIndo_zonaMerah = new javax.swing.JLabel();
-        lblDataCovidIndo_ZonaOren = new javax.swing.JLabel();
-        valDataCovidIndo_zonaOren = new javax.swing.JLabel();
+        lblDataCovidIndo_zonaOranye = new javax.swing.JLabel();
+        valDataCovidIndo_zonaOranye = new javax.swing.JLabel();
         lblDataCovidIndo_zonaHijau = new javax.swing.JLabel();
         valDataCovidIndo_zonaHijau = new javax.swing.JLabel();
+        lblDataCovidIndo_presentaseKasus = new javax.swing.JLabel();
+        valDataCovidIndo_presentase = new javax.swing.JLabel();
+        lblDataCovidIndo_kasusPertama = new javax.swing.JLabel();
+        valDataCovidIndo_kasusPertama = new javax.swing.JLabel();
+        lblDataCovidIndo_diubah = new javax.swing.JLabel();
+        valDataCovidIndo_diubah = new javax.swing.JLabel();
         lblAppName = new javax.swing.JLabel();
         lblKetApp = new javax.swing.JLabel();
         lblCopyright = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -228,6 +419,11 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblPhotoProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPhotoProfile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-profile.png"))); // NOI18N
         lblPhotoProfile.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        lblPhotoProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblPhotoProfileMouseClicked(evt);
+            }
+        });
 
         lblNamaUser.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNamaUser.setForeground(new java.awt.Color(255, 255, 255));
@@ -237,6 +433,17 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblEditProfile.setForeground(new java.awt.Color(255, 255, 255));
         lblEditProfile.setText("Informasi Akun");
         lblEditProfile.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblEditProfile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditProfileMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEditProfileMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEditProfileMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlAccountLayout = new javax.swing.GroupLayout(pnlAccount);
         pnlAccount.setLayout(pnlAccountLayout);
@@ -468,40 +675,55 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblDataUser_totalUser.setText("Total User");
 
-        valDataUser_totalUser.setText(": 4");
+        valDataUser_totalUser.setText(": 14.565.346 User");
 
         lblDataUser_genderPria.setText("Total User Laki-Laki");
 
-        valDataUser_userPria.setText(": 3");
+        valDataUser_userPria.setText(": 8.634.971 User");
 
         lblDataUser_genderWanita.setText("Total User Perempuan");
 
-        valDataUser_userWanita.setText(": 1");
+        valDataUser_userWanita.setText(": 5.940.370 User");
 
         lblDataUser_userIndo.setText("User Dari Indonesia");
 
-        valDataUser_userIndo.setText(": 3");
+        valDataUser_userIndo.setText(": 11.542.654");
 
         lblDataUser_userLuarNegeri.setText("User Dari Luar Negeri");
 
-        valDataUser_userLuarNegeri.setText(": 1");
+        valDataUser_userLuar.setText(": 3.022.692");
 
         lblDataUser_rata2Umur.setText("Rata-Rata Umur User");
 
-        valDataUser_rata2Umur.setText(": 2");
+        valDataUser_rata2Umur.setText(": 34 Tahun");
 
         lblDataUser_tipeAdmin.setText("Akun DenganTipe Admin");
 
-        valDataUser_tipeAdmin.setText(": 2");
+        valDataUser_tipeAdmin.setText(": 216");
 
         lblDataUser_tipeUser.setText("Akun Dengan Tipe User");
 
-        valDataUser_tipeUser.setText(": 17");
+        valDataUser_tipeUser.setText(": 14.565.130");
 
         lblLinkDataUser.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         lblLinkDataUser.setForeground(new java.awt.Color(255, 0, 24));
         lblLinkDataUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLinkDataUser.setText("Update Data User");
+        lblLinkDataUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLinkDataUserMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblLinkDataUserMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblLinkDataUserMouseExited(evt);
+            }
+        });
+
+        lblDataUser_online.setText("Pengguna Online");
+
+        valDataUser_online.setText(": 75.454");
 
         javax.swing.GroupLayout pnlDataUserLayout = new javax.swing.GroupLayout(pnlDataUser);
         pnlDataUser.setLayout(pnlDataUserLayout);
@@ -518,17 +740,19 @@ public class DataAplikasi extends javax.swing.JFrame {
                     .addComponent(lblDataUser_userIndo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataUser_genderWanita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataUser_genderPria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataUser_totalUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblDataUser_totalUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDataUser_online, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(valDataUser_totalUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataUser_userPria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataUser_userWanita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataUser_userIndo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataUser_userLuarNegeri, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataUser_userLuar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataUser_rata2Umur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataUser_tipeAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataUser_tipeUser, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                    .addComponent(valDataUser_tipeUser, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                    .addComponent(valDataUser_online, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(lblLinkDataUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -555,7 +779,7 @@ public class DataAplikasi extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataUser_userLuarNegeri)
-                    .addComponent(valDataUser_userLuarNegeri))
+                    .addComponent(valDataUser_userLuar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataUser_rata2Umur)
@@ -568,7 +792,11 @@ public class DataAplikasi extends javax.swing.JFrame {
                 .addGroup(pnlDataUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(valDataUser_tipeUser)
                     .addComponent(lblDataUser_tipeUser, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDataUserLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblDataUser_online, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataUser_online, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(lblLinkDataUser)
                 .addGap(22, 22, 22))
         );
@@ -585,6 +813,17 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblLinkDataCovidDunia.setForeground(new java.awt.Color(255, 0, 24));
         lblLinkDataCovidDunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLinkDataCovidDunia.setText("Update Data Covid-19 Dunia");
+        lblLinkDataCovidDunia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidDuniaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidDuniaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidDuniaMouseExited(evt);
+            }
+        });
 
         valDataCovidDunia_positif.setText(": 32.138.014");
 
@@ -720,6 +959,17 @@ public class DataAplikasi extends javax.swing.JFrame {
         lblLinkDataCovidIndonesia.setForeground(new java.awt.Color(255, 0, 24));
         lblLinkDataCovidIndonesia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLinkDataCovidIndonesia.setText("Update Data Covid-19 Indonesia");
+        lblLinkDataCovidIndonesia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidIndonesiaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidIndonesiaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblLinkDataCovidIndonesiaMouseExited(evt);
+            }
+        });
 
         valDataCovidIndo_positif.setText(": 262.022");
 
@@ -737,33 +987,33 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         valDataCovidIndo_aktif.setText(": 5.983");
 
-        lblDataCovidIndo_odp.setText("Total ODP");
-
-        valDataCovidIndo_odp.setText(": 756.545");
-
-        lblDataCovidIndo_pdp.setText("Total PDP");
-
-        valDataCovidIndo_pdp.setText(": 453.644");
-
-        lblDataCovidIndo_otg.setText("Total OTG");
-
-        valDataCovidIndo_otg.setText(": 90.434");
-
         lblDataCovidIndo_totalKab.setText("Total Kabupaten");
 
-        valDataCovidIndo_totalKab.setText(": 4.345");
+        valDataCovidIndo_totalKab.setText(": 416");
 
         lblDataCovidIndo_zonaMerah.setText("Kab. Zona Merah");
 
-        valDataCovidIndo_zonaMerah.setText(": 1.458");
+        valDataCovidIndo_zonaMerah.setText(": 138");
 
-        lblDataCovidIndo_ZonaOren.setText("Kab.Zona Oranye");
+        lblDataCovidIndo_zonaOranye.setText("Kab. Zona Oranye");
 
-        valDataCovidIndo_zonaOren.setText(": 2.434");
+        valDataCovidIndo_zonaOranye.setText(": 138");
 
         lblDataCovidIndo_zonaHijau.setText("Kab. Zona Hijau");
 
-        valDataCovidIndo_zonaHijau.setText(": 574");
+        valDataCovidIndo_zonaHijau.setText(": 138");
+
+        lblDataCovidIndo_presentaseKasus.setText("Presentase Kasus");
+
+        valDataCovidIndo_presentase.setText(": 5.7%");
+
+        lblDataCovidIndo_kasusPertama.setText("Kasus Pertama Kalil");
+
+        valDataCovidIndo_kasusPertama.setText(": 2 Maret 2020");
+
+        lblDataCovidIndo_diubah.setText("Terakhir Diubah");
+
+        valDataCovidIndo_diubah.setText(": 3 Desember 2020");
 
         javax.swing.GroupLayout pnlDataCovidIndoLayout = new javax.swing.GroupLayout(pnlDataCovidIndo);
         pnlDataCovidIndo.setLayout(pnlDataCovidIndoLayout);
@@ -774,13 +1024,13 @@ public class DataAplikasi extends javax.swing.JFrame {
             .addGroup(pnlDataCovidIndoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblDataCovidIndo_diubah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDataCovidIndo_kasusPertama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDataCovidIndo_presentaseKasus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_zonaHijau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataCovidIndo_ZonaOren, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDataCovidIndo_zonaOranye, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_zonaMerah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_totalKab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataCovidIndo_otg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataCovidIndo_pdp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDataCovidIndo_odp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_aktif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_kematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblDataCovidIndo_sembuh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -791,13 +1041,13 @@ public class DataAplikasi extends javax.swing.JFrame {
                     .addComponent(valDataCovidIndo_sembuh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataCovidIndo_kematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataCovidIndo_aktif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataCovidIndo_odp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataCovidIndo_pdp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataCovidIndo_otg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataCovidIndo_totalKab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(valDataCovidIndo_zonaMerah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataCovidIndo_zonaOren, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(valDataCovidIndo_zonaHijau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(valDataCovidIndo_zonaOranye, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataCovidIndo_zonaHijau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataCovidIndo_presentase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataCovidIndo_kasusPertama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(valDataCovidIndo_diubah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlDataCovidIndoLayout.setVerticalGroup(
@@ -822,18 +1072,6 @@ public class DataAplikasi extends javax.swing.JFrame {
                     .addComponent(valDataCovidIndo_aktif))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataCovidIndo_odp)
-                    .addComponent(valDataCovidIndo_odp))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataCovidIndo_pdp)
-                    .addComponent(valDataCovidIndo_pdp))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataCovidIndo_otg)
-                    .addComponent(valDataCovidIndo_otg))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataCovidIndo_totalKab)
                     .addComponent(valDataCovidIndo_totalKab))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -842,12 +1080,24 @@ public class DataAplikasi extends javax.swing.JFrame {
                     .addComponent(valDataCovidIndo_zonaMerah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDataCovidIndo_ZonaOren)
-                    .addComponent(valDataCovidIndo_zonaOren))
+                    .addComponent(lblDataCovidIndo_zonaOranye)
+                    .addComponent(valDataCovidIndo_zonaOranye))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDataCovidIndo_zonaHijau)
                     .addComponent(valDataCovidIndo_zonaHijau))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDataCovidIndo_presentaseKasus)
+                    .addComponent(valDataCovidIndo_presentase))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDataCovidIndo_kasusPertama)
+                    .addComponent(valDataCovidIndo_kasusPertama))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDataCovidIndoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDataCovidIndo_diubah)
+                    .addComponent(valDataCovidIndo_diubah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(lblLinkDataCovidIndonesia)
                 .addGap(24, 24, 24))
@@ -863,7 +1113,18 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblCopyright.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         lblCopyright.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblCopyright.setText("Copyright © 2020. Achmad Baihaqi");
+        lblCopyright.setText("Copyright © 2020. Achmad Baihaqi.");
+        lblCopyright.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCopyrightMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCopyrightMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCopyrightMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -956,6 +1217,9 @@ public class DataAplikasi extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
+        acc.closeConnection();
+        caseDunia.closeConnection();
+        caseIndo.closeConnection();
         System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
@@ -1137,6 +1401,126 @@ public class DataAplikasi extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDataAppMouseExited
 
+    private void lblPhotoProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhotoProfileMouseClicked
+
+    }//GEN-LAST:event_lblPhotoProfileMouseClicked
+
+    private void lblEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseClicked
+
+    }//GEN-LAST:event_lblEditProfileMouseClicked
+
+    private void lblEditProfileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseEntered
+        this.lblEditProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        this.lblEditProfile.setText("<html><p style=\"text-decoration:underline;\">Informasi Akun</p></html>");
+    }//GEN-LAST:event_lblEditProfileMouseEntered
+
+    private void lblEditProfileMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseExited
+        this.lblEditProfile.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        this.lblEditProfile.setText("<html><p style=\"text-decoration:none;\">Informasi Akun</p></html>");
+    }//GEN-LAST:event_lblEditProfileMouseExited
+
+    private void lblLinkDataUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataUserMouseClicked
+        System.out.println("Membuka Window UpdateUser");
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateUser.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_lblLinkDataUserMouseClicked
+
+    private void lblLinkDataUserMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataUserMouseEntered
+        this.lblLinkDataUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.lblLinkDataUser.setText("<html><p style=\"text-decoration:underline; color:rgb(1,67,228)\">Update Data User</p></html>");
+    }//GEN-LAST:event_lblLinkDataUserMouseEntered
+
+    private void lblLinkDataUserMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataUserMouseExited
+        this.lblLinkDataUser.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.lblLinkDataUser.setText("<html><p style=\"text-decoration:none; color:rgb(255,0,24)\">Update Data User</p></html>");
+    }//GEN-LAST:event_lblLinkDataUserMouseExited
+
+    private void lblLinkDataCovidDuniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidDuniaMouseClicked
+        System.out.println("Membuka Window UpdateCovidDunia");
+        UpdateCovidDunia updateCovidDunia = new UpdateCovidDunia();
+        updateCovidDunia.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidDunia.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_lblLinkDataCovidDuniaMouseClicked
+
+    private void lblLinkDataCovidDuniaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidDuniaMouseEntered
+        this.lblLinkDataCovidDunia.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.lblLinkDataCovidDunia.setText("<html><p style=\"text-decoration:underline; color:rgb(1,67,228)\">Update Data Covid-19 Dunia</p></html>");
+    }//GEN-LAST:event_lblLinkDataCovidDuniaMouseEntered
+
+    private void lblLinkDataCovidDuniaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidDuniaMouseExited
+        this.lblLinkDataCovidDunia.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.lblLinkDataCovidDunia.setText("<html><p style=\"text-decoration:none; color:rgb(255,0,24)\">Update Data Covid-19 Dunia</p></html>");
+    }//GEN-LAST:event_lblLinkDataCovidDuniaMouseExited
+
+    private void lblLinkDataCovidIndonesiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidIndonesiaMouseClicked
+        System.out.println("Membuka Window UpdateCovidIndo");
+        UpdateCovidIndo updateCovidIndo = new UpdateCovidIndo();
+        updateCovidIndo.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidIndo.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_lblLinkDataCovidIndonesiaMouseClicked
+
+    private void lblLinkDataCovidIndonesiaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidIndonesiaMouseEntered
+        this.lblLinkDataCovidIndonesia.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        this.lblLinkDataCovidIndonesia.setText("<html><p style=\"text-decoration:underline; color:rgb(1,67,228)\">Update Data Covid-19 Indonesia</p></html>");
+    }//GEN-LAST:event_lblLinkDataCovidIndonesiaMouseEntered
+
+    private void lblLinkDataCovidIndonesiaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLinkDataCovidIndonesiaMouseExited
+        this.lblLinkDataCovidIndonesia.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        this.lblLinkDataCovidIndonesia.setText("<html><p style=\"text-decoration:none; color:rgb(255,0,24)\">Update Data Covid-19 Indonesia</p></html>");
+    }//GEN-LAST:event_lblLinkDataCovidIndonesiaMouseExited
+
+    private void lblCopyrightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseClicked
+        
+    }//GEN-LAST:event_lblCopyrightMouseClicked
+
+    private void lblCopyrightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseEntered
+        this.lblCopyright.setText("<html><p style=\"text-decoration:underline; color:rgb(1,67,228);\">Copyright © 2020. Achmad Baihaqi.</p></html>");
+    }//GEN-LAST:event_lblCopyrightMouseEntered
+
+    private void lblCopyrightMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCopyrightMouseExited
+        this.lblCopyright.setText("<html><p style=\"text-decoration:none; color:rgb(0, 0, 0);\">Copyright © 2020. Achmad Baihaqi.</p></html>");
+    }//GEN-LAST:event_lblCopyrightMouseExited
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("Keluar dari Window DataAplikasi");
+        isPlay = false;
+        acc.closeConnection();
+        caseDunia.closeConnection();
+        caseIndo.closeConnection();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        acc.closeConnection();
+        caseDunia.closeConnection();
+        caseIndo.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1196,20 +1580,21 @@ public class DataAplikasi extends javax.swing.JFrame {
     private javax.swing.JLabel lblDataCovidDunia_tingkatSembuh;
     private javax.swing.JLabel lblDataCovidDunia_totalNegara;
     private javax.swing.JLabel lblDataCovidIndo;
-    private javax.swing.JLabel lblDataCovidIndo_ZonaOren;
     private javax.swing.JLabel lblDataCovidIndo_aktif;
+    private javax.swing.JLabel lblDataCovidIndo_diubah;
+    private javax.swing.JLabel lblDataCovidIndo_kasusPertama;
     private javax.swing.JLabel lblDataCovidIndo_kematian;
-    private javax.swing.JLabel lblDataCovidIndo_odp;
-    private javax.swing.JLabel lblDataCovidIndo_otg;
-    private javax.swing.JLabel lblDataCovidIndo_pdp;
     private javax.swing.JLabel lblDataCovidIndo_positif;
+    private javax.swing.JLabel lblDataCovidIndo_presentaseKasus;
     private javax.swing.JLabel lblDataCovidIndo_sembuh;
     private javax.swing.JLabel lblDataCovidIndo_totalKab;
     private javax.swing.JLabel lblDataCovidIndo_zonaHijau;
     private javax.swing.JLabel lblDataCovidIndo_zonaMerah;
+    private javax.swing.JLabel lblDataCovidIndo_zonaOranye;
     private javax.swing.JLabel lblDataUser;
     private javax.swing.JLabel lblDataUser_genderPria;
     private javax.swing.JLabel lblDataUser_genderWanita;
+    private javax.swing.JLabel lblDataUser_online;
     private javax.swing.JLabel lblDataUser_rata2Umur;
     private javax.swing.JLabel lblDataUser_tipeAdmin;
     private javax.swing.JLabel lblDataUser_tipeUser;
@@ -1243,22 +1628,23 @@ public class DataAplikasi extends javax.swing.JFrame {
     private javax.swing.JLabel valDataCovidDunia_tingkatSembuh;
     private javax.swing.JLabel valDataCovidDunia_totalNegara;
     private javax.swing.JLabel valDataCovidIndo_aktif;
+    private javax.swing.JLabel valDataCovidIndo_diubah;
+    private javax.swing.JLabel valDataCovidIndo_kasusPertama;
     private javax.swing.JLabel valDataCovidIndo_kematian;
-    private javax.swing.JLabel valDataCovidIndo_odp;
-    private javax.swing.JLabel valDataCovidIndo_otg;
-    private javax.swing.JLabel valDataCovidIndo_pdp;
     private javax.swing.JLabel valDataCovidIndo_positif;
+    private javax.swing.JLabel valDataCovidIndo_presentase;
     private javax.swing.JLabel valDataCovidIndo_sembuh;
     private javax.swing.JLabel valDataCovidIndo_totalKab;
     private javax.swing.JLabel valDataCovidIndo_zonaHijau;
     private javax.swing.JLabel valDataCovidIndo_zonaMerah;
-    private javax.swing.JLabel valDataCovidIndo_zonaOren;
+    private javax.swing.JLabel valDataCovidIndo_zonaOranye;
+    private javax.swing.JLabel valDataUser_online;
     private javax.swing.JLabel valDataUser_rata2Umur;
     private javax.swing.JLabel valDataUser_tipeAdmin;
     private javax.swing.JLabel valDataUser_tipeUser;
     private javax.swing.JLabel valDataUser_totalUser;
     private javax.swing.JLabel valDataUser_userIndo;
-    private javax.swing.JLabel valDataUser_userLuarNegeri;
+    private javax.swing.JLabel valDataUser_userLuar;
     private javax.swing.JLabel valDataUser_userPria;
     private javax.swing.JLabel valDataUser_userWanita;
     // End of variables declaration//GEN-END:variables
