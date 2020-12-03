@@ -4,7 +4,7 @@ INSERT INTO users VALUES
 ('ananta', 'Ananta Eka Prayoga', 'Ananta', 'anantaprayoga25@gmail.com', 'L', '2002-01-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ananta1234', '2020-11-18', 'default', 'User'),
 ('ansori', 'Ahmad Ansori', 'Ansori', 'aanblogme@gmail.com', 'L', '2002-05-01', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ansori1234', '2020-11-18', 'default', 'User'),
 ('arifin', 'M. Arifin Mustofa', 'Arifin', 'arifinmmustofa173@gmail.com', 'L', '2003-10-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'arifin1234', '2020-11-18', 'default', 'User'),
-('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', '12345678', '2020-11-15', 'default', 'Admin'),
+('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'pandemic', '2020-11-15', 'default', 'Admin'),
 ('baihaqi2', 'achmad baihaqi s.kom mta', 'baihaqi', 'hakiahmad@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'mypassword123', '2020-11-26', 'default', 'User'),
 ('bima', 'Fahrezian Arya Bima', 'Bima', 'awal.in45@gmail.com', 'L', '2003-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'bima1234', '2020-11-18', 'default', 'User'),
 ('chuenk', 'M. Nur Kholis Chu Enk Yunani', 'Chu Enk', 'chuenkaisyah15@gmail.com', 'L', '2003-05-02', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'chu1234', '2020-11-18', 'default', 'User'),
@@ -24,4 +24,4 @@ INSERT INTO users VALUES
 ('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User'),
 ('tesaja', 'baihaqi', 'baihaqi', 'baihaqi.myapps@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'appjava20', '2020-11-26', 'default', 'User'),
 ('tester', 'aku hanya ikan', 'hanya ikan', 'ikanlele@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'HANYA IKAN', '2020-11-26', 'default', 'User');
-# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
+# Copyright Â© 2020. Achmad Baihaqi. All Rights Reserved.
