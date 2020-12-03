@@ -13,13 +13,21 @@ import javax.swing.JOptionPane;
  */
 public class CovidCases extends Database{
 
+    /**
+     * Digunakan untuk mendapatkan tanggal saat ini pada method getDateNow()
+     */
     private final LocalDateTime lc = LocalDateTime.now();
     private final String TABEL_SELECTED;
     private String sql;
     
+    /**
+     * Tabel yang menampung data dari kasus Covid-19 di Dunia atau di Indonesia
+     */
     public static final String KASUS_DUNIA = "kasuscovid_dunia",
                                KASUS_INDO = "kasuscovid_indo";
-    
+    /**
+     * Nama field yang ada didalam tabel kasuscovid_dunia maupun kasuscovid_indo
+     */
     public static final String NEGARA_IDN = "negara_idn", NEGARA_ENG = "negara_eng", KODE_PROV = "kode", PROVINSI = "provinsi", KASUS = "kasus", KEMATIAN = "kematian", SEMBUH = "sembuh", 
                                AKTIF = "aktif", KRITIS = "kritis", POPULASI = "populasi", TOTAL_KAB = "total_kab", ZONA_MERAH = "kab_zonamerah",
                                ZONA_ORANYE = "kab_zonaoranye", ZONA_HIJAU = "kab_zonahijau", DIUBAH = "diubah", KASUS_PERTAMA = "kasus_pertama", WEBSITE = "website", BENUA = "benua", LAMBANG = "lambang", BENDERA = "bendera";
@@ -208,6 +216,35 @@ public class CovidCases extends Database{
             this.restoreTabel(TABEL_SELECTED);
         }
         return null;
+    }
+    
+    /**
+     * Digunakan untuk mendapatkan total dari data tertentu
+     * 
+     * @param field field / data yang akan dihitung total-nya
+     * @return total dari data
+     */
+    public int getTotalData(final String field){
+        try{
+            // digunakan untuk manampung total dari data
+             int totalData = 0;
+            // membuat query yang digunakan untuk mendapatkan total dari sebuah data berdasarkan tabel yang dipilih
+            if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
+                sql = "SELECT * FROM kasuscovid_dunia";
+            }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
+                sql = "SELECT * FROM kasuscovid_indo";
+            }
+            // mengeksekusi query sql 
+            res = stat.executeQuery(sql);
+            // menhitung total dari data
+            while(res.next()){
+                totalData += Integer.parseInt(res.getString(field));
+            }
+            return totalData;
+        }catch(SQLException ex){
+            System.out.println("Terjadi kesalahan saat mengambil total data : " + ex.getMessage());
+        }
+        return -1;
     }
     
     public boolean setData(final String field, final String key, final String newData){
