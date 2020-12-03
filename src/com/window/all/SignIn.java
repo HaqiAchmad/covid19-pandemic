@@ -376,7 +376,18 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignInMouseEntered
 
     private void lblLupaPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseClicked
+        UbahPassword ubah = new UbahPassword();
+        ubah.setLocation(this.getX(), this.getY());
+        System.out.println("Membuka Window UbahPassword");
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                ubah.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_lblLupaPassMouseClicked
 
     private void lblLupaPassMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseEntered

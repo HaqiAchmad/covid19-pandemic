@@ -83,7 +83,7 @@ public class AboutApp extends javax.swing.JFrame {
         this.btnTentangApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnKirimRatting.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnDataApp.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-aboutapp-gmailnew.png"), 40, 30));
      
         // menampilkan data dari ratting ke window
         this.valRatting5.setText(String.format("%,d user memberi ratting 5", ratting5));
@@ -1779,12 +1779,12 @@ public class AboutApp extends javax.swing.JFrame {
 
     private void lblIconGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseEntered
         this.lblGmail.setForeground(new java.awt.Color(255,0,0));
-        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 35, 25));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-aboutapp-gmailnew.png"), 35, 25));
     }//GEN-LAST:event_lblIconGmailMouseEntered
 
     private void lblIconGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconGmailMouseExited
         this.lblGmail.setForeground(new java.awt.Color(0, 0, 0));
-        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-aboutapp-gmailnew.png"), 40, 30));
     }//GEN-LAST:event_lblIconGmailMouseExited
 
     private void lblIconWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblIconWAMouseClicked
@@ -1821,12 +1821,12 @@ public class AboutApp extends javax.swing.JFrame {
 
     private void lblGmailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseEntered
         this.lblGmail.setForeground(new java.awt.Color(255,0,0));
-        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 35, 25));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-aboutapp-gmailnew.png"), 35, 25));
     }//GEN-LAST:event_lblGmailMouseEntered
 
     private void lblGmailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGmailMouseExited
         this.lblGmail.setForeground(new java.awt.Color(0, 0, 0));
-        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-gmailnew.png"), 40, 30));
+        this.lblIconGmail.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\icons\\ic-aboutapp-gmailnew.png"), 40, 30));
     }//GEN-LAST:event_lblGmailMouseExited
 
     private void lblWAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblWAMouseClicked

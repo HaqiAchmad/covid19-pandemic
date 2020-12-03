@@ -4,8 +4,9 @@ import com.database.Account;
 import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
-import java.awt.Color;
+import com.window.admin.DataAplikasi;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -1043,7 +1044,7 @@ public class Beranda extends javax.swing.JFrame {
 
     private void btnDataAppActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataAppActionPerformed
         System.out.println("Membuka Window DataAplikasi");
-        com.window.admin.DataAplikasi data = new com.window.admin.DataAplikasi();
+        DataAplikasi data = new DataAplikasi();
         data.setLocation(this.getX(), this.getY());
         
         java.awt.EventQueue.invokeLater(new Runnable(){
