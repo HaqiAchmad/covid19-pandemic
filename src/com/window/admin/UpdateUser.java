@@ -1,16 +1,15 @@
 package com.window.admin;
 
+import com.media.audio.Audio;
+import com.media.gambar.Gambar;
+import com.window.all.Beranda;
 import java.awt.Color;
-import java.awt.Image;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  * 
@@ -19,141 +18,84 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UpdateUser extends javax.swing.JFrame {
 
-    int x, y;
-    private Connection conn;
-    private Statement stat;
-    private ResultSet res;
+    private int x, y;
+    /**
+     * Digunakan untuk mengedit data
+     */
+    private boolean isEdit = false;
     
     public UpdateUser() {
         initComponents();
+        
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        
-        this.btnBeranda.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnInfo.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataUser.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataCovidDunia.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataCovidIndo.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-//        this.jButton8.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        
         this.tabelUsers.setRowHeight(30);
         this.tabelUsers.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelUsers.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
-        this.btnAdd.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnEdit.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnSimpan.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.pnlMain.setUI(new javax.swing.plaf.basic.BasicPanelUI());
-        
         this.btnSimpan.setVisible(false);
         this.btnBatal.setVisible(false);
         
-        this.editEmail.setEditable(false);
-        this.editUsername.setEditable(false);
-        this.editGender.setEditable(false);
-        this.editTipeAkun.setEditable(false);
-//        this.editNamalengkap.setEditable(false);
-//        this.editNamapanggilan.setEditable(false);
-        this.editTglLahir.setEditable(false);
-//        this.editAlamat.setEditable(false);
-//        this.editAsalNegara.setEditable(false);
-//        this.editPekerjaan.setEditable(false);
-        this.editTglDibuat.setEditable(false);
-        this.editPassword.setEditable(false);
+        JTextField edits[] = new JTextField[]{
+            this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword, this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
+        };
+        this.setBorderColor(edits, new Color(0,0,0));
         
-        this.editUsername.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editNamalengkap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editNamapanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editTipeAkun.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editTglLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editAsalNegara.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editPekerjaan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editGender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        this.editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        this.scaleImage(new ImageIcon("D:\\Downloads\\Images\\profile.jpg"));
-        this.startConnection();
-        this.getUsers();
-        
-        JButton[] btns = new JButton[]{this.btnBeranda, this.btnInfo, this.btnDataCovidIndo, this.btnDataCovidDunia};
+         // mengatur UI dari button yang ada didalam window ke BasicButtonUI
+        JButton btns[] = new JButton[]{
+            this.btnAdd, this.btnBatal, this.btnBeranda, this.btnDataUser, this.btnEdit, this.btnHapus, this.btnInfo, this.btnSimpan, this.btnDataCovidDunia, this.btnDataCovidIndo
+        };
         for(JButton btn : btns){
-            
+            btn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        }
+        
+        // mengatur MouseEvent Entered & Exited pada Button yang ada di dalam Panel pnlLeft
+        JButton btnLeft[] = new JButton[]{
+            this.btnBeranda, this.btnInfo, this.btnDataCovidDunia, this.btnDataCovidIndo
+        };
+        for(JButton btn : btnLeft){
             btn.addMouseListener(new java.awt.event.MouseListener() {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new java.awt.Color(28,100,230));
+                    btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    btn.setBackground(new Color(28,100,230));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new java.awt.Color(49,144,215));
+                    btn.setBackground(new Color(49,144,215));
+                    btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             });
-
         }
         
     }
     
-    private void scaleImage(ImageIcon icon){
-        Image img = icon.getImage();
-        Image imgScale = img.getScaledInstance(lblPhotoProfile.getWidth(), lblPhotoProfile.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon scaleIcon = new ImageIcon(imgScale);
-        lblPhotoProfile.setText("");
-        lblPhotoProfile.setIcon(scaleIcon);
-    }
-
-    private void startConnection(){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/app_covid19tester", "root", "");
-            stat = conn.createStatement();
-            System.out.println("koneksi sukses");
-        }catch(SQLException | ClassNotFoundException sx){
-            System.out.println("koneksi gagal \n" + sx.toString());
+    private void setBorderColor(JTextField[] edits, Color color){
+        for(JTextField edit : edits){
+            edit.setBorder(javax.swing.BorderFactory.createLineBorder(color));
         }
     }
     
-    private void getUsers(){
-        DefaultTableModel tbl = new DefaultTableModel();
-        tbl.addColumn("Username");
-        tbl.addColumn("Nama Panggilan");
-        tbl.addColumn("Email");
-        tbl.addColumn("Type");
-        try{
-            res = stat.executeQuery("SELECT * FROM users");
-            while(res.next()){
-                tbl.addRow(new Object[]{
-                    res.getString("username"),
-                    res.getString("namalengkap"),
-                    res.getString("email"),
-                    res.getString("type")
-                });
-            }
-            this.tabelUsers.setModel(tbl);
-        }catch(SQLException ex){
-            System.out.println(ex);
-        }
+    private void seEditableData(boolean edit){
+        
     }
-   
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -244,9 +186,24 @@ public class UpdateUser extends javax.swing.JFrame {
         tabelUsers.setGridColor(new java.awt.Color(0, 0, 0));
         tabelUsers.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelUsers.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelUsers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelUsersMouseClicked(evt);
+            }
+        });
+        tabelUsers.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelUsersKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelUsers);
 
         inpCariUser.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        inpCariUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpCariUserKeyTyped(evt);
+            }
+        });
 
         lblCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCari.setForeground(new java.awt.Color(224, 56, 56));
@@ -267,30 +224,55 @@ public class UpdateUser extends javax.swing.JFrame {
         btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-beranda.png"))); // NOI18N
         btnBeranda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBeranda.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnBeranda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBerandaActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnBeranda);
 
         btnInfo.setBackground(new java.awt.Color(49, 144, 215));
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-info.png"))); // NOI18N
         btnInfo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnInfo.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnInfo);
 
         btnDataUser.setBackground(new java.awt.Color(34, 119, 237));
         btnDataUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-users.png"))); // NOI18N
         btnDataUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataUser.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataUserActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataUser);
 
         btnDataCovidDunia.setBackground(new java.awt.Color(49, 144, 215));
         btnDataCovidDunia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusdunia.png"))); // NOI18N
         btnDataCovidDunia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataCovidDunia.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataCovidDunia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataCovidDuniaActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataCovidDunia);
 
         btnDataCovidIndo.setBackground(new java.awt.Color(49, 144, 215));
         btnDataCovidIndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusindo.png"))); // NOI18N
         btnDataCovidIndo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataCovidIndo.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataCovidIndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataCovidIndoActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataCovidIndo);
 
         lblTop.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -332,16 +314,55 @@ public class UpdateUser extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add Akun");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAddMouseExited(evt);
+            }
+        });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setBackground(new java.awt.Color(41, 180, 50));
         btnEdit.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit");
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+        });
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnHapus.setBackground(new java.awt.Color(220, 41, 41));
         btnHapus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
+        btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHapusMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHapusMouseExited(evt);
+            }
+        });
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         line1.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -354,12 +375,22 @@ public class UpdateUser extends javax.swing.JFrame {
         editEmail.setText("hakiahmad756@gmail.com");
         editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editEmail.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmailMouseClicked(evt);
+            }
+        });
 
         editUsername.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editUsername.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         editUsername.setText("baihaqi");
         editUsername.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editUsername.setCaretColor(new java.awt.Color(255, 0, 0));
+        editUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editUsernameMouseClicked(evt);
+            }
+        });
 
         lblUsername.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -370,6 +401,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editNamalengkap.setText("Achmad Baihaqi");
         editNamalengkap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editNamalengkap.setCaretColor(new java.awt.Color(255, 0, 0));
+        editNamalengkap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editNamalengkapMouseClicked(evt);
+            }
+        });
 
         lblNamalengkap.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblNamalengkap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -380,6 +416,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editTipeAkun.setText("Admin");
         editTipeAkun.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTipeAkun.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTipeAkun.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editTipeAkunMouseClicked(evt);
+            }
+        });
 
         lblTipeAkun.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblTipeAkun.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -394,6 +435,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editGender.setText("Laki-Laki");
         editGender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editGender.setCaretColor(new java.awt.Color(255, 0, 0));
+        editGender.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editGenderMouseClicked(evt);
+            }
+        });
 
         lblGender.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -404,6 +450,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editNamapanggilan.setText("Baihaqi");
         editNamapanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editNamapanggilan.setCaretColor(new java.awt.Color(255, 0, 0));
+        editNamapanggilan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editNamapanggilanMouseClicked(evt);
+            }
+        });
 
         lblNamaPanggilan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblNamaPanggilan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -425,12 +476,22 @@ public class UpdateUser extends javax.swing.JFrame {
         editTglLahir.setText("04 Agustus 2003");
         editTglLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTglLahir.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTglLahir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editTglLahirMouseClicked(evt);
+            }
+        });
 
         editAlamat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editAlamat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         editAlamat.setText("Jawa Timur");
         editAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editAlamat.setCaretColor(new java.awt.Color(255, 0, 0));
+        editAlamat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editAlamatMouseClicked(evt);
+            }
+        });
 
         lblAlamat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblAlamat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -441,6 +502,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editAsalNegara.setText("Indonesia");
         editAsalNegara.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editAsalNegara.setCaretColor(new java.awt.Color(255, 0, 0));
+        editAsalNegara.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editAsalNegaraMouseClicked(evt);
+            }
+        });
 
         lblAsalNegara.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblAsalNegara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -451,6 +517,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editPekerjaan.setText("Software Enginer");
         editPekerjaan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editPekerjaan.setCaretColor(new java.awt.Color(255, 0, 0));
+        editPekerjaan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editPekerjaanMouseClicked(evt);
+            }
+        });
 
         lblPekerjaan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblPekerjaan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -461,6 +532,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editTglDibuat.setText("30 Oktober 2020");
         editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTglDibuat.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTglDibuat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editTglDibuatMouseClicked(evt);
+            }
+        });
 
         lblDibuat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblDibuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -471,6 +547,11 @@ public class UpdateUser extends javax.swing.JFrame {
         editPassword.setText("••••••••••••••••");
         editPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editPassword.setCaretColor(new java.awt.Color(255, 0, 0));
+        editPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editPasswordMouseClicked(evt);
+            }
+        });
 
         lblPassword.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -482,22 +563,81 @@ public class UpdateUser extends javax.swing.JFrame {
         btnSimpan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpan.setText("Simpan");
+        btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseExited(evt);
+            }
+        });
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         btnBatal.setBackground(new java.awt.Color(220, 41, 41));
         btnBatal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnBatal.setForeground(new java.awt.Color(255, 255, 255));
         btnBatal.setText("Batal");
+        btnBatal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBatalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBatalMouseExited(evt);
+            }
+        });
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
 
         line4.setForeground(new java.awt.Color(0, 0, 0));
 
         lblEditFoto.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblEditFoto.setText("Edit Foto");
+        lblEditFoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditFotoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEditFotoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEditFotoMouseExited(evt);
+            }
+        });
 
         lblHapusFoto.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblHapusFoto.setText("Hapus Foto");
+        lblHapusFoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHapusFotoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblHapusFotoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblHapusFotoMouseExited(evt);
+            }
+        });
 
         lblKembali.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-back.png"))); // NOI18N
+        lblKembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -527,8 +667,8 @@ public class UpdateUser extends javax.swing.JFrame {
                 .addComponent(line2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(432, 432, 432)
-                        .addComponent(lblKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(440, 440, 440)
+                        .addComponent(lblKembali)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblMinimaze, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -726,51 +866,377 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_BLACK));
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_ENTERED));
     }//GEN-LAST:event_lblCloseMouseEntered
-
+    
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
-        java.awt.EventQueue.invokeLater(new Runnable(){
-            
-            @Override
-            public void run(){
-                new com.window.admin.DataAplikasi().setVisible(true);
-            }
-        });
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblMinimazeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseExited
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_BLACK));
     }//GEN-LAST:event_lblMinimazeMouseExited
 
     private void lblMinimazeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseEntered
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_ENTERED));
     }//GEN-LAST:event_lblMinimazeMouseEntered
 
     private void lblMinimazeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseClicked
         this.setState(javax.swing.JFrame.ICONIFIED);
     }//GEN-LAST:event_lblMinimazeMouseClicked
-    private boolean isEdit = false;
-    public void changeColor(Color color){
-        this.editUsername.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editNamalengkap.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editNamapanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editTipeAkun.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editTglLahir.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editAsalNegara.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editPekerjaan.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editGender.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editPassword.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-    } 
-   
+
+    private void lblKembaliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseExited
+        this.lblKembali.setIcon(Gambar.getIcon(Gambar.IC_BACK));
+    }//GEN-LAST:event_lblKembaliMouseExited
+
+    private void lblKembaliMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseEntered
+        this.lblKembali.setIcon(Gambar.getIcon(Gambar.IC_BACK_ENTERED));
+    }//GEN-LAST:event_lblKembaliMouseEntered
+
+    private void lblKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseClicked
+        System.out.println("Membuka Window DataAplikasi");
+        DataAplikasi dataApp = new DataAplikasi();
+        dataApp.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                dataApp.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_lblKembaliMouseClicked
+
+    private void btnBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBerandaActionPerformed
+        System.out.println("Membuka Window Beranda");
+        Beranda beranda = new Beranda();
+        beranda.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                beranda.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnBerandaActionPerformed
+
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        System.out.println("Membuka Window DataAplikasi");
+        com.window.admin.DataAplikasi data = new com.window.admin.DataAplikasi();
+        data.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                data.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void btnDataUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataUserActionPerformed
+        System.out.println("Membuka Window UpdateUser");
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateUser.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataUserActionPerformed
+
+    private void btnDataCovidDuniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataCovidDuniaActionPerformed
+        System.out.println("Membuka Window UpdateCovidDunia");
+        UpdateCovidDunia updateCovidDunia = new UpdateCovidDunia();
+        updateCovidDunia.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidDunia.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataCovidDuniaActionPerformed
+
+    private void btnDataCovidIndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataCovidIndoActionPerformed
+        System.out.println("Membuka Window UpdateCovidIndo");
+        UpdateCovidIndo updateCovidIndo = new UpdateCovidIndo();
+        updateCovidIndo.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidIndo.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataCovidIndoActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
+        this.btnAdd.setBackground(new Color(31,34,38));
+        this.btnHapus.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnAddMouseEntered
+
+    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        this.btnAdd.setBackground(new Color(34,119,237));
+        this.btnHapus.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
+        this.btnHapus.setBackground(new Color(31,34,38));
+        this.btnAdd.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnHapusMouseEntered
+
+    private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
+        this.btnHapus.setBackground(new Color(220,41,41));
+        this.btnAdd.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnHapusMouseExited
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        isEdit = true;
+        this.btnEdit.setVisible(false);
+        this.btnSimpan.setVisible(true);
+        this.btnBatal.setVisible(true);
+        // mengatur warna border pada input edit data menjadi warna hitam
+        JTextField edits[] = new JTextField[]{
+            this.editAlamat, this.editAsalNegara, this.editNamalengkap, this.editNamapanggilan, this.editPekerjaan, 
+        };
+        for(JTextField edit : edits){
+            edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,106,255)));
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        this.btnEdit.setBackground(new Color(33,123,39));
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        this.btnEdit.setBackground(new Color(41,180,50));
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
+        this.btnSimpan.setBackground(new Color(31,34,38));
+        this.btnBatal.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnSimpanMouseEntered
+
+    private void btnSimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseExited
+        this.btnSimpan.setBackground(new Color(34,119,237));
+        this.btnBatal.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnSimpanMouseExited
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+        isEdit = false;
+        this.btnEdit.setVisible(true);
+        this.btnSimpan.setVisible(false);
+        this.btnBatal.setVisible(false);
+        // mengatur warna border pada input edit data menjadi warna hitam
+        JTextField edits[] = new JTextField[]{
+            this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword, this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
+        };
+        for(JTextField edit : edits){
+            edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+        }
+    }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
+        this.btnBatal.setBackground(new Color(31,34,38));
+        this.btnSimpan.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnBatalMouseEntered
+
+    private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
+        this.btnBatal.setBackground(new Color(220,41,41));
+        this.btnSimpan.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnBatalMouseExited
+
+    private void tabelUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelUsersMouseClicked
+        
+    }//GEN-LAST:event_tabelUsersMouseClicked
+
+    private void tabelUsersKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelUsersKeyPressed
+        
+    }//GEN-LAST:event_tabelUsersKeyPressed
+
+    private void inpCariUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariUserKeyTyped
+        this.lblKeyword.setText("Menampilkan data dengan keyword = \""+inpCariUser.getText()+"\"");
+    }//GEN-LAST:event_inpCariUserKeyTyped
+
+    private void lblEditFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditFotoMouseClicked
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(null, "Fitur 'Edit Foto' untuk saat ini belum tesedia!!\n\nCopyright © 2020. Achmad Baihaqi.", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_lblEditFotoMouseClicked
+
+    private void lblEditFotoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditFotoMouseEntered
+        this.lblEditFoto.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,255);\">Edit Foto</p></html>");
+        this.lblEditFoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_lblEditFotoMouseEntered
+
+    private void lblEditFotoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditFotoMouseExited
+        this.lblEditFoto.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Edit Foto</p></html>");
+        this.lblEditFoto.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_lblEditFotoMouseExited
+
+    private void lblHapusFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHapusFotoMouseClicked
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(null, "Fitur 'Hapus Foto' untuk saat ini belum tesedia!!\n\nCopyright © 2020. Achmad Baihaqi.", "Info", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_lblHapusFotoMouseClicked
+
+    private void lblHapusFotoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHapusFotoMouseEntered
+        this.lblHapusFoto.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,255);\">Hapus Foto</p></html>");
+        this.lblHapusFoto.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_lblHapusFotoMouseEntered
+
+    private void lblHapusFotoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHapusFotoMouseExited
+        this.lblHapusFoto.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Hapus Foto</p></html>");
+        this.lblHapusFoto.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_lblHapusFotoMouseExited
+
+    private void editUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editUsernameMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editUsernameMouseClicked
+
+    private void editEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmailMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editEmailMouseClicked
+
+    private void editTipeAkunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTipeAkunMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editTipeAkunMouseClicked
+
+    private void editNamalengkapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamalengkapMouseClicked
+         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editNamalengkapMouseClicked
+
+    private void editNamapanggilanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamapanggilanMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editNamapanggilanMouseClicked
+
+    private void editTglLahirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglLahirMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editTglLahirMouseClicked
+
+    private void editGenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGenderMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editGenderMouseClicked
+
+    private void editAlamatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAlamatMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editAlamatMouseClicked
+
+    private void editAsalNegaraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAsalNegaraMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editAsalNegaraMouseClicked
+
+    private void editPekerjaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPekerjaanMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editPekerjaanMouseClicked
+
+    private void editPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPasswordMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editPasswordMouseClicked
+
+    private void editTglDibuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglDibuatMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editTglDibuatMouseClicked
+  
     /**
      * @param args the command line arguments
      */
@@ -796,7 +1262,6 @@ public class UpdateUser extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(UpdateUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

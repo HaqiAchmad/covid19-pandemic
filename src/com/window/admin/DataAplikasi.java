@@ -60,6 +60,8 @@ public class DataAplikasi extends javax.swing.JFrame {
     
     public DataAplikasi() {
         initComponents();
+        
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
         this.btnBeranda.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnApaCovid.setUI(new javax.swing.plaf.basic.BasicButtonUI());

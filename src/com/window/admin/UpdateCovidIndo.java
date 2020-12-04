@@ -1,16 +1,14 @@
 package com.window.admin;
 
+import com.media.audio.Audio;
+import com.media.gambar.Gambar;
+import com.window.all.Beranda;
 import java.awt.Color;
-import java.awt.Image;
+import java.awt.Cursor;
+
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -19,131 +17,68 @@ import javax.swing.table.DefaultTableModel;
  */
 public class UpdateCovidIndo extends javax.swing.JFrame {
 
-    int x, y;
-    private Connection conn;
-    private Statement stat;
-    private ResultSet res;
+    private int x, y;
+    /**
+     * Digunakan untuk mengedit data
+     */
+    private boolean isEdit = false;
     
     public UpdateCovidIndo() {
         initComponents();
+        
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        
-        this.btnBeranda.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnInfo.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataUser.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataCovidDunia.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnDataCovidIndo.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-//        this.jButton8.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        
         this.tabelKasus.setRowHeight(30);
         this.tabelKasus.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelKasus.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
-        this.btnAdd.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnEdit.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnSimpan.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
-        this.pnlMain.setUI(new javax.swing.plaf.basic.BasicPanelUI());
+        this.btnSimpan.setVisible(false);
+        this.btnBatal.setVisible(false);
         
-//        this.btnSimpan.setVisible(false);
-//        this.btnBatal.setVisible(false);
-        
-        this.editNamaProvinsi.setEditable(false);
-        this.editAktif.setEditable(false);
-        this.editDiubah.setEditable(false);
-        
-//        this.editPeringkat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editPositif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editNegara_IDN.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editNegara_ENG.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editAktif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editPopulasi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editTingkatKesembuhan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editKritis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editTingkatKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editDiubah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-//        this.editBenua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        this.scaleImage(new ImageIcon("S:\\Source Code\\Java Programming\\Java Project\\Covid-19 Pandemic\\src\\com\\media\\flags\\bendera-jepang.jpg"));
-        this.startConnection();
-        this.getUsers();
-        
-        JButton[] btns = new JButton[]{this.btnBeranda, this.btnInfo, this.btnDataUser, this.btnDataCovidDunia};
+               // mengatur UI dari button yang ada didalam window ke BasicButtonUI
+        JButton btns[] = new JButton[]{
+            this.btnAdd, this.btnBatal, this.btnBeranda, this.btnDataUser, this.btnEdit, this.btnHapus, this.btnInfo, this.btnSimpan, this.btnDataCovidDunia, this.btnDataCovidIndo
+        };
         for(JButton btn : btns){
-            
+            btn.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        }
+        
+        // mengatur MouseEvent Entered & Exited pada Button yang ada di dalam Panel pnlLeft
+        JButton btnLeft[] = new JButton[]{
+            this.btnBeranda, this.btnInfo, this.btnDataUser, this.btnDataCovidDunia, 
+        };
+        for(JButton btn : btnLeft){
             btn.addMouseListener(new java.awt.event.MouseListener() {
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
+                    
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    btn.setBackground(new java.awt.Color(28,100,230));
+                    btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                    btn.setBackground(new Color(28,100,230));
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    btn.setBackground(new java.awt.Color(49,144,215));
+                    btn.setBackground(new Color(49,144,215));
+                    btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }
             });
-
         }
         
-    }
-    
-    private void scaleImage(ImageIcon icon){
-        Image img = icon.getImage();
-        Image imgScale = img.getScaledInstance(this.lblLambangProvinsi.getWidth(), this.lblLambangProvinsi.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon scaleIcon = new ImageIcon(imgScale);
-        lblLambangProvinsi.setText("");
-        lblLambangProvinsi.setIcon(scaleIcon);
-    }
-
-    private void startConnection(){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/app_covid19tester", "root", "");
-            stat = conn.createStatement();
-            System.out.println("koneksi sukses");
-        }catch(SQLException | ClassNotFoundException sx){
-            System.out.println("koneksi gagal \n" + sx.toString());
-        }
-    }
-    
-    private void getUsers(){
-        DefaultTableModel tbl = new DefaultTableModel();
-        tbl.addColumn("Provinsi");
-        tbl.addColumn("Positif");
-        tbl.addColumn("Sembuh");
-        tbl.addColumn("Kematian");
-        try{
-            res = stat.executeQuery("SELECT * FROM kasuscovid_indo ORDER BY kasus DESC");
-            while(res.next()){
-                tbl.addRow(new Object[]{
-                    res.getString("provinsi"),
-                    res.getString("kasus"),
-                    res.getString("sembuh"),
-                    res.getString("kematian")
-                });
-            }
-            this.tabelKasus.setModel(tbl);
-        }catch(SQLException ex){
-            System.out.println(ex);
-        }
+        
     }
    
     @SuppressWarnings("unchecked")
@@ -171,30 +106,30 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         btnEdit = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         line1 = new javax.swing.JSeparator();
-        lblPositif = new javax.swing.JLabel();
-        editPositif = new javax.swing.JTextField();
-        editNamaProvinsi = new javax.swing.JTextField();
-        lblNamaProvinsi = new javax.swing.JLabel();
-        editKematian = new javax.swing.JTextField();
-        lblKematian = new javax.swing.JLabel();
+        lblNamaProv = new javax.swing.JLabel();
+        editProvinsi = new javax.swing.JTextField();
+        editKodeProv = new javax.swing.JTextField();
+        lblNamaKodeProv = new javax.swing.JLabel();
         editSembuh = new javax.swing.JTextField();
         lblSembuh = new javax.swing.JLabel();
+        editPositif = new javax.swing.JTextField();
+        lblPositif = new javax.swing.JLabel();
         lblEditData = new javax.swing.JLabel();
-        editPDP = new javax.swing.JTextField();
-        lblTotalPDP = new javax.swing.JLabel();
-        editAktif = new javax.swing.JTextField();
-        lblAktif = new javax.swing.JLabel();
-        lblProvinsi = new javax.swing.JLabel();
-        lblTotalODP = new javax.swing.JLabel();
-        editODP = new javax.swing.JTextField();
-        editOTG = new javax.swing.JTextField();
-        lblTotalOTG = new javax.swing.JLabel();
         editTotalKab = new javax.swing.JTextField();
         lblTotalKab = new javax.swing.JLabel();
+        editKematian = new javax.swing.JTextField();
+        lblKematian = new javax.swing.JLabel();
+        lblProvinsi = new javax.swing.JLabel();
+        lblAktif = new javax.swing.JLabel();
+        editAktif = new javax.swing.JTextField();
         editZonaMerah = new javax.swing.JTextField();
         lblZonaMerah = new javax.swing.JLabel();
         editZonaOranye = new javax.swing.JTextField();
         lblZonaOren = new javax.swing.JLabel();
+        editZonaHijau = new javax.swing.JTextField();
+        lblZonaHijau = new javax.swing.JLabel();
+        editWebsite = new javax.swing.JTextField();
+        lblWebsite = new javax.swing.JLabel();
         line3 = new javax.swing.JSeparator();
         btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
@@ -202,8 +137,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         lblEditLambang = new javax.swing.JLabel();
         lblKembali = new javax.swing.JLabel();
         lblLambangProvinsi = new javax.swing.JLabel();
-        editZonaHijau = new javax.swing.JTextField();
-        lblZonaHijau = new javax.swing.JLabel();
+        editKasusPertama = new javax.swing.JTextField();
+        lblKasusPertama = new javax.swing.JLabel();
         editDiubah = new javax.swing.JTextField();
         lblDiubah = new javax.swing.JLabel();
 
@@ -237,9 +172,24 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         tabelKasus.setGridColor(new java.awt.Color(0, 0, 0));
         tabelKasus.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelKasus.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelKasus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelKasusMouseClicked(evt);
+            }
+        });
+        tabelKasus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelKasusKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelKasus);
 
         inpCariProvinsi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        inpCariProvinsi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inpCariProvinsiKeyTyped(evt);
+            }
+        });
 
         lblCari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblCari.setForeground(new java.awt.Color(224, 56, 56));
@@ -260,30 +210,55 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         btnBeranda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-beranda.png"))); // NOI18N
         btnBeranda.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnBeranda.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnBeranda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBerandaActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnBeranda);
 
         btnInfo.setBackground(new java.awt.Color(49, 144, 215));
         btnInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-info.png"))); // NOI18N
         btnInfo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnInfo.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnInfo);
 
         btnDataUser.setBackground(new java.awt.Color(49, 144, 215));
         btnDataUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-users.png"))); // NOI18N
         btnDataUser.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataUser.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataUserActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataUser);
 
         btnDataCovidDunia.setBackground(new java.awt.Color(49, 144, 215));
         btnDataCovidDunia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusdunia.png"))); // NOI18N
         btnDataCovidDunia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataCovidDunia.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataCovidDunia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataCovidDuniaActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataCovidDunia);
 
         btnDataCovidIndo.setBackground(new java.awt.Color(34, 119, 237));
         btnDataCovidIndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusindo.png"))); // NOI18N
         btnDataCovidIndo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnDataCovidIndo.setPreferredSize(new java.awt.Dimension(43, 43));
+        btnDataCovidIndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataCovidIndoActionPerformed(evt);
+            }
+        });
         pnlLeft.add(btnDataCovidIndo);
 
         lblTop.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -325,121 +300,180 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         btnAdd.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
         btnAdd.setText("Add Provinsi");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAddMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAddMouseExited(evt);
+            }
+        });
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
         btnEdit.setBackground(new java.awt.Color(41, 180, 50));
         btnEdit.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnEdit.setForeground(new java.awt.Color(255, 255, 255));
         btnEdit.setText("Edit");
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEditMouseExited(evt);
+            }
+        });
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnHapus.setBackground(new java.awt.Color(220, 41, 41));
         btnHapus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnHapus.setForeground(new java.awt.Color(255, 255, 255));
         btnHapus.setText("Hapus");
+        btnHapus.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHapusMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHapusMouseExited(evt);
+            }
+        });
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
 
         line1.setForeground(new java.awt.Color(0, 0, 0));
 
-        lblPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblPositif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPositif.setText("Kasus Positif");
+        lblNamaProv.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblNamaProv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNamaProv.setText("Provinsi");
 
-        editPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editPositif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editPositif.setText("45666");
-        editPositif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editPositif.setCaretColor(new java.awt.Color(255, 0, 0));
+        editProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editProvinsi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editProvinsi.setText("Jawa Timur");
+        editProvinsi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editProvinsi.setCaretColor(new java.awt.Color(255, 0, 0));
+        editProvinsi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editProvinsiMouseClicked(evt);
+            }
+        });
 
-        editNamaProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editNamaProvinsi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editNamaProvinsi.setText("Jawa Timur (Jatim)");
-        editNamaProvinsi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editNamaProvinsi.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKodeProv.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editKodeProv.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editKodeProv.setText("Jatim");
+        editKodeProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editKodeProv.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKodeProv.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editKodeProvMouseClicked(evt);
+            }
+        });
 
-        lblNamaProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNamaProvinsi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNamaProvinsi.setText("Provinsi");
-
-        editKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editKematian.setText("1653");
-        editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editKematian.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKematian.setText("Kematian");
+        lblNamaKodeProv.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblNamaKodeProv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNamaKodeProv.setText("Kode Provinsi");
 
         editSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editSembuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editSembuh.setText("43444");
+        editSembuh.setText("53131");
         editSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editSembuh.setCaretColor(new java.awt.Color(255, 0, 0));
+        editSembuh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editSembuhMouseClicked(evt);
+            }
+        });
 
         lblSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblSembuh.setText("Sembuh");
 
+        editPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editPositif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editPositif.setText("60190");
+        editPositif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editPositif.setCaretColor(new java.awt.Color(255, 0, 0));
+        editPositif.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editPositifMouseClicked(evt);
+            }
+        });
+
+        lblPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblPositif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPositif.setText("Kasus Positif");
+
         lblEditData.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblEditData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEditData.setText("Edit Data Kasus Covid-19");
 
-        editPDP.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editPDP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editPDP.setText("50055");
-        editPDP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editPDP.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        lblTotalPDP.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTotalPDP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTotalPDP.setText("Total PDP");
-
-        editAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editAktif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editAktif.setText("2461");
-        editAktif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editAktif.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        lblAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblAktif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAktif.setText("Kasus Aktif");
-
-        lblProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblProvinsi.setText("Lambang Provinsi");
-
-        lblTotalODP.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTotalODP.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTotalODP.setText("Total ODP");
-
-        editODP.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editODP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editODP.setText("65445");
-        editODP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editODP.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        editOTG.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editOTG.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editOTG.setText("5983");
-        editOTG.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editOTG.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        lblTotalOTG.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTotalOTG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTotalOTG.setText("Total OTG");
-
         editTotalKab.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editTotalKab.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editTotalKab.setText("5355");
+        editTotalKab.setText("29");
         editTotalKab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTotalKab.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTotalKab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editTotalKabMouseClicked(evt);
+            }
+        });
 
         lblTotalKab.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblTotalKab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalKab.setText("Total Kabupaten");
 
+        editKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editKematian.setText("4275");
+        editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editKematian.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKematian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editKematianMouseClicked(evt);
+            }
+        });
+
+        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKematian.setText("Kematian");
+
+        lblProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblProvinsi.setText("Lambang Provinsi");
+
+        lblAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblAktif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAktif.setText("Kasus Aktif");
+
+        editAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editAktif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editAktif.setText("2784");
+        editAktif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editAktif.setCaretColor(new java.awt.Color(255, 0, 0));
+        editAktif.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editAktifMouseClicked(evt);
+            }
+        });
+
         editZonaMerah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editZonaMerah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editZonaMerah.setText("3604");
+        editZonaMerah.setText("0");
         editZonaMerah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editZonaMerah.setCaretColor(new java.awt.Color(255, 0, 0));
+        editZonaMerah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editZonaMerahMouseClicked(evt);
+            }
+        });
 
         lblZonaMerah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblZonaMerah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -447,13 +481,48 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
 
         editZonaOranye.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editZonaOranye.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editZonaOranye.setText("1805");
+        editZonaOranye.setText("0");
         editZonaOranye.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editZonaOranye.setCaretColor(new java.awt.Color(255, 0, 0));
+        editZonaOranye.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editZonaOranyeMouseClicked(evt);
+            }
+        });
 
         lblZonaOren.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblZonaOren.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblZonaOren.setText("Kab. Zona Oranye");
+
+        editZonaHijau.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editZonaHijau.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editZonaHijau.setText("0");
+        editZonaHijau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editZonaHijau.setCaretColor(new java.awt.Color(255, 0, 0));
+        editZonaHijau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editZonaHijauMouseClicked(evt);
+            }
+        });
+
+        lblZonaHijau.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblZonaHijau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblZonaHijau.setText("Kab. Zona Hijau");
+
+        editWebsite.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editWebsite.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editWebsite.setText("infocovid19.jatimprov.go.id");
+        editWebsite.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editWebsite.setCaretColor(new java.awt.Color(255, 0, 0));
+        editWebsite.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editWebsiteMouseClicked(evt);
+            }
+        });
+
+        lblWebsite.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblWebsite.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWebsite.setText("Website Provinsi");
 
         line3.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -461,38 +530,96 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         btnSimpan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpan.setText("Simpan");
+        btnSimpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSimpanMouseExited(evt);
+            }
+        });
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanActionPerformed(evt);
+            }
+        });
 
         btnBatal.setBackground(new java.awt.Color(220, 41, 41));
         btnBatal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnBatal.setForeground(new java.awt.Color(255, 255, 255));
         btnBatal.setText("Batal");
+        btnBatal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBatalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBatalMouseExited(evt);
+            }
+        });
+        btnBatal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBatalActionPerformed(evt);
+            }
+        });
 
         line4.setForeground(new java.awt.Color(0, 0, 0));
 
         lblEditLambang.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
         lblEditLambang.setText("Edit Lambang");
+        lblEditLambang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblEditLambangMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblEditLambangMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblEditLambangMouseExited(evt);
+            }
+        });
 
         lblKembali.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-back2.png"))); // NOI18N
+        lblKembali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-back.png"))); // NOI18N
+        lblKembali.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblKembaliMouseExited(evt);
+            }
+        });
 
         lblLambangProvinsi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblLambangProvinsi.setText("Lambang");
 
-        editZonaHijau.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editZonaHijau.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editZonaHijau.setText("567");
-        editZonaHijau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editZonaHijau.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKasusPertama.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editKasusPertama.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editKasusPertama.setText("17 Maret 2020");
+        editKasusPertama.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editKasusPertama.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKasusPertama.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editKasusPertamaMouseClicked(evt);
+            }
+        });
 
-        lblZonaHijau.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblZonaHijau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblZonaHijau.setText("Kab. Zona Hijau");
+        lblKasusPertama.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblKasusPertama.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKasusPertama.setText("Kasus Pertama");
 
         editDiubah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editDiubah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editDiubah.setText("30 Oktober 2020");
+        editDiubah.setText("27 November 2020");
         editDiubah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editDiubah.setCaretColor(new java.awt.Color(255, 0, 0));
+        editDiubah.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editDiubahMouseClicked(evt);
+            }
+        });
 
         lblDiubah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblDiubah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -526,8 +653,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                 .addComponent(line2, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addGap(432, 432, 432)
-                        .addComponent(lblKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(440, 440, 440)
+                        .addComponent(lblKembali)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblMinimaze, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -539,10 +666,10 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                             .addComponent(lblEditData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(editPositif)
-                                    .addComponent(lblPositif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editKematian)
-                                    .addComponent(lblKematian, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(editProvinsi)
+                                    .addComponent(lblNamaProv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(editSembuh)
+                                    .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                                         .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -553,34 +680,34 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                                             .addGroup(pnlMainLayout.createSequentialGroup()
                                                 .addComponent(lblProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
-                                    .addComponent(lblTotalODP, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                                    .addComponent(editODP)
-                                    .addComponent(editOTG)
-                                    .addComponent(lblTotalOTG, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(editAktif)
                                     .addComponent(editZonaMerah)
-                                    .addComponent(lblZonaMerah, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
+                                    .addComponent(lblZonaMerah, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(editZonaHijau)
+                                    .addComponent(lblZonaHijau, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
                                 .addGap(39, 39, 39)
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlMainLayout.createSequentialGroup()
                                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(editPDP)
-                                            .addComponent(lblTotalPDP, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                             .addComponent(editTotalKab)
                                             .addComponent(lblTotalKab, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                             .addComponent(editZonaOranye)
-                                            .addComponent(lblZonaOren, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                                            .addComponent(lblZonaOren, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                            .addComponent(editWebsite)
+                                            .addComponent(lblWebsite, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(editNamaProvinsi)
-                                    .addComponent(lblNamaProvinsi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editSembuh)
-                                    .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editAktif)
-                                    .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(editKodeProv)
+                                    .addComponent(lblNamaKodeProv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(editPositif)
+                                    .addComponent(lblPositif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(editKematian)
+                                    .addComponent(lblKematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(editZonaHijau)
-                                    .addComponent(lblZonaHijau, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(editKasusPertama)
+                                    .addComponent(lblKasusPertama, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(pnlMainLayout.createSequentialGroup()
                                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -636,23 +763,15 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNamaProvinsi)
+                                    .addComponent(lblNamaKodeProv)
                                     .addComponent(lblProvinsi))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(editNamaProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(editKodeProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblEditLambang)))
                             .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(lblSembuh)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblAktif)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblPositif)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -660,39 +779,47 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lblKematian)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTotalPDP)
-                            .addComponent(lblTotalODP))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(editPDP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editODP, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(editKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addComponent(lblNamaProv)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblSembuh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblTotalKab)
-                            .addComponent(lblTotalOTG))
+                            .addComponent(lblAktif))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editTotalKab, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editOTG, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(editAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblZonaOren)
+                            .addComponent(lblZonaMerah))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(editZonaOranye, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editZonaMerah, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(lblZonaMerah)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editZonaMerah, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addComponent(lblZonaOren)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editZonaOranye, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblZonaHijau)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(editZonaHijau, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addComponent(lblWebsite)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editWebsite, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlMainLayout.createSequentialGroup()
+                                .addComponent(lblKasusPertama)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(editKasusPertama, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblDiubah)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -733,51 +860,357 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_BLACK));
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_ENTERED));
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseClicked
-        java.awt.EventQueue.invokeLater(new Runnable(){
-            
-            @Override
-            public void run(){
-                new com.window.admin.DataAplikasi().setVisible(true);
-            }
-        });
-        dispose();
+        System.exit(0);
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblMinimazeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseExited
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_BLACK));
     }//GEN-LAST:event_lblMinimazeMouseExited
 
     private void lblMinimazeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseEntered
-
+        this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_ENTERED));
     }//GEN-LAST:event_lblMinimazeMouseEntered
 
     private void lblMinimazeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblMinimazeMouseClicked
         this.setState(javax.swing.JFrame.ICONIFIED);
     }//GEN-LAST:event_lblMinimazeMouseClicked
-    private boolean isEdit = false;
-    public void changeColor(Color color){
-        this.editNamaProvinsi.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editAktif.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editPositif.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editODP.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editOTG.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editTotalKab.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editZonaMerah.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editPDP.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-        this.editZonaOranye.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-//        this.editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(color));
-    } 
-   
+
+    private void lblKembaliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseExited
+        this.lblKembali.setIcon(Gambar.getIcon(Gambar.IC_BACK));
+    }//GEN-LAST:event_lblKembaliMouseExited
+
+    private void lblKembaliMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseEntered
+        this.lblKembali.setIcon(Gambar.getIcon(Gambar.IC_BACK_ENTERED));
+    }//GEN-LAST:event_lblKembaliMouseEntered
+
+    private void lblKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseClicked
+        System.out.println("Membuka Window DataAplikasi");
+        DataAplikasi dataApp = new DataAplikasi();
+        dataApp.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                dataApp.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_lblKembaliMouseClicked
+
+    private void btnBerandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBerandaActionPerformed
+        System.out.println("Membuka Window Beranda");
+        Beranda beranda = new Beranda();
+        beranda.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                beranda.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnBerandaActionPerformed
+
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        System.out.println("Membuka Window DataAplikasi");
+        com.window.admin.DataAplikasi data = new com.window.admin.DataAplikasi();
+        data.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                data.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void btnDataUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataUserActionPerformed
+        System.out.println("Membuka Window UpdateUser");
+        UpdateUser updateUser = new UpdateUser();
+        updateUser.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateUser.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataUserActionPerformed
+
+    private void btnDataCovidDuniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataCovidDuniaActionPerformed
+        System.out.println("Membuka Window UpdateCovidDunia");
+        UpdateCovidDunia updateCovidDunia = new UpdateCovidDunia();
+        updateCovidDunia.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidDunia.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataCovidDuniaActionPerformed
+
+    private void btnDataCovidIndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataCovidIndoActionPerformed
+        System.out.println("Membuka Window UpdateCovidIndo");
+        UpdateCovidIndo updateCovidIndo = new UpdateCovidIndo();
+        updateCovidIndo.setLocation(this.getX(), this.getY());
+        
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                updateCovidIndo.setVisible(true);
+            }
+        });
+        dispose();
+    }//GEN-LAST:event_btnDataCovidIndoActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        
+    }//GEN-LAST:event_btnAddActionPerformed
+
+    private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
+         this.btnAdd.setBackground(new Color(31,34,38));
+        this.btnHapus.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnAddMouseEntered
+
+    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        this.btnAdd.setBackground(new Color(34,119,237));
+        this.btnHapus.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        
+    }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
+        this.btnHapus.setBackground(new Color(31,34,38));
+        this.btnAdd.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnHapusMouseEntered
+
+    private void btnHapusMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseExited
+        this.btnHapus.setBackground(new Color(220,41,41));
+        this.btnAdd.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnHapusMouseExited
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        isEdit = true;
+        this.btnEdit.setVisible(false);
+        this.btnSimpan.setVisible(true);
+        this.btnBatal.setVisible(true);
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
+        this.btnEdit.setBackground(new Color(33,123,39));
+    }//GEN-LAST:event_btnEditMouseEntered
+
+    private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
+        this.btnEdit.setBackground(new Color(41,180,50));
+    }//GEN-LAST:event_btnEditMouseExited
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        
+    }//GEN-LAST:event_btnSimpanActionPerformed
+
+    private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
+        this.btnSimpan.setBackground(new Color(31,34,38));
+        this.btnBatal.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnSimpanMouseEntered
+
+    private void btnSimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseExited
+        this.btnSimpan.setBackground(new Color(34,119,237));
+        this.btnBatal.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnSimpanMouseExited
+
+    private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
+        isEdit = false;
+        this.btnEdit.setVisible(true);
+        this.btnSimpan.setVisible(false);
+        this.btnBatal.setVisible(false);
+    }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
+       this.btnBatal.setBackground(new Color(31,34,38));
+       this.btnSimpan.setBackground(new Color(220,41,41));
+    }//GEN-LAST:event_btnBatalMouseEntered
+
+    private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
+        this.btnBatal.setBackground(new Color(220,41,41));
+        this.btnSimpan.setBackground(new Color(34,119,237));
+    }//GEN-LAST:event_btnBatalMouseExited
+
+    private void tabelKasusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKasusMouseClicked
+        
+    }//GEN-LAST:event_tabelKasusMouseClicked
+
+    private void tabelKasusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelKasusKeyPressed
+        
+    }//GEN-LAST:event_tabelKasusKeyPressed
+
+    private void inpCariProvinsiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariProvinsiKeyTyped
+        this.lblKeyword.setText("Menampilkan data dengan keyword = \""+inpCariProvinsi.getText()+"\"");
+    }//GEN-LAST:event_inpCariProvinsiKeyTyped
+
+    private void lblEditLambangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditLambangMouseClicked
+        
+    }//GEN-LAST:event_lblEditLambangMouseClicked
+
+    private void lblEditLambangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditLambangMouseEntered
+        this.lblEditLambang.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,255);\">Edit Lambang</p></html>");
+        this.lblEditLambang.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_lblEditLambangMouseEntered
+
+    private void lblEditLambangMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditLambangMouseExited
+        this.lblEditLambang.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Edit Lambang</p></html>");
+        this.lblEditLambang.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_lblEditLambangMouseExited
+
+    private void editKodeProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKodeProvMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editKodeProvMouseClicked
+
+    private void editProvinsiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProvinsiMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editProvinsiMouseClicked
+
+    private void editPositifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPositifMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editPositifMouseClicked
+
+    private void editSembuhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editSembuhMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editSembuhMouseClicked
+
+    private void editKematianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKematianMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editKematianMouseClicked
+
+    private void editAktifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAktifMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editAktifMouseClicked
+
+    private void editTotalKabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTotalKabMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editTotalKabMouseClicked
+
+    private void editZonaMerahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editZonaMerahMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editZonaMerahMouseClicked
+
+    private void editZonaOranyeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editZonaOranyeMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editZonaOranyeMouseClicked
+
+    private void editZonaHijauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editZonaHijauMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editZonaHijauMouseClicked
+
+    private void editWebsiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editWebsiteMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editWebsiteMouseClicked
+
+    private void editKasusPertamaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKasusPertamaMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editKasusPertamaMouseClicked
+
+    private void editDiubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDiubahMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editDiubahMouseClicked
+ 
     /**
      * @param args the command line arguments
      */
@@ -827,14 +1260,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private javax.swing.JButton btnSimpan;
     private javax.swing.JTextField editAktif;
     private javax.swing.JTextField editDiubah;
+    private javax.swing.JTextField editKasusPertama;
     private javax.swing.JTextField editKematian;
-    private javax.swing.JTextField editNamaProvinsi;
-    private javax.swing.JTextField editODP;
-    private javax.swing.JTextField editOTG;
-    private javax.swing.JTextField editPDP;
+    private javax.swing.JTextField editKodeProv;
     private javax.swing.JTextField editPositif;
+    private javax.swing.JTextField editProvinsi;
     private javax.swing.JTextField editSembuh;
     private javax.swing.JTextField editTotalKab;
+    private javax.swing.JTextField editWebsite;
     private javax.swing.JTextField editZonaHijau;
     private javax.swing.JTextField editZonaMerah;
     private javax.swing.JTextField editZonaOranye;
@@ -846,21 +1279,21 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private javax.swing.JLabel lblDiubah;
     private javax.swing.JLabel lblEditData;
     private javax.swing.JLabel lblEditLambang;
+    private javax.swing.JLabel lblKasusPertama;
     private javax.swing.JLabel lblKematian;
     private javax.swing.JLabel lblKembali;
     private javax.swing.JLabel lblKeyword;
     private javax.swing.JLabel lblLambangProvinsi;
     private javax.swing.JLabel lblLeft;
     private javax.swing.JLabel lblMinimaze;
-    private javax.swing.JLabel lblNamaProvinsi;
+    private javax.swing.JLabel lblNamaKodeProv;
+    private javax.swing.JLabel lblNamaProv;
     private javax.swing.JLabel lblPositif;
     private javax.swing.JLabel lblProvinsi;
     private javax.swing.JLabel lblSembuh;
     private javax.swing.JLabel lblTop;
     private javax.swing.JLabel lblTotalKab;
-    private javax.swing.JLabel lblTotalODP;
-    private javax.swing.JLabel lblTotalOTG;
-    private javax.swing.JLabel lblTotalPDP;
+    private javax.swing.JLabel lblWebsite;
     private javax.swing.JLabel lblZonaHijau;
     private javax.swing.JLabel lblZonaMerah;
     private javax.swing.JLabel lblZonaOren;
