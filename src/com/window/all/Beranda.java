@@ -1100,7 +1100,18 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_lblEditProfileMouseExited
 
     private void lblKasusCovid_DuniaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKasusCovid_DuniaMouseClicked
+        System.out.println("Membuka Window KasusCovidDunia");
+        KasusCovidDunia kasusDunia = new KasusCovidDunia();
+        kasusDunia.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                kasusDunia.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_lblKasusCovid_DuniaMouseClicked
 
     private void lblKasusCovid_DuniaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKasusCovid_DuniaMouseEntered
@@ -1114,7 +1125,18 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_lblKasusCovid_DuniaMouseExited
 
     private void lblKasusCovid_IndoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKasusCovid_IndoMouseClicked
+        System.out.println("Membuka Window KasusCovidIndo");
+        KasusCovidIndo kasusIndo = new KasusCovidIndo();
+        kasusIndo.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                kasusIndo.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_lblKasusCovid_IndoMouseClicked
 
     private void lblKasusCovid_IndoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKasusCovid_IndoMouseEntered
