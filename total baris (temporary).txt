@@ -1,0 +1,28 @@
+com.main.Main 				22
+com.database.Database			1040
+com.database.Account			535
+com.database.CovidCases			438
+com.media.audio.Audio			90
+com.media.gambar.Gambar			95
+com.window.all.LoadingWindow		242
+com.window.all.SignIn			462
+com.window.all.SignUp			510
+com.window.all.UbahPassword		525
+com.window.all.Beranda			1297
+com.window.all.ApaCovid			831
+com.window.all.BahayaCovid			831
+com.window.all.GejalaCovid			831
+com.window.all.PenangananCovid		831
+com.window.all.Pencegahan.Covid		831
+com.window.all.KasusCovidDunia		859
+com.window.all.KasusCovidIndo		976
+com.window.all.AboutApp			1981
+com.window.admin.DataAplikasi		1654
+com.window.admin.UpdateUser		1333
+com.window.admin.UpdateCovidDunia		1310
+com.window.admin.UpdateCovidIndo		1309
+
+baris = 22 + 1040 + 535 + 438 + 90 + 95 + 242 + 462 + 510 + 525 + 1297 + (831*5) + 859 + 976 + 1981 + 1654 + 1333 + 1310 + 1309
+ = 18833
+rata rata baris
+18833 / 24
