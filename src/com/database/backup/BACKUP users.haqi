@@ -18,6 +18,7 @@ INSERT INTO users VALUES
 ('iamrobot', 'tsukasa tsukuyomi', 'tsukasa', 'tsukasacha@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'pass1235', '2020-11-26', 'default', 'User'),
 ('ikan', 'hanya ikan air tawar biasa', 'ikan air tawar', 'masikanlele@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'ffffffffffffff', '2020-11-26', 'default', 'User'),
 ('maul', 'Ilham Maulana', 'Ilham', 'im285281@gmail.com', 'L', '2002-06-16', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'mauldesu', '2020-11-18', 'default', 'User'),
+('myusername', 'intellij idea community edition and pycharm', 'intellij idea', 'intellijidea@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'netbeans8.0', '2020-12-05', 'default', 'User'),
 ('null', 'achmad baihaqi', 'baihaqi', 'hakiahmad7@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', '12345678', '2020-11-26', 'default', 'User'),
 ('robot', 'Achmad Baihaqi', 'Baihaqi', 'BaIhaQI@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'privatevoid', '2020-11-26', 'default', 'User'),
 ('robotai', 'artificial inteligenge', 'artificial', 'airobotic2020@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'machine1234', '2020-11-26', 'default', 'User'),
