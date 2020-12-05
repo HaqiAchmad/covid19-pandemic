@@ -261,6 +261,49 @@ public class Account extends Database{
         return null;
     }
     
+    public Object[][] getDataAccount(final String[] fields, final String key){
+        try{
+            Object[][] obj;
+            int rows = 0;
+            // membuat query yang digunakan untuk mendapatkan data dari tabel berdasarkan tabel yang dipilih
+            String sql = "SELECT "+getMultipleFields(fields)+" FROM " + USERS + " "
+                       + "WHERE username LIKE '%"+key+"%' OR namapanggilan LIKE '%"+key+"%' OR email LIKE '%"+key+"%' OR type LIKE '%"+key+"%'";
+            
+            // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
+            obj = new Object[getTotalAkun(sql)][fields.length];
+            // mengeksekusi query
+            res = stat.executeQuery(sql);
+            // mendapatkan semua data yang ada didalam tabel
+            while(res.next()){
+                // menyimpan data dari tabel ke object
+                for (int i = 0; i < fields.length; i++) {
+                    obj[rows][i] = res.getString(i+1);
+                }
+                rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
+            }
+            return obj;
+        }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
+    }
+    
+    /**
+     * digunakan untuk mendapatkan fields yang berasal dari param field pada method getData
+     * 
+     * @param fields
+     * @return 
+     */
+    private String getMultipleFields(String fields[]){
+        String field = "";
+        for (String buff : fields) {
+            field += buff + ", ";
+        }
+        // membuang tanda koma diakhir String
+        return field.substring(0, field.length()-2);
+    }
+    
     public String getActivedUser(){
         try{
             // mendapatkan semua data yang ada didalam tabel islogin
@@ -274,6 +317,24 @@ public class Account extends Database{
             this.restoreTabel(ISLOGIN);
         }
         return null;
+    }
+    
+    public int getTotalAkun(final String sql){
+        try{
+            // untuk menyimpan total baris yang ada didalam tabel
+            int rows = 0;
+            // mendapatkan semua data yang ada didalam tabel berdasarkan query sql
+            res = stat.executeQuery(sql);
+            // akan melakukan perulangan sampai tidak ada baris lagi yang ada didalam tabel
+            while(res.next()){
+                rows++; // var rows akan bertambah 1 setiap membaca 1 baris tabel
+            }
+            return rows;
+        }catch(SQLException ex){
+            this.restoreDatabase();
+            System.out.println("Terjadi kesalahan saat akan mendapatkan total rows pada tabel!\nError : " + ex.getMessage());
+        }
+        return -1;
     }
     
     public boolean deleteAccount(final String user){
@@ -531,4 +592,37 @@ public class Account extends Database{
         return false;
     }
     
+    public String getDateNow(){
+        // mendapatkan tanggal saat ini dengan menggunakan object dari class LocalDateTime
+        return "" + lc.getYear() + "-" + lc.getMonthValue() + "-" + lc.getDayOfMonth();
+    }
+    
+    public String dateToString(final String date){
+        // mengambil data seperti tahun, bulan dan hari dari param date 
+        int tahun = Integer.parseInt(date.substring(0, date.indexOf("-"))),
+            bulan = Integer.parseInt(date.substring(date.indexOf("-") + 1, date.lastIndexOf("-"))),
+            hari = Integer.parseInt(date.substring(date.lastIndexOf("-") + 1));
+        // digunakan untuk menyimpan data nama bulan
+        String namaBulan;
+        
+        // mendapatkan nama bulan berdasarkan nilai bulan
+        switch(bulan){
+            case 1: namaBulan = "Januari"; break;
+            case 2: namaBulan = "Februari"; break;
+            case 3: namaBulan = "Maret"; break;
+            case 4: namaBulan = "April"; break;
+            case 5: namaBulan = "Mei"; break;
+            case 6: namaBulan = "Juni"; break;
+            case 7: namaBulan = "Juli"; break;
+            case 8: namaBulan = "Agustus"; break;
+            case 9: namaBulan = "September"; break;
+            case 10: namaBulan = "Oktober"; break;
+            case 11: namaBulan = "November"; break;
+            case 12: namaBulan = "Desember"; break;
+            default: return "Gagal Mendapatkan Data";
+        }
+        
+        // contoh output : 20 November 2020
+        return "" + hari + " " + namaBulan + " " + tahun;
+    }
 }

@@ -218,6 +218,44 @@ public class CovidCases extends Database{
         return null;
     }
     
+    public Object[][] getData(final String[] fields, final String key, final boolean delim){
+        try{
+            Object[][] obj;
+            String data; // digunakan untuk menyimpan data sementara
+            int rows = 0;
+            // membuat query yang digunakan untuk mendapatkan data dari tabel berdasarkan tabel yang dipilih
+            if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
+                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ key +"%' OR negara_eng LIKE '%"+ key +"%' OR benua LIKE '%"+ key +"%' ORDER BY kasus DESC;";
+            }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
+                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_indo WHERE kode LIKE '%"+ key +"%' OR provinsi LIKE '%"+ key +"%' ORDER BY kasus DESC;";
+            }
+            
+            // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
+            obj = new Object[getRows(sql)][fields.length];
+            // mengeksekusi query
+            res = stat.executeQuery(sql);
+            // mendapatkan semua data yang ada didalam tabel
+            while(res.next()){
+                // menyimpan data dari tabel ke object
+                for (int i = 0; i < fields.length; i++) {
+                    data = res.getString(i+1);
+                    if(isNumber(data)){
+                        obj[rows][i] = addDelim(Integer.parseInt(res.getString(i+1)));
+                    }else{
+                        obj[rows][i] = res.getString(i+1);
+                    }
+                }
+                rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
+            }
+            return obj;
+        }catch(SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            this.restoreTabel(TABEL_SELECTED);
+        }
+        return null;
+    }
+    
     /**
      * Digunakan untuk mendapatkan total dari data tertentu
      * 
@@ -310,6 +348,27 @@ public class CovidCases extends Database{
             this.restoreTabel(TABEL_SELECTED);
         }
         return false;
+    }
+    
+    /**
+     * Digunakan untuk mengecek apakah sebuah <code>String</code> dapat dikonversi ke <code>Integer</code> atau tidak.
+     * 
+     * @param text text yang ingin dicek
+     * @return jika bisa dikonversi maka akan mengembalikan nilai <i>True</i> tapi jika tidak maka akan mengembalikan nilai <i>False</i>.
+     */
+    public boolean isNumber(String text){
+        text = text.toLowerCase();
+        // karakter yang bukan merupakan number
+        String notNums = "abcdefghijklmnopqrstuvwxyz`~!@#$%^&*()_+=\\|{[]}:;'\"<>?/,.";
+        for(int i = 0; i < text.length(); i++){
+            for(int k = 0; k < notNums.length(); k++){
+                // jika kerakter yang ada didalam text mengandung karakter yang ada didalam notNums maka akan mereturn false
+                if(text.charAt(i) == notNums.charAt(k)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     public boolean isExist(final String key){
@@ -432,6 +491,27 @@ public class CovidCases extends Database{
             return "Terjadi Error";
         }
             
+    }
+    
+    /**
+     * Digunakan untuk membuang character yang bukan angka didalam text
+     * @param num
+     * @return 
+     */
+    public String removeDelim(final String num){
+        // angka
+        String delims = "1234567890",
+               data = ""; // digunakan untuk menyimpan data sementara saat menghapus delimetri
+        // menghapus charackter yang bukan angka
+        for(int i = 0; i < num.length(); i++){
+            for (int j = 0; j < delims.length(); j++) {
+                if(num.charAt(i) == delims.charAt(j)){
+                    data += num.charAt(i);
+                    break;
+                }
+            }
+        }
+        return data;
     }
 
 }
