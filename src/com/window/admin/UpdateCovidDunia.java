@@ -1,7 +1,9 @@
 package com.window.admin;
 
+import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+import com.sun.glass.events.KeyEvent;
 import com.window.all.Beranda;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -18,6 +20,29 @@ import javax.swing.JOptionPane;
  */
 public class UpdateCovidDunia extends javax.swing.JFrame {
 
+    /**
+     * Digunakan untuk mengambil dan mengedit data dari kasus covid-19 dunia
+     */
+    private final CovidCases dataDunia = new CovidCases(CovidCases.KASUS_DUNIA);
+    /**
+     * Digunakan untuk menyimpan hasil filter dari input cari negara
+     */
+    private String keyword = "";
+    /**
+     * Digunakan untuk menyimpan data dari kasus covid dunia yang bertipe <code>String</code>
+     */
+    private String negara_selected, negara_idn, negara_eng, diubah, benua, bendera;
+    /**
+     * Fields/Data yang akan ditampilkan kedalam tabel
+     */
+    private final String[] fields = new String[]{CovidCases.NEGARA_IDN, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    /**
+     * Digunakan untuk menyimpan data dari kasus covid dunia yang bertipe <code>Integer</code>
+     */
+    private int positif, sembuh, kematian, kritis, aktif, populasi;
+    /**
+     * Digunakan untuk mengatur posisi dari window
+     */
     private int x, y;
     /**
      * Digunakan untuk mengedit data
@@ -34,7 +59,12 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         this.tabelNegara.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
         this.btnSimpan.setVisible(false);
         this.btnBatal.setVisible(false);
+        this.lblShowBendera.setText("");
        
+        negara_selected = "Dunia";
+        dataTabel();
+        showData();
+        
         // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
             this.btnAdd, this.btnBatal, this.btnBeranda, this.btnDataUser, this.btnEdit, this.btnHapus, this.btnInfo, this.btnSimpan, this.btnDataCovidDunia, this.btnDataCovidIndo
@@ -81,6 +111,93 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         
         
     }
+    
+    /**
+     * Digunakan untuk mengatur apakah data akan diedit atau tidak 
+     * 
+     * @param edit jika True maka akan diedit jika False maka data tidak akan dedit
+     */
+    private void setEditableData(final boolean edit){
+        isEdit = edit;
+        if(isEdit){
+            this.btnEdit.setVisible(false);
+            this.btnSimpan.setVisible(true);
+            this.btnBatal.setVisible(true);
+        }else{
+            this.btnEdit.setVisible(true);
+            this.btnSimpan.setVisible(false);
+            this.btnBatal.setVisible(false);
+        }
+    }
+    
+    /**
+     * Digunakan untuk menampilkan data kasus Covid-19 dunia ke dalam tabel berdasrakan keyword yang diinputkan user
+     */
+    private void dataTabel(){
+        tabelNegara.setModel(new javax.swing.table.DefaultTableModel(
+            dataDunia.getData(fields, keyword, true),
+            new String [] {
+                "Negara", "Positif", "Sembuh", "Kematian"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+    }
+    
+    /**
+     * Digunakan untuk mendapatkan data Covid-19 yang ada didalam database melalui class CovidCases. 
+     * Lalu datanya akan ditampilkan ke dalam window
+     */
+    private void showData(){
+        // mendapatkan data kasus covid dunia yang ada didalam database
+        this.negara_idn = dataDunia.getData(CovidCases.NEGARA_IDN, this.negara_selected);
+        this.negara_eng = dataDunia.getData(CovidCases.NEGARA_ENG, this.negara_selected);
+        this.positif = dataDunia.getDataNumber(CovidCases.KASUS, this.negara_selected);
+        this.sembuh = dataDunia.getDataNumber(CovidCases.SEMBUH, this.negara_selected);
+        this.kematian = dataDunia.getDataNumber(CovidCases.KEMATIAN, this.negara_selected);
+        this.aktif = dataDunia.getDataNumber(CovidCases.AKTIF, this.negara_selected);
+        this.kritis = dataDunia.getDataNumber(CovidCases.KRITIS, this.negara_selected);
+        this.populasi = dataDunia.getDataNumber(CovidCases.POPULASI, this.negara_selected);
+        this.diubah = dataDunia.getData(CovidCases.DIUBAH, this.negara_selected);
+        this.benua = dataDunia.getData(CovidCases.BENUA, this.negara_selected);
+        this.bendera = dataDunia.getData(CovidCases.BENDERA, this.negara_selected);
+        
+        // menampilkan data kasus covid ke window
+        this.lblShowBendera.setIcon(Gambar.getFlag(bendera));
+        this.editPeringkat.setText(dataDunia.addDelim(dataDunia.getPeringkat(negara_idn)));
+        this.editNegara_IDN.setText(negara_idn);
+        this.editNegara_ENG.setText(negara_eng);
+        this.editPositif.setText(dataDunia.addDelim(positif));
+        this.editSembuh.setText(dataDunia.addDelim(sembuh));
+        this.editKematian.setText(dataDunia.addDelim(kematian));
+        this.editAktif.setText(dataDunia.addDelim(aktif));
+        this.editKritis.setText(dataDunia.addDelim(kritis));
+        this.editPopulasi.setText(dataDunia.addDelim(populasi));
+        this.editBenua.setText(benua);
+        this.editDiubah.setText(dataDunia.dateToString(diubah));
+        
+        // menghitung tingkat kematian dan kesembuhan
+        int tSembuh = (int)dataDunia.getPresentase(sembuh, kematian),
+            tKematian = (int)dataDunia.getPresentase(kematian, sembuh);
+        // jika tSembuh atau tKematian = -1 maka tingkatKesembuhan dan tingkatKematian akan menampilkan data N/A
+        if(tSembuh == -1 || tKematian == -1){
+            this.editTingkatKesembuhan.setText("N/A");
+            this.editTingkatKematian.setText("N/A");
+        }else{
+            this.editTingkatKesembuhan.setText(Integer.toString(tSembuh) + "%");
+            this.editTingkatKematian.setText(Integer.toString(tKematian) + "%");
+        }
+        
+
+    }
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -169,7 +286,15 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
             new String [] {
                 "Negara", "Positif", "Sembuh", "Kematian"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelNegara.setGridColor(new java.awt.Color(0, 0, 0));
         tabelNegara.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelNegara.setSelectionForeground(new java.awt.Color(250, 246, 246));
@@ -1011,10 +1136,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        isEdit = true;
-        this.btnEdit.setVisible(false);
-        this.btnSimpan.setVisible(true);
-        this.btnBatal.setVisible(true);
+        this.setEditableData(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -1040,10 +1162,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        isEdit = false;
-        this.btnEdit.setVisible(true);
-        this.btnSimpan.setVisible(false);
-        this.btnBatal.setVisible(false);
+        this.setEditableData(false);
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1057,19 +1176,43 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBatalMouseExited
 
     private void tabelNegaraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelNegaraMouseClicked
-        
+        this.setEditableData(false);
+        // mendapatkan negara yang dipilih oleh user
+        this.negara_selected = this.tabelNegara.getValueAt(this.tabelNegara.getSelectedRow(), 0).toString();
+        // menampilkan data dari negara yang dipilih oleh user
+        showData();
     }//GEN-LAST:event_tabelNegaraMouseClicked
 
     private void tabelNegaraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelNegaraKeyPressed
-        
+        this.setEditableData(false);
+        // menangkap event jika user menekan tombol arah atas atau arah bawah
+        if(evt.getKeyCode() == KeyEvent.VK_UP){
+            // mendapatkan negara yang sedang dipilih
+            negara_selected = this.tabelNegara.getValueAt(tabelNegara.getSelectedRow() - 1, 0).toString(); // -1 artinya berpindah mundur dari index dari negara sebelumnya ke index negara saat ini
+            // mereset data kasus covid yang ditampilkan diwindow
+            showData();
+        }else if(evt.getKeyCode() == KeyEvent.VK_DOWN){
+            // mendapatkan negara yang sedang dipilih
+            negara_selected = this.tabelNegara.getValueAt(tabelNegara.getSelectedRow() + 1, 0).toString(); // +1 artinya berpindah maju dari index dari negara sebelumnya ke index negara saat ini
+            // mereset data kasus covid yang ditampilkan diwindow
+            showData();
+        }
     }//GEN-LAST:event_tabelNegaraKeyPressed
 
     private void inpCariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariKeyTyped
-        this.lblKeyword.setText("Menampilkan data dengan keyword = \""+inpCari.getText()+"\"");
+        // mendapatkan negara yang dicari oleh user
+        keyword = this.inpCari.getText();
+        // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
+        int row = dataDunia.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ keyword +"%' OR negara_eng LIKE '%"+ keyword +"%' OR benua LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
+        // mereset lbl show keyword
+        this.lblKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
+        // mereset tabel
+        dataTabel();
     }//GEN-LAST:event_inpCariKeyTyped
 
     private void lblEditBenderaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditBenderaMouseClicked
-        
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(null, "Fitur 'Edit Bendera' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_lblEditBenderaMouseClicked
 
     private void lblEditBenderaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditBenderaMouseEntered

@@ -1,10 +1,12 @@
 package com.window.admin;
 
+import com.database.Account;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.Beranda;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
@@ -18,7 +20,28 @@ import javax.swing.JTextField;
  */
 public class UpdateUser extends javax.swing.JFrame {
 
+    /**
+     * Digunakan untuk mendapatkan dan mengedit data dari akun
+     */
+    private final Account dataUser = new Account();
+    /**
+     * Digunakan untuk mencari akun dengan keyword tertentu
+     */
+    private String keyword = "";
+    /**
+     * Digunakan untuk menyimpan data dari akun
+     */
+    private String user_selected, username, namaLengkap, namaPanggilan, email, gender, tanggalLahir, 
+                   pekerjaan, alamat, negara, password, tanggalDibuat, fotoProfile, type;
+    /**
+     * Fields / data yang akan ditampilkan ke dalam tabel
+     */
+    private final String[] fields = new String[]{Account.USERNAME, Account.NAMA_PANGGILAN, Account.EMAIL, Account.TYPE};
+    /**
+     * Digunakan untuk mengatur posisi dari window
+     */
     private int x, y;
+    
     /**
      * Digunakan untuk mengedit data
      */
@@ -35,10 +58,10 @@ public class UpdateUser extends javax.swing.JFrame {
         this.btnSimpan.setVisible(false);
         this.btnBatal.setVisible(false);
         
-        JTextField edits[] = new JTextField[]{
-            this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword, this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
-        };
-        this.setBorderColor(edits, new Color(0,0,0));
+        this.user_selected = "baihaqi";
+        dataTabel();
+        showData();
+        setEditableData(false);
         
          // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -86,14 +109,128 @@ public class UpdateUser extends javax.swing.JFrame {
         
     }
     
-    private void setBorderColor(JTextField[] edits, Color color){
-        for(JTextField edit : edits){
-            edit.setBorder(javax.swing.BorderFactory.createLineBorder(color));
+    /**
+     * Digunakan untuk mengatur apakah data akan diedit atau tidak 
+     * 
+     * @param edit jika True maka akan diedit jika False maka data tidak akan dedit
+     */
+    private void setEditableData(final boolean edit){
+
+        JTextField[] edits = new JTextField[]{
+            this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword,
+            this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
+        };
+        
+        isEdit = edit;
+        
+        if(isEdit){
+            this.btnEdit.setVisible(false);
+            this.btnSimpan.setVisible(true);
+            this.btnBatal.setVisible(true);
+            
+                for(JTextField field : edits){
+                    field.setEditable(true);
+                    field.setEnabled(true);
+                    field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,106,255)));
+                }
+        }else{
+            this.btnEdit.setVisible(true);
+            this.btnSimpan.setVisible(false);
+            this.btnBatal.setVisible(false);
+            
+                for(JTextField field : edits){
+                    field.setDisabledTextColor(new Color(0,0,0));
+                    field.setEditable(true);
+                    field.setEnabled(false);
+                    field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+                }
         }
     }
     
-    private void seEditableData(boolean edit){
+    /**
+     * Digunakan untuk menampilkan data dari akun ke dalam tabel
+     */
+    private void dataTabel(){
+        tabelUsers.setModel(new javax.swing.table.DefaultTableModel(
+            dataUser.getDataAccount(fields, keyword),
+            new String [] {
+                "Username", "Nama Panggilan", "Email", "Type "
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+    }
+    
+    /**
+     * Digunakan untuk mendapatkan data dari akun melalui class Account 
+     * Lalu datanya akan ditampilkan ke dalam window
+     */
+    private void showData(){
+        // mendapatkan data dari akun
+        this.username = dataUser.getDataAccount(this.user_selected, Account.USERNAME);
+        this.namaLengkap = dataUser.getDataAccount(this.user_selected, Account.NAMA_LENGKAP);
+        this.namaPanggilan = dataUser.getDataAccount(this.user_selected, Account.NAMA_PANGGILAN);
+        this.email = dataUser.getDataAccount(this.user_selected, Account.EMAIL);
+        this.gender = dataUser.getDataAccount(this.user_selected, Account.GENDER);
+        this.tanggalLahir = dataUser.getDataAccount(this.user_selected, Account.TGL_LAHIR);
+        this.pekerjaan = dataUser.getDataAccount(this.user_selected, Account.PEKERJAAN);
+        this.alamat = dataUser.getDataAccount(this.user_selected, Account.ALAMAT);
+        this.negara = dataUser.getDataAccount(this.user_selected, Account.NEGARA);
+        this.password = dataUser.getDataAccount(this.user_selected, Account.PASSWORD);
+        this.tanggalDibuat = dataUser.getDataAccount(this.user_selected, Account.TGL_DIBUAT);
+        this.fotoProfile = dataUser.getDataAccount(this.user_selected, Account.FOTO_PROFILE);
+        this.type = dataUser.getDataAccount(this.user_selected, Account.TYPE);
         
+        // menampilkan data akun ke window
+        this.editUsername.setText(username);
+        this.editNamalengkap.setText(namaLengkap);
+        this.editNamapanggilan.setText(namaPanggilan);
+        this.editEmail.setText(email);
+        this.editPekerjaan.setText(pekerjaan);
+        this.editAlamat.setText(alamat);
+        this.editAsalNegara.setText(negara);
+        this.editPassword.setText(setVisiblePass(password));
+        this.editTglDibuat.setText(dataUser.dateToString(tanggalDibuat));
+        this.editTipeAkun.setText(type);
+
+        // jika tgl lahir = 0000-01-01 maka akan ditampilkan 'Tidak Dicantumkan'
+        if(dataUser.dateToString(tanggalLahir).equalsIgnoreCase("1 Januari 1")){
+            this.editTglLahir.setText("Tidak Dicantumkan");
+        }else{
+            this.editTglLahir.setText(dataUser.dateToString(tanggalLahir));
+        }
+        
+        // jika gender bernilai L maka akan menampilkan text 'Laki-Laki' jika berniali P akan menampilkan 'Perempuan'
+        if(gender.equalsIgnoreCase("L")){
+            this.editGender.setText("Laki-Laki");
+        }else if(gender.equalsIgnoreCase("P")){
+            this.editGender.setText("Perempuan");
+        }else{
+            this.editGender.setText("Tidak Dicantumkan");
+        }
+        
+        // jika pekerjaan bernilai null maka akan ditampilkan menjadi 'Tidak Dicantumkan'
+        if(pekerjaan.equalsIgnoreCase("null")){
+            this.editPekerjaan.setText("Tidak Dicantumkan");
+        }else{
+            this.editPekerjaan.setText(pekerjaan);
+        }
+        
+    }
+    
+    private String setVisiblePass(final String pass){
+        String buff = "";
+        for (int i = 0; i < pass.length(); i++) {
+            buff += "•";
+        }
+        return buff;
     }
     
     @SuppressWarnings("unchecked")
@@ -182,7 +319,15 @@ public class UpdateUser extends javax.swing.JFrame {
             new String [] {
                 "Username", "Nama Panggilan", "Email", "Type "
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabelUsers.setGridColor(new java.awt.Color(0, 0, 0));
         tabelUsers.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelUsers.setSelectionForeground(new java.awt.Color(250, 246, 246));
@@ -1016,17 +1161,7 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        isEdit = true;
-        this.btnEdit.setVisible(false);
-        this.btnSimpan.setVisible(true);
-        this.btnBatal.setVisible(true);
-        // mengatur warna border pada input edit data menjadi warna hitam
-        JTextField edits[] = new JTextField[]{
-            this.editAlamat, this.editAsalNegara, this.editNamalengkap, this.editNamapanggilan, this.editPekerjaan, 
-        };
-        for(JTextField edit : edits){
-            edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,106,255)));
-        }
+        this.setEditableData(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -1052,17 +1187,7 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        isEdit = false;
-        this.btnEdit.setVisible(true);
-        this.btnSimpan.setVisible(false);
-        this.btnBatal.setVisible(false);
-        // mengatur warna border pada input edit data menjadi warna hitam
-        JTextField edits[] = new JTextField[]{
-            this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword, this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
-        };
-        for(JTextField edit : edits){
-            edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
-        }
+        this.setEditableData(false);
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1076,15 +1201,38 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBatalMouseExited
 
     private void tabelUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelUsersMouseClicked
-        
+        this.setEditableData(false);
+        // mendapatkan akun yang dipilih oleh user
+        this.user_selected = this.tabelUsers.getValueAt(tabelUsers.getSelectedRow(), 0).toString();
+        // menampilkan data yang dipilih user ke window
+        showData();
     }//GEN-LAST:event_tabelUsersMouseClicked
 
     private void tabelUsersKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelUsersKeyPressed
-        
+        this.setEditableData(false);
+        // menangkap event jika user menekan tombol arah atas atau arah bawah
+        if(evt.getKeyCode() == KeyEvent.VK_UP){
+            // mendapatkan user yang sedang dipilih
+            this.user_selected = this.tabelUsers.getValueAt(tabelUsers.getSelectedRow() - 1, 0).toString(); // -1 artinya berpindah mundur dari index dari user sebelumnya ke index user saat ini
+            // mereset data akun yang ditampilkan di window
+            showData();
+        }else if(evt.getKeyCode() == KeyEvent.VK_DOWN){
+            // mendapatkan user yang sedang dipilih
+            this.user_selected = this.tabelUsers.getValueAt(tabelUsers.getSelectedRow() + 1, 0).toString(); // +1 artinya berpindah maju dari index dari user sebelumnya ke index user saat ini
+            // mereset data akun yang ditampilkan di window
+            showData();            
+        }
     }//GEN-LAST:event_tabelUsersKeyPressed
 
     private void inpCariUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariUserKeyTyped
-        this.lblKeyword.setText("Menampilkan data dengan keyword = \""+inpCariUser.getText()+"\"");
+        // mendapatkan keyword yang diinputkan user melalui inpCariUser
+        this.keyword = inpCariUser.getText();
+        // mendapatkan total akun yang karakternya mirip dengan keyword yg diinputkan user
+        int row = dataUser.getTotalAkun("SELECT * FROM users WHERE username LIKE '%"+keyword+"%' OR namalengkap LIKE '%"+keyword+"%' OR namapanggilan LIKE '%"+keyword+"%' OR email LIKE '%"+keyword+"%' OR type LIKE '%"+keyword+"%'");
+        // mereset lblKeyword
+        this.lblKeyword.setText("Menampilkan "+row+" data dengan keyword = \""+keyword+"\"");
+        // mereset data tabel berdasarkan keyword yang dimasukan user
+        dataTabel();
     }//GEN-LAST:event_inpCariUserKeyTyped
 
     private void lblEditFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditFotoMouseClicked

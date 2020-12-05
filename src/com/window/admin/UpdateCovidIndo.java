@@ -1,7 +1,9 @@
 package com.window.admin;
 
+import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+import com.sun.glass.events.KeyEvent;
 import com.window.all.Beranda;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -16,7 +18,30 @@ import javax.swing.JOptionPane;
  * @since 2020-12-03
  */
 public class UpdateCovidIndo extends javax.swing.JFrame {
-
+    
+    /**
+     * Digunakan untuk mengambil dan mengedit data dari kasus covid-19 indonesia
+     */
+    private final CovidCases dataIndo = new CovidCases(CovidCases.KASUS_INDO);
+    /**
+     * Digunakan untuk menyimpan hasil filter dari input cari negara
+     */
+    private String keyword = "";
+    /**
+     * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>String</code>
+     */
+    private String prov_selected, kode, provinsi, kasusPertama, diubah, website, lambang;
+    /**
+     * Fields / data yang akan ditampilkan ke dalam tabel
+     */
+    private final String[] fields = new String[]{CovidCases.PROVINSI, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
+    /**
+     * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>Integer</code>
+     */
+    private int positif, sembuh, kematian, aktif, totalKab, zonaMerah, zonaOren, zonaHijau;
+    /**
+     * Digunakan untuk mengatur posisi dari window
+     */
     private int x, y;
     /**
      * Digunakan untuk mengedit data
@@ -28,13 +53,18 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         
         this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        this.tabelKasus.setRowHeight(30);
-        this.tabelKasus.getTableHeader().setBackground(new java.awt.Color(255,255,255));
-        this.tabelKasus.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
+        this.tabelProvinsi.setRowHeight(30);
+        this.tabelProvinsi.getTableHeader().setBackground(new java.awt.Color(255,255,255));
+        this.tabelProvinsi.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
         this.btnSimpan.setVisible(false);
         this.btnBatal.setVisible(false);
+        this.lblLambangProvinsi.setText("");
         
-               // mengatur UI dari button yang ada didalam window ke BasicButtonUI
+        prov_selected = "Jatim";
+        dataTabel();
+        showData();
+        
+       // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
             this.btnAdd, this.btnBatal, this.btnBeranda, this.btnDataUser, this.btnEdit, this.btnHapus, this.btnInfo, this.btnSimpan, this.btnDataCovidDunia, this.btnDataCovidIndo
         };
@@ -80,14 +110,91 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         
         
     }
+    
+    /**
+     * Digunakan untuk mengatur apakah data akan diedit atau tidak 
+     * 
+     * @param edit jika True maka akan diedit jika False maka data tidak akan dedit
+     */
+    private void setEditableData(final boolean edit){
+        isEdit = edit;
+        if(isEdit){
+            this.btnEdit.setVisible(false);
+            this.btnSimpan.setVisible(true);
+            this.btnBatal.setVisible(true);
+        }else{
+            this.btnEdit.setVisible(true);
+            this.btnSimpan.setVisible(false);
+            this.btnBatal.setVisible(false);
+        }
+    }
+    
+    /**
+     * Digunakan untuk menampilkan data kasus Covid-19 dunia ke dalam tabel berdasrakan keyword yang diinputkan user
+     */
+    private void dataTabel(){
+        tabelProvinsi.setModel(new javax.swing.table.DefaultTableModel(
+            dataIndo.getData(fields, keyword, true),
+            new String [] {
+                "Provinsi", "Positif", "Sembuh", "Kematian"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+    }
    
+    /**
+     * Digunakan untuk mendapatkan data Covid-19 yang ada didalam database melalui class CovidCases. 
+     * Lalu datanya akan ditampilkan ke dalam window
+     */
+    private void showData(){
+        // mengambil data kasus covid indo dari database
+        kode = dataIndo.getData(CovidCases.KODE_PROV, this.prov_selected);
+        provinsi = dataIndo.getData(CovidCases.PROVINSI, this.prov_selected);
+        positif = dataIndo.getDataNumber(CovidCases.KASUS, this.prov_selected);
+        sembuh = dataIndo.getDataNumber(CovidCases.SEMBUH, this.prov_selected);
+        kematian = dataIndo.getDataNumber(CovidCases.KEMATIAN, this.prov_selected);
+        aktif = dataIndo.getDataNumber(CovidCases.AKTIF, this.prov_selected);
+        totalKab = dataIndo.getDataNumber(CovidCases.TOTAL_KAB, this.prov_selected);
+        zonaMerah = dataIndo.getDataNumber(CovidCases.ZONA_MERAH, this.prov_selected);
+        zonaOren = dataIndo.getDataNumber(CovidCases.ZONA_ORANYE, this.prov_selected);
+        zonaHijau = dataIndo.getDataNumber(CovidCases.ZONA_HIJAU, this.prov_selected);
+        kasusPertama = dataIndo.getData(CovidCases.KASUS_PERTAMA, this.prov_selected);
+        diubah = dataIndo.getData(CovidCases.DIUBAH, this.prov_selected);
+        website = dataIndo.getData(CovidCases.WEBSITE, this.prov_selected);
+        lambang = dataIndo.getData(CovidCases.LAMBANG, this.prov_selected);
+        
+        // menampilkan data covid ke window
+        this.lblLambangProvinsi.setIcon(Gambar.getLambangProvinsi(lambang));
+        this.editKodeProv.setText(kode);
+        this.editProvinsi.setText(provinsi);
+        this.editPositif.setText(dataIndo.addDelim(positif));
+        this.editSembuh.setText(dataIndo.addDelim(sembuh));
+        this.editKematian.setText(dataIndo.addDelim(kematian));
+        this.editAktif.setText(dataIndo.addDelim(aktif));
+        this.editTotalKab.setText(dataIndo.addDelim(totalKab));
+        this.editZonaMerah.setText(dataIndo.addDelim(zonaMerah));
+        this.editZonaOranye.setText(dataIndo.addDelim(zonaOren));
+        this.editZonaHijau.setText(dataIndo.addDelim(zonaHijau));
+        this.editKasusPertama.setText(dataIndo.dateToString(kasusPertama));
+        this.editDiubah.setText(dataIndo.dateToString(diubah));
+        this.editWebsite.setText(website);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         pnlMain = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelKasus = new javax.swing.JTable();
+        tabelProvinsi = new javax.swing.JTable();
         inpCariProvinsi = new javax.swing.JTextField();
         lblCari = new javax.swing.JLabel();
         line2 = new javax.swing.JSeparator();
@@ -157,8 +264,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
             }
         });
 
-        tabelKasus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        tabelKasus.setModel(new javax.swing.table.DefaultTableModel(
+        tabelProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        tabelProvinsi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -168,21 +275,29 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
             new String [] {
                 "Provinsi", "Positif", "Sembuh", "Kematian"
             }
-        ));
-        tabelKasus.setGridColor(new java.awt.Color(0, 0, 0));
-        tabelKasus.setSelectionBackground(new java.awt.Color(26, 164, 250));
-        tabelKasus.setSelectionForeground(new java.awt.Color(250, 246, 246));
-        tabelKasus.addMouseListener(new java.awt.event.MouseAdapter() {
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelProvinsi.setGridColor(new java.awt.Color(0, 0, 0));
+        tabelProvinsi.setSelectionBackground(new java.awt.Color(26, 164, 250));
+        tabelProvinsi.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelProvinsi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabelKasusMouseClicked(evt);
+                tabelProvinsiMouseClicked(evt);
             }
         });
-        tabelKasus.addKeyListener(new java.awt.event.KeyAdapter() {
+        tabelProvinsi.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                tabelKasusKeyPressed(evt);
+                tabelProvinsiKeyPressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelKasus);
+        jScrollPane1.setViewportView(tabelProvinsi);
 
         inpCariProvinsi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         inpCariProvinsi.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -671,14 +786,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                                     .addComponent(editSembuh)
                                     .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(pnlMainLayout.createSequentialGroup()
                                                 .addComponent(lblEditLambang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGap(48, 48, 48))
                                             .addGroup(pnlMainLayout.createSequentialGroup()
-                                                .addComponent(lblProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(lblProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
                                     .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                                     .addComponent(editAktif)
@@ -769,7 +884,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(editKodeProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblEditLambang)))
-                            .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblLambangProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
@@ -831,7 +946,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                             .addComponent(btnEdit)
                             .addComponent(btnSimpan)
                             .addComponent(btnBatal))
-                        .addContainerGap(26, Short.MAX_VALUE))))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -982,7 +1097,11 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataCovidIndoActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+        int jumlahProv = dataIndo.getRows("SELECT * FROM kasuscovid_indo");
+        if(jumlahProv >= 34){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Jumlah Provinsi Di Indonesia cuma ada 34!!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
@@ -1010,10 +1129,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHapusMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        isEdit = true;
-        this.btnEdit.setVisible(false);
-        this.btnSimpan.setVisible(true);
-        this.btnBatal.setVisible(true);
+        this.setEditableData(true);
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
@@ -1039,10 +1155,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        isEdit = false;
-        this.btnEdit.setVisible(true);
-        this.btnSimpan.setVisible(false);
-        this.btnBatal.setVisible(false);
+        this.setEditableData(false);
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1055,20 +1168,44 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         this.btnSimpan.setBackground(new Color(34,119,237));
     }//GEN-LAST:event_btnBatalMouseExited
 
-    private void tabelKasusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelKasusMouseClicked
-        
-    }//GEN-LAST:event_tabelKasusMouseClicked
+    private void tabelProvinsiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelProvinsiMouseClicked
+        this.setEditableData(false);
+        // mendapatkan negara yang dipilih oleh user
+        this.prov_selected = this.tabelProvinsi.getValueAt(this.tabelProvinsi.getSelectedRow(), 0).toString();
+        // menampilkan data dari negara yang dipilih oleh user
+        showData();
+    }//GEN-LAST:event_tabelProvinsiMouseClicked
 
-    private void tabelKasusKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelKasusKeyPressed
-        
-    }//GEN-LAST:event_tabelKasusKeyPressed
+    private void tabelProvinsiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelProvinsiKeyPressed
+        this.setEditableData(false);
+        // menangkap event jika user menekan tombol arah atas atau arah bawah
+        if(evt.getKeyCode() == KeyEvent.VK_UP){
+            // mendapatkan provinsi yang sedang dipilih
+            prov_selected = this.tabelProvinsi.getValueAt(tabelProvinsi.getSelectedRow() - 1, 0).toString(); // -1 artinya berpindah mundur dari index dari negara sebelumnya ke index negara saat ini
+            // mereset data kasus covid yang ditampilkan diwindow
+            showData();
+        }else if(evt.getKeyCode() == KeyEvent.VK_DOWN){
+            // mendapatkan provinsi yang sedang dipilih
+            prov_selected = this.tabelProvinsi.getValueAt(tabelProvinsi.getSelectedRow() + 1, 0).toString(); // +1 artinya berpindah maju dari index dari negara sebelumnya ke index negara saat ini
+            // mereset data kasus covid yang ditampilkan diwindow
+            showData();
+        }
+    }//GEN-LAST:event_tabelProvinsiKeyPressed
 
     private void inpCariProvinsiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariProvinsiKeyTyped
-        this.lblKeyword.setText("Menampilkan data dengan keyword = \""+inpCariProvinsi.getText()+"\"");
+        // mendapatkan provinsi yang dicari oleh user
+        keyword = this.inpCariProvinsi.getText();
+        // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
+        int row = dataIndo.getRows("SELECT * FROM kasuscovid_indo WHERE kode LIKE '%"+ keyword +"%' OR provinsi LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
+        // mereset lbl show keyword
+        this.lblKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
+        // mereset tabel
+        dataTabel();
     }//GEN-LAST:event_inpCariProvinsiKeyTyped
 
     private void lblEditLambangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditLambangMouseClicked
-        
+        Audio.play(Audio.SOUND_INFO);
+        JOptionPane.showMessageDialog(null, "Fitur 'Edit Lambang' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_lblEditLambangMouseClicked
 
     private void lblEditLambangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditLambangMouseEntered
@@ -1303,6 +1440,6 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private javax.swing.JSeparator line4;
     private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlMain;
-    private javax.swing.JTable tabelKasus;
+    private javax.swing.JTable tabelProvinsi;
     // End of variables declaration//GEN-END:variables
 }
