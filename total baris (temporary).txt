@@ -1,28 +1,25 @@
-com.main.Main 				22
-com.database.Database			1040
-com.database.Account			535
-com.database.CovidCases			438
-com.media.audio.Audio			90
-com.media.gambar.Gambar			95
-com.window.all.LoadingWindow		242
-com.window.all.SignIn			462
-com.window.all.SignUp			510
-com.window.all.UbahPassword		525
-com.window.all.Beranda			1297
-com.window.all.ApaCovid			831
-com.window.all.BahayaCovid			831
-com.window.all.GejalaCovid			831
-com.window.all.PenangananCovid		831
-com.window.all.Pencegahan.Covid		831
-com.window.all.KasusCovidDunia		859
-com.window.all.KasusCovidIndo		976
-com.window.all.AboutApp			1981
-com.window.admin.DataAplikasi		1654
-com.window.admin.UpdateUser		1333
-com.window.admin.UpdateCovidDunia		1310
-com.window.admin.UpdateCovidIndo		1309
+com.main.Main 				21 baris
+com.database.Database 			1039 baris
+com.database.Account 			628 baris
+com.database.CovidCases 			517 baris
+com.media.audio.Audio 			89 baris
+com.media.gambar.Gambar 			94 baris
+com.window.all.LoadingWindow 		241 baris
+com.window.all.SignIn 			461 baris
+com.window.all.SignUp 			509 baris
+com.window.all.UbahPassword 		524 baris
+com.window.all.Beranda 			1296 baris
+com.window.all.ApaCovid 			830 baris
+com.window.all.BahayaCovid 			830 baris
+com.window.all.GejalaCovid 			830 baris
+com.window.all.PenangananCovid 		830 baris
+com.window.all.PencegahanCovid 		830 baris
+com.window.all.KasusCovidDunia 		859 baris
+com.window.all.KasusCovidIndo 		976 baris
+com.window.all.AboutApp 			1980 baris
+com.window.admin.DataAplikasi 		1653 baris
+com.window.admin.UpdateUser 		1480 baris
+com.window.admin.UpdateCovidDunia 		1452 baris
+com.window.admin.UpdateCovidIndo 		1445 baris
 
-baris = 22 + 1040 + 535 + 438 + 90 + 95 + 242 + 462 + 510 + 525 + 1297 + (831*5) + 859 + 976 + 1981 + 1654 + 1333 + 1310 + 1309
- = 18833
-rata rata baris
-18833 / 24
+19414
