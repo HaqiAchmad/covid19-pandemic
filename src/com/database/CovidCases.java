@@ -320,6 +320,8 @@ public class CovidCases extends Database{
         return false;
     }
     
+
+    
     public boolean deleteData(final String key){
         try{
             // digunakan untuk mengecek apakah data berhasil didelete atau tidak
@@ -511,7 +513,11 @@ public class CovidCases extends Database{
                 }
             }
         }
-        return data;
+        if(num.contains("-")){
+            return "-" + data;
+        }else{
+            return data;
+        }
     }
-
 }
+
