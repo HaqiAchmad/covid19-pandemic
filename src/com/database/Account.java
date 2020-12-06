@@ -220,9 +220,13 @@ public class Account extends Database{
                 edit = stat.executeUpdate("UPDATE users SET "+ data +" = '"+ newData +"' WHERE username = '"+ user +"' OR email = '"+ user +"'");
                 // mengecek apakah data berhasil diedit atau tidak, jika berhasil maka database akan dibackup
                 if(edit > 0){
+                    System.out.println("Berhasil mengedit data "+data+" ke '"+newData+"' dari user '"+user+"'");
                     // membackup database
                     this.backupDatabase();
                     return true;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "Gagal mengedit data", "Warning", JOptionPane.WARNING_MESSAGE);
                 }
             }else{
                 // memulihkan tabel jika tabel bermasalah
@@ -423,6 +427,8 @@ public class Account extends Database{
     public boolean isValidUsername(String username){
         // mengecek apakah username kosong atau tidak
         if(username == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Username tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         // karakter yang tidak diperbolehkan untuk membuat username
@@ -465,6 +471,8 @@ public class Account extends Database{
     public boolean isValidNamalengkap(String nama){
         // mengecek apakah nama kosong atau tidak
         if(nama == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Nama Lengkap tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         // karakter yang tidak diperbolehkan untuk membuat nama lengkap
@@ -495,6 +503,8 @@ public class Account extends Database{
     public boolean isValidNamapanggilan(String nama){
         // mengecek apakah nama kosong atau tidak
         if(nama == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Nama Panggilan tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         // karakter yang tidak diperbolehkan untuk membuat nama panggilan
@@ -518,6 +528,8 @@ public class Account extends Database{
     public boolean isValidEmail(String email){
         // Mengecek apakah email kosong atau tidak
         if(email == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Email tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }else if(!email.contains("@")){ // mengecek apakah usename mengandung @ atau tidak
             JOptionPane.showMessageDialog(null, "Email tidak valid", "Info", JOptionPane.INFORMATION_MESSAGE);
@@ -554,9 +566,28 @@ public class Account extends Database{
         return false;
     }
     
+    public boolean isValidAlamat(String alamat){
+        // mengecek apakah alamat kosong atau tidak
+        if(alamat == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Alamat tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        // alamat harus diantara 3-35 karakter
+        if(alamat.length() >= 3 && alamat.length() <= 35){
+            return true;
+        }else{
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Panjang alamat harus berkisar antara 3-35 karakter!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return false;
+    }
+    
     public boolean isValidPassword(String password){
         // mengecek apakah password kosong atau tidak
         if(password == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Password tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
         // password harus diantara 8-30 karakter
@@ -565,6 +596,31 @@ public class Account extends Database{
         }else{
             Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Panjang password harus berkisar antara 8-30 karakter!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        return false;
+    }
+    
+    public boolean isValidPekerjaan(String pekerjaan){
+        // mengecek apakah pekerjaan kosong atau tidak
+        if(pekerjaan == null){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Pekerjaan tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+        // karakter yang tidak diperbolehkan untuk membuat pekerjaan
+        String blokChar = "`~!@#$%^*()_-+=\\|{[]}:;'\"<>?";
+        // pekerjaaan harus diantara 4-15 karakter
+        if(pekerjaan.length() >= 4 && pekerjaan.length() <= 30){
+            // nama perkerjaan tidak boleh menggunakan karakter yang tidak diperbolehkan
+            if(isValidText(pekerjaan, blokChar)){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_INFO);
+                JOptionPane.showMessageDialog(null, "Pekerjaan tidak boleh menggunakan simbol", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Pekerjaan harus diantara 4-30 karakter!!", "Info", JOptionPane.INFORMATION_MESSAGE);
         }
         return false;
     }
