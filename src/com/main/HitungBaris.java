@@ -27,7 +27,8 @@ public class HitungBaris {
         "com.window.admin.DataAplikasi",
         "com.window.admin.UpdateUser",
         "com.window.admin.UpdateCovidDunia",
-        "com.window.admin.UpdateCovidIndo"
+        "com.window.admin.UpdateCovidIndo",
+        "com.window.admin.DeleteData"
     };
     
     private String getDirectory(final String file){
@@ -46,17 +47,21 @@ public class HitungBaris {
         FileReader f;
         BufferedReader line;
         String file, buff = "";
-        int lines = 0, lineLocal = 0;
+        int lines = 0, lineLocal = 0, chars = 0;
         
         for(int i = 0; i < files.length; i++){
             file = getDirectory(files[i]);
             f = new FileReader(file);
             line = new BufferedReader(f);
+            buff = line.readLine();
             
-                while((buff = line.readLine()) != null){
+                while(buff != null){
+                    chars += buff.length();
                     lineLocal++;
+                    buff = line.readLine();
                 }
                 System.out.println(files[i] + " \t\t\t" + lineLocal + " baris");
+                System.out.println(String.format("CHARACTERS : %,d", chars));
                 lines += lineLocal;
                 lineLocal = 0;
         }
