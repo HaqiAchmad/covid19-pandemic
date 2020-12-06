@@ -10,7 +10,9 @@ import java.awt.Cursor;
 
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  * 
@@ -63,6 +65,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         prov_selected = "Jatim";
         dataTabel();
         showData();
+        setEditableData(false);
         
        // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -112,20 +115,92 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }
     
     /**
-     * Digunakan untuk mengatur apakah data akan diedit atau tidak 
+     * Method ini digunakan untuk mengatur apakah sebuah fields yang digunakan untuk mengedit data 
+     * diperbolehkan untuk diedit atau tidak. Data diperbolehkan diedit jika parameter <code>editData</code> memiliki 
+     * nilai <b>True</b>. Tapi jika parameter <code>editData</code> memiliki nilai <b>False</b> maka data tidak dapat diedit dan hanya 
+     * bersifat read only saja.
+     * <br><br>
+     * Method ini juga digunakan untuk mengatur field-field mana yang tidak diperbolehkan untuk diedit oleh Admin. Field-Field
+     * tersebut antara lain:
+     * <UL>
+     *  <LI> <b>Username :</b> Username tidak di perbolehkan di edit karena username pada <b>Database</b> bersifat <code>Primary Key</code> / tidak dapat didupliat. </LI>
+     *  <LI> <b>Email :</b> Email tidak di perbolehkan di edit karena email pada <b>Database</b> bersifat <code>Primary Key</code> / tidak dapat didupliat.</LI>
+     *  <LI> <b>Tipe Akun :</b> Tipe akun tidak dapat diedit karena tipe akun bersifat final (hanya dapat diubah saat pertama kali akun dibuat).</LI> 
+     *  <LI> <b>Gender : </b> Gender tidak dapat diedit di window ini karena tidak memandai-nya teknologi yang dipakai.</LI>
+     *  <LI> <b>Tanggal Lahir : </b> Tanggal lahir dari user tidak dapat diedit di window ini karena tidak memandai-nya teknologi yang dipakai.</L>
+     *  <LI> <b>Password : </b> Password tidak dapat diedit karena merupakan sebuah privasi dari user.</LI>
+     *  <LI> <b>Tanggal Dibuat : </b> Tanggal dibuat tidak bisa diedit karena bersifat final (hanya dapat diubah saat pertama kali akun dibuat).</LI>
+     * </UL>
+     * <br>
+     * Field yang tidak disetbutkan diatas merupakan field yang bisa diedit oleh Admin. Selain itu method ini juga digunakan untuk merubah warna pada
+     * line border field edit data dan foreground pada label edit data.
+     * <br><br>
+     * Jika parameter bernilai <b>True</b> maka line border pada field edit data akan memiliki warna biru dan label edit data akan memilik warna hitam. 
+     * Tapi jika parameter bernilai <b>False</b> maka line border pada filed edit data akan memiliki warna hitam dan label edit data akan memiliki warna biru.
      * 
-     * @param edit jika True maka akan diedit jika False maka data tidak akan dedit
+     * @param editData Jika <code>editData</code> benilai <b>True</b> maka data dapat diedit. Tapi jika parameter <code>editData</code> bernilai <b>False</b> maka data tidak dapat diedit.
      */
-    private void setEditableData(final boolean edit){
-        isEdit = edit;
+    private void setEditableData(final boolean editData){
+        // isEdit nilai-nya akan sama dengan editData
+        isEdit = editData;
+        
+        // label edit data
+        JLabel[] labels = new JLabel[]{
+            this.lblAktif, this.lblDiubah, this.lblKasusPertama, this.lblKematian, this.lblNamaKodeProv, this.lblNamaProv,
+            this.lblPositif, this.lblSembuh, this.lblTotalKab, this.lblWebsite, this.lblZonaHijau, this.lblZonaMerah, this.lblZonaOren
+        };
+        // fields edit data
+        JTextField[] edits = new JTextField[]{
+            this.editAktif, this.editDiubah, this.editKasusPertama, this.editKematian, this.editKodeProv, this.editPositif, this.editProvinsi,
+            this.editSembuh, this.editTotalKab, this.editWebsite, this.editZonaHijau, this.editZonaMerah, this.editZonaOranye
+        };
+        // fields edit data yang tidak bisa di edit oleh admin
+        JTextField[] notEditable = new JTextField[]{
+            this.editKodeProv, this.editProvinsi, this.editTotalKab, this.editKasusPertama, this.editDiubah
+        };
+        
+        // jika parameter bernilai True
         if(isEdit){
+            // menyembunyikan button edit dan menampilkan button simpan, batal
             this.btnEdit.setVisible(false);
             this.btnSimpan.setVisible(true);
             this.btnBatal.setVisible(true);
-        }else{
+                // merubah fields edit data agar dapat diedit dan mengubah warna line border pada fields edit data ke warna biru
+                for(JTextField field : edits){
+                    // merubah fields edit data agar dapat diedit
+                    field.setEditable(true);
+                    field.setEnabled(true);
+                    // merubah warna line border
+                    field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,106,255)));
+                }
+                // menonaktifkan field-field yang tidak bisa diedit oleh admin
+                for(JTextField noEdit : notEditable){
+                    noEdit.setEditable(false);
+                    noEdit.setEnabled(false);
+                }
+                // merubah warna foreground pada label edit ke warna hitam
+                for(JLabel label : labels){
+                    label.setForeground(new Color(0,0,0));
+                }
+        }else{// jika parameter bernilai False
+            // menampilkan button edit dan menyembunyikan button simpan, batal
             this.btnEdit.setVisible(true);
             this.btnSimpan.setVisible(false);
             this.btnBatal.setVisible(false);
+                // merubah fields edit data agar tidak dapat diedit dan mengubah warna line border pada fields edit data ke warna hitam
+                for(JTextField field : edits){
+                    // merubah fields edit data agar tidak dapat diedit
+                    field.setEditable(true);
+                    field.setEnabled(false);
+                    // merubah warna foreground ke warna hitam
+                    field.setDisabledTextColor(new Color(0,0,0));
+                    // merubah warna line border
+                    field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
+                }
+                // merubah warna foreground pada label edit ke warna biru
+                for(JLabel label : labels){
+                    label.setForeground(new Color(10,72,201));
+                }
         }
     }
     
@@ -1115,7 +1190,18 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMouseExited
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        System.out.println("Membuka Window DeleteData");
+        DeleteData delete = new DeleteData(DeleteData.UPDATE_INDO);
+        delete.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                delete.setVisible(true);
+            }
+        });
+        dispose();        
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered

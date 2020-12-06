@@ -1,6 +1,7 @@
 package com.window.admin;
 
 import com.database.Account;
+import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.Beranda;
@@ -10,8 +11,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
 /**
  * 
@@ -34,6 +36,10 @@ public class UpdateUser extends javax.swing.JFrame {
     private String user_selected, username, namaLengkap, namaPanggilan, email, gender, tanggalLahir, 
                    pekerjaan, alamat, negara, password, tanggalDibuat, fotoProfile, type;
     /**
+     * Digunakan untuk menyimpan hasil dari edit data akun
+     */
+    private String eNamaLengkap, eNamaPanggilan, ePekerjaan, eAlamat, eNegara;
+    /**
      * Fields / data yang akan ditampilkan ke dalam tabel
      */
     private final String[] fields = new String[]{Account.USERNAME, Account.NAMA_PANGGILAN, Account.EMAIL, Account.TYPE};
@@ -52,7 +58,7 @@ public class UpdateUser extends javax.swing.JFrame {
         
         this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        this.tabelUsers.setRowHeight(30);
+        this.tabelUsers.setRowHeight(32);
         this.tabelUsers.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelUsers.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
         this.btnSimpan.setVisible(false);
@@ -61,7 +67,7 @@ public class UpdateUser extends javax.swing.JFrame {
         this.user_selected = "baihaqi";
         dataTabel();
         showData();
-        setEditableData(false);
+        this.setEditableData(false);
         
          // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -106,45 +112,200 @@ public class UpdateUser extends javax.swing.JFrame {
                 }
             });
         }
-        
     }
     
     /**
-     * Digunakan untuk mengatur apakah data akan diedit atau tidak 
+     * Method ini digunakan untuk mengatur apakah sebuah fields yang digunakan untuk mengedit data 
+     * diperbolehkan untuk diedit atau tidak. Data diperbolehkan diedit jika parameter <code>editData</code> memiliki 
+     * nilai <b>True</b>. Tapi jika parameter <code>editData</code> memiliki nilai <b>False</b> maka data tidak dapat diedit dan hanya 
+     * bersifat read only saja.
+     * <br><br>
+     * Method ini juga digunakan untuk mengatur field-field mana yang tidak diperbolehkan untuk diedit oleh Admin. Field-Field
+     * tersebut antara lain:
+     * <UL>
+     *  <LI> <b>Username :</b> Username tidak di perbolehkan di edit karena username pada <b>Database</b> bersifat <code>Primary Key</code> / tidak dapat didupliat. </LI>
+     *  <LI> <b>Email :</b> Email tidak di perbolehkan di edit karena email pada <b>Database</b> bersifat <code>Primary Key</code> / tidak dapat didupliat.</LI>
+     *  <LI> <b>Tipe Akun :</b> Tipe akun tidak dapat diedit karena tipe akun bersifat final (hanya dapat diubah saat pertama kali akun dibuat).</LI> 
+     *  <LI> <b>Gender : </b> Gender tidak dapat diedit di window ini karena tidak memandai-nya teknologi yang dipakai.</LI>
+     *  <LI> <b>Tanggal Lahir : </b> Tanggal lahir dari user tidak dapat diedit di window ini karena tidak memandai-nya teknologi yang dipakai.</L>
+     *  <LI> <b>Password : </b> Password tidak dapat diedit karena merupakan sebuah privasi dari user.</LI>
+     *  <LI> <b>Tanggal Dibuat : </b> Tanggal dibuat tidak bisa diedit karena bersifat final (hanya dapat diubah saat pertama kali akun dibuat).</LI>
+     * </UL>
+     * <br>
+     * Field yang tidak disetbutkan diatas merupakan field yang bisa diedit oleh Admin. Selain itu method ini juga digunakan untuk merubah warna pada
+     * line border field edit data dan foreground pada label edit data.
+     * <br><br>
+     * Jika parameter bernilai <b>True</b> maka line border pada field edit data akan memiliki warna biru dan label edit data akan memilik warna hitam. 
+     * Tapi jika parameter bernilai <b>False</b> maka line border pada filed edit data akan memiliki warna hitam dan label edit data akan memiliki warna biru.
      * 
-     * @param edit jika True maka akan diedit jika False maka data tidak akan dedit
+     * @param editData Jika <code>editData</code> benilai <b>True</b> maka data dapat diedit. Tapi jika parameter <code>editData</code> bernilai <b>False</b> maka data tidak dapat diedit.
      */
-    private void setEditableData(final boolean edit){
-
+    private void setEditableData(final boolean editData){
+        // isEdit nilai-nya akan sama dengan editData
+        isEdit = editData;
+        
+        // label edit data
+        JLabel[] labels = new JLabel[]{
+            this.lblAlamat, this.lblAsalNegara, this.lblEmail, this.lblGender, this.lblNamalengkap, this.lblNamaPanggilan, this.lblPassword,
+            this.lblPekerjaan, this.lblDibuat, this.lblTanggalLahir, this.lblTipeAkun, this.lblUsername
+        };
+        // fields edit data
         JTextField[] edits = new JTextField[]{
             this.editAlamat, this.editAsalNegara, this.editEmail, this.editGender, this.editNamalengkap, this.editNamapanggilan, this.editPassword,
-            this.editPekerjaan, this.editTglDibuat, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
+            this.editPekerjaan, this.editTglDibuat, this.editTglLahir, this.editTipeAkun, this.editUsername
+        };
+        // fields edit data yang tidak bisa di edit oleh admin
+        JTextField[] notEditable = new JTextField[]{
+          this.editUsername, this.editEmail, this.editGender, this.editTglLahir, this.editPassword, this.editTipeAkun, this.editTglDibuat  
         };
         
-        isEdit = edit;
-        
+        // jika parameter bernilai True
         if(isEdit){
+            // menyembunyikan button edit dan menampilkan button simpan, batal
             this.btnEdit.setVisible(false);
             this.btnSimpan.setVisible(true);
             this.btnBatal.setVisible(true);
-            
+                // merubah fields edit data agar dapat diedit dan mengubah warna line border pada fields edit data ke warna biru
                 for(JTextField field : edits){
+                    // merubah fields edit data agar dapat diedit
                     field.setEditable(true);
                     field.setEnabled(true);
+                    // merubah warna line border
                     field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,106,255)));
                 }
-        }else{
+                // menonaktifkan field-field yang tidak bisa diedit oleh admin
+                for(JTextField noEdit : notEditable){
+                    noEdit.setEditable(false);
+                    noEdit.setEnabled(false);
+                }
+                // merubah warna foreground pada label edit ke warna hitam
+                for(JLabel label : labels){
+                    label.setForeground(new Color(0,0,0));
+                }
+        }else{// jika parameter bernilai False
+            // menampilkan button edit dan menyembunyikan button simpan, batal
             this.btnEdit.setVisible(true);
             this.btnSimpan.setVisible(false);
             this.btnBatal.setVisible(false);
-            
+                // merubah fields edit data agar tidak dapat diedit dan mengubah warna line border pada fields edit data ke warna hitam
                 for(JTextField field : edits){
-                    field.setDisabledTextColor(new Color(0,0,0));
+                    // merubah fields edit data agar tidak dapat diedit
                     field.setEditable(true);
                     field.setEnabled(false);
+                    // merubah warna foreground ke warna hitam
+                    field.setDisabledTextColor(new Color(0,0,0));
+                    // merubah warna line border
                     field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0,0,0)));
                 }
+                // merubah warna foreground pada label edit ke warna biru
+                for(JLabel label : labels){
+                    label.setForeground(new Color(10,72,201));
+                }
         }
+    }
+    
+    /**
+     * Method ini digunakan untuk melakukan perubahan data dari sebuah akun lalu akan menyimpan perbuhan tersebut. 
+     * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
+     * <br><br>
+     * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
+     * Method akan mengecek semua data yang akan diedit tersebut sampai valid, Jika salah satu data yang dimasukan belum valid makan akan 
+     * mucul notifikasi bahwa data tersebut belum valid dan warna border dan foreground pada Textfield dan Label akan berubah menjadi merah.
+     * <br><br>
+     * Jika semua data sudah valid maka proses selanjutnya adalah menyimpan data tersebut ke dalam <b>Database</b>. 
+     * Jika ada data yang gagal disimpan maka method akan memunculkan notif bahwa ada gagal yang disimpan dan aplikasi akan 
+     * secara otomatis merstore <b>Databse</b> dan mengembalikan nilai <b>False</b>. Tapi jika semua data berhasil disimpan maka method akan mengembalikan nilai <b>True</b>.
+     * 
+     * 
+     * 
+     * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
+     */
+    private boolean saveData(){
+        // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
+        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
+        // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
+        boolean isValids = false;
+        
+        // mendapatkan data yang diedit
+        this.eNamaLengkap = this.editNamalengkap.getText();
+        this.eNamaPanggilan = this.editNamapanggilan.getText();
+        this.eAlamat = this.editAlamat.getText();
+        this.eNegara = this.editAsalNegara.getText();
+        this.ePekerjaan = this.editPekerjaan.getText();
+        
+        // mengecek apakah nama lengkap valid atau tidak
+        if(dataUser.isValidNamalengkap(eNamaLengkap)){
+            changeColor(this.editNamalengkap, this.lblNamalengkap, true); 
+            // mengecek apakah nama panggilan valid atau tidak
+            if(dataUser.isValidNamapanggilan(eNamaPanggilan)){
+                changeColor(this.editNamapanggilan, this.lblNamaPanggilan, true);
+                // mengecek apakah alamat valid atau tidak
+                if(dataUser.isValidAlamat(eAlamat)){
+                    changeColor(this.editAlamat, this.lblAlamat, true);
+                    // mengecek apakah negara yg dimasukan user ada atau tidak
+                    if(dataNegara.isExist(eNegara)){
+                        changeColor(this.editAsalNegara, this.lblAsalNegara, true);
+                        // mengecek apakah pekerjaan valid atau tidak
+                        if(dataUser.isValidPekerjaan(ePekerjaan)){
+                            changeColor(this.editPekerjaan, this.lblPekerjaan, true);
+                            isValids = true;
+                        }else{
+                            changeColor(this.editPekerjaan, this.lblPekerjaan, false);
+                        }
+                    }else{
+                        Audio.play(Audio.SOUND_WARNING);
+                        JOptionPane.showMessageDialog(null, "Tidak dapat menemukan negara '"+eNegara+"'.", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                        changeColor(this.editAsalNegara, this.lblAsalNegara, false);
+                    }
+                }else{
+                    changeColor(this.editAlamat, this.lblAlamat, false);
+                }
+            }else{
+                changeColor(this.editNamapanggilan, this.lblNamaPanggilan, false);
+            }
+        }else{
+            changeColor(this.editNamalengkap, this.lblNamalengkap, false); 
+        }
+        
+        // mengecek apakah semua data yang diedit valid atau tidak
+        if(isValids){
+            // menyimpan data dari nama lengkap
+            if(dataUser.editAccount(username, Account.NAMA_LENGKAP, eNamaLengkap)){
+                // menyimpan data dari nama panggilan
+                if(dataUser.editAccount(username, Account.NAMA_PANGGILAN, eNamaPanggilan)){
+                    // menyimpan data dari alamat
+                    if(dataUser.editAccount(username, Account.ALAMAT, eAlamat)){
+                        // menyimpan data dari negara
+                        if(dataUser.editAccount(username, Account.NEGARA, eNegara)){
+                            // menyimpan data dari pekerjaan
+                            if(dataUser.editAccount(username, Account.PEKERJAAN, ePekerjaan)){
+                                return true; // akan mereturn true jika semua data berhasil disimpan
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
+    }
+    
+    /**
+     * Jika <code>isValid</code> bernilai <b>True</b> maka TextField akan berwarna biru dan Label akan berwarna hitam, 
+     * Tapi jika <code>isValid</code> bernilai <b>False</b> maka TextField dan Label akan berwarna merah
+     * 
+     * @param field TextField yang akan diubah warna-nya
+     * @param label Label yang akan diubah warna-nya
+     * @param isValid untuk menentukan warna dari TextField dan Label
+     */
+    private void changeColor(JTextField field, JLabel label, boolean isValid){
+       // Jika isValid false
+       if(!isValid){
+           field.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(255,0,0)));
+           label.setForeground(new Color(255,0,0));
+       }else{// Jika isValid true
+           field.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(0,106,255)));
+           label.setForeground(new Color(0,0,0));
+       }
     }
     
     /**
@@ -520,6 +681,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editEmail.setText("hakiahmad756@gmail.com");
         editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editEmail.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editEmail.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editEmailMouseClicked(evt);
@@ -531,6 +693,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editUsername.setText("baihaqi");
         editUsername.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editUsername.setCaretColor(new java.awt.Color(255, 0, 0));
+        editUsername.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editUsername.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editUsernameMouseClicked(evt);
@@ -546,6 +709,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editNamalengkap.setText("Achmad Baihaqi");
         editNamalengkap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editNamalengkap.setCaretColor(new java.awt.Color(255, 0, 0));
+        editNamalengkap.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editNamalengkap.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editNamalengkapMouseClicked(evt);
@@ -561,6 +725,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editTipeAkun.setText("Admin");
         editTipeAkun.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTipeAkun.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTipeAkun.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editTipeAkun.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editTipeAkunMouseClicked(evt);
@@ -580,6 +745,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editGender.setText("Laki-Laki");
         editGender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editGender.setCaretColor(new java.awt.Color(255, 0, 0));
+        editGender.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editGender.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editGenderMouseClicked(evt);
@@ -595,6 +761,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editNamapanggilan.setText("Baihaqi");
         editNamapanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editNamapanggilan.setCaretColor(new java.awt.Color(255, 0, 0));
+        editNamapanggilan.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editNamapanggilan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editNamapanggilanMouseClicked(evt);
@@ -621,6 +788,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editTglLahir.setText("04 Agustus 2003");
         editTglLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTglLahir.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTglLahir.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editTglLahir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editTglLahirMouseClicked(evt);
@@ -632,6 +800,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editAlamat.setText("Jawa Timur");
         editAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editAlamat.setCaretColor(new java.awt.Color(255, 0, 0));
+        editAlamat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editAlamat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editAlamatMouseClicked(evt);
@@ -647,6 +816,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editAsalNegara.setText("Indonesia");
         editAsalNegara.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editAsalNegara.setCaretColor(new java.awt.Color(255, 0, 0));
+        editAsalNegara.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editAsalNegara.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editAsalNegaraMouseClicked(evt);
@@ -662,6 +832,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editPekerjaan.setText("Software Enginer");
         editPekerjaan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editPekerjaan.setCaretColor(new java.awt.Color(255, 0, 0));
+        editPekerjaan.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editPekerjaan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editPekerjaanMouseClicked(evt);
@@ -677,6 +848,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editTglDibuat.setText("30 Oktober 2020");
         editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editTglDibuat.setCaretColor(new java.awt.Color(255, 0, 0));
+        editTglDibuat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editTglDibuat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editTglDibuatMouseClicked(evt);
@@ -692,6 +864,7 @@ public class UpdateUser extends javax.swing.JFrame {
         editPassword.setText("••••••••••••••••");
         editPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editPassword.setCaretColor(new java.awt.Color(255, 0, 0));
+        editPassword.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         editPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editPasswordMouseClicked(evt);
@@ -1147,7 +1320,18 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMouseExited
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        System.out.println("Membuka Window DeleteData");
+        DeleteData delete = new DeleteData(DeleteData.UPDATE_USER);
+        delete.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                delete.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
@@ -1173,7 +1357,12 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-
+        boolean isValid = this.saveData();
+        if(isValid){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Data dari '"+username+"' berhasil disimpan!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            this.setEditableData(false);
+        }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
@@ -1188,6 +1377,12 @@ public class UpdateUser extends javax.swing.JFrame {
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         this.setEditableData(false);
+        // mereset field edit
+        this.editNamalengkap.setText(this.namaLengkap);
+        this.editNamapanggilan.setText(this.namaPanggilan);
+        this.editAlamat.setText(alamat);
+        this.editAsalNegara.setText(negara);
+        this.editPekerjaan.setText(pekerjaan);
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1318,7 +1513,7 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editTglLahirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglLahirMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
