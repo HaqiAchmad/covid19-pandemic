@@ -14,6 +14,7 @@ public class HitungBaris {
         "com.window.all.LoadingWindow",
         "com.window.all.SignIn",
         "com.window.all.SignUp",
+        "com.window.all.SignInMySQl",
         "com.window.all.UbahPassword",
         "com.window.all.Beranda",
         "com.window.all.ApaCovid",
