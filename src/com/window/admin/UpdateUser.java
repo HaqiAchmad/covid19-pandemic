@@ -1321,14 +1321,11 @@ public class UpdateUser extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         System.out.println("Membuka Window DeleteData");
-        DeleteData delete = new DeleteData(DeleteData.UPDATE_USER);
-        delete.setLocation(this.getX(), this.getY());
-        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                delete.setVisible(true);
+                new DeleteData(DeleteData.UPDATE_USER, user_selected).setVisible(true);
             }
         });
         dispose();
@@ -1463,7 +1460,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editUsernameMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Username dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1473,7 +1471,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmailMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Email dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);

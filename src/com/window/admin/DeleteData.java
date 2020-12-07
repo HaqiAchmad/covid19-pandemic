@@ -8,14 +8,16 @@ public class DeleteData extends javax.swing.JFrame {
     
     public static final int UPDATE_USER = 1, UPDATE_DUNIA = 2, UPDATE_INDO = 3;
     
+    private String data;
     
-    public DeleteData(final int window) {
+    public DeleteData(final int window, final String data) {
         initComponents();
         
         from = window;
+        this.data = data;
         
         this.setLocationRelativeTo(null);
-        
+        this.lblData.setText("<html><p style=\"color:black;\">'<span style=\"color:rgb(222,34,34);\">"+data+"</span>'</p></html>");
         this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
     }

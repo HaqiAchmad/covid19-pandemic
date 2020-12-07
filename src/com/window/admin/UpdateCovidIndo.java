@@ -484,7 +484,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         });
 
         lblKeyword.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-        lblKeyword.setText("Menampilkan data dengan keyword = \"\"");
+        lblKeyword.setText("Menampilkan provinsi dengan keyword = \"\"");
 
         btnAdd.setBackground(new java.awt.Color(34, 119, 237));
         btnAdd.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -1191,17 +1191,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         System.out.println("Membuka Window DeleteData");
-        DeleteData delete = new DeleteData(DeleteData.UPDATE_INDO);
-        delete.setLocation(this.getX(), this.getY());
-        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                delete.setVisible(true);
+                new DeleteData(DeleteData.UPDATE_INDO, prov_selected).setVisible(true);
             }
         });
-        dispose();        
+        dispose();      
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
@@ -1284,7 +1281,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
         int row = dataIndo.getRows("SELECT * FROM kasuscovid_indo WHERE kode LIKE '%"+ keyword +"%' OR provinsi LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
         // mereset lbl show keyword
-        this.lblKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
+        this.lblKeyword.setText("Menampilkan "+ row +" provinsi dengan keyword = \""+keyword+"\"");
         // mereset tabel
         dataTabel();
     }//GEN-LAST:event_inpCariProvinsiKeyTyped

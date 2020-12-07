@@ -1,6 +1,5 @@
 package com.window.admin;
 
-import com.database.Account;
 import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
@@ -44,9 +43,13 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
      */
     private int positif, sembuh, kematian, kritis, aktif, populasi;
     /**
-     * Digunakan untuk menyimpan hasil dari edit data
+     * Digunakan untuk menyimpan hasil dari edit data yang memiliki tipe int
      */
-    private int ePositif, eSembuh, eKematian, eKritis, eAktif, ePopulasi;
+    private int ePositif, eSembuh, eKematian, eKritis, eAktif;
+    /**
+     * Digunakan untuk menyimpan hasil dari edit data yang memiliki tipe long
+     */
+    private long ePopulasi;
     /**
      * Digunakan untuk mengatur posisi dari window
      */
@@ -211,6 +214,37 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }
     
     /**
+     * Digunakan untuk mengecek apakah sebuah input kosong atau tidak
+     * 
+     * @param input
+     * @param data
+     * @return Jika input kosong maka akan mengembalikan nilai True, Tapi jika input tidak kosong maka akan mengembalikan nilai False
+     */
+    private boolean isEmptyInput(JTextField input, final String data){
+        try{
+            // mengecek apakah input kosong atau tidak, jika kosong makan akan mengembalikan nilai falses
+            if(input.getText() == null || input.getText().equals("")){
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                return true;
+            }else{ // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
+                // mengecek apakah input yg dimasukan user angka atau tidak
+                if(input.getText().equalsIgnoreCase("n/a")){
+                    return false;
+                }else if(dataDunia.isNumber(dataDunia.removeDelim(input.getText()))){
+                    return false;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " harus berupa angka!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }catch(NumberFormatException nex){
+            System.out.println("Terjadi kesalahan saat mengambil input : " + nex.getMessage());
+        }
+        return true;
+    }
+    
+    /**
      * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di dunia lalu akan menyimpan perbuhan tersebut. 
      * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
      * <br><br>
@@ -232,54 +266,132 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
         boolean isValids = false;
         
-        // mendapatkan data yang diedit dengan membuang karakter yang bukan number
-        this.ePositif = Integer.parseInt(dataDunia.removeDelim(this.editPositif.getText()));
-        this.eSembuh = Integer.parseInt(dataDunia.removeDelim(this.editSembuh.getText()));
-        this.eKematian = Integer.parseInt(dataDunia.removeDelim(this.editKematian.getText()));
-        this.eAktif = Integer.parseInt(dataDunia.removeDelim(this.editAktif.getText()));
-        this.eKritis = Integer.parseInt(dataDunia.removeDelim(this.editKritis.getText()));
-        if(negara_selected.equalsIgnoreCase("dunia")){
-            this.ePopulasi = Integer.parseInt(dataDunia.removeDelim(this.editPopulasi.getText())) / 10;
+        /*
+          * Mengecek apakah edit data yang diinputkan user kosong atau benilai n/a
+        */
+         if(this.isEmptyInput(this.editPositif, "positif")){
+             changeColor(this.editPositif, this.lblPositif, false);
+             return false;
+         }else{
+             changeColor(this.editPositif, this.lblPositif, true);
+            this.ePositif = Integer.parseInt(dataDunia.removeDelim(this.editPositif.getText()));
+         }
+         
+         if(this.isEmptyInput(this.editSembuh, "sembuh")){
+             changeColor(this.editSembuh, this.lblSembuh, false);
+             return false;
+         }else{
+             changeColor(this.editSembuh, this.lblSembuh, true);
+            this.eSembuh = Integer.parseInt(dataDunia.removeDelim(this.editSembuh.getText()));
+         }
+         
+         if(this.isEmptyInput(this.editKematian, "kematian")){
+             changeColor(this.editKematian, this.lblKematian, false);
+             return false;
+         }else{
+             changeColor(this.editKematian, this.lblKematian, true);
+            this.eKematian = Integer.parseInt(dataDunia.removeDelim(this.editKematian.getText()));
+         }
+         
+         if(this.isEmptyInput(this.editAktif, "aktif")){
+             changeColor(this.editAktif, this.lblAktif, false);
+             return false;
+         }else{
+             changeColor(this.editAktif, this.lblAktif, true);
+            this.eAktif = Integer.parseInt(dataDunia.removeDelim(this.editAktif.getText()));
+         }
+         
+         if(this.isEmptyInput(this.editKritis, "kritis")){
+             changeColor(this.editKritis, this.lblKritis, false);
+             return false;
+         }else{
+             changeColor(this.editKritis, this.lblKritis, true);
+             this.eKritis = Integer.parseInt(dataDunia.removeDelim(this.editKritis.getText()));
+         }
+         
+         if(this.isEmptyInput(this.editPopulasi, "populasi")){
+             changeColor(this.editPopulasi, this.lblPopulasi, false);
+             return false;
+         }else{
+            changeColor(this.editPopulasi, this.lblPopulasi, true);
+            this.ePopulasi = Long.parseLong(dataDunia.removeDelim(this.editPopulasi.getText()));
+         }
+         
+         if(ePopulasi > 2100000000){
+             ePopulasi /= 10;
+         }
+        
+         // mengecek apakah data yang dimasukan user valid atau tidak
+        if(dataDunia.isValidPositif(negara_selected, positif, ePositif)){
+            changeColor(this.editPositif, this.lblPositif, true);
+            if(dataDunia.isValidSembuh(ePositif, sembuh, eSembuh)){
+                changeColor(this.editSembuh, this.lblSembuh, true);
+                if(dataDunia.isValidKematian(ePositif, kematian, eKematian)){
+                    changeColor(this.editKematian, this.lblKematian, true);
+                    if(dataDunia.isValidAktif(ePositif, eKematian, eAktif)){
+                        changeColor(this.editAktif, this.lblAktif, true);
+                        if(dataDunia.isValidKritis(eAktif, eKritis)){
+                            changeColor(this.editKritis, this.lblKritis, true);
+                            if(dataDunia.isValidPopulasi(populasi, (int)ePopulasi)){
+                                changeColor(this.editPopulasi, this.lblPopulasi, true);
+                                isValids = true;
+                            }else{
+                                changeColor(this.editPopulasi, this.lblPopulasi, false);
+                            }
+                        }else{
+                            changeColor(this.editKritis, this.lblKritis, false);
+                        }
+                    }else{
+                        changeColor(this.editAktif, this.lblAktif, false);
+                    }
+                }else{
+                    changeColor(this.editKematian, this.lblKematian, false);                    
+                }
+            }else{
+                changeColor(this.editSembuh, this.lblSembuh, false);
+            }
         }else{
-            this.ePopulasi = Integer.parseInt(dataDunia.removeDelim(this.editPopulasi.getText()));
+            changeColor(this.editPositif, this.lblPositif, false);
         }
         
-        if(ePositif <= 0){
-            
-        }else if(ePositif < positif){
-            
-        }else if(ePositif > populasi){
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        if(isValids){
+            if(dataDunia.setData(CovidCases.KASUS, this.negara_selected, Integer.toString(ePositif))){
+                if(dataDunia.setData(CovidCases.SEMBUH, this.negara_selected, Integer.toString(eSembuh))){
+                    if(dataDunia.setData(CovidCases.KEMATIAN, this.negara_selected, Integer.toString(eKematian))){
+                        if(dataDunia.setData(CovidCases.AKTIF, this.negara_selected, Integer.toString(eAktif))){
+                            if(dataDunia.setData(CovidCases.KRITIS, this.negara_selected, Integer.toString(eKritis))){
+                                if(dataDunia.setData(CovidCases.POPULASI, this.negara_selected, Long.toString(ePopulasi))){
+                                    this.dataTabel();
+                                    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                                    return true;
+                                }else{
+                                    
+                                }
+                            }else{
+                                
+                            }
+                        }else{
+                            
+                        }
+                    }else{
+                        
+                    }
+                }else{
+                    
+                }
+            }else{
+                
+            }
+        }else{
             
         }
         
-        if(eSembuh < -1){
-            
-        }else if(eSembuh < sembuh){
-            
-        }else if(eSembuh > ePositif){
-            
-        }
-        
-        if(eKematian < -1){
-            
-        }else if(eKematian < kematian){
-            
-        }else if(eKematian < ePositif){
-            
-        }
-        
-        if(eSembuh > -1 && eKematian > -1){
-            
-        }
-        
-        if(eAktif < -1){
-            
-        }else if(eKematian > eSembuh - eKematian){
-            
-        }
-        
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
+    
+
     
     /**
      * Jika <code>isValid</code> bernilai <b>True</b> maka TextField akan berwarna biru dan Label akan berwarna hitam, 
@@ -596,7 +708,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         });
 
         lblKeyword.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-        lblKeyword.setText("Menampilkan data dengan keyword = \"\"");
+        lblKeyword.setText("Menampilkan negara dengan keyword = \"\"");
 
         btnAdd.setBackground(new java.awt.Color(34, 119, 237));
         btnAdd.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
@@ -1299,17 +1411,14 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         System.out.println("Membuka Window DeleteData");
-        DeleteData delete = new DeleteData(DeleteData.UPDATE_DUNIA);
-        delete.setLocation(this.getX(), this.getY());
-        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                delete.setVisible(true);
+                new DeleteData(DeleteData.UPDATE_DUNIA, negara_selected).setVisible(true);
             }
         });
-        dispose();   
+        dispose(); 
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnHapusMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHapusMouseEntered
@@ -1355,6 +1464,8 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         this.setEditableData(false);
+        // mereset field edit ke data sebelumnya
+        this.showData();
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1397,7 +1508,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
         int row = dataDunia.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ keyword +"%' OR negara_eng LIKE '%"+ keyword +"%' OR benua LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
         // mereset lbl show keyword
-        this.lblKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
+        this.lblKeyword.setText("Menampilkan "+ row +" negara dengan keyword = \""+keyword+"\"");
         // mereset tabel
         dataTabel();
     }//GEN-LAST:event_inpCariKeyTyped

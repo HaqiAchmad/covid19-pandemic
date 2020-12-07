@@ -49,8 +49,13 @@ public class LoadingWindow extends javax.swing.JFrame {
                         }else if(value >= 30 && value < 45){
                             lblInfo.setText("  Menghubungkan ke Database...");
                             db.startConnection();
-                            value = 45;
-                            delay = 60;
+                            if(db.isExistDatabase()){
+                                delay = 60;
+                                value = 45;
+                            }else{
+                                dispose();
+                                break;
+                            }
                         }else if(value >= 45 && value < 60){
                             lblInfo.setText("  Memulihkan Database...");
                             db.restoreDatabase();
