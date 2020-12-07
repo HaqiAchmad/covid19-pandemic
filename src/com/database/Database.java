@@ -60,7 +60,11 @@ public class Database {
      */
     public static final String KASUSCOVID_DUNIA = "kasuscovid_dunia", KASUSCOVID_INDO = "kasuscovid_indo", 
                                USERS = "users", ISLOGIN = "islogin";
-        
+    /**
+     * Digunakan untuk mendapatkan username dan password mysql 
+    */
+    public static String SET_USER = "", SET_PASS = "";
+    
     /**
      * Digunakan untuk menghubungkan aplikasi ke <B>Database</B>. 
      * <BR>
@@ -88,6 +92,70 @@ public class Database {
             // Menghubungkan ke database
             Class.forName(DRIVER); 
             conn = DriverManager.getConnection(URL, USER, PASS); 
+            stat = conn.createStatement(); 
+            System.out.println("Berhasil terhubung ke database '" + DB_NAME + "'\n");
+        }catch(ClassNotFoundException | SQLException ex){
+            Audio.play(Audio.SOUND_ERROR);
+            // Menanggani exception yang terjadi dengan cara mendapatkan pesan error dari exception tersebut.
+            if(ex.getMessage().contains("com.mysql.jdbc.Driver")){
+                JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
+            }else if(ex.getMessage().contains("Communications link failure")){
+                JOptionPane.showMessageDialog(null, "MySQL anda belum diaktifkan!!\nSilahkan aktifkan MySQL anda dan buka kembali aplikasi!!", "Error", JOptionPane.WARNING_MESSAGE);
+                System.exit(0);
+            }else if(ex.getMessage().contains("Access denied for user")){
+                if(SET_USER.equalsIgnoreCase("") || SET_PASS.equalsIgnoreCase("")){
+                    JOptionPane.showMessageDialog(null, SET_USER = "  " + SET_PASS);
+                    java.awt.EventQueue.invokeLater(new Runnable(){
+                        
+                        @Override
+                        public void run(){
+                            JOptionPane.showMessageDialog(null, "Sepertinya MySQL adan memiliki Password", "Error", JOptionPane.WARNING_MESSAGE);
+                            new com.window.all.SignInMySQL().setVisible(true);
+                        }
+                    });
+                }else{
+                    this.startConnection(Database.SET_USER, Database.SET_PASS);
+                }
+            }else if(ex.getMessage().contains("Unknown database")){
+                JOptionPane.showMessageDialog(null, "Klik OK untuk memulihkan Database!", "Error", JOptionPane.WARNING_MESSAGE);
+                restoreDatabase();
+            }else{
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : "+ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+    
+    /**
+     * Digunakan untuk menghubungkan aplikasi ke <B>Database</B>. 
+     * <BR>
+     * Pertama-tama method akan meregrister Driver yang dipakai.
+     * Driver yang dipakai di aplikasi ini adalah <B>MySQL Driver</B>. Selanjutnya method akan melakukan koneksi ke <B>Database</B>.
+     * Setelah berhasil terkoneksi ke <B>Database</B> method akan membuat object <code>Statement</code>
+     * <BR><BR>
+     * Terdapat dua exception yang mungkin akan terjadi di method ini yaitu <code>ClassNotFoundException</code> dan <code>SQLException</code>.
+     * Exception akan ditangani dengan mendapatkan pesan error dari method <code>getMessage</code> pada kedua exception tersebut.
+     * Beberapa pesan error yang dapat ditanggani di method ini antara lain: 
+     * <UL>
+     * <LI> <B>com.mysql.jdbc.Driver : </B> pesan error ini berarti aplikasi tidak dapat menemukan Driver yang akan dipakai untuk menkoneksikan aplikasi ke <B>Database</B>. 
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Communications link failure : </B> pesan error ini bearti MySQL pada Komputer user belum diaktifkan. 
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Access denied for user 'root'@'localhost' (using password: YES) : </B> pesan error ini bearti username atau password pada MySQL di komputer user tidak cocok dengan username dan password yang ada di Aplikasi ini.
+     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
+     * <LI> <B>Unknown database" : </B> pesan error ini bearti bahwa database MySQL aplikasi ini tidak ada di komputer user. 
+     *      Method akan memulihkan database secara otomatis dengan method <code>restoreDatabase()</code> jika mendapatkan pesan error ini.
+     * </UL>
+     * <B>Note : </B> Jika pesan error tidak dikenali maka aplikasi akan keluar sendiri.
+     * @param user
+     * @param pass
+     */
+    public void startConnection(final String user, final String pass){
+        try{
+            // Menghubungkan ke database
+            Class.forName(DRIVER); 
+            conn = DriverManager.getConnection(URL, user, pass); 
             stat = conn.createStatement(); 
             System.out.println("Berhasil terhubung ke database '" + DB_NAME + "'\n");
         }catch(ClassNotFoundException | SQLException ex){
