@@ -1078,15 +1078,18 @@ public class Beranda extends javax.swing.JFrame {
     }//GEN-LAST:event_lblPhotoProfileMouseClicked
 
     private void lblEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseClicked
-        acc.logout();
+        System.out.println("Membuka Window InformasiAkun");
+        InformasiAkun infoAkun = new InformasiAkun();
+        infoAkun.setLocation(this.getX(), this.getY());
+        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                dispose();
-                new SignIn().setVisible(true);
+                infoAkun.setVisible(true);
             }
         });
+        dispose();
     }//GEN-LAST:event_lblEditProfileMouseClicked
 
     private void lblEditProfileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseEntered

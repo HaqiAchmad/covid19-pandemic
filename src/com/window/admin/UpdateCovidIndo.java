@@ -42,6 +42,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
      */
     private int positif, sembuh, kematian, aktif, totalKab, zonaMerah, zonaOren, zonaHijau;
     /**
+     * Digunakan untuk menyimpan hasil dari edit data yang memiliki tipe int
+     */
+    private int ePositif, eSembuh, eKematian, eAktif, eZonaMerah, eZonaOren, eZonaHijau;
+    /**
+     * Digunakan untuk menyimpan data yang memiliki tipe long
+     */
+    private long populasi;
+    /**
      * Digunakan untuk mengatur posisi dari window
      */
     private int x, y;
@@ -203,6 +211,178 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
                 }
         }
     }
+
+    /**
+     * Method ini digunakan untuk mengecek apakah sebuah data yang diinputakan oleh user melalui <code>JTextField</code> kosong 
+     * atau tidak dan juga untuk mengecek apakah yang dinputkan merupakah sebuah angka atau tidak.
+     * 
+     * @param input JTextfield yang akan dicek input-nya
+     * @param data Data jenis apa yang sedang dicek! data bisa berupa kasus positif, sembuh, kematian, aktif dan kritis.
+     * @return Jika input kosong dan input yang dimasukan bukan number/angka maka akan mengegembalikan nilai <b>True</b>. 
+     *         Tapi jika input tidak kosong dan yang dimasukan adalah angka maka akan mengembalikan nilai <b>False</b>.
+     */
+    private boolean isEmptyInput(JTextField input, final String data){
+        try{
+            // mengecek apakah input kosong atau tidak, jika kosong maka akan mengembalikan nilai false
+            if(input.getText() == null || input.getText().equals("")){
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                return true;
+            // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
+            }else{ 
+                // jika input dari user adalah n/a maka akan mengembalikan nilai false, (n/a adalah data yang kosong)
+                if(input.getText().equalsIgnoreCase("n/a")){
+                    return false;
+                // mengecek apakah data yang diinputkan berupa angka atau tidak, jika angka maka akan mengembalikan nilai false
+                }else if(dataIndo.isNumber(dataIndo.removeDelim(input.getText()))){
+                    return false;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " harus berupa angka!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }catch(NumberFormatException nex){
+            System.out.println("Terjadi kesalahan saat mengambil input : " + nex.getMessage());
+        }
+        return true;
+    }
+    
+    /**
+     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di indonesia lalu akan menyimpan perubahan tersebut. 
+     * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
+     * <br><br>
+     * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
+     * Method akan mengecek semua data yang akan diedit tersebut sampai valid, Jika salah satu data yang dimasukan belum valid makan akan 
+     * mucul notifikasi bahwa data tersebut belum valid dan warna border dan foreground pada Textfield dan Label akan berubah menjadi merah.
+     * <br><br>
+     * Jika semua data sudah valid maka proses selanjutnya adalah menyimpan data tersebut ke dalam <b>Database</b>. 
+     * Jika ada data yang gagal disimpan maka method akan memunculkan notif bahwa ada gagal yang disimpan dan aplikasi akan 
+     * secara otomatis merstore <b>Databse</b> dan mengembalikan nilai <b>False</b>. Tapi jika semua data berhasil disimpan maka method akan mengembalikan nilai <b>True</b>.
+     * 
+     * 
+     * 
+     * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
+     */
+    private boolean saveData(){
+        
+        // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
+        // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
+        boolean isValids = false, isSave = false;
+        
+        /*
+            Digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField kosong atau tidak. 
+            dan juga digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField adalah sebuah angka atau tidak. 
+            Pengecekan tersebut menggunakan method isEmptyInput. Jika method isEmptyInput mengembalikan nilai False
+            maka data dari input JTextField tersebut akan diambil dan dimasukan kedalam sebuah variabel dan warna line border pada JTextField 
+            akan memilki warna biru, Tapi jika method isEmptyInput mengembalikan nilai True maka data tidak akan diambil dan method ini 
+            akan mengembalikan nilai False, dan line border pada JTextField akan memiliki warna merah.
+            .
+        */
+        
+        // mengecek input dari kasus positif
+        if(this.isEmptyInput(this.editPositif, "positif")){
+            changeColor(this.editPositif, this.lblPositif, false);
+            return false;
+        }else{
+            changeColor(this.editPositif, this.lblPositif, true);
+            this.ePositif = Integer.parseInt(dataIndo.removeDelim(this.editPositif.getText())); // mengambil data kasus positif
+        }
+        // mengecek input dari kasus kematian
+        if(this.isEmptyInput(this.editKematian, "kematian")){
+            changeColor(this.editKematian, this.lblKematian, false);
+            return false;
+        }else{
+            changeColor(this.editKematian, this.lblKematian, true);
+            this.eKematian = Integer.parseInt(dataIndo.removeDelim(this.editKematian.getText())); // mengambil data kasus kematian
+        }
+        // mengecek input dari kasus sembuh
+        if(this.isEmptyInput(this.editSembuh, "sembuh")){
+            changeColor(this.editSembuh, this.lblSembuh, false);
+            return false;
+        }else{
+            changeColor(this.editSembuh, this.lblSembuh, true);
+            this.eSembuh = Integer.parseInt(dataIndo.removeDelim(this.editSembuh.getText())); // mengambil data kasus sembuh
+        }
+        // mengecek input dari kasus aktif
+        if(this.isEmptyInput(this.editAktif, "aktif")){
+            changeColor(this.editAktif, this.lblAktif, false);
+            return false;
+        }else{
+            changeColor(this.editAktif, this.lblAktif, true);
+            this.eAktif = Integer.parseInt(dataIndo.removeDelim(this.editAktif.getText())); // mengambil data kasus aktif
+        }
+        // mengecek input dari zona merah
+        if(this.isEmptyInput(this.editZonaMerah, "zona merah")){
+            changeColor(this.editZonaMerah, this.lblZonaMerah, false);
+            return false;
+        }else{
+            changeColor(this.editZonaMerah, this.lblZonaMerah, true);
+            this.eZonaMerah = Integer.parseInt(dataIndo.removeDelim(this.editZonaMerah.getText())); // mengambil data zona merah
+        }
+        // mengecek input dari zona oranye
+        if(this.isEmptyInput(this.editZonaOranye, "zona oren")){
+            changeColor(this.editZonaOranye, this.lblZonaOren, false);
+            return false;
+        }else{
+            changeColor(this.editZonaOranye, this.lblZonaOren, true);
+            this.eZonaOren = Integer.parseInt(dataIndo.removeDelim(this.editZonaOranye.getText())); // mengambil data zona oranye
+        }
+        // mengecek input dari zona hijau
+        if(this.isEmptyInput(this.editZonaHijau, "zona hijau")){
+            changeColor(this.editZonaHijau, this.lblZonaHijau, false);
+            return false;
+        }else{
+            changeColor(this.editZonaHijau, this.lblZonaHijau, true);
+            this.eZonaHijau = Integer.parseInt(dataIndo.removeDelim(this.editZonaHijau.getText())); // mengambil data zona hijau
+        }
+        
+        return true;
+        
+        /**
+         * Mengecek apakah sebuah data yg diinputkan oleh user valid atau tidak dengan menggunakan method-method dari 
+         * class CovidCases, jika ada data yang tidak valid maka line border JTextField akan memiliki warna merah, Tapi jika 
+         * valid makan akan memiliki warna biru, Data akan dicek satu-persatu hingga semua data yang diinputkan valid semua.
+         * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
+         */
+        
+        // ==================================
+
+         /**
+          * Proses selanjutnya adalah proses menyimpan data yang tadi diinputkan oleh user degan method seData() pada class CovidCases.
+          * Data akan disave satu persatu hingga habis. Jika ada salah satu data yang gagal disimpan. Maka data-data yang lain direset ke 
+          * data yang sebelumnya.
+          */
+
+        // ===============================
+        
+         // mengatur cursor ke cursor loading
+//         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+
+
+        
+        // mereset cursor ke cursor defautl
+//        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+//        return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
+    }
+     
+    /**
+     * Jika <code>isValid</code> bernilai <b>True</b> maka TextField akan berwarna biru dan Label akan berwarna hitam, 
+     * Tapi jika <code>isValid</code> bernilai <b>False</b> maka TextField dan Label akan berwarna merah
+     * 
+     * @param field TextField yang akan diubah warna-nya
+     * @param label Label yang akan diubah warna-nya
+     * @param isValid untuk menentukan warna dari TextField dan Label
+     */
+    private void changeColor(JTextField field, JLabel label, boolean isValid){
+       // Jika isValid false
+       if(!isValid){
+           field.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(255,0,0)));
+           label.setForeground(new Color(255,0,0));
+       }else{// Jika isValid true
+           field.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(0,106,255)));
+           label.setForeground(new Color(0,0,0));
+       }
+    }
     
     /**
      * Digunakan untuk menampilkan data kasus Covid-19 dunia ke dalam tabel berdasrakan keyword yang diinputkan user
@@ -326,6 +506,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1224,7 +1412,15 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
-        
+        boolean isSave = this.saveData();
+        if(isSave){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Data dari '"+prov_selected+"' berhasil disimpan!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            this.setEditableData(false);
+            // mereset data yang ditampilkan
+            this.showData();
+            this.dataTabel();
+        }  
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
@@ -1239,6 +1435,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
         this.setEditableData(false);
+        // mereset data
+        this.showData();
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
@@ -1430,6 +1628,16 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_editDiubahMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        dataIndo.closeConnection();
+        System.out.println("Menutup Window UpdateCovidIndo");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dataIndo.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
  
     /**
      * @param args the command line arguments

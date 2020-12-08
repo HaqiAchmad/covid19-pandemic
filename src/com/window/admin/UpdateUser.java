@@ -267,7 +267,9 @@ public class UpdateUser extends javax.swing.JFrame {
             changeColor(this.editNamalengkap, this.lblNamalengkap, false); 
         }
         
-        // mengecek apakah semua data yang diedit valid atau tidak
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        
+        // mengecek apakah semua data yang diedit valid atau tidak, jika valid maka data akan disimpan
         if(isValids){
             // menyimpan data dari nama lengkap
             if(dataUser.editAccount(username, Account.NAMA_LENGKAP, eNamaLengkap)){
@@ -279,6 +281,7 @@ public class UpdateUser extends javax.swing.JFrame {
                         if(dataUser.editAccount(username, Account.NEGARA, eNegara)){
                             // menyimpan data dari pekerjaan
                             if(dataUser.editAccount(username, Account.PEKERJAAN, ePekerjaan)){
+                                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                                 return true; // akan mereturn true jika semua data berhasil disimpan
                             }
                         }
@@ -286,6 +289,8 @@ public class UpdateUser extends javax.swing.JFrame {
                 }
             }
         }
+        
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
     
@@ -456,6 +461,14 @@ public class UpdateUser extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -1359,6 +1372,9 @@ public class UpdateUser extends javax.swing.JFrame {
             Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Data dari '"+username+"' berhasil disimpan!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             this.setEditableData(false);
+            // mereset data yang ditampilkan
+            this.showData();
+            this.dataTabel();
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -1578,6 +1594,16 @@ public class UpdateUser extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_editTglDibuatMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        dataUser.closeConnection();
+        System.out.println("Menutup Window UpdateUser");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dataUser.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
   
     /**
      * @param args the command line arguments

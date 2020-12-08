@@ -155,13 +155,13 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         
         // label edit data
         JLabel[] labels = new JLabel[]{
-            this.lblPeringkat, this.lblNamaNegara_ENG, this.lblNamaNegara_IDN, this.lblPositif, this.lblSembuh, this.lblKematian, this.lblAktif,
-            this.lblKritis, this.lblPopulasi, this.lblTingkatKematian, this.lblTingkatSembuh, this.lblBenua, this.lblDiubah
+            this.lblPeringkat, this.lblNamaNegara_ENG, this.lblNamaNegara_IDN, this.lblPositif, this.lblKematian, this.lblSembuh, this.lblKritis,
+            this.lblAktif, this.lblPopulasi, this.lblTingkatKematian, this.lblTingkatSembuh, this.lblBenua, this.lblDiubah
         };
         // fields edit data
         JTextField[] edits = new JTextField[]{
-            this.editAktif, this.editBenua, this.editDiubah, this.editKematian, this.editKritis, this.editNegara_ENG, this.editNegara_IDN,
-            this.editPeringkat, this.editPopulasi, this.editPositif, this.editSembuh, this.editTingkatKematian, this.editTingkatKesembuhan
+            this.editKritis, this.editBenua, this.editDiubah, this.editSembuh, this.editAktif, this.editNegara_ENG, this.editNegara_IDN,
+            this.editPeringkat, this.editPopulasi, this.editPositif, this.editKematian, this.editTingkatKematian, this.editTingkatKesembuhan
         };
         // fields edit data yang tidak bisa di edit oleh admin
         JTextField[] notEditable = new JTextField[]{
@@ -214,23 +214,27 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }
     
     /**
-     * Digunakan untuk mengecek apakah sebuah input kosong atau tidak
+     * Method ini digunakan untuk mengecek apakah sebuah data yang diinputakan oleh user melalui <code>JTextField</code> kosong 
+     * atau tidak dan juga untuk mengecek apakah yang dinputkan merupakah sebuah angka atau tidak.
      * 
-     * @param input
-     * @param data
-     * @return Jika input kosong maka akan mengembalikan nilai True, Tapi jika input tidak kosong maka akan mengembalikan nilai False
+     * @param input JTextfield yang akan dicek input-nya
+     * @param data Data jenis apa yang sedang dicek! data bisa berupa kasus positif, sembuh, kematian, aktif dan kritis.
+     * @return Jika input kosong dan input yang dimasukan bukan number/angka maka akan mengegembalikan nilai <b>True</b>. 
+     *         Tapi jika input tidak kosong dan yang dimasukan adalah angka maka akan mengembalikan nilai <b>False</b>.
      */
     private boolean isEmptyInput(JTextField input, final String data){
         try{
-            // mengecek apakah input kosong atau tidak, jika kosong makan akan mengembalikan nilai falses
+            // mengecek apakah input kosong atau tidak, jika kosong maka akan mengembalikan nilai false
             if(input.getText() == null || input.getText().equals("")){
                 Audio.play(Audio.SOUND_WARNING);
                 JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
                 return true;
-            }else{ // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
-                // mengecek apakah input yg dimasukan user angka atau tidak
+            // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
+            }else{ 
+                // jika input dari user adalah n/a maka akan mengembalikan nilai false, (n/a adalah data yang kosong)
                 if(input.getText().equalsIgnoreCase("n/a")){
                     return false;
+                // mengecek apakah data yang diinputkan berupa angka atau tidak, jika angka maka akan mengembalikan nilai false
                 }else if(dataDunia.isNumber(dataDunia.removeDelim(input.getText()))){
                     return false;
                 }else{
@@ -245,7 +249,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }
     
     /**
-     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di dunia lalu akan menyimpan perbuhan tersebut. 
+     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di dunia lalu akan menyimpan perubahan tersebut. 
      * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
      * <br><br>
      * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
@@ -261,138 +265,180 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
      * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
      */
     private boolean saveData(){
-        // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
-        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
-        boolean isValids = false;
+        // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
+        boolean isValids = false, isSave = false;
         
         /*
-          * Mengecek apakah edit data yang diinputkan user kosong atau benilai n/a
+            Digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField kosong atau tidak. 
+            dan juga digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField adalah sebuah angka atau tidak. 
+            Pengecekan tersebut menggunakan method isEmptyInput. Jika method isEmptyInput mengembalikan nilai False
+            maka data dari input JTextField tersebut akan diambil dan dimasukan kedalam sebuah variabel dan warna line border pada JTextField 
+            akan memilki warna biru, Tapi jika method isEmptyInput mengembalikan nilai True maka data tidak akan diambil dan method ini 
+            akan mengembalikan nilai False, dan line border pada JTextField akan memiliki warna merah.
+            .
         */
-         if(this.isEmptyInput(this.editPositif, "positif")){
-             changeColor(this.editPositif, this.lblPositif, false);
-             return false;
-         }else{
-             changeColor(this.editPositif, this.lblPositif, true);
-            this.ePositif = Integer.parseInt(dataDunia.removeDelim(this.editPositif.getText()));
-         }
-         
-         if(this.isEmptyInput(this.editSembuh, "sembuh")){
-             changeColor(this.editSembuh, this.lblSembuh, false);
-             return false;
-         }else{
-             changeColor(this.editSembuh, this.lblSembuh, true);
-            this.eSembuh = Integer.parseInt(dataDunia.removeDelim(this.editSembuh.getText()));
-         }
-         
-         if(this.isEmptyInput(this.editKematian, "kematian")){
-             changeColor(this.editKematian, this.lblKematian, false);
-             return false;
-         }else{
-             changeColor(this.editKematian, this.lblKematian, true);
-            this.eKematian = Integer.parseInt(dataDunia.removeDelim(this.editKematian.getText()));
-         }
-         
-         if(this.isEmptyInput(this.editAktif, "aktif")){
-             changeColor(this.editAktif, this.lblAktif, false);
-             return false;
-         }else{
-             changeColor(this.editAktif, this.lblAktif, true);
-            this.eAktif = Integer.parseInt(dataDunia.removeDelim(this.editAktif.getText()));
-         }
-         
-         if(this.isEmptyInput(this.editKritis, "kritis")){
-             changeColor(this.editKritis, this.lblKritis, false);
-             return false;
-         }else{
-             changeColor(this.editKritis, this.lblKritis, true);
-             this.eKritis = Integer.parseInt(dataDunia.removeDelim(this.editKritis.getText()));
-         }
-         
-         if(this.isEmptyInput(this.editPopulasi, "populasi")){
-             changeColor(this.editPopulasi, this.lblPopulasi, false);
-             return false;
-         }else{
-            changeColor(this.editPopulasi, this.lblPopulasi, true);
-            this.ePopulasi = Long.parseLong(dataDunia.removeDelim(this.editPopulasi.getText()));
-         }
-         
-         if(ePopulasi > 2100000000){
-             ePopulasi /= 10;
-         }
         
-         // mengecek apakah data yang dimasukan user valid atau tidak
-        if(dataDunia.isValidPositif(negara_selected, positif, ePositif)){
-            changeColor(this.editPositif, this.lblPositif, true);
-            if(dataDunia.isValidSembuh(ePositif, sembuh, eSembuh)){
-                changeColor(this.editSembuh, this.lblSembuh, true);
-                if(dataDunia.isValidKematian(ePositif, kematian, eKematian)){
-                    changeColor(this.editKematian, this.lblKematian, true);
-                    if(dataDunia.isValidAktif(ePositif, eKematian, eAktif)){
-                        changeColor(this.editAktif, this.lblAktif, true);
-                        if(dataDunia.isValidKritis(eAktif, eKritis)){
-                            changeColor(this.editKritis, this.lblKritis, true);
-                            if(dataDunia.isValidPopulasi(populasi, (int)ePopulasi)){
-                                changeColor(this.editPopulasi, this.lblPopulasi, true);
-                                isValids = true;
-                            }else{
-                                changeColor(this.editPopulasi, this.lblPopulasi, false);
-                            }
-                        }else{
-                            changeColor(this.editKritis, this.lblKritis, false);
-                        }
-                    }else{
-                        changeColor(this.editAktif, this.lblAktif, false);
-                    }
-                }else{
-                    changeColor(this.editKematian, this.lblKematian, false);                    
-                }
-            }else{
-                changeColor(this.editSembuh, this.lblSembuh, false);
-            }
-        }else{
+        // mengecek input dari kasus positif
+        if(this.isEmptyInput(this.editPositif, "positif")){
             changeColor(this.editPositif, this.lblPositif, false);
-        }
-        
-        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        if(isValids){
-            if(dataDunia.setData(CovidCases.KASUS, this.negara_selected, Integer.toString(ePositif))){
-                if(dataDunia.setData(CovidCases.SEMBUH, this.negara_selected, Integer.toString(eSembuh))){
-                    if(dataDunia.setData(CovidCases.KEMATIAN, this.negara_selected, Integer.toString(eKematian))){
-                        if(dataDunia.setData(CovidCases.AKTIF, this.negara_selected, Integer.toString(eAktif))){
-                            if(dataDunia.setData(CovidCases.KRITIS, this.negara_selected, Integer.toString(eKritis))){
-                                if(dataDunia.setData(CovidCases.POPULASI, this.negara_selected, Long.toString(ePopulasi))){
-                                    this.dataTabel();
-                                    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                                    return true;
-                                }else{
-                                    
-                                }
-                            }else{
-                                
-                            }
-                        }else{
-                            
-                        }
-                    }else{
-                        
-                    }
-                }else{
-                    
-                }
-            }else{
-                
-            }
+            return false;
         }else{
-            
+            changeColor(this.editPositif, this.lblPositif, true);
+            this.ePositif = Integer.parseInt(dataDunia.removeDelim(this.editPositif.getText())); // mengambil data kasus positif
+        }
+        // mengecek input dari kasus kematian
+        if(this.isEmptyInput(this.editKematian, "kematian")){
+            changeColor(this.editKematian, this.lblKematian, false);
+            return false;
+        }else{
+            changeColor(this.editKematian, this.lblKematian, true);
+            this.eKematian = Integer.parseInt(dataDunia.removeDelim(this.editKematian.getText())); // mengambil data kasus kematian
+        }
+        // mengecek input dari kasus sembuh
+        if(this.isEmptyInput(this.editSembuh, "sembuh")){
+            changeColor(this.editSembuh, this.lblSembuh, false);
+            return false;
+        }else{
+            changeColor(this.editSembuh, this.lblSembuh, true);
+            this.eSembuh = Integer.parseInt(dataDunia.removeDelim(this.editSembuh.getText())); // mengambil data kasus sembuh
+        }
+        // mengecek input dari kasus aktif
+        if(this.isEmptyInput(this.editAktif, "aktif")){
+            changeColor(this.editAktif, this.lblAktif, false);
+            return false;
+        }else{
+            changeColor(this.editAktif, this.lblAktif, true);
+            this.eAktif = Integer.parseInt(dataDunia.removeDelim(this.editAktif.getText())); // mengambil data kasus aktif
+        }
+        // mengecek input dari kasus kritis
+        if(this.isEmptyInput(this.editKritis, "kritis")){
+            changeColor(this.editKritis, this.lblKritis, false);
+            return false;
+        }else{
+            changeColor(this.editKritis, this.lblKritis, true);
+            this.eKritis = Integer.parseInt(dataDunia.removeDelim(this.editKritis.getText())); // mengambi data kasus kritis
+        }
+        // mengecek input dari populasi dunia
+        if(this.isEmptyInput(this.editPopulasi, "populasi")){
+            changeColor(this.editPopulasi, this.lblPopulasi, false);
+            return false;
+        }else{
+            changeColor(this.editPopulasi, this.lblPopulasi, true);
+            this.ePopulasi = Long.parseLong(dataDunia.removeDelim(this.editPopulasi.getText())); // mengambil data populasi
+            // jika populasi yg diinputkan jumlahnya lebih dari 2 miliar maka populasi tsb akan dibagi 10
+            // ini digunakan untuk menghindari kesalahan saat nanti dikonversi ke dalam bentuk Integer
+            if(this.ePopulasi > 2000000000){
+                this.ePopulasi /= 10;
+            }else if(this.ePopulasi <= 0){ // jika populasi kosong maka scr default akan diatur ke 1
+                this.ePopulasi = 1;
+            }
         }
         
+        /**
+         * Mengecek apakah sebuah data yg diinputkan oleh user valid atau tidak dengan menggunakan method-method dari 
+         * class CovidCases, jika ada data yang tidak valid maka line border JTextField akan memiliki warna merah, Tapi jika 
+         * valid makan akan memiliki warna biru, Data akan dicek satu-persatu hingga semua data yang diinputkan valid semua.
+         * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
+         */
+        
+         // mengecek apakah data dari kasus positif valid atau tidak
+         if(dataDunia.isValidPositif(negara_selected, ePositif)){
+             changeColor(this.editPositif, this.lblPositif, true);
+             // mengecek apakah data dari kasus kematian valid atau tidak
+             if(dataDunia.isValidKematian(ePositif, eKematian)){
+                 changeColor(this.editKematian, this.lblKematian, true);
+                 // mengecek apakah data dari kasus sembuh valid atau tidak
+                 if(dataDunia.isValidSembuh(ePositif, eSembuh)){
+                     changeColor(this.editSembuh, this.lblSembuh, true);
+                     // mengecek apakah data dari kasus aktif valid atau tidak
+                     if(dataDunia.isValidAktif(ePositif, eAktif)){
+                         changeColor(this.editAktif, this.lblAktif, true);
+                         // mengecek apakah data dari kasus kritis valid atau tidak
+                         if(dataDunia.isValidKritis(ePositif, eKritis)){
+                             changeColor(this.editKritis, this.lblKritis, true);
+                             // mengecek apakah data dari populasi valid atau tidak
+                             if(dataDunia.isValidPopulasi(ePositif, ePopulasi)){
+                                 changeColor(this.editPopulasi, this.lblPopulasi, true);
+                                 // data sudah valid semua dan variabel isValids bernilai True
+                                 isValids = true; 
+                             }else{
+                                 changeColor(this.editPopulasi, this.lblPopulasi, false);
+                             }
+                         }else{
+                             changeColor(this.editKritis, this.lblKritis, false);
+                         }
+                     }else{
+                         changeColor(this.editAktif, this.lblAktif, false);
+                     }
+                 }else{
+                     changeColor(this.editSembuh, this.lblSembuh, false);
+                 }
+             }else{
+                 changeColor(this.editKematian, this.lblKematian, false);
+             }
+         }else{
+             changeColor(this.editPositif, this.lblPositif, false);
+         }
+
+         /**
+          * Proses selanjutnya adalah proses menyimpan data yang tadi diinputkan oleh user degan method seData() pada class CovidCases.
+          * Data akan disave satu persatu hingga habis. Jika ada salah satu data yang gagal disimpan. Maka data-data yang lain direset ke 
+          * data yang sebelumnya.
+          */
+
+         // mengatur cursor ke cursor loading
+         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+         
+         // data akan disimpan jika semua data sudah valid
+         if(isValids){
+             // menyimpan data dari kasus positif
+             if(dataDunia.setData(CovidCases.KASUS, this.negara_selected, Integer.toString(this.ePositif))){
+                 // menyimpan data dari kasus kematian
+                 if(dataDunia.setData(CovidCases.KEMATIAN, this.negara_selected, Integer.toString(this.eKematian))){
+                     // menyimpan data dari kasus sembuh
+                     if(dataDunia.setData(CovidCases.SEMBUH, this.negara_selected, Integer.toString(this.eSembuh))){
+                         // menyimpan data dari kasus aktif
+                         if(dataDunia.setData(CovidCases.AKTIF, this.negara_selected, Integer.toString(this.eAktif))){
+                             // menyimpan data dari kasus kritis
+                             if(dataDunia.setData(CovidCases.KRITIS, this.negara_selected, Integer.toString(this.eKritis))){
+                                 // menyimpan data dari populasi
+                                 if(dataDunia.setData(CovidCases.POPULASI, this.negara_selected, Long.toString(this.ePopulasi))){
+                                     // mengupdate data terakhir diubah
+                                     if(dataDunia.setData(CovidCases.DIUBAH, this.negara_selected, dataDunia.getDateNow())){
+                                         // data sudah tersimpan semua dan variabel isSave bernilai True
+                                         isSave = true;                                         
+                                     }
+                                 }
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+         
+         // jika proses penyimpanan data berhasil
+         if(isSave){
+             // mereset cursor ke cursor defautl
+             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+             return true;
+         // jika proses penyimpanan data gagal
+         }else{
+             // mereset data ke data sebelumnya
+             dataDunia.setData(CovidCases.KASUS, this.negara_selected, Integer.toString(positif)); // mereset data kasus positif
+             dataDunia.setData(CovidCases.SEMBUH, this.negara_selected, Integer.toString(sembuh)); // mereset data kasus sembuh
+             dataDunia.setData(CovidCases.KEMATIAN, this.negara_selected, Integer.toString(kematian)); // mereset data kasus kematian
+             dataDunia.setData(CovidCases.AKTIF, this.negara_selected, Integer.toString(aktif)); // mereset data kasus aktif
+             dataDunia.setData(CovidCases.KRITIS, this.negara_selected, Integer.toString(kritis)); // mereset data kasus kritis
+             dataDunia.setData(CovidCases.POPULASI, this.negara_selected, Integer.toString(populasi)); // mereset data populasi
+             dataDunia.setData(CovidCases.DIUBAH, this.negara_selected, diubah); // mereset data terakhir diubah
+         }
+        
+        // mereset cursor ke cursor defautl
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
-    
-
-    
+     
     /**
      * Jika <code>isValid</code> bernilai <b>True</b> maka TextField akan berwarna biru dan Label akan berwarna hitam, 
      * Tapi jika <code>isValid</code> bernilai <b>False</b> maka TextField dan Label akan berwarna merah
@@ -457,8 +503,8 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         this.editNegara_IDN.setText(negara_idn);
         this.editNegara_ENG.setText(negara_eng);
         this.editPositif.setText(dataDunia.addDelim(positif));
-        this.editSembuh.setText(dataDunia.addDelim(sembuh));
         this.editKematian.setText(dataDunia.addDelim(kematian));
+        this.editSembuh.setText(dataDunia.addDelim(sembuh));
         this.editAktif.setText(dataDunia.addDelim(aktif));
         this.editKritis.setText(dataDunia.addDelim(kritis));
         this.editBenua.setText(benua);
@@ -521,15 +567,15 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         editNegara_ENG = new javax.swing.JTextField();
         lblNamaNegara_ENG = new javax.swing.JLabel();
         lblEditData = new javax.swing.JLabel();
-        editKritis = new javax.swing.JTextField();
-        lblKritis = new javax.swing.JLabel();
-        editSembuh = new javax.swing.JTextField();
-        lblSembuh = new javax.swing.JLabel();
-        lblBendera = new javax.swing.JLabel();
-        lblKematian = new javax.swing.JLabel();
-        editKematian = new javax.swing.JTextField();
         editAktif = new javax.swing.JTextField();
         lblAktif = new javax.swing.JLabel();
+        editKematian = new javax.swing.JTextField();
+        lblKematian = new javax.swing.JLabel();
+        lblBendera = new javax.swing.JLabel();
+        lblSembuh = new javax.swing.JLabel();
+        editSembuh = new javax.swing.JTextField();
+        editKritis = new javax.swing.JTextField();
+        lblKritis = new javax.swing.JLabel();
         editPopulasi = new javax.swing.JTextField();
         lblPopulasi = new javax.swing.JLabel();
         editTingkatKesembuhan = new javax.swing.JTextField();
@@ -550,6 +596,14 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -830,57 +884,9 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         lblEditData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEditData.setText("Edit Data Kasus Covid-19");
 
-        editKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editKritis.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editKritis.setText("166");
-        editKritis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editKritis.setCaretColor(new java.awt.Color(255, 0, 0));
-        editKritis.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editKritisMouseClicked(evt);
-            }
-        });
-
-        lblKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblKritis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKritis.setText("Kasus Kritis");
-
-        editSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editSembuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editSembuh.setText("72538");
-        editSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editSembuh.setCaretColor(new java.awt.Color(255, 0, 0));
-        editSembuh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editSembuhMouseClicked(evt);
-            }
-        });
-
-        lblSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSembuh.setText("Sembuh");
-
-        lblBendera.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblBendera.setText("Bendera Negara");
-
-        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKematian.setText("Kematian");
-
-        editKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editKematian.setText("1520");
-        editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editKematian.setCaretColor(new java.awt.Color(255, 0, 0));
-        editKematian.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editKematianMouseClicked(evt);
-            }
-        });
-
         editAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editAktif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editAktif.setText("5983");
+        editAktif.setText("166");
         editAktif.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         editAktif.setCaretColor(new java.awt.Color(255, 0, 0));
         editAktif.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -892,6 +898,54 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         lblAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblAktif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAktif.setText("Kasus Aktif");
+
+        editKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editKematian.setText("72538");
+        editKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editKematian.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKematian.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editKematianMouseClicked(evt);
+            }
+        });
+
+        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKematian.setText("Kematian");
+
+        lblBendera.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblBendera.setText("Bendera Negara");
+
+        lblSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSembuh.setText("Sembuh");
+
+        editSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editSembuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editSembuh.setText("1520");
+        editSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editSembuh.setCaretColor(new java.awt.Color(255, 0, 0));
+        editSembuh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editSembuhMouseClicked(evt);
+            }
+        });
+
+        editKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editKritis.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editKritis.setText("5983");
+        editKritis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editKritis.setCaretColor(new java.awt.Color(255, 0, 0));
+        editKritis.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editKritisMouseClicked(evt);
+            }
+        });
+
+        lblKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblKritis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKritis.setText("Kasus Kritis");
 
         editPopulasi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         editPopulasi.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -1094,18 +1148,18 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
                                             .addGroup(pnlMainLayout.createSequentialGroup()
                                                 .addComponent(lblBendera, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE))))
-                                    .addComponent(lblKematian, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                                    .addComponent(editKematian)
-                                    .addComponent(editAktif)
-                                    .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                                    .addComponent(editSembuh)
+                                    .addComponent(editKritis)
+                                    .addComponent(lblKritis, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                                     .addComponent(editTingkatKesembuhan)
                                     .addComponent(lblTingkatSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
                                 .addGap(39, 39, 39)
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlMainLayout.createSequentialGroup()
                                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(editKritis)
-                                            .addComponent(lblKritis, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                            .addComponent(editAktif)
+                                            .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                             .addComponent(editPopulasi)
                                             .addComponent(lblPopulasi, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                                             .addComponent(editTingkatKematian)
@@ -1115,8 +1169,8 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
                                     .addComponent(lblPeringkat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(editNegara_ENG)
                                     .addComponent(lblNamaNegara_ENG, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(editSembuh)
-                                    .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(editKematian)
+                                    .addComponent(lblKematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1191,9 +1245,9 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(editNegara_ENG, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblSembuh)
+                                .addComponent(lblKematian)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(editSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(editKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addComponent(lblNamaNegara_IDN)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1204,20 +1258,20 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
                                 .addComponent(editPositif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblKritis)
-                            .addComponent(lblKematian))
+                            .addComponent(lblAktif)
+                            .addComponent(lblSembuh))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(editKritis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(editAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPopulasi)
-                            .addComponent(lblAktif))
+                            .addComponent(lblKritis))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(editPopulasi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(editAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(editKritis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainLayout.createSequentialGroup()
@@ -1449,7 +1503,10 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
             Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Data dari '"+negara_selected+"' berhasil disimpan!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
             this.setEditableData(false);
-        }     
+            // mereset data yang ditampilkan
+            this.showData();
+            this.dataTabel();
+        }  
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
@@ -1568,16 +1625,6 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editPositifMouseClicked
 
-    private void editSembuhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editSembuhMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-            
-        }else{
-           Audio.play(Audio.SOUND_WARNING);
-           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editSembuhMouseClicked
-
     private void editKematianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKematianMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
@@ -1588,7 +1635,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editKematianMouseClicked
 
-    private void editKritisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKritisMouseClicked
+    private void editSembuhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editSembuhMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
             
@@ -1596,7 +1643,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_editKritisMouseClicked
+    }//GEN-LAST:event_editSembuhMouseClicked
 
     private void editAktifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAktifMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
@@ -1607,6 +1654,16 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_editAktifMouseClicked
+
+    private void editKritisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKritisMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            
+        }else{
+           Audio.play(Audio.SOUND_WARNING);
+           JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editKritisMouseClicked
 
     private void editPopulasiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPopulasiMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
@@ -1657,6 +1714,16 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_editDiubahMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        dataDunia.closeConnection();
+        System.out.println("Menutup Window UpdateCovidDunia");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        dataDunia.closeConnection();
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
