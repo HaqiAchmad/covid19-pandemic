@@ -532,133 +532,181 @@ public class CovidCases extends Database{
         }
     }
     
-    public boolean isValidPositif(final String key, final int oldData, final int newData){
-        
-        if(newData > 0){
-            if(newData >= oldData){
-                if(newData <= this.getDataNumber(POPULASI, key)){
-                    return true;
-                }else{
-                    Audio.play(Audio.SOUND_WARNING);
-                    JOptionPane.showMessageDialog(null, "Data kasus positif yang anda inputkan lebih besar dari jumlah populasi!", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }else{
-                Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus positif yang anda inputkan jumlahnya lebih kecil dari data kasus positif sebelumnya\n--\n"+ newData + " < " + oldData, "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data kasus positif harus lebih besar dari 0!", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-        }
-        return false;
-    }
-    
-    public boolean isValidSembuh(final int kasus, final int oldData, final int newData){
-        
-        if(newData == -1){
-            return true;
-        }
-        
-        if(newData > -2){
-            if(newData <= kasus){
-                if(newData >= oldData){
-                    return true;
-                }else{
-                    Audio.play(Audio.SOUND_WARNING);
-                    JOptionPane.showMessageDialog(null, "Data kasus sembuh yang anda inputkan harus >= dari data kasus sembuh sebelumnya!\n---\n"+ newData + " < " + oldData, "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }else{
-                Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus sembuh tidak boleh lebih besar dari data kasus positif!", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data kasus sembuh harus >= 0", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-        }
-        return false;
-    }
-    
-    public boolean isValidKematian(final int kasus, final int oldData, final int newData){
-        
-        if(newData == -1){
-            return true;
-        }
-        
-        if(newData > -2){
-            if(newData <= kasus){
-                if(newData >= oldData){
-                    return true;
-                }else{
-                    Audio.play(Audio.SOUND_WARNING);
-                    JOptionPane.showMessageDialog(null, "Data kasus kematian yang anda inputkan harus >= dari data kasus sembuh sebelumnya!\n---\n"+ newData + " < " + oldData, "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-                }
-            }else{
-                Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus kematian tidak boleh lebih besar dari data kasus positif!", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data kasus kematian harus >= 0", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
-        }
-        return false;
-    }
-    
-    public boolean isValidAktif(final int positif, final int kematian, final int newData){
-        
-        if(newData == -1){
-            return true;
-        }
-        
-        if(newData >= -2){
-            if(newData <= (positif - kematian)){
+    /**
+     *  -  Data kasus positif harus lebih besar dari 0 <br>
+     *  -  Data kasus positif tidak boleh lebih besar dari jumlah populasi
+     * 
+     * @param key 
+     * @param positif
+     * @return 
+     */
+    public boolean isValidPositif(final String key, final int positif){
+        // mengecek apakah kasus positif > dari 0 atau tidak
+        if(positif > 0){
+            // mengecek apakah kasus <= dari jumlah populasi atau tidak
+            if(positif <= getDataNumber(CovidCases.POPULASI, key)){
                 return true;
             }else{
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus aktif jumlahnya harus <= (positif - kematian).", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Data kasus positif tidak boleh lebih besar dari jumlah populasi sebelumnya!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data kasus aktif harus >= 0", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Data kasus positif harus lebih dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
     
-    public boolean isValidKritis(final int aktif, final int newData){
-        
-        if(newData == -1){
-            return true;
-        }
-        
-        if(newData >= -2){
-            if(newData <= aktif){
+    /**
+     * -  Data kasus sembuh harus lebih besar dari -1 <br>
+     * -  Data kasus sembuh tidak boleh lebih besar dari jumlah kasus positif
+     * 
+     * @param positif
+     * @param sembuh
+     * @return 
+     */
+    public boolean isValidSembuh(final int positif, final int sembuh){
+        // mengecek apakah data sembuh lebih dari -1 atau tidak
+        if(sembuh >= -1){
+            // mengecek apakah kasus sembuh <= kasus positif atau tidak
+            if(sembuh <= positif){
                 return true;
             }else{
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus kritis harus >= data kasus aktif", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Data kasus sembuh tidak boleh lebih besar dari jumlah kasus positif!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data kasus kritis harus >= 0", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Data kasus sembuh harus lebih besar dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
     
-    public boolean isValidPopulasi(final int oldData, final int newData){
-        
-        if(newData == -1){
-            return true;
-        }
-        
-        if(newData >= -2){
-            if(newData >= oldData){
+    /**
+     * -  Data kasus kematian harus lebih besar dari -1 <br>
+     * -  Data kasus kematian tidak boleh lebih besar dari jumlah kasus positif
+     * 
+     * @param positif
+     * @param kematian
+     * @return 
+     */
+    public boolean isValidKematian(final int positif, final int kematian){
+        // mengecek apakah kasus kematian lebih dari -1 atau tidak
+        if(kematian >= -1){
+            // mengecek apakah kasus kematian <= kasus positif atau tidak
+            if(kematian <= positif){
                 return true;
             }else{
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "data populasi yang baru harus >= data populasi yang sebelumnya!", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Data kasus kematian tidak boleh lebih besar dari jumlah kasus positif!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Data populasi harus >= 0", "Data tidak valid!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Data kasus kematian harus lebih besar dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     * -  Data kasus aktif harus lebih besar dari -1 <br>
+     * -  Data kasus aktif tidak boleh lebih dari data kasus positif
+     * 
+     * @param positif
+     * @param aktif
+     * @return 
+     */
+    public boolean isValidAktif(final int positif, final int aktif){
+        // mengecek apakah kasus lebih dari -1 atau tidak
+        if(aktif >= -1){
+            // mengecek apakah kasus aktif <= kasus positif atau tidak
+            if(aktif <= positif){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Data kasus aktif tidak boleh lebih besar dari jumlah kasus positif!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Data kasus aktif harus lebih besar dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     * -  Data kasus kritis harus lebih besar dari -1 <br>
+     * -  Data kasus kritis tidak boleh lebih dari data kasus positif
+     * 
+     * @param positif
+     * @param kritis
+     * @return 
+     */
+    public boolean isValidKritis(final int positif, final int kritis){
+        // mengecek apakah kasus kritis lebih dari -1 atau tidak
+        if(kritis >= -1){
+            // mengecek apakah kasus kritis <= kasus positif atau tidak
+            if(kritis <= positif){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Data kasus kritis tidak boleh lebih besar dari jumlah kasus positif!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Data kasus kritis harus lebih besar dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     * -  Data populasi tidak boleh bernilai 0
+     * -  Data populasi harus lebih besar dari -1
+     * -  Data populasi harus lebih besar daripada kasus positif
+     * 
+     * @param positif
+     * @param populasi
+     * @return 
+     */
+    public boolean isValidPopulasi(final int positif, final long populasi){
+
+        // mengecek apakah populasi lebih dari 0 atau tidak
+        if(populasi > 0){
+            // mengecek apkah populasi lebih besar dari kasus positif
+            if(populasi >= positif){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Jumlah populasi harus lebih besar dari kasus positif!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Populasi harus lebih dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return false;
+    }
+    
+    /**
+     *  - total zona harus >= 0
+     *  - total zona tidak boleh lebih dari total kabupaten
+     * 
+     * @param totalKab
+     * @param zona
+     * @return 
+     */
+    public boolean isValidZona(final int totalKab, final int zona){
+        
+        //mengecek apkah zona lebih dari nol atau tidak
+        if(zona >= 0){
+            // mengecek apakah zona lebih dari total kab atau tidak
+            if(zona <= totalKab){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Zona tidak boleh lebih besar dari total kabupaten!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Zona harus lebih dari 0 !", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
@@ -666,26 +714,37 @@ public class CovidCases extends Database{
     public static void main(String[] args) {
         
         CovidCases cov = new CovidCases(KASUS_DUNIA);
-//        System.out.println(cov.isValidPositif("Indonesia", cov.getDataNumber(KASUS, "Indonesia"), 900000));
-//        System.out.println(cov.isValidSembuh(cov.getDataNumber(KASUS, "Indonesia"), cov.getDataNumber(SEMBUH, "Indonesia"), 343));
-        System.out.println(cov.isNumber("n/a"));
+        System.out.println(cov.isValidZona(29,56));
         
     }
 }
 
 
+
 /*
- data kasus positif harus > 0
- data baru pada kasus positif harus lebih besar dari data sebelumnya
- data pada kasus positif harus kurang dari populasi negara tersebut
+Ketentuan Data
 
- data sembuh dan kematian harus >= -1
- data sembuh dan kematian harus <= dari data kasus positif
- data sembuah baru harus >= dari data sembuh sebelumnya
- data kematian baru harus >= dari data kematian sebelumnya
- data sembuh + data kematian harus sama dengan kasus positif
+Kasus Positif
+ -  Data kasus positif harus lebih besar dari 0
+ -  Data kasus positif tidak boleh lebih besar dari jumlah populasi
 
- data kasus aktif jumlahnya harus == data positif - (data kematian + data sembuh)
- 
- data kasus krtitis jumlahnya harus <= kasus aktfi
+Kasus Sembuh
+ -  Data kasus sembuh harus lebih besar dari -1
+ -  Data kasus sembuh tidak boleh lebih besar dari jumlah kasus positif
+
+Kasus Kematian
+ -  Data kasus kematian harus lebih besar dari -1
+ -  Data kasus kematian tidak boleh lebih besar dari jumlah kasus positif
+
+Kasus Aktif
+ -  Data kasus aktif harus lebih besar dari -1
+ -  Data kasus aktif tidak boleh lebih dari data kasus positif
+
+Kasus Kritis 
+ -  Data kasus kritis harus lebih besar dari -1
+ -  Data kasus kritis tidak boleh lebih dari data kasus positif
+
+Populasi
+ -  Data populasi tidak boleh bernilai 0
+ -  Data populasi harus lebih besar dari -1
 */
