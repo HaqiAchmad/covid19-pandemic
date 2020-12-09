@@ -548,7 +548,7 @@ public class Database {
     public boolean isExistField(final String tabel, final String field){
         // daftar field yang ada dialam tabel kasuscovid_dunia, kasuscovid_indo, users dan islogin
         String fieldDunia[] = new String[]{"negara_idn", "negara_eng", "kasus", "kematian", "sembuh", "aktif", "kritis", "populasi", "diubah", "benua", "bendera"},
-               fieldIndo[] = new String[]{"kode", "provinsi", "kasus", "sembuh", "kematian", "aktif", "populasi", "total_kab", "kab_zonamerah", "kab_zonaoranye", "kab_zonahijau", "kasus_pertama", "diubah", "websit", "lambang"},
+               fieldIndo[] = new String[]{"kode", "provinsi", "kasus", "sembuh", "kematian", "aktif", "populasi", "total_kab", "kab_zonamerah", "kab_zonaoranye", "kab_zonahijau", "kasus_pertama", "diubah", "website", "lambang"},
                fieldUsers[] = new String[]{"username", "namalengkap", "namapanggilan", "email", "gender", "tgl_lahir", "pekerjaan", "alamat", "negara", "password", "tgl_dibuat", "fotoprofile", "type"},
                fieldIslogin[] = new String[]{"username", "namalengkap", "email"};
         
