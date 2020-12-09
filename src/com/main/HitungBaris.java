@@ -14,6 +14,7 @@ public class HitungBaris {
         "com.window.all.LoadingWindow",
         "com.window.all.SignIn",
         "com.window.all.SignUp",
+        "com.window.all.InformasiAkun",
         "com.window.all.SignInMySQl",
         "com.window.all.UbahPassword",
         "com.window.all.Beranda",
@@ -29,6 +30,7 @@ public class HitungBaris {
         "com.window.admin.UpdateUser",
         "com.window.admin.UpdateCovidDunia",
         "com.window.admin.UpdateCovidIndo",
+        "com.window.admin.AddDataDunia",
         "com.window.admin.DeleteData"
     };
     
