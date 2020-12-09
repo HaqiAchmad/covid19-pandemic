@@ -556,7 +556,7 @@ public class Beranda extends javax.swing.JFrame {
 
         lblKritis_Dunia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblKritis_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKritis_Dunia.setText("Kritis");
+        lblKritis_Dunia.setText("Kasus Kritis");
         lblKritis_Dunia.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         valKritis_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -592,7 +592,7 @@ public class Beranda extends javax.swing.JFrame {
 
         lblKritis_Indo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblKritis_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKritis_Indo.setText("Kritis");
+        lblKritis_Indo.setText("Kasus Kritis");
         lblKritis_Indo.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         valKritis_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N

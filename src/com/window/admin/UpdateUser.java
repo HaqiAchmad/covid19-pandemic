@@ -224,7 +224,8 @@ public class UpdateUser extends javax.swing.JFrame {
         // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
         CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
-        boolean isValids = false;
+        // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
+        boolean isValids = false, isSave = false;
         
         // mendapatkan data yang diedit
         this.eNamaLengkap = this.editNamalengkap.getText();
@@ -248,6 +249,7 @@ public class UpdateUser extends javax.swing.JFrame {
                         // mengecek apakah pekerjaan valid atau tidak
                         if(dataUser.isValidPekerjaan(ePekerjaan)){
                             changeColor(this.editPekerjaan, this.lblPekerjaan, true);
+                            // data sudah valid semua dan variabel isValids bernilai True
                             isValids = true;
                         }else{
                             changeColor(this.editPekerjaan, this.lblPekerjaan, false);
@@ -281,14 +283,29 @@ public class UpdateUser extends javax.swing.JFrame {
                         if(dataUser.editAccount(username, Account.NEGARA, eNegara)){
                             // menyimpan data dari pekerjaan
                             if(dataUser.editAccount(username, Account.PEKERJAAN, ePekerjaan)){
-                                this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-                                return true; // akan mereturn true jika semua data berhasil disimpan
+                                // data sudah tersimpan semua dan variabel isSave bernilai True
+                                isSave = true;   
                             }
                         }
                     }
                 }
             }
         }
+        
+         // jika proses penyimpanan data berhasil
+         if(isSave){
+             // mereset cursor ke cursor defautl
+             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+             return true; // mengembalikan nilai true
+         // jika proses penyimpanan data gagal
+         }else if(isValids && !isSave){
+             // mereset data yang diedit ke data sebelumnya
+             dataUser.editAccount(this.user_selected, Account.NAMA_LENGKAP, this.eNamaLengkap);
+             dataUser.editAccount(this.user_selected, Account.NAMA_PANGGILAN, this.eNamaPanggilan);
+             dataUser.editAccount(this.user_selected, Account.ALAMAT, this.eAlamat);
+             dataUser.editAccount(this.user_selected, Account.NEGARA, this.eNegara);
+             dataUser.editAccount(this.user_selected, Account.PEKERJAAN, this.ePekerjaan);
+         }
         
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data

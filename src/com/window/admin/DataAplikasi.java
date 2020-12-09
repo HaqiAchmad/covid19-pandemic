@@ -1009,7 +1009,7 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         valDataCovidIndo_presentase.setText(": 5.7%");
 
-        lblDataCovidIndo_kasusPertama.setText("Kasus Pertama Kalil");
+        lblDataCovidIndo_kasusPertama.setText("Kasus Pertama Kali");
 
         valDataCovidIndo_kasusPertama.setText(": 2 Maret 2020");
 

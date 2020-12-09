@@ -1249,7 +1249,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="lblDataCovidIndo_kasusPertama">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Kasus Pertama Kalil"/>
+                <Property name="text" type="java.lang.String" value="Kasus Pertama Kali"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="valDataCovidIndo_kasusPertama">

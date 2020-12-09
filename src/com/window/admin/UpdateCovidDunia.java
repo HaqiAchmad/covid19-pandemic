@@ -423,8 +423,8 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
              this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
              return true;
          // jika proses penyimpanan data gagal
-         }else{
-             // mereset data ke data sebelumnya
+         }else if(isValids && !isSave){
+             // mereset data yang diedit ke data sebelumnya
              dataDunia.setData(CovidCases.KASUS, this.negara_selected, Integer.toString(positif)); // mereset data kasus positif
              dataDunia.setData(CovidCases.SEMBUH, this.negara_selected, Integer.toString(sembuh)); // mereset data kasus sembuh
              dataDunia.setData(CovidCases.KEMATIAN, this.negara_selected, Integer.toString(kematian)); // mereset data kasus kematian
@@ -1450,7 +1450,18 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataCovidIndoActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        System.out.println("Membuka Window AddADataDunia");
+        AddDataDunia addData = new AddDataDunia();
+        addData.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                addData.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered

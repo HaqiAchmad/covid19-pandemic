@@ -34,6 +34,10 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
      */
     private String prov_selected, kode, provinsi, kasusPertama, diubah, website, lambang;
     /**
+     * Digunakan untuk menyimpan hasil dari edit data yang memiliki tipe String
+     */
+    private String eWebsite;
+    /**
      * Fields / data yang akan ditampilkan ke dalam tabel
      */
     private final String[] fields = new String[]{CovidCases.PROVINSI, CovidCases.KASUS, CovidCases.SEMBUH, CovidCases.KEMATIAN};
@@ -287,14 +291,6 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
             changeColor(this.editPositif, this.lblPositif, true);
             this.ePositif = Integer.parseInt(dataIndo.removeDelim(this.editPositif.getText())); // mengambil data kasus positif
         }
-        // mengecek input dari kasus kematian
-        if(this.isEmptyInput(this.editKematian, "kematian")){
-            changeColor(this.editKematian, this.lblKematian, false);
-            return false;
-        }else{
-            changeColor(this.editKematian, this.lblKematian, true);
-            this.eKematian = Integer.parseInt(dataIndo.removeDelim(this.editKematian.getText())); // mengambil data kasus kematian
-        }
         // mengecek input dari kasus sembuh
         if(this.isEmptyInput(this.editSembuh, "sembuh")){
             changeColor(this.editSembuh, this.lblSembuh, false);
@@ -302,6 +298,14 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         }else{
             changeColor(this.editSembuh, this.lblSembuh, true);
             this.eSembuh = Integer.parseInt(dataIndo.removeDelim(this.editSembuh.getText())); // mengambil data kasus sembuh
+        }
+        // mengecek input dari kasus kematian
+        if(this.isEmptyInput(this.editKematian, "kematian")){
+            changeColor(this.editKematian, this.lblKematian, false);
+            return false;
+        }else{
+            changeColor(this.editKematian, this.lblKematian, true);
+            this.eKematian = Integer.parseInt(dataIndo.removeDelim(this.editKematian.getText())); // mengambil data kasus kematian
         }
         // mengecek input dari kasus aktif
         if(this.isEmptyInput(this.editAktif, "aktif")){
@@ -335,8 +339,9 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
             changeColor(this.editZonaHijau, this.lblZonaHijau, true);
             this.eZonaHijau = Integer.parseInt(dataIndo.removeDelim(this.editZonaHijau.getText())); // mengambil data zona hijau
         }
+        // mengambil input dari website
+        this.eWebsite = this.editWebsite.getText();
         
-        return true;
         
         /**
          * Mengecek apakah sebuah data yg diinputkan oleh user valid atau tidak dengan menggunakan method-method dari 
@@ -345,24 +350,114 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
          * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
          */
         
-        // ==================================
+        // mengecek data kasus positif valid atau tidak
+        if(dataIndo.isValidPositif(this.prov_selected, ePositif)){
+            changeColor(this.editPositif, this.lblPositif, true);
+            // mengecek data kasus sembuh valid atau tidak
+            if(dataIndo.isValidSembuh(ePositif, eSembuh)){
+                changeColor(this.editSembuh, this.lblSembuh, true);
+                // mengecek data kasus kematian valid atau tidak
+                if(dataIndo.isValidKematian(ePositif, eSembuh)){
+                    changeColor(this.editKematian, this.lblKematian, true);
+                    // mengecek data kasus aktif valid atau tidak
+                    if(dataIndo.isValidAktif(ePositif, eAktif)){
+                        changeColor(this.editAktif, this.lblAktif, true);
+                        // mengecek apakah data zona merah, oren dan hijau valid atau tidak
+                        if(dataIndo.isValidZona(totalKab, (eZonaMerah + eZonaOren + eZonaHijau))){
+                            changeColor(this.editZonaHijau, this.lblZonaHijau, true);
+                            changeColor(this.editZonaOranye, this.lblZonaOren, true);
+                            changeColor(this.editZonaMerah, this.lblZonaMerah, true);
+                            // mengecek apakah website valid atau tidak
+                            if(dataIndo.isValidWebsite(eWebsite)){
+                                changeColor(this.editWebsite, this.lblWebsite, true);
+                                // jika semua data sudah valid maka isValids akan bernilai true
+                                isValids = true;
+                            }else{
+                                changeColor(this.editWebsite, this.lblWebsite, false);
+                            }
+                        }else{
+                            changeColor(this.editZonaHijau, this.lblZonaHijau, false);
+                            changeColor(this.editZonaOranye, this.lblZonaOren, false);
+                            changeColor(this.editZonaMerah, this.lblZonaMerah, false);
+                        }
+                    }else{
+                        changeColor(this.editAktif, this.lblAktif, false);
+                    }
+                }else{
+                    changeColor(this.editKematian, this.lblKematian, false);
+                }
+            }else{
+                changeColor(this.editSembuh, this.lblSembuh, false);
+            }
+        }else{
+            changeColor(this.editPositif, this.lblPositif, false);
+        }
 
          /**
           * Proses selanjutnya adalah proses menyimpan data yang tadi diinputkan oleh user degan method seData() pada class CovidCases.
           * Data akan disave satu persatu hingga habis. Jika ada salah satu data yang gagal disimpan. Maka data-data yang lain direset ke 
           * data yang sebelumnya.
           */
-
-        // ===============================
         
-         // mengatur cursor ke cursor loading
-//         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-
-
+        // mengatur cursor ke cursor loading
+         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+         
+         // data akan disimpan jika semua data sudah valid
+         if(isValids){
+             // menyimpan data dari kasus positif
+             if(dataIndo.setData(CovidCases.KASUS, this.prov_selected, Integer.toString(this.ePositif))){
+                 // menyimpan data dari kasus sembuh
+                 if(dataIndo.setData(CovidCases.SEMBUH, this.prov_selected, Integer.toString(this.eSembuh))){
+                     // menyimpan data dari kasus kematian
+                     if(dataIndo.setData(CovidCases.KEMATIAN, this.prov_selected, Integer.toString(this.eKematian))){
+                         // menyimpan data dari kasus aktif
+                         if(dataIndo.setData(CovidCases.AKTIF, this.prov_selected, Integer.toString(this.eAktif))){
+                             // menyimpan data dari zona merah
+                             if(dataIndo.setData(CovidCases.ZONA_MERAH, this.prov_selected, Integer.toString(this.eZonaMerah))){
+                                 // menyimpan data dari zona oren
+                                if(dataIndo.setData(CovidCases.ZONA_ORANYE, this.prov_selected, Integer.toString(this.eZonaOren))){
+                                    // menyimpan data dari zona hijau
+                                   if(dataIndo.setData(CovidCases.ZONA_HIJAU, this.prov_selected, Integer.toString(this.eZonaHijau))){
+                                       // menyimpan data dari website
+                                       if(dataIndo.setData(CovidCases.WEBSITE, this.prov_selected, eWebsite)){
+                                           // mengupdate data terakhir diubah
+                                           if(dataIndo.setData(CovidCases.DIUBAH, this.prov_selected, dataIndo.getDateNow())){
+                                               // data sudah tersimpan semua dan variabel isSave bernilai True
+                                               isSave = true;
+                                           }
+                                       }
+                                   }
+                                }
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+         
+         // jika proses penyimpanan data berhasil
+         if(isSave){
+             // mereset cursor ke cursor defautl
+             this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+             return true;
+         // jika proses penyimpanan data gagal
+         }else if(isValids && !isSave){
+             // mereset data yang diedit ke data sebelumnya
+             dataIndo.setData(CovidCases.KASUS, this.prov_selected, Integer.toString(this.positif)); // mereset data kasus positif
+             dataIndo.setData(CovidCases.SEMBUH, this.prov_selected, Integer.toString(this.sembuh)); // mereset data kasus sembuh
+             dataIndo.setData(CovidCases.KEMATIAN, this.prov_selected, Integer.toString(this.kematian)); // mereset data kasus kematian
+             dataIndo.setData(CovidCases.AKTIF, this.prov_selected, Integer.toString(this.aktif)); // mereset data kasus aktif
+             dataIndo.setData(CovidCases.ZONA_MERAH, this.prov_selected, Integer.toString(this.zonaMerah)); // mereset data zona merah
+             dataIndo.setData(CovidCases.ZONA_ORANYE, this.prov_selected, Integer.toString(this.zonaOren)); // mereset data zona Oren
+             dataIndo.setData(CovidCases.ZONA_MERAH, this.prov_selected, Integer.toString(this.zonaHijau)); // mereset data zona Hijau
+             dataIndo.setData(CovidCases.WEBSITE, this.prov_selected, this.website); // mereset data website
+             dataIndo.setData(CovidCases.DIUBAH, this.prov_selected, diubah); // mereset data terakhir diubah
+             
+         }
         
         // mereset cursor ke cursor defautl
-//        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-//        return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
      
     /**
