@@ -307,9 +307,11 @@ public class CovidCases extends Database{
             update = stat.executeUpdate(sql);
             // mengecek apakah data berhasil diupdate atau tidak
             if(update > 0){
+                System.out.println("Mengedit data " + field + " dari negara/provinsi = '" + key + "' ke " + newData);
                 this.backupDatabase();
                 return true;
             }else{
+                System.out.println("GAGAL MENGEDIT DATA.....");
                 this.restoreTabel(TABEL_SELECTED);
             }
         }catch(Exception ex){
@@ -319,8 +321,6 @@ public class CovidCases extends Database{
         }
         return false;
     }
-    
-
     
     public boolean deleteData(final String key){
         try{
@@ -548,7 +548,7 @@ public class CovidCases extends Database{
                 return true;
             }else{
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Data kasus positif tidak boleh lebih besar dari jumlah populasi sebelumnya!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Data kasus positif tidak boleh lebih besar dari jumlah populasi!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
             }
         }else{
             Audio.play(Audio.SOUND_WARNING);
@@ -711,6 +711,31 @@ public class CovidCases extends Database{
         return false;
     }
     
+    /**
+     * Website tidak boleh kosong! <br>
+     * Panjang dari website harus diantara 10 sampai 50 karakter
+     * 
+     * @param website
+     * @return 
+     */
+    public boolean isValidWebsite(final String website){
+        
+        // mengecek apakah website kosong atau tidak
+        if(!website.equals("")){
+            // panjang dari website harus diantara 10 - 50 karakter
+            if(website.length() >= 10 && website.length() <= 50){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Panjang dari website harus diantara 10 sampai 50 karakter!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Website tidak boleh kosong!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
     public static void main(String[] args) {
         
         CovidCases cov = new CovidCases(KASUS_DUNIA);
@@ -747,4 +772,12 @@ Kasus Kritis
 Populasi
  -  Data populasi tidak boleh bernilai 0
  -  Data populasi harus lebih besar dari -1
+
+Zona Merah, Oren dan Hijau
+ -  total zona harus >= 0
+ -  total zona tidak boleh lebih dari total kabupaten
+
+Website
+ - website tidak boleh kosong
+
 */
