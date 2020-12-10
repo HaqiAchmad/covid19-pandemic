@@ -532,6 +532,7 @@ public class Account extends Database{
             JOptionPane.showMessageDialog(null, "Email tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }else if(!email.contains("@")){ // mengecek apakah usename mengandung @ atau tidak
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Email tidak valid", "Info", JOptionPane.INFORMATION_MESSAGE);
             return false;
         }
@@ -549,7 +550,7 @@ public class Account extends Database{
                         return true;
                     }else{
                         Audio.play(Audio.SOUND_INFO);
-                        JOptionPane.showMessageDialog(null, "Email tersebut sudah digunakan untuk pengguna lain!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "'"+email+"'\nEmail tersebut sudah digunakan untuk pengguna lain!", "Info", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }else{
                     Audio.play(Audio.SOUND_INFO);
@@ -640,7 +641,9 @@ public class Account extends Database{
                 return true;
             }else{
                 Audio.play(Audio.SOUND_INFO);
-                JOptionPane.showMessageDialog(null, "Umur anda tidak diperbolehkan untuk mendaftar akun pada aplikasi ini\n Umur anda : " + umur, "Info", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(
+                        null, 
+                        "Umur anda tidak diperbolehkan untuk mendaftar akun pada aplikasi ini\nUmur anda : " + umur + " tahun \nUmur minimal untuk membuat akun adalah : 5 tahun\nSedangkan umur maksimal untuk membuat akun adalah :  200 tahun", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }catch(NumberFormatException ex){
             System.out.println("Error : " + ex.getMessage());
