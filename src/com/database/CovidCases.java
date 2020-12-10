@@ -558,6 +558,31 @@ public class CovidCases extends Database{
     }
     
     /**
+     *  -  Data kasus positif harus lebih besar dari 0 <br>
+     *  -  Data kasus positif tidak boleh lebih besar dari jumlah populasi
+     * 
+     * @param populasi
+     * @param positif
+     * @return 
+     */
+    public boolean isValidPositif(final int populasi, final int positif){
+        // mengecek apakah kasus positif > dari 0 atau tidak
+        if(positif > 0){
+            // mengecek apakah kasus <= dari jumlah populasi atau tidak
+            if(positif <= populasi){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Data kasus positif tidak boleh lebih besar dari jumlah populasi!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Data kasus positif harus lebih dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
      * -  Data kasus sembuh harus lebih besar dari -1 <br>
      * -  Data kasus sembuh tidak boleh lebih besar dari jumlah kasus positif
      * 
@@ -682,6 +707,118 @@ public class CovidCases extends Database{
             JOptionPane.showMessageDialog(null, "Populasi harus lebih dari 0!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
         }
         
+        return false;
+    }
+    
+    /**
+     *  - Nama Negara tidak boleh kosong
+     *  - Nama Negara harus diantara 35-40 karakter
+     *  - Nama Negara harus belum terdaftar di database
+     * 
+     * @param negara
+     * @return 
+     */
+    public boolean isValidNamaNegara(final String negara){
+        
+        // mengecek apakah negara kosong atau tidak
+        if(!negara.equals("")){
+            // panjang dari negara harus diantara 2 - 35 karakter
+            if(negara.length() >= 2 && negara.length() <= 35){
+                // nama negara harus belum digunakan 
+                if(!this.isExist(negara)){
+                    return true;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "'"+negara+"'\nNama Negara tersebut sudah terdaftar di Database!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Panjang dari nama negara harus diantara 2 sampai 35 karakter!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Nama Negara tidak boleh kosong!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     *  - Nama Provinsi tidak boleh kosong
+     *  - Nama Provinsi harus diantara 4-40 karakter
+     *  - Nama Provinsi harus belum terdaftar di database
+     * 
+     * @param provinsi
+     * @return 
+     */
+    public boolean isValidNamaProvinsi(final String provinsi){
+        
+        // mengecek apakah provinsi kosong atau tidak
+        if(!provinsi.equals("")){
+            // panjang dari provinsi harus diantara 4 - 40 karakter
+            if(provinsi.length() >= 4 && provinsi.length() <= 40){
+                // nama provinsi harus belum digunakan 
+                if(!this.isExist(provinsi)){
+                    return true;
+                }else{
+                    Audio.play(Audio.SOUND_WARNING);
+                    JOptionPane.showMessageDialog(null, "'"+provinsi+"'\nNama Provinsi tersebut sudah terdaftar di Database!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+                }
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Panjang dari nama provinsi harus diantara 4 sampai 40 karakter!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Nama Provinsi tidak boleh kosong!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     * Singkatan Provinsi tidak boleh kosong
+     * Singkatan Provinsi harus diantara 4-10 karakter
+     * 
+     * @param singkatan
+     * @return 
+     */
+    public boolean isValidSingkatanProv(final String singkatan){
+        // mengecek apakah sngkatan kosong atau tidak
+        if(!singkatan.equals("")){
+            // panjang dari sngkatan harus diantara 10 - 50 karakter
+            if(singkatan.length() >= 4 && singkatan.length() <= 10){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Singkatan Provinsi harus diantara 4 sampai 10 karakter!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Singkatan Provinsi tidak boleh kosong!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+    
+    /**
+     *  - Benua tidak boleh kosng
+     *  - Benua tidak boleh null
+     * 
+     * @param benua
+     * @return 
+     */
+    public boolean isValidBenua(final String benua){
+        // mengecek apakah benua kosong atau tidak
+        if(!benua.equals("")){
+            // panjang dari benua harus diantara 10 - 50 karakter
+            if(!benua.equalsIgnoreCase("null")){
+                return true;
+            }else{
+                Audio.play(Audio.SOUND_WARNING);
+                JOptionPane.showMessageDialog(null, "Benua tidak boleh null!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Benua tidak boleh kosong!", "Data Tidak Valid", JOptionPane.WARNING_MESSAGE);
+        }
         return false;
     }
     
