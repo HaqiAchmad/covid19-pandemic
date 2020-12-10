@@ -30,7 +30,9 @@ public class HitungBaris {
         "com.window.admin.UpdateUser",
         "com.window.admin.UpdateCovidDunia",
         "com.window.admin.UpdateCovidIndo",
+        "com.window.admin.AddDataUser",
         "com.window.admin.AddDataDunia",
+        "com.window.admin.AddDataIndo",
         "com.window.admin.DeleteData"
     };
     
