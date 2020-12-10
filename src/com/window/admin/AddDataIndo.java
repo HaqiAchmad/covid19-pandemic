@@ -17,46 +17,42 @@ import javax.swing.JTextField;
 /**
  * 
  * @author Achmad Baihaqi
- * @since 2020-12-09
+ * @since 2020-12-10
  */
-public class AddDataDunia extends javax.swing.JFrame {
+public class AddDataIndo extends javax.swing.JFrame {
 
     /**
      * Digunakan untuk menambahkan sebuah data ke database
      */
-    private final CovidCases dataDunia = new CovidCases(CovidCases.KASUS_DUNIA);
+    private final CovidCases dataIndo = new CovidCases(CovidCases.KASUS_INDO);
     /**
-     * Digunakan untuk menyimpan data dari kasus covid dunia yang bertipe <code>String</code>
+     * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>String</code>
      */
-    private String negara_idn, negara_eng, diubah, benua, bendera;
+    private String kode, provinsi, kasusPertama, diubah, website, lambang;
     /**
-     * Digunakan untuk menyimpan data dari kasus covid dunia yang bertipe <code>Integer</code>
+     * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>Integer</code>
      */
-    private int positif, sembuh, kematian, kritis, aktif;            
-    /**
-     * Digunakan untuk menyimpan data dari kasus covid dunia yang bertipe <code>Long</code>
-     */
-    private long populasi;
+    private int positif, sembuh, kematian, aktif, totalKab, zonaMerah, zonaOren, zonaHijau;
     /**
      * Digunakan untuk mengatur posisi dari window
      */
     private int x, y;
     /**
+     * Digunakan untuk menyimpan data yang memiliki tipe long
+     */
+    private long populasi;
+    /**
      * Digunakan untuk memainkan efek copyright
      */
     private boolean isPlay = true;
     
-    public AddDataDunia() {
+    public AddDataIndo() {
         initComponents();
         
         this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        this.lblShowBendera.setText("");
-        this.lblShowBendera.setIcon(Gambar.getFlag(dataDunia.getData(CovidCases.BENDERA, "Dunia")));
-        this.inpDiubah.setText(dataDunia.dateToString(dataDunia.getDateNow()));
-        this.inpDiubah.setEditable(false);
-        this.inpDiubah.setEnabled(false);
-        this.inpDiubah.setDisabledTextColor(new Color(0,0,0));
+        this.lblShowLambang.setText("");
+        this.lblShowLambang.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\lambang\\lambang-negara.jpeg"), 55, 60));
         
         this.copyrightEffect();
         
@@ -70,7 +66,7 @@ public class AddDataDunia extends javax.swing.JFrame {
         
         // mengatur MouseEvent Entered & Exited pada Button yang ada di dalam Panel pnlLeft
         JButton btnLeft[] = new JButton[]{
-            this.btnBeranda, this.btnInfo, this.btnAddUser, this.btnAddDataIndo
+            this.btnBeranda, this.btnInfo, this.btnAddUser, this.btnAddDataDunia
         };
         for(JButton btn : btnLeft){
             btn.addMouseListener(new java.awt.event.MouseListener() {
@@ -162,7 +158,7 @@ public class AddDataDunia extends javax.swing.JFrame {
                 if(input.getText().equalsIgnoreCase("n/a")){
                     return false;
                 // mengecek apakah data yang diinputkan berupa angka atau tidak, jika angka maka akan mengembalikan nilai false
-                }else if(dataDunia.isNumber(dataDunia.removeDelim(input.getText()))){
+                }else if(dataIndo.isNumber(dataIndo.removeDelim(input.getText()))){
                     return false;
                 }else{
                     Audio.play(Audio.SOUND_WARNING);
@@ -195,7 +191,7 @@ public class AddDataDunia extends javax.swing.JFrame {
     }
     
     /**
-     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di dunia lalu akan menyimpan perubahan tersebut. 
+     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di indonesia lalu akan menyimpan perubahan tersebut. 
      * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
      * <br><br>
      * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
@@ -211,6 +207,7 @@ public class AddDataDunia extends javax.swing.JFrame {
      * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
      */
     private boolean tambahData(){
+        
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
         // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
         boolean isValids = false, isSave = false;
@@ -225,52 +222,13 @@ public class AddDataDunia extends javax.swing.JFrame {
             .
         */
         
-        // mengecek input dari negara_idn
-        if(this.inpNegara_IDN.getText().equals("")){
-            changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, false);
-            return false;
-        }else{
-            changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, true);
-        }
-        
-        // mengecek input dari negara_eng
-        if(this.inpNegara_ENG.getText().equals("")){
-            changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, false);
-            return false;
-        }else{
-            changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, true);
-        }
-        
-        // mengecek input dari populasi dunia
-        if(this.isEmptyInput(this.inpPopulasi, "populasi")){
-            changeColor(this.inpPopulasi, this.lblPopulasi, false);
-            return false;
-        }else{
-            changeColor(this.inpPopulasi, this.lblPopulasi, true);
-            this.populasi = Long.parseLong(dataDunia.removeDelim(this.inpPopulasi.getText())); // mengambil data populasi
-            // jika populasi yg diinputkan jumlahnya lebih dari 2 miliar maka populasi tsb akan dibagi 10
-            // ini digunakan untuk menghindari kesalahan saat nanti dikonversi ke dalam bentuk Integer
-            if(this.populasi > 2000000000){
-                this.populasi /= 10;
-            }else if(this.populasi <= 0){ // jika populasi kosong maka scr default akan diatur ke 1
-                this.populasi = 1;
-            }
-        }
         // mengecek input dari kasus positif
         if(this.isEmptyInput(this.inpPositif, "positif")){
             changeColor(this.inpPositif, this.lblPositif, false);
             return false;
         }else{
             changeColor(this.inpPositif, this.lblPositif, true);
-            this.positif = Integer.parseInt(dataDunia.removeDelim(this.inpPositif.getText())); // mengambil data kasus positif
-        }
-        // mengecek input dari kasus kematian
-        if(this.isEmptyInput(this.inpKematian, "kematian")){
-            changeColor(this.inpKematian, this.lblKematian, false);
-            return false;
-        }else{
-            changeColor(this.inpKematian, this.lblKematian, true);
-            this.kematian = Integer.parseInt(dataDunia.removeDelim(this.inpKematian.getText())); // mengambil data kasus kematian
+            this.positif = Integer.parseInt(dataIndo.removeDelim(this.inpPositif.getText())); // mengambil data kasus positif
         }
         // mengecek input dari kasus sembuh
         if(this.isEmptyInput(this.inpSembuh, "sembuh")){
@@ -278,7 +236,15 @@ public class AddDataDunia extends javax.swing.JFrame {
             return false;
         }else{
             changeColor(this.inpSembuh, this.lblSembuh, true);
-            this.sembuh = Integer.parseInt(dataDunia.removeDelim(this.inpSembuh.getText())); // mengambil data kasus sembuh
+            this.sembuh = Integer.parseInt(dataIndo.removeDelim(this.inpSembuh.getText())); // mengambil data kasus sembuh
+        }
+        // mengecek input dari kasus kematian
+        if(this.isEmptyInput(this.inpKematian, "kematian")){
+            changeColor(this.inpKematian, this.lblKematian, false);
+            return false;
+        }else{
+            changeColor(this.inpKematian, this.lblKematian, true);
+            this.kematian = Integer.parseInt(dataIndo.removeDelim(this.inpKematian.getText())); // mengambil data kasus kematian
         }
         // mengecek input dari kasus aktif
         if(this.isEmptyInput(this.inpAktif, "aktif")){
@@ -286,33 +252,35 @@ public class AddDataDunia extends javax.swing.JFrame {
             return false;
         }else{
             changeColor(this.inpAktif, this.lblAktif, true);
-            this.aktif = Integer.parseInt(dataDunia.removeDelim(this.inpAktif.getText())); // mengambil data kasus aktif
+            this.aktif = Integer.parseInt(dataIndo.removeDelim(this.inpAktif.getText())); // mengambil data kasus aktif
         }
-        // mengecek input dari kasus kritis
-        if(this.isEmptyInput(this.inpKritis, "kritis")){
-            changeColor(this.inpKritis, this.lblKritis, false);
+        // mengecek input dari zona merah
+        if(this.isEmptyInput(this.inpZonaMerah, "zona merah")){
+            changeColor(this.inpZonaMerah, this.lblZonaMerah, false);
             return false;
         }else{
-            changeColor(this.inpKritis, this.lblKritis, true);
-            this.kritis = Integer.parseInt(dataDunia.removeDelim(this.inpKritis.getText())); // mengambi data kasus kritis
+            changeColor(this.inpZonaMerah, this.lblZonaMerah, true);
+            this.zonaMerah = Integer.parseInt(dataIndo.removeDelim(this.inpZonaMerah.getText())); // mengambil data zona merah
         }
-
-        // mendapatkan data yang bertipe data String
-        this.negara_idn = this.inpNegara_IDN.getText();
-        this.negara_eng = this.inpNegara_ENG.getText();
-        this.diubah = dataDunia.getDateNow();
+        // mengecek input dari zona oranye
+        if(this.isEmptyInput(this.inpZonaOren, "zona oren")){
+            changeColor(this.inpZonaOren, this.lblZonaOren, false);
+            return false;
+        }else{
+            changeColor(this.inpZonaOren, this.lblZonaOren, true);
+            this.zonaOren = Integer.parseInt(dataIndo.removeDelim(this.inpZonaOren.getText())); // mengambil data zona oranye
+        }
+        // mengecek input dari zona hijau
+        if(this.isEmptyInput(this.inpZonaHijau, "zona hijau")){
+            changeColor(this.inpZonaHijau, this.lblZonaHijau, false);
+            return false;
+        }else{
+            changeColor(this.inpZonaHijau, this.lblZonaHijau, true);
+            this.zonaHijau = Integer.parseInt(dataIndo.removeDelim(this.inpZonaHijau.getText())); // mengambil data zona hijau
+        }
+        // mengambil input dari website
+        this.website = this.inpWebsite.getText();
         
-        // mendapatkan data yg dari JComboBox
-        switch(this.inpBenua.getSelectedIndex()){
-            case 0: this.benua = "null"; break; 
-            case 1: this.benua = "Asia"; break; 
-            case 2: this.benua = "Afrika"; break; 
-            case 3: this.benua = "Amerika Selatan"; break; 
-            case 4: this.benua = "Amerika Utara"; break; 
-            case 5: this.benua = "Eropa"; break; 
-            case 6: this.benua = "Oceania"; break; 
-            default : this.benua = "null";
-        }
         
         /**
          * Mengecek apakah sebuah data yg diinputkan oleh user valid atau tidak dengan menggunakan method-method dari 
@@ -321,84 +289,69 @@ public class AddDataDunia extends javax.swing.JFrame {
          * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
          */
         
-        // mengecek apakah negara_idn valid atau tidak
-        if(dataDunia.isValidNamaNegara(negara_idn)){
-            changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, true);
-            // mengecek apakah negara_eng valid atau tidak
-            if(dataDunia.isValidNamaNegara(negara_eng)){
-                changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, true);
-                // mengecek apakah data dari kasus positif valid atau tidak
-                if(dataDunia.isValidPositif((int)populasi, positif)){
-                    changeColor(this.inpPositif, this.lblPositif, true);
-                    // mengecek apakah data dari kasus kematian valid atau tidak
-                    if(dataDunia.isValidKematian(positif, kematian)){
-                        changeColor(this.inpKematian, this.lblKematian, true);
-                        // mengecek apakah data dari kasus sembuh valid atau tidak
-                        if(dataDunia.isValidSembuh(positif, sembuh)){
-                            changeColor(this.inpSembuh, this.lblSembuh, true);
-                            // mengecek apakah data dari kasus aktif valid atau tidak
-                            if(dataDunia.isValidAktif(positif, aktif)){
-                                changeColor(this.inpAktif, this.lblAktif, true);
-                                // mengecek apakah data dari kasus kritis valid atau tidak
-                                if(dataDunia.isValidKritis(positif, kritis)){
-                                    changeColor(this.inpKritis, this.lblKritis, true);
-                                    // mengecek apakah data dari populasi valid atau tidak
-                                    if(dataDunia.isValidPopulasi(positif, populasi)){
-                                        changeColor(this.inpPopulasi, this.lblPopulasi, true);
-                                        // mengecek apakah benua valid atau tidak
-                                        if(dataDunia.isValidBenua(benua)){
-                                            this.inpBenua.setForeground(new Color(0,0,0));
-                                            // data sudah valid semua dan variabel isValids bernilai True
-                                            isValids = true; 
-                                        }else{
-                                            this.inpBenua.setForeground(new Color(255,0,0));
-                                        }
-                                    }else{
-                                        changeColor(this.inpPopulasi, this.lblPopulasi, false);
-                                    }
-                                }else{
-                                    changeColor(this.inpKritis, this.lblKritis, false);
-                                }
+        // mengecek data kasus positif valid atau tidak
+        if(dataIndo.isValidPositif(this.provinsi, positif)){
+            changeColor(this.inpPositif, this.lblPositif, true);
+            // mengecek data kasus sembuh valid atau tidak
+            if(dataIndo.isValidSembuh(positif, sembuh)){
+                changeColor(this.inpSembuh, this.lblSembuh, true);
+                // mengecek data kasus kematian valid atau tidak
+                if(dataIndo.isValidKematian(positif, sembuh)){
+                    changeColor(this.inpKematian, this.lblKematian, true);
+                    // mengecek data kasus aktif valid atau tidak
+                    if(dataIndo.isValidAktif(positif, aktif)){
+                        changeColor(this.inpAktif, this.lblAktif, true);
+                        // mengecek apakah data zona merah, oren dan hijau valid atau tidak
+                        if(dataIndo.isValidZona(totalKab, (zonaMerah + zonaOren + zonaHijau))){
+                            changeColor(this.inpZonaHijau, this.lblZonaHijau, true);
+                            changeColor(this.inpZonaOren, this.lblZonaOren, true);
+                            changeColor(this.inpZonaMerah, this.lblZonaMerah, true);
+                            // mengecek apakah website valid atau tidak
+                            if(dataIndo.isValidWebsite(website)){
+                                changeColor(this.inpWebsite, this.lblWebsite, true);
+                                // jika semua data sudah valid maka isValids akan bernilai true
+                                isValids = true;
                             }else{
-                                changeColor(this.inpAktif, this.lblAktif, false);
+                                changeColor(this.inpWebsite, this.lblWebsite, false);
                             }
                         }else{
-                            changeColor(this.inpSembuh, this.lblSembuh, false);
+                            changeColor(this.inpZonaHijau, this.lblZonaHijau, false);
+                            changeColor(this.inpZonaOren, this.lblZonaOren, false);
+                            changeColor(this.inpZonaMerah, this.lblZonaMerah, false);
                         }
                     }else{
-                        changeColor(this.inpKematian, this.lblKematian, false);
+                        changeColor(this.inpAktif, this.lblAktif, false);
                     }
                 }else{
-                    changeColor(this.inpPositif, this.lblPositif, false);
+                    changeColor(this.inpKematian, this.lblKematian, false);
                 }
-
             }else{
-                changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, false);
+                changeColor(this.inpSembuh, this.lblSembuh, false);
             }
         }else{
-            changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, false);
+            changeColor(this.inpPositif, this.lblPositif, false);
         }
-        
 
          /**
           * Proses selanjutnya adalah proses menyimpan data yang tadi diinputkan oleh user degan method seData() pada class CovidCases.
           * Data akan disave satu persatu hingga habis. Jika ada salah satu data yang gagal disimpan. Maka data-data yang lain direset ke 
           * data yang sebelumnya.
           */
-
-         // mengatur cursor ke cursor loading
+        
+        // mengatur cursor ke cursor loading
          this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
          
+         // data akan disimpan jika semua data sudah valid
          if(isValids){
              return true;
          }
-
+         
         
         // mereset cursor ke cursor defautl
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
-     
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -414,37 +367,41 @@ public class AddDataDunia extends javax.swing.JFrame {
         btnAddDataIndo = new javax.swing.JButton();
         lblMinimaze = new javax.swing.JLabel();
         lblClose = new javax.swing.JLabel();
-        lblNamaNegara_IDN = new javax.swing.JLabel();
-        inpNegara_IDN = new javax.swing.JTextField();
+        lblSingkatanProv = new javax.swing.JLabel();
+        inpSingkatanProv = new javax.swing.JTextField();
         inpPopulasi = new javax.swing.JTextField();
         lblPopulasi = new javax.swing.JLabel();
-        inpNegara_ENG = new javax.swing.JTextField();
-        lblNamaNegara_ENG = new javax.swing.JLabel();
+        inpNamaProv = new javax.swing.JTextField();
+        lblNamaProv = new javax.swing.JLabel();
         lblTop = new javax.swing.JLabel();
-        inpSembuh = new javax.swing.JTextField();
-        lblSembuh = new javax.swing.JLabel();
+        inpKematian = new javax.swing.JTextField();
+        lblKematian = new javax.swing.JLabel();
         inpPositif = new javax.swing.JTextField();
         lblPositif = new javax.swing.JLabel();
-        lblBendera = new javax.swing.JLabel();
-        lblKematian = new javax.swing.JLabel();
-        inpKematian = new javax.swing.JTextField();
+        lblProvinsi = new javax.swing.JLabel();
+        lblSembuh = new javax.swing.JLabel();
+        inpSembuh = new javax.swing.JTextField();
         inpAktif = new javax.swing.JTextField();
         lblAktif = new javax.swing.JLabel();
-        inpKritis = new javax.swing.JTextField();
-        lblKritis = new javax.swing.JLabel();
+        inpWebsite = new javax.swing.JTextField();
+        lblWebsite = new javax.swing.JLabel();
         line3 = new javax.swing.JSeparator();
         btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
         line4 = new javax.swing.JSeparator();
-        lblInpBendera = new javax.swing.JLabel();
+        lblInpLambang = new javax.swing.JLabel();
         lblKembali = new javax.swing.JLabel();
-        lblShowBendera = new javax.swing.JLabel();
-        lblBenua = new javax.swing.JLabel();
-        inpDiubah = new javax.swing.JTextField();
-        lblDiubah = new javax.swing.JLabel();
-        inpBenua = new javax.swing.JComboBox();
+        lblShowLambang = new javax.swing.JLabel();
+        lblTotalkab = new javax.swing.JLabel();
+        inpZonaMerah = new javax.swing.JTextField();
+        lblZonaMerah = new javax.swing.JLabel();
         lblApp = new javax.swing.JLabel();
         lblCopyright = new javax.swing.JLabel();
+        inpTotalKab = new javax.swing.JTextField();
+        inpZonaHijau = new javax.swing.JTextField();
+        lblZonaHijau = new javax.swing.JLabel();
+        lblZonaOren = new javax.swing.JLabel();
+        inpZonaOren = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -509,7 +466,7 @@ public class AddDataDunia extends javax.swing.JFrame {
         });
         pnlLeft.add(btnAddUser);
 
-        btnAddDataDunia.setBackground(new java.awt.Color(34, 119, 237));
+        btnAddDataDunia.setBackground(new java.awt.Color(49, 144, 215));
         btnAddDataDunia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusdunia.png"))); // NOI18N
         btnAddDataDunia.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnAddDataDunia.setPreferredSize(new java.awt.Dimension(43, 43));
@@ -520,7 +477,7 @@ public class AddDataDunia extends javax.swing.JFrame {
         });
         pnlLeft.add(btnAddDataDunia);
 
-        btnAddDataIndo.setBackground(new java.awt.Color(49, 144, 215));
+        btnAddDataIndo.setBackground(new java.awt.Color(34, 119, 237));
         btnAddDataIndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-update-kasusindo.png"))); // NOI18N
         btnAddDataIndo.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btnAddDataIndo.setPreferredSize(new java.awt.Dimension(43, 43));
@@ -559,17 +516,17 @@ public class AddDataDunia extends javax.swing.JFrame {
             }
         });
 
-        lblNamaNegara_IDN.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNamaNegara_IDN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNamaNegara_IDN.setText("Nama Negara (IDN)");
+        lblSingkatanProv.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblSingkatanProv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSingkatanProv.setText("Singkatan Provinsi");
 
-        inpNegara_IDN.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpNegara_IDN.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpNegara_IDN.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpNegara_IDN.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpNegara_IDN.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpSingkatanProv.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpSingkatanProv.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpSingkatanProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpSingkatanProv.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpSingkatanProv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpNegara_IDNMouseClicked(evt);
+                inpSingkatanProvMouseClicked(evt);
             }
         });
 
@@ -585,39 +542,39 @@ public class AddDataDunia extends javax.swing.JFrame {
 
         lblPopulasi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblPopulasi.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPopulasi.setText("Populasi Negara");
+        lblPopulasi.setText("Jumlah Penduduk");
 
-        inpNegara_ENG.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpNegara_ENG.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpNegara_ENG.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpNegara_ENG.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpNegara_ENG.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpNamaProv.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpNamaProv.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpNamaProv.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpNamaProv.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpNamaProv.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpNegara_ENGMouseClicked(evt);
+                inpNamaProvMouseClicked(evt);
             }
         });
 
-        lblNamaNegara_ENG.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNamaNegara_ENG.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNamaNegara_ENG.setText("Nama Negara (ENG)");
+        lblNamaProv.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblNamaProv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNamaProv.setText("Nama Provinsi");
 
         lblTop.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblTop.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTop.setText("Tambahkan Data Negara");
+        lblTop.setText("Tambahkan Data Provinsi");
 
-        inpSembuh.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpSembuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpSembuh.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpSembuh.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpKematian.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpKematian.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpKematian.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpSembuhMouseClicked(evt);
+                inpKematianMouseClicked(evt);
             }
         });
 
-        lblSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblSembuh.setText("Sembuh");
+        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblKematian.setText("Kematian");
 
         inpPositif.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         inpPositif.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -633,20 +590,20 @@ public class AddDataDunia extends javax.swing.JFrame {
         lblPositif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPositif.setText("Kasus Positif");
 
-        lblBendera.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblBendera.setText("Bendera Negara");
+        lblProvinsi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblProvinsi.setText("Lambang Provinsi");
 
-        lblKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKematian.setText("Kematian");
+        lblSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblSembuh.setText("Sembuh");
 
-        inpKematian.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpKematian.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpKematian.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpKematian.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpKematian.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpSembuh.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpSembuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpSembuh.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpSembuh.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpSembuh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpKematianMouseClicked(evt);
+                inpSembuhMouseClicked(evt);
             }
         });
 
@@ -664,19 +621,19 @@ public class AddDataDunia extends javax.swing.JFrame {
         lblAktif.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAktif.setText("Kasus Aktif");
 
-        inpKritis.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpKritis.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpKritis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpKritis.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpKritis.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpWebsite.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpWebsite.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpWebsite.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpWebsite.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpWebsite.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpKritisMouseClicked(evt);
+                inpWebsiteMouseClicked(evt);
             }
         });
 
-        lblKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblKritis.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblKritis.setText("Kasus Kritis");
+        lblWebsite.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblWebsite.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblWebsite.setText("Website Resmi");
 
         line3.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -718,17 +675,17 @@ public class AddDataDunia extends javax.swing.JFrame {
 
         line4.setForeground(new java.awt.Color(0, 0, 0));
 
-        lblInpBendera.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
-        lblInpBendera.setText("Tambahkan Bendera");
-        lblInpBendera.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblInpLambang.setFont(new java.awt.Font("Dialog", 0, 11)); // NOI18N
+        lblInpLambang.setText("Tambahkan Lambang");
+        lblInpLambang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblInpBenderaMouseClicked(evt);
+                lblInpLambangMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblInpBenderaMouseEntered(evt);
+                lblInpLambangMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblInpBenderaMouseExited(evt);
+                lblInpLambangMouseExited(evt);
             }
         });
 
@@ -746,39 +703,73 @@ public class AddDataDunia extends javax.swing.JFrame {
             }
         });
 
-        lblShowBendera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblShowBendera.setText("Bendera");
-        lblShowBendera.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        lblShowLambang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblShowLambang.setText("Lambang");
+        lblShowLambang.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        lblBenua.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblBenua.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblBenua.setText("Benua");
+        lblTotalkab.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblTotalkab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalkab.setText("Total Kabupaten");
 
-        inpDiubah.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpDiubah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        inpDiubah.setText("09 Desember 2020");
-        inpDiubah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        inpDiubah.setCaretColor(new java.awt.Color(255, 0, 0));
-        inpDiubah.addMouseListener(new java.awt.event.MouseAdapter() {
+        inpZonaMerah.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpZonaMerah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpZonaMerah.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpZonaMerah.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpZonaMerah.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                inpDiubahMouseClicked(evt);
+                inpZonaMerahMouseClicked(evt);
             }
         });
 
-        lblDiubah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblDiubah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDiubah.setText("Dibuat Pada");
-
-        inpBenua.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
-        inpBenua.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                       null", "                       Asia", "                      Afrika", "               Amerika Selatan", "                Amerika Utara", "                      Eropa", "                    Oceania" }));
-        inpBenua.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        lblZonaMerah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblZonaMerah.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblZonaMerah.setText("Kab. Zona Merah");
 
         lblApp.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         lblApp.setText("App Covid-19 Pandemic");
         lblApp.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         lblCopyright.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+        lblCopyright.setForeground(new java.awt.Color(35, 34, 32));
         lblCopyright.setText("© 2020. Achmad Baihaqi. All Rights Reserved.");
+
+        inpTotalKab.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpTotalKab.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpTotalKab.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpTotalKab.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpTotalKab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inpTotalKabMouseClicked(evt);
+            }
+        });
+
+        inpZonaHijau.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpZonaHijau.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpZonaHijau.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpZonaHijau.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpZonaHijau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inpZonaHijauMouseClicked(evt);
+            }
+        });
+
+        lblZonaHijau.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblZonaHijau.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblZonaHijau.setText("Kab. Zona Hijau");
+
+        lblZonaOren.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblZonaOren.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblZonaOren.setText("Kab. Zona Oranye");
+
+        inpZonaOren.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
+        inpZonaOren.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        inpZonaOren.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        inpZonaOren.setCaretColor(new java.awt.Color(255, 0, 0));
+        inpZonaOren.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inpZonaOrenMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
@@ -790,42 +781,51 @@ public class AddDataDunia extends javax.swing.JFrame {
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                            .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(inpNegara_IDN)
-                                    .addComponent(lblNamaNegara_IDN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inpPopulasi)
-                                    .addComponent(lblPopulasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                                        .addComponent(lblShowBendera, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(lblBendera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lblInpBendera, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lblKematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inpKematian)
-                                    .addComponent(inpAktif)
-                                    .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(inpBenua, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(39, 39, 39)
+                                    .addGroup(pnlMainLayout.createSequentialGroup()
+                                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(inpSingkatanProv)
+                                            .addComponent(lblSingkatanProv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(inpPopulasi)
+                                            .addComponent(lblPopulasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+                                                .addComponent(lblShowLambang, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(lblProvinsi, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(lblInpLambang))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(lblSembuh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(inpSembuh)
+                                            .addComponent(inpAktif)
+                                            .addComponent(lblAktif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(39, 39, 39))
+                                    .addGroup(pnlMainLayout.createSequentialGroup()
+                                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(inpTotalKab, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(inpZonaOren, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNamaNegara_ENG, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(inpNegara_ENG, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblNamaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(inpNamaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(inpDiubah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                        .addComponent(lblDiubah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(inpKritis, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblKritis, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(inpSembuh, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblSembuh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(inpZonaMerah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                        .addComponent(lblZonaMerah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(inpWebsite, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblWebsite, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(inpKematian, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblKematian, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(lblPositif, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(inpPositif, javax.swing.GroupLayout.Alignment.LEADING))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                                        .addComponent(inpPositif, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(inpZonaHijau, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                        .addComponent(lblZonaHijau, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(pnlMainLayout.createSequentialGroup()
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(lblTop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblBenua, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE))
+                                    .addComponent(lblTotalkab, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+                                    .addComponent(lblZonaOren, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(22, 22, 22))
                     .addGroup(pnlMainLayout.createSequentialGroup()
@@ -861,55 +861,64 @@ public class AddDataDunia extends javax.swing.JFrame {
                 .addComponent(lblTop, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(line3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblShowLambang, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblBendera)
+                        .addGap(8, 8, 8)
+                        .addComponent(lblProvinsi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblInpBendera))
-                    .addComponent(lblShowBendera, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblInpLambang)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblNamaNegara_ENG)
+                        .addComponent(lblNamaProv)
                         .addGap(13, 13, 13)
-                        .addComponent(inpNegara_ENG, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inpNamaProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblPositif)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inpPositif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblNamaNegara_IDN)
+                        .addComponent(lblSingkatanProv)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(inpNegara_IDN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inpSingkatanProv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)
                         .addComponent(lblPopulasi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inpPopulasi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSembuh)
-                    .addComponent(lblKematian))
+                    .addComponent(lblKematian)
+                    .addComponent(lblSembuh))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inpSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inpKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inpKematian, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inpSembuh, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblKritis)
+                    .addComponent(lblWebsite)
                     .addComponent(lblAktif))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inpKritis, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inpWebsite, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inpAktif, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBenua)
-                    .addComponent(lblDiubah))
+                    .addComponent(lblTotalkab)
+                    .addComponent(lblZonaMerah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(inpDiubah)
-                    .addComponent(inpBenua, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inpZonaMerah, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inpTotalKab, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblZonaOren)
+                    .addComponent(lblZonaHijau))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(inpZonaHijau, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inpZonaOren, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(line4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -945,12 +954,12 @@ public class AddDataDunia extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         isPlay = false;
-        dataDunia.closeConnection();
+        dataIndo.closeConnection();
         System.out.println("Menutup Window UpdateCovidDunia");
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        dataDunia.closeConnection();
+        dataIndo.closeConnection();
         System.out.println("-->     APLIKASI DITUTUP");
     }//GEN-LAST:event_formWindowClosing
 
@@ -965,9 +974,9 @@ public class AddDataDunia extends javax.swing.JFrame {
         this.setLocation(xx-x, yy-y);
     }//GEN-LAST:event_pnlMainMouseDragged
 
-    private void inpDiubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpDiubahMouseClicked
+    private void inpZonaMerahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpZonaMerahMouseClicked
 
-    }//GEN-LAST:event_inpDiubahMouseClicked
+    }//GEN-LAST:event_inpZonaMerahMouseClicked
 
     private void lblKembaliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseExited
         this.lblKembali.setIcon(Gambar.getIcon(Gambar.IC_BACK));
@@ -978,45 +987,45 @@ public class AddDataDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_lblKembaliMouseEntered
 
     private void lblKembaliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseClicked
-        System.out.println("Membuka Window UpdateCovidDunia");
-        UpdateCovidDunia updateDunia = new UpdateCovidDunia();
-        updateDunia.setLocation(this.getX(), this.getY());
+        System.out.println("Membuka Window AddDataIndo");
+        UpdateCovidIndo updateIndo = new UpdateCovidIndo();
+        updateIndo.setLocation(this.getX(), this.getY());
         
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                updateDunia.setVisible(true);
+                updateIndo.setVisible(true);
             }
         });
         dispose();
     }//GEN-LAST:event_lblKembaliMouseClicked
 
-    private void lblInpBenderaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpBenderaMouseExited
-        this.lblInpBendera.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Tambahkan Bendera</p></html>");
-        this.lblInpBendera.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-    }//GEN-LAST:event_lblInpBenderaMouseExited
+    private void lblInpLambangMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpLambangMouseExited
+        this.lblInpLambang.setText("<html><p style=\"text-decoration:none; color:rgb(0,0,0);\">Tambahkan Bendera</p></html>");
+        this.lblInpLambang.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_lblInpLambangMouseExited
 
-    private void lblInpBenderaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpBenderaMouseEntered
-        this.lblInpBendera.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,255);\">Tambahkan Bendera</p></html>");
-        this.lblInpBendera.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_lblInpBenderaMouseEntered
+    private void lblInpLambangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpLambangMouseEntered
+        this.lblInpLambang.setText("<html><p style=\"text-decoration:underline; color:rgb(0,0,255);\">Tambahkan Bendera</p></html>");
+        this.lblInpLambang.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_lblInpLambangMouseEntered
 
-    private void lblInpBenderaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpBenderaMouseClicked
+    private void lblInpLambangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpLambangMouseClicked
         Audio.play(Audio.SOUND_INFO);
         JOptionPane.showMessageDialog(null, "Fitur 'Edit Bendera' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_lblInpBenderaMouseClicked
+    }//GEN-LAST:event_lblInpLambangMouseClicked
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        System.out.println("Membuka Window UpdateCovidDunia");
-        UpdateCovidDunia updateDunia = new UpdateCovidDunia();
-        updateDunia.setLocation(this.getX(), this.getY());
+        System.out.println("Membuka Window AddDataIndo");
+        UpdateCovidIndo updateIndo = new UpdateCovidIndo();
+        updateIndo.setLocation(this.getX(), this.getY());
         
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                updateDunia.setVisible(true);
+                updateIndo.setVisible(true);
             }
         });
         dispose();
@@ -1040,18 +1049,18 @@ public class AddDataDunia extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selamat data berhasil ditambakan ke Database!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             
             // mereset window AddDataUser dengan menutup dan membuka window kembali
-        System.out.println("Membuka Window AddADataDunia");
-        AddDataDunia addData = new AddDataDunia();
-        addData.setLocation(this.getX(), this.getY());
-        
-        java.awt.EventQueue.invokeLater(new Runnable(){
-            
-            @Override
-            public void run(){
-                addData.setVisible(true);
-            }
-        });
-        dispose();
+            System.out.println("Membuka Window AddDataIndo");
+            AddDataIndo addData = new AddDataIndo();
+            addData.setLocation(this.getX(), this.getY());
+
+            java.awt.EventQueue.invokeLater(new Runnable(){
+
+                @Override
+                public void run(){
+                    addData.setVisible(true);
+                }
+            });
+            dispose();
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 
@@ -1065,37 +1074,37 @@ public class AddDataDunia extends javax.swing.JFrame {
         this.btnBatal.setBackground(new Color(34,119,237));
     }//GEN-LAST:event_btnSimpanMouseEntered
 
-    private void inpKritisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpKritisMouseClicked
+    private void inpWebsiteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpWebsiteMouseClicked
 
-    }//GEN-LAST:event_inpKritisMouseClicked
+    }//GEN-LAST:event_inpWebsiteMouseClicked
 
     private void inpAktifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpAktifMouseClicked
 
     }//GEN-LAST:event_inpAktifMouseClicked
 
-    private void inpKematianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpKematianMouseClicked
+    private void inpSembuhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpSembuhMouseClicked
 
-    }//GEN-LAST:event_inpKematianMouseClicked
+    }//GEN-LAST:event_inpSembuhMouseClicked
 
     private void inpPositifMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpPositifMouseClicked
 
     }//GEN-LAST:event_inpPositifMouseClicked
 
-    private void inpSembuhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpSembuhMouseClicked
+    private void inpKematianMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpKematianMouseClicked
 
-    }//GEN-LAST:event_inpSembuhMouseClicked
+    }//GEN-LAST:event_inpKematianMouseClicked
 
-    private void inpNegara_ENGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpNegara_ENGMouseClicked
+    private void inpNamaProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpNamaProvMouseClicked
 
-    }//GEN-LAST:event_inpNegara_ENGMouseClicked
+    }//GEN-LAST:event_inpNamaProvMouseClicked
 
     private void inpPopulasiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpPopulasiMouseClicked
 
     }//GEN-LAST:event_inpPopulasiMouseClicked
 
-    private void inpNegara_IDNMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpNegara_IDNMouseClicked
+    private void inpSingkatanProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpSingkatanProvMouseClicked
 
-    }//GEN-LAST:event_inpNegara_IDNMouseClicked
+    }//GEN-LAST:event_inpSingkatanProvMouseClicked
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
         this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_BLACK));
@@ -1122,10 +1131,14 @@ public class AddDataDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_lblMinimazeMouseClicked
 
     private void btnAddDataIndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDataIndoActionPerformed
-        System.out.println("Membuka Window AddDataIndo");
-        AddDataIndo addData = new AddDataIndo();
+
+    }//GEN-LAST:event_btnAddDataIndoActionPerformed
+
+    private void btnAddDataDuniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDataDuniaActionPerformed
+        System.out.println("Membuka Window AddADataDunia");
+        AddDataDunia addData = new AddDataDunia();
         addData.setLocation(this.getX(), this.getY());
-       
+        
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
@@ -1134,10 +1147,6 @@ public class AddDataDunia extends javax.swing.JFrame {
             }
         });
         dispose();
-    }//GEN-LAST:event_btnAddDataIndoActionPerformed
-
-    private void btnAddDataDuniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDataDuniaActionPerformed
-
     }//GEN-LAST:event_btnAddDataDuniaActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
@@ -1185,6 +1194,18 @@ public class AddDataDunia extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnBerandaActionPerformed
 
+    private void inpTotalKabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpTotalKabMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpTotalKabMouseClicked
+
+    private void inpZonaHijauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpZonaHijauMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpZonaHijauMouseClicked
+
+    private void inpZonaOrenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpZonaOrenMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_inpZonaOrenMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1202,21 +1223,23 @@ public class AddDataDunia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddDataDunia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDataIndo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddDataDunia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDataIndo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddDataDunia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDataIndo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddDataDunia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddDataIndo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddDataDunia().setVisible(true);
+                new AddDataIndo().setVisible(true);
             }
         });
     }
@@ -1230,35 +1253,39 @@ public class AddDataDunia extends javax.swing.JFrame {
     private javax.swing.JButton btnInfo;
     private javax.swing.JButton btnSimpan;
     private javax.swing.JTextField inpAktif;
-    private javax.swing.JComboBox inpBenua;
-    private javax.swing.JTextField inpDiubah;
     private javax.swing.JTextField inpKematian;
-    private javax.swing.JTextField inpKritis;
-    private javax.swing.JTextField inpNegara_ENG;
-    private javax.swing.JTextField inpNegara_IDN;
+    private javax.swing.JTextField inpNamaProv;
     private javax.swing.JTextField inpPopulasi;
     private javax.swing.JTextField inpPositif;
     private javax.swing.JTextField inpSembuh;
+    private javax.swing.JTextField inpSingkatanProv;
+    private javax.swing.JTextField inpTotalKab;
+    private javax.swing.JTextField inpWebsite;
+    private javax.swing.JTextField inpZonaHijau;
+    private javax.swing.JTextField inpZonaMerah;
+    private javax.swing.JTextField inpZonaOren;
     private javax.swing.JLabel lblAktif;
     private javax.swing.JLabel lblApp;
-    private javax.swing.JLabel lblBendera;
-    private javax.swing.JLabel lblBenua;
     private javax.swing.JLabel lblClose;
     private javax.swing.JLabel lblCopyright;
-    private javax.swing.JLabel lblDiubah;
-    private javax.swing.JLabel lblInpBendera;
+    private javax.swing.JLabel lblInpLambang;
     private javax.swing.JLabel lblKematian;
     private javax.swing.JLabel lblKembali;
-    private javax.swing.JLabel lblKritis;
     private javax.swing.JLabel lblLeft;
     private javax.swing.JLabel lblMinimaze;
-    private javax.swing.JLabel lblNamaNegara_ENG;
-    private javax.swing.JLabel lblNamaNegara_IDN;
+    private javax.swing.JLabel lblNamaProv;
     private javax.swing.JLabel lblPopulasi;
     private javax.swing.JLabel lblPositif;
+    private javax.swing.JLabel lblProvinsi;
     private javax.swing.JLabel lblSembuh;
-    private javax.swing.JLabel lblShowBendera;
+    private javax.swing.JLabel lblShowLambang;
+    private javax.swing.JLabel lblSingkatanProv;
     private javax.swing.JLabel lblTop;
+    private javax.swing.JLabel lblTotalkab;
+    private javax.swing.JLabel lblWebsite;
+    private javax.swing.JLabel lblZonaHijau;
+    private javax.swing.JLabel lblZonaMerah;
+    private javax.swing.JLabel lblZonaOren;
     private javax.swing.JSeparator line3;
     private javax.swing.JSeparator line4;
     private javax.swing.JPanel pnlLeft;

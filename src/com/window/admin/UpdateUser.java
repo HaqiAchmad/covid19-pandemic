@@ -1336,7 +1336,18 @@ public class UpdateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataCovidIndoActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        System.out.println("Membuka Window AddDataUser");
+        AddDataUser addData = new AddDataUser();
+        addData.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+        
+            @Override
+            public void run(){
+                addData.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered

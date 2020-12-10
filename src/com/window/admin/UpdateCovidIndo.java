@@ -1455,11 +1455,18 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataCovidIndoActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        int jumlahProv = dataIndo.getRows("SELECT * FROM kasuscovid_indo");
-        if(jumlahProv >= 34){
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Jumlah Provinsi Di Indonesia cuma ada 34!!", "Warning", JOptionPane.WARNING_MESSAGE);
-        }
+        System.out.println("Membuka Window AddDataIndo");
+        AddDataIndo addData = new AddDataIndo();
+        addData.setLocation(this.getX(), this.getY());
+       
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                addData.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnAddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseEntered
