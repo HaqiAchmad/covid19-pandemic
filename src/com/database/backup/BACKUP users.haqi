@@ -7,6 +7,7 @@ INSERT INTO users VALUES
 ('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Cyber Security Analyst', 'Tokyo (東京都)', 'Japan', 'viruscorona', '2020-11-15', 'default', 'Admin'),
 ('baihaqi2', 'Achmad Baihaqi, S.kom', 'Baihaqi', 'hakiahmad@gmail.com', 'N', '0001-01-01', 'Data Analyst', 'Yokohama', 'Japan', 'mypassword123', '2020-11-26', 'default', 'User'),
 ('bima', 'Fahrezian Arya Bima', 'Bima', 'awal.in45@gmail.com', 'L', '2003-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'bima1234', '2020-11-18', 'default', 'User'),
+('chrome', 'Google Chrome', 'Chrome', 'google.chrome@gmail.com', 'N', '1994-09-26', 'App Developer', 'Silicon Valey', 'USA', 'google.yahoo.com', '2020-12-10', 'default', 'Admin'),
 ('chuenk', 'M. Nur Kholis Chu Enk Yunani', 'Chu Enk', 'chuenkaisyah15@gmail.com', 'L', '2003-05-02', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'chu1234', '2020-11-18', 'default', 'User'),
 ('david', 'David Aldian Hidayat', 'David', 'davidaldian15@gmail.com', 'L', '2002-05-17', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'davidaldian', '2020-11-18', 'default', 'User'),
 ('deky', 'Deky Reza Saputra', 'Deky', 'dekyreza8787@gmail.com', 'L', '2002-11-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'dekyreza', '2020-11-18', 'default', 'User'),

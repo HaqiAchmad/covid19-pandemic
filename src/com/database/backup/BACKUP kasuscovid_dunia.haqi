@@ -43,7 +43,7 @@ INSERT INTO kasuscovid_dunia VALUES
 ('Denmark', 'Denmark', 24916, 645, 18646, 5625, 14, 5796947, '2020-09-30', 'Eropa', 'bendera-denmark.jpg'),
 ('Djibouti', 'Djibouti', 5407, 61, 5339, 7, 0, 991311, '2020-09-30', 'Afrika', 'bendera-djibouti.png'),
 ('Dominika', 'Dominica', 24, 0, 18, 6, 0, 72028, '2020-09-30', 'Amerika Utara', 'bendera-dominika.png'),
-('Dunia', 'World', 68603289, 1563834, 47491916, 19547539, 106374, 781423273, '2020-12-09', 'null', 'bendera-perserikatan-bangsa-bangsa.png'),
+('Dunia', 'World', 68603289, 1563834, 47491916, 19547539, 106374, 781423273, '2020-12-10', 'null', 'bendera-perserikatan-bangsa-bangsa.png'),
 ('Ekuador', 'Ecuador', 129892, 11171, 102852, 15869, 360, 17703980, '2020-09-30', 'Amerika Selatan', 'bendera-ekuador.jpg'),
 ('El Salvador', 'El Salvador', 28201, 823, 22326, 5052, 89, 6493797, '2020-09-30', 'Amerika Utara', 'bendera-el-salvador.png'),
 ('Eritrea', 'Eritrea', 369, 0, 330, 39, 0, 3557748, '2020-09-30', 'Afrika', 'bendera-eritrea.jpg'),
