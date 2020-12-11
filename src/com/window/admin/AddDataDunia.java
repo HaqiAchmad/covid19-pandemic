@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -154,7 +155,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             // mengecek apakah input kosong atau tidak, jika kosong maka akan mengembalikan nilai false
             if(input.getText() == null || input.getText().equals("")){
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Input dari data " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
                 return true;
             // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
             }else{ 
@@ -195,7 +196,7 @@ public class AddDataDunia extends javax.swing.JFrame {
     }
     
     /**
-     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di dunia lalu akan menyimpan perubahan tersebut. 
+     * Method ini digunakan untuk menambahkan sebuah data kasus covid dunia ke Database. 
      * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
      * <br><br>
      * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
@@ -212,8 +213,7 @@ public class AddDataDunia extends javax.swing.JFrame {
      */
     private boolean tambahData(){
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
-        // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
-        boolean isValids = false, isSave = false;
+        boolean isValids = false;
         
         /*
             Digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField kosong atau tidak. 
@@ -225,22 +225,24 @@ public class AddDataDunia extends javax.swing.JFrame {
             .
         */
         
-        // mengecek input dari negara_idn
+        // mengecek input dari negara_idn kosong atau tidak
         if(this.inpNegara_IDN.getText().equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Input dari Negara IDN (Nama Negara dalam bahasa Indonesia) \nTidak boleh kosong!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, false);
             return false;
         }else{
             changeColor(this.inpNegara_IDN, this.lblNamaNegara_IDN, true);
         }
-        
-        // mengecek input dari negara_eng
+        // mengecek input dari negara_eng kosong atau tidak
         if(this.inpNegara_ENG.getText().equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Input dari Negara ENG (Nama Negara dalam bahasa Inggris) \nTidak boleh kosong!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, false);
             return false;
         }else{
             changeColor(this.inpNegara_ENG, this.lblNamaNegara_ENG, true);
         }
-        
         // mengecek input dari populasi dunia
         if(this.isEmptyInput(this.inpPopulasi, "populasi")){
             changeColor(this.inpPopulasi, this.lblPopulasi, false);
@@ -257,7 +259,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             }
         }
         // mengecek input dari kasus positif
-        if(this.isEmptyInput(this.inpPositif, "positif")){
+        if(this.isEmptyInput(this.inpPositif, "kasus positif")){
             changeColor(this.inpPositif, this.lblPositif, false);
             return false;
         }else{
@@ -265,7 +267,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             this.positif = Integer.parseInt(dataDunia.removeDelim(this.inpPositif.getText())); // mengambil data kasus positif
         }
         // mengecek input dari kasus kematian
-        if(this.isEmptyInput(this.inpKematian, "kematian")){
+        if(this.isEmptyInput(this.inpKematian, "kasus kematian")){
             changeColor(this.inpKematian, this.lblKematian, false);
             return false;
         }else{
@@ -273,7 +275,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             this.kematian = Integer.parseInt(dataDunia.removeDelim(this.inpKematian.getText())); // mengambil data kasus kematian
         }
         // mengecek input dari kasus sembuh
-        if(this.isEmptyInput(this.inpSembuh, "sembuh")){
+        if(this.isEmptyInput(this.inpSembuh, "kasus sembuh")){
             changeColor(this.inpSembuh, this.lblSembuh, false);
             return false;
         }else{
@@ -281,7 +283,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             this.sembuh = Integer.parseInt(dataDunia.removeDelim(this.inpSembuh.getText())); // mengambil data kasus sembuh
         }
         // mengecek input dari kasus aktif
-        if(this.isEmptyInput(this.inpAktif, "aktif")){
+        if(this.isEmptyInput(this.inpAktif, "kasus aktif")){
             changeColor(this.inpAktif, this.lblAktif, false);
             return false;
         }else{
@@ -289,7 +291,7 @@ public class AddDataDunia extends javax.swing.JFrame {
             this.aktif = Integer.parseInt(dataDunia.removeDelim(this.inpAktif.getText())); // mengambil data kasus aktif
         }
         // mengecek input dari kasus kritis
-        if(this.isEmptyInput(this.inpKritis, "kritis")){
+        if(this.isEmptyInput(this.inpKritis, "kasus kritis")){
             changeColor(this.inpKritis, this.lblKritis, false);
             return false;
         }else{
@@ -388,17 +390,34 @@ public class AddDataDunia extends javax.swing.JFrame {
 
          // mengatur cursor ke cursor loading
          this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-         
+            
+         // jika isValids bernilai True maka data akan ditambahkan
          if(isValids){
-             return true;
+             // membuat query untuk menambahkan data
+             String sql = "INSERT INTO `kasuscovid_dunia` (`negara_idn`, `negara_eng`, `kasus`, `kematian`, `sembuh`, `aktif`, `kritis`, `populasi`, `diubah`, `benua`, `bendera`) "
+                        + "\nVALUES" 
+                        + "\n('"+negara_idn+"', '"+negara_eng+"', "+positif+", "+kematian+", "+sembuh+", "+aktif+", "+kritis+", "+populasi+", '"+dataDunia.getDateNow()+"', '"+benua+"', 'bendera-perserikatan-bangsa-bangsa.png')";
+             
+            // menambahkan data ke database
+            try {
+                // mengeksekusi query sql
+                int isAdd = dataDunia.stat.executeUpdate(sql);
+                
+                // mengecek apakah data berhasil ditambahkan atau tidak
+                if(isAdd > 0){
+                    // mereset cursor ke cursor defautl
+                    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    return true;
+                }
+            } catch (SQLException ex) {
+                Audio.play(Audio.SOUND_ERROR);
+                JOptionPane.showMessageDialog(null, "Terjadi keslahan saat akan menambahkan akun : " + ex.getMessage());
+            }
          }
-
-        
         // mereset cursor ke cursor defautl
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
-     
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -966,7 +985,8 @@ public class AddDataDunia extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void inpDiubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpDiubahMouseClicked
-
+        Audio.play(Audio.SOUND_WARNING);
+        JOptionPane.showMessageDialog(null, "Data ini tidak bisa diubah!", "Pesan", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_inpDiubahMouseClicked
 
     private void lblKembaliMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblKembaliMouseExited
@@ -1036,22 +1056,22 @@ public class AddDataDunia extends javax.swing.JFrame {
         boolean isSave = this.tambahData();
         // jika isSave bernilai True maka data berhasil disimpan
         if(isSave){
-            Audio.play(Audio.SOUND_WARNING);
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Selamat data berhasil ditambakan ke Database!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             
             // mereset window AddDataUser dengan menutup dan membuka window kembali
-        System.out.println("Membuka Window AddADataDunia");
-        AddDataDunia addData = new AddDataDunia();
-        addData.setLocation(this.getX(), this.getY());
-        
-        java.awt.EventQueue.invokeLater(new Runnable(){
-            
-            @Override
-            public void run(){
-                addData.setVisible(true);
-            }
-        });
-        dispose();
+            System.out.println("Membuka Window AddADataDunia");
+            AddDataDunia addData = new AddDataDunia();
+            addData.setLocation(this.getX(), this.getY());
+
+            java.awt.EventQueue.invokeLater(new Runnable(){
+
+                @Override
+                public void run(){
+                    addData.setVisible(true);
+                }
+            });
+            dispose();
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 

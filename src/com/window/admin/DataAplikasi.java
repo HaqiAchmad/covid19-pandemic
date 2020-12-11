@@ -241,7 +241,6 @@ public class DataAplikasi extends javax.swing.JFrame {
         int positif = caseDunia.getDataNumber(CovidCases.KASUS, "Dunia"), sembuh = caseDunia.getDataNumber(CovidCases.SEMBUH, "Dunia"),
             kematian = caseDunia.getDataNumber(CovidCases.KEMATIAN, "Dunia"), aktif = caseDunia.getDataNumber(CovidCases.AKTIF, "Dunia"),
             kritis = caseDunia.getDataNumber(CovidCases.KRITIS, "Dunia"), populasi = caseDunia.getDataNumber(CovidCases.POPULASI, "Dunia"),
-            tingkatKesembuhan = (int)caseDunia.getPresentase(sembuh, kematian), tingkatKematian = (int)caseDunia.getPresentase(kematian, sembuh),
             totalNegara = caseDunia.getRows("SELECT * FROM kasuscovid_dunia");
         
         // menampilkan data dari kasus covid ke window
@@ -251,10 +250,17 @@ public class DataAplikasi extends javax.swing.JFrame {
         this.valDataCovidDunia_aktif.setText(": " + caseDunia.addDelim(aktif));
         this.valDataCovidDunia_kritis.setText(": " + caseDunia.addDelim(kritis));
         this.valDataCovidDunia_populasi.setText(": " + caseDunia.addDelim((long)populasi * 10L));
-        this.valDataCovidDunia_tingkatSembuh.setText(": " + caseDunia.addDelim(tingkatKesembuhan) + "%");
-        this.valDataCovidDunia_tingkatKematian.setText(": " + caseDunia.addDelim(tingkatKematian) + "%");
         this.valDataCovidDunia_totalNegara.setText(": " + caseDunia.addDelim(totalNegara) + " Negara");
         this.valDataCovidDunia_diubah.setText(": " + caseDunia.dateToString(caseDunia.getData(CovidCases.DIUBAH, "Dunia")));
+        
+        // menampilkan data tingkat kematian dan tingkat sembuh
+        if(sembuh == -1 || kematian == -1){
+            this.valDataCovidDunia_tingkatSembuh.setText(": N/A");
+            this.valDataCovidDunia_tingkatKematian.setText(": N/A");
+        }else{
+            this.valDataCovidDunia_tingkatSembuh.setText(": " + caseDunia.getPresentase(sembuh, kematian) + "%");
+            this.valDataCovidDunia_tingkatKematian.setText(": " + caseDunia.getPresentase(kematian, sembuh) + "%");
+        }
     }
     /**
      * Digunakan untuk menampilkan data dari kasus covid Indo ke window, Data yang akan ditampilkan ke window
@@ -266,9 +272,8 @@ public class DataAplikasi extends javax.swing.JFrame {
         int positif = caseIndo.getTotalData(CovidCases.KASUS), sembuh = caseIndo.getTotalData(CovidCases.SEMBUH),
             kematian = caseIndo.getTotalData(CovidCases.KEMATIAN), aktif = caseIndo.getTotalData(CovidCases.AKTIF),
             totalKab = caseIndo.getTotalData(CovidCases.TOTAL_KAB), zonaMerah = caseIndo.getTotalData(CovidCases.ZONA_MERAH),
-            zonaOren = caseIndo.getTotalData(CovidCases.ZONA_ORANYE), zonaHijau = caseIndo.getTotalData(CovidCases.ZONA_HIJAU),
-            presentase = (int)caseIndo.getPresentase(caseIndo.getTotalData(CovidCases.KASUS), caseDunia.getDataNumber(CovidCases.KASUS, "Dunia"));
-    
+            zonaOren = caseIndo.getTotalData(CovidCases.ZONA_ORANYE), zonaHijau = caseIndo.getTotalData(CovidCases.ZONA_HIJAU);
+        
         // menampilkan data ke window
         this.valDataCovidIndo_positif.setText(": " + caseIndo.addDelim(positif));
         this.valDataCovidIndo_sembuh.setText(": " + caseIndo.addDelim(sembuh));
@@ -278,7 +283,7 @@ public class DataAplikasi extends javax.swing.JFrame {
         this.valDataCovidIndo_zonaMerah.setText(": " + caseIndo.addDelim(zonaMerah) + " Kabupaten");
         this.valDataCovidIndo_zonaOranye.setText(": " + caseIndo.addDelim(zonaOren) + " Kabupaten");
         this.valDataCovidIndo_zonaHijau.setText(": " + caseIndo.addDelim(zonaHijau) + " Kabupaten");
-        this.valDataCovidIndo_presentase.setText(": " + caseIndo.addDelim(presentase) + "%");
+        this.valDataCovidIndo_presentase.setText(": " + caseDunia.getPresentase(positif, caseDunia.getDataNumber(CovidCases.KASUS, "Dunia")) + "%");
         this.valDataCovidIndo_kasusPertama.setText(": 2 Maret 2020");
         this.valDataCovidIndo_diubah.setText(": " + caseIndo.dateToString(caseDunia.getData(CovidCases.DIUBAH, "Indonesia")));
     }

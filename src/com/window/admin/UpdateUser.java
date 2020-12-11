@@ -64,10 +64,13 @@ public class UpdateUser extends javax.swing.JFrame {
         this.btnSimpan.setVisible(false);
         this.btnBatal.setVisible(false);
         
-        this.user_selected = "baihaqi";
         dataTabel();
-        showData();
         this.setEditableData(false);
+        this.user_selected = "baihaqi";
+        // jika user ditemukan maka data akan ditampilkan
+        if(dataUser.isExistUser(user_selected)){
+            showData();
+        }
         
          // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -405,7 +408,7 @@ public class UpdateUser extends javax.swing.JFrame {
         }else{
             this.editPekerjaan.setText(pekerjaan);
         }
-        
+        System.out.println("");
     }
     
     private String setVisiblePass(final String pass){
@@ -522,6 +525,7 @@ public class UpdateUser extends javax.swing.JFrame {
         tabelUsers.setGridColor(new java.awt.Color(0, 0, 0));
         tabelUsers.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelUsers.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelUsers.getTableHeader().setReorderingAllowed(false);
         tabelUsers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelUsersMouseClicked(evt);

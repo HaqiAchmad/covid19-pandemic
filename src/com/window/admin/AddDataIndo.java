@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,7 +29,7 @@ public class AddDataIndo extends javax.swing.JFrame {
     /**
      * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>String</code>
      */
-    private String kode, provinsi, kasusPertama, diubah, website, lambang;
+    private String singkatanProv, provinsi, kasusPertama, diubah, website, lambang;
     /**
      * Digunakan untuk menyimpan data dari kasus covid indonesia yang berbentuk <code>Integer</code>
      */
@@ -150,7 +151,7 @@ public class AddDataIndo extends javax.swing.JFrame {
             // mengecek apakah input kosong atau tidak, jika kosong maka akan mengembalikan nilai false
             if(input.getText() == null || input.getText().equals("")){
                 Audio.play(Audio.SOUND_WARNING);
-                JOptionPane.showMessageDialog(null, "Input dari data kasus " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Input dari data " + data + " tidak boleh kosong!", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
                 return true;
             // jika input tidak kosong maka input akan dicek apakah yg data yg diinputkan user angka atau tidak
             }else{ 
@@ -191,7 +192,7 @@ public class AddDataIndo extends javax.swing.JFrame {
     }
     
     /**
-     * Method ini digunakan untuk melakukan perubahan data dari kasus covid-19 di indonesia lalu akan menyimpan perubahan tersebut. 
+     * Method ini digunakan untuk menambahkan sebuah data kasus covid indonesia ke Database. 
      * Sebelumnya method akan mengambil input dari Textfield yang berisi data-data akun yang akan diedit. 
      * <br><br>
      * Lalu method akan mengecek apakah data-data yang akan diedit tersebut valid atau tidak datanya. 
@@ -209,8 +210,7 @@ public class AddDataIndo extends javax.swing.JFrame {
     private boolean tambahData(){
         
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
-        // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
-        boolean isValids = false, isSave = false;
+        boolean isValids = false;
         
         /*
             Digunakan untuk mengecek apakah input yang dimasukan user melalui JTextField kosong atau tidak. 
@@ -222,8 +222,41 @@ public class AddDataIndo extends javax.swing.JFrame {
             .
         */
         
+        // mengecek input dari nama singkatan provinsi
+        if(this.inpSingkatanProv.getText().equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Input dari singkatan Provinsi tidak boleh kosong!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            changeColor(this.inpSingkatanProv, this.lblSingkatanProv, false);
+            return false;
+        }else{
+            changeColor(this.inpSingkatanProv, this.lblSingkatanProv, true);
+        }
+        // mengecek input dari nama provinsi
+        if(this.inpNamaProv.getText().equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Input dari nama Provinsi tidak boleh kosong!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            changeColor(this.inpNamaProv, this.lblNamaProv, false);
+            return false;
+        }else{
+            changeColor(this.inpNamaProv, this.lblNamaProv, true);
+        }
+        // mengecek input dari penduduk
+        if(this.isEmptyInput(this.inpPopulasi, "populasi")){
+            changeColor(this.inpPopulasi, this.lblPopulasi, false);
+            return false;
+        }else{
+            changeColor(this.inpPopulasi, this.lblPopulasi, true);
+            this.populasi = Long.parseLong(dataIndo.removeDelim(this.inpPopulasi.getText())); // mengambil data populasi
+            // jika populasi yg diinputkan jumlahnya lebih dari 2 miliar maka populasi tsb akan dibagi 10
+            // ini digunakan untuk menghindari kesalahan saat nanti dikonversi ke dalam bentuk Integer
+            if(this.populasi > 2000000000){
+                this.populasi /= 10;
+            }else if(this.populasi <= 0){ // jika populasi kosong maka scr default akan diatur ke 1
+                this.populasi = 1;
+            }
+        }
         // mengecek input dari kasus positif
-        if(this.isEmptyInput(this.inpPositif, "positif")){
+        if(this.isEmptyInput(this.inpPositif, "kasus positif")){
             changeColor(this.inpPositif, this.lblPositif, false);
             return false;
         }else{
@@ -231,7 +264,7 @@ public class AddDataIndo extends javax.swing.JFrame {
             this.positif = Integer.parseInt(dataIndo.removeDelim(this.inpPositif.getText())); // mengambil data kasus positif
         }
         // mengecek input dari kasus sembuh
-        if(this.isEmptyInput(this.inpSembuh, "sembuh")){
+        if(this.isEmptyInput(this.inpSembuh, "kasus sembuh")){
             changeColor(this.inpSembuh, this.lblSembuh, false);
             return false;
         }else{
@@ -239,7 +272,7 @@ public class AddDataIndo extends javax.swing.JFrame {
             this.sembuh = Integer.parseInt(dataIndo.removeDelim(this.inpSembuh.getText())); // mengambil data kasus sembuh
         }
         // mengecek input dari kasus kematian
-        if(this.isEmptyInput(this.inpKematian, "kematian")){
+        if(this.isEmptyInput(this.inpKematian, "kasus kematian")){
             changeColor(this.inpKematian, this.lblKematian, false);
             return false;
         }else{
@@ -247,12 +280,29 @@ public class AddDataIndo extends javax.swing.JFrame {
             this.kematian = Integer.parseInt(dataIndo.removeDelim(this.inpKematian.getText())); // mengambil data kasus kematian
         }
         // mengecek input dari kasus aktif
-        if(this.isEmptyInput(this.inpAktif, "aktif")){
+        if(this.isEmptyInput(this.inpAktif, "kasus aktif")){
             changeColor(this.inpAktif, this.lblAktif, false);
             return false;
         }else{
             changeColor(this.inpAktif, this.lblAktif, true);
             this.aktif = Integer.parseInt(dataIndo.removeDelim(this.inpAktif.getText())); // mengambil data kasus aktif
+        }
+        // mengecek input dari website resmi provinsi
+        if(this.inpWebsite.getText().equals("")){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Input dari Website tidak boleh kosong!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            changeColor(this.inpWebsite, this.lblWebsite, false);
+            return false;
+        }else{
+            changeColor(this.inpWebsite, this.lblWebsite, true);
+        }
+        // mengecek input dari total kab
+        if(this.isEmptyInput(this.inpTotalKab, "total kabupaten")){
+            changeColor(this.inpTotalKab, this.lblTotalkab, false);
+            return false;
+        }else{
+            changeColor(this.inpTotalKab, this.lblTotalkab, true);
+            this.totalKab = Integer.parseInt(dataIndo.removeDelim(this.inpTotalKab.getText())); // mengambil data total kabupaten
         }
         // mengecek input dari zona merah
         if(this.isEmptyInput(this.inpZonaMerah, "zona merah")){
@@ -279,6 +329,8 @@ public class AddDataIndo extends javax.swing.JFrame {
             this.zonaHijau = Integer.parseInt(dataIndo.removeDelim(this.inpZonaHijau.getText())); // mengambil data zona hijau
         }
         // mengambil input dari website
+        this.singkatanProv = this.inpSingkatanProv.getText();
+        this.provinsi = this.inpNamaProv.getText();
         this.website = this.inpWebsite.getText();
         
         
@@ -289,48 +341,74 @@ public class AddDataIndo extends javax.swing.JFrame {
          * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
          */
         
-        // mengecek data kasus positif valid atau tidak
-        if(dataIndo.isValidPositif(this.provinsi, positif)){
-            changeColor(this.inpPositif, this.lblPositif, true);
-            // mengecek data kasus sembuh valid atau tidak
-            if(dataIndo.isValidSembuh(positif, sembuh)){
-                changeColor(this.inpSembuh, this.lblSembuh, true);
-                // mengecek data kasus kematian valid atau tidak
-                if(dataIndo.isValidKematian(positif, sembuh)){
-                    changeColor(this.inpKematian, this.lblKematian, true);
-                    // mengecek data kasus aktif valid atau tidak
-                    if(dataIndo.isValidAktif(positif, aktif)){
-                        changeColor(this.inpAktif, this.lblAktif, true);
-                        // mengecek apakah data zona merah, oren dan hijau valid atau tidak
-                        if(dataIndo.isValidZona(totalKab, (zonaMerah + zonaOren + zonaHijau))){
-                            changeColor(this.inpZonaHijau, this.lblZonaHijau, true);
-                            changeColor(this.inpZonaOren, this.lblZonaOren, true);
-                            changeColor(this.inpZonaMerah, this.lblZonaMerah, true);
-                            // mengecek apakah website valid atau tidak
-                            if(dataIndo.isValidWebsite(website)){
-                                changeColor(this.inpWebsite, this.lblWebsite, true);
-                                // jika semua data sudah valid maka isValids akan bernilai true
-                                isValids = true;
+        // mengecek data singkatan provinsi valid atatu tidak
+        if(dataIndo.isValidSingkatanProv(singkatanProv)){
+            changeColor(this.inpSingkatanProv, this.lblSingkatanProv, true);
+            // mengecek data nama provinsi valid atau tidak
+            if(dataIndo.isValidNamaProvinsi(provinsi)){
+                changeColor(this.inpNamaProv, this.lblNamaProv, true);
+                // mengecek data positif valid atau tidak
+                if(dataIndo.isValidPositif((int)populasi, positif)){
+                    changeColor(this.inpPositif, this.lblPositif, true);
+                    // mengecek data populasi valid atatu tidak
+                    if(dataIndo.isValidPopulasi(positif, populasi)){
+                        changeColor(this.inpPopulasi, this.lblPopulasi, true);
+                        // mengecek data kasus sembuh valid atau tidak
+                        if(dataIndo.isValidSembuh(positif, sembuh)){
+                            changeColor(this.inpSembuh, this.lblSembuh, true);
+                            // mengecek data kasus kematian valid atau tidak
+                            if(dataIndo.isValidKematian(positif, sembuh)){
+                                changeColor(this.inpKematian, this.lblKematian, true);
+                                // mengecek data kasus aktif valid atau tidak
+                                if(dataIndo.isValidAktif(positif, aktif)){
+                                    changeColor(this.inpAktif, this.lblAktif, true);
+                                    // mengecek website valid atau tidak
+                                    if(dataIndo.isValidWebsite(website)){
+                                        changeColor(this.inpWebsite, this.lblWebsite, true);
+                                        // mengecek data total kabupaten valid atu tidak
+                                        if(dataIndo.isValidTotalKab(this.totalKab)){
+                                            changeColor(this.inpTotalKab, this.lblTotalkab, true);
+                                            // mengecek apakah data zona merah, oren dan hijau valid atau tidak
+                                            if(dataIndo.isValidZona(totalKab, (zonaMerah + zonaOren + zonaHijau))){
+                                                changeColor(this.inpZonaHijau, this.lblZonaHijau, true);
+                                                changeColor(this.inpZonaOren, this.lblZonaOren, true);
+                                                changeColor(this.inpZonaMerah, this.lblZonaMerah, true);
+                                                // jika semua data sudah valid maka isValids akan bernilai true
+                                                isValids = true;
+                                            }else{
+                                                changeColor(this.inpZonaHijau, this.lblZonaHijau, false);
+                                                changeColor(this.inpZonaOren, this.lblZonaOren, false);
+                                                changeColor(this.inpZonaMerah, this.lblZonaMerah, false);
+                                            }
+                                        }else{
+                                            changeColor(this.inpTotalKab, this.lblTotalkab, false);
+                                        }
+                                    }else{
+                                        changeColor(this.inpWebsite, this.lblWebsite, false);
+                                    }
+                                }else{
+                                    changeColor(this.inpAktif, this.lblAktif, false);
+                                }
                             }else{
-                                changeColor(this.inpWebsite, this.lblWebsite, false);
+                                changeColor(this.inpKematian, this.lblKematian, false);
                             }
                         }else{
-                            changeColor(this.inpZonaHijau, this.lblZonaHijau, false);
-                            changeColor(this.inpZonaOren, this.lblZonaOren, false);
-                            changeColor(this.inpZonaMerah, this.lblZonaMerah, false);
+                            changeColor(this.inpSembuh, this.lblSembuh, false);
                         }
                     }else{
-                        changeColor(this.inpAktif, this.lblAktif, false);
+                        changeColor(this.inpPopulasi, this.lblPopulasi, false);
                     }
                 }else{
-                    changeColor(this.inpKematian, this.lblKematian, false);
+                    changeColor(this.inpPositif, this.lblPositif, false);
                 }
             }else{
-                changeColor(this.inpSembuh, this.lblSembuh, false);
+                changeColor(this.inpNamaProv, this.lblNamaProv, false);
             }
         }else{
-            changeColor(this.inpPositif, this.lblPositif, false);
+            changeColor(this.inpSingkatanProv, this.lblSingkatanProv, false);
         }
+        
+
 
          /**
           * Proses selanjutnya adalah proses menyimpan data yang tadi diinputkan oleh user degan method seData() pada class CovidCases.
@@ -341,9 +419,28 @@ public class AddDataIndo extends javax.swing.JFrame {
         // mengatur cursor ke cursor loading
          this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
          
-         // data akan disimpan jika semua data sudah valid
+         // data akan ditambahkan jika isValids berniali True
          if(isValids){
-             return true;
+             // membuat query untuk menambahkan data
+             String sql = "INSERT INTO `kasuscovid_indo` (`kode`, `provinsi`, `kasus`, `sembuh`, `kematian`, `aktif`, `populasi`, `total_kab`, `kab_zonamerah`, `kab_zonaoranye`, `kab_zonahijau`, `kasus_pertama`, `diubah`, `website`, `lambang`) "
+                        + "\nVALUES" 
+                        + "\n('"+singkatanProv+"', '"+provinsi+"', "+positif+", "+sembuh+", "+kematian+", "+aktif+", "+populasi+", "+totalKab+", "+zonaMerah+", "+zonaOren+", "+zonaHijau+", '"+dataIndo.getDateNow()+"', '"+dataIndo.getDateNow()+"', '"+website+"', 'lambang-negara.jpeg')";
+            
+            // menambahkan data ke database
+            try {
+                // mengeksekusi query sql
+                int isAdd = dataIndo.stat.executeUpdate(sql);
+                
+                // mengecek apakah data berhasil ditambahkan atau tidak
+                if(isAdd > 0){
+                    // mereset cursor ke cursor defautl
+                    this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    return true;
+                }
+            } catch (SQLException ex) {
+                Audio.play(Audio.SOUND_ERROR);
+                JOptionPane.showMessageDialog(null, "Terjadi keslahan saat akan menambahkan akun : " + ex.getMessage());
+            }
          }
          
         
@@ -1045,7 +1142,7 @@ public class AddDataIndo extends javax.swing.JFrame {
         boolean isSave = this.tambahData();
         // jika isSave bernilai True maka data berhasil disimpan
         if(isSave){
-            Audio.play(Audio.SOUND_WARNING);
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Selamat data berhasil ditambakan ke Database!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             
             // mereset window AddDataUser dengan menutup dan membuka window kembali

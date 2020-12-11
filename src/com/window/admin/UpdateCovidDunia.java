@@ -71,10 +71,12 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         this.btnBatal.setVisible(false);
         this.lblShowBendera.setText("");
        
-        negara_selected = "Dunia";
         dataTabel();
-        showData();
         setEditableData(false);
+        negara_selected = "Dunia";
+        if(dataDunia.isExist(negara_selected)){
+            showData();
+        }
         
         // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -463,7 +465,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
      */
     private void dataTabel(){
         tabelNegara.setModel(new javax.swing.table.DefaultTableModel(
-            dataDunia.getData(fields, keyword, true),
+            dataDunia.getData(fields, keyword),
             new String [] {
                 "Negara", "Positif", "Sembuh", "Kematian"
             }
@@ -517,18 +519,16 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
             this.editPopulasi.setText(dataDunia.addDelim(populasi));
         }
         
-        // menghitung tingkat kematian dan kesembuhan
-        int tSembuh = (int)dataDunia.getPresentase(sembuh, kematian),
-            tKematian = (int)dataDunia.getPresentase(kematian, sembuh);
-        // jika tSembuh atau tKematian = -1 maka tingkatKesembuhan dan tingkatKematian akan menampilkan data N/A
-        if(tSembuh == -1 || tKematian == -1){
+        // menampilkan tingkat kematian dan tingkat kesembuhan
+        if(sembuh == -1 || kematian == -1){
             this.editTingkatKesembuhan.setText("N/A");
-            this.editTingkatKematian.setText("N/A");
+            this.editTingkatKematian.setText("N/A");            
         }else{
-            this.editTingkatKesembuhan.setText(Integer.toString(tSembuh) + "%");
-            this.editTingkatKematian.setText(Integer.toString(tKematian) + "%");
+            this.editTingkatKesembuhan.setText(dataDunia.getPresentase(sembuh, kematian) + "%");
+            this.editTingkatKematian.setText(dataDunia.getPresentase(kematian, sembuh) + "%");
         }
-        
+
+        System.out.println("");
     }
     
     
@@ -640,6 +640,7 @@ public class UpdateCovidDunia extends javax.swing.JFrame {
         tabelNegara.setGridColor(new java.awt.Color(0, 0, 0));
         tabelNegara.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelNegara.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelNegara.getTableHeader().setReorderingAllowed(false);
         tabelNegara.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelNegaraMouseClicked(evt);

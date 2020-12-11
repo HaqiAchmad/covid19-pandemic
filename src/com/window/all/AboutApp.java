@@ -5,6 +5,7 @@ import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -258,6 +259,7 @@ public class AboutApp extends javax.swing.JFrame {
             // jeda waktu saat memainkan efek
             int delay = 30;
                 try{
+                   setCursor(new Cursor(Cursor.WAIT_CURSOR));
                     while(isPlay){
                         // memainkan efek update ratting sesuai dengan nilai ratting yang diberikan oleh user
                         switch(ratting){
@@ -347,6 +349,7 @@ public class AboutApp extends javax.swing.JFrame {
                                 valRatting5.setText(String.format("%,d user memberi ratting 5", ratting5));
                                 break;
                         }
+                       setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                        isPlay = false; // mereset isPlay ke false jika efek sudah selesai
                        ratting = 0; // mereset nilai dari ratting
                     }

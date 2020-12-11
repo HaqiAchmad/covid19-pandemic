@@ -74,10 +74,12 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         this.btnBatal.setVisible(false);
         this.lblLambangProvinsi.setText("");
         
-        prov_selected = "Jatim";
         dataTabel();
-        showData();
         setEditableData(false);
+        prov_selected = "Jawa Timur";
+        if(dataIndo.isExist(prov_selected)){
+            showData();
+        }
         
        // mengatur UI dari button yang ada didalam window ke BasicButtonUI
         JButton btns[] = new JButton[]{
@@ -484,7 +486,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
      */
     private void dataTabel(){
         tabelProvinsi.setModel(new javax.swing.table.DefaultTableModel(
-            dataIndo.getData(fields, keyword, true),
+            dataIndo.getData(fields, keyword),
             new String [] {
                 "Provinsi", "Positif", "Sembuh", "Kematian"
             }
@@ -536,6 +538,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         this.editKasusPertama.setText(dataIndo.dateToString(kasusPertama));
         this.editDiubah.setText(dataIndo.dateToString(diubah));
         this.editWebsite.setText(website);
+        
+        System.out.println("");
     }
     
     @SuppressWarnings("unchecked")
@@ -645,6 +649,7 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
         tabelProvinsi.setGridColor(new java.awt.Color(0, 0, 0));
         tabelProvinsi.setSelectionBackground(new java.awt.Color(26, 164, 250));
         tabelProvinsi.setSelectionForeground(new java.awt.Color(250, 246, 246));
+        tabelProvinsi.getTableHeader().setReorderingAllowed(false);
         tabelProvinsi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelProvinsiMouseClicked(evt);

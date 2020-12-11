@@ -12,8 +12,6 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -50,8 +48,8 @@ public class AddDataUser extends javax.swing.JFrame {
         
         this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-        this.lblShowProfile.setText("");
-        this.lblShowProfile.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\lambang\\lambang-negara.jpeg"), 55, 60));
+//        this.lblShowProfile.setText("");
+//        this.lblShowProfile.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\lambang\\lambang-negara.jpeg"), 55, 60));
         this.inpTanggalLahir.setDate(new Date(2003, 7, 4));
         
         this.copyrightEffect();
@@ -995,7 +993,7 @@ public class AddDataUser extends javax.swing.JFrame {
         boolean isSave = this.tambahData();
         // jika isSave bernilai True maka data berhasil disimpan
         if(isSave){
-            Audio.play(Audio.SOUND_WARNING);
+            Audio.play(Audio.SOUND_INFO);
             JOptionPane.showMessageDialog(null, "Selamat data berhasil ditambakan ke Database!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
             
             // mereset window AddDataUser dengan menutup dan membuka window kembali

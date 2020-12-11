@@ -33,37 +33,40 @@ public class InformasiAkun extends javax.swing.JFrame {
         lblMinimaze = new javax.swing.JLabel();
         lblClose = new javax.swing.JLabel();
         btnEdit = new javax.swing.JButton();
-        lblEmail = new javax.swing.JLabel();
-        editEmail = new javax.swing.JTextField();
-        editNamalengkap = new javax.swing.JTextField();
-        lblNamalengkap = new javax.swing.JLabel();
-        editTipeAkun = new javax.swing.JTextField();
-        lblTipeAkun = new javax.swing.JLabel();
         lblEditData = new javax.swing.JLabel();
-        editGender = new javax.swing.JTextField();
-        lblGender = new javax.swing.JLabel();
-        editNamapanggilan = new javax.swing.JTextField();
-        lblNamaPanggilan = new javax.swing.JLabel();
         lblPhotoProfile = new javax.swing.JLabel();
         lblProfile = new javax.swing.JLabel();
-        lblTanggalLahir = new javax.swing.JLabel();
-        editTglLahir = new javax.swing.JTextField();
-        editAlamat = new javax.swing.JTextField();
-        lblAlamat = new javax.swing.JLabel();
-        editAsalNegara = new javax.swing.JTextField();
-        lblAsalNegara = new javax.swing.JLabel();
-        editPekerjaan = new javax.swing.JTextField();
-        lblPekerjaan = new javax.swing.JLabel();
-        editTglDibuat = new javax.swing.JTextField();
-        lblDibuat = new javax.swing.JLabel();
-        editPassword = new javax.swing.JTextField();
-        lblPassword = new javax.swing.JLabel();
         line3 = new javax.swing.JSeparator();
         btnSimpan = new javax.swing.JButton();
         btnBatal = new javax.swing.JButton();
         lblEditFoto = new javax.swing.JLabel();
         lblHapusFoto = new javax.swing.JLabel();
         lblKembali = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        editEmail = new javax.swing.JTextField();
+        editEmail2 = new javax.swing.JTextField();
+        lblEmail2 = new javax.swing.JLabel();
+        editEmail3 = new javax.swing.JTextField();
+        lblEmail3 = new javax.swing.JLabel();
+        lblEmail4 = new javax.swing.JLabel();
+        lblEmail1 = new javax.swing.JLabel();
+        editEmail1 = new javax.swing.JTextField();
+        editEmail4 = new javax.swing.JTextField();
+        lblEmail5 = new javax.swing.JLabel();
+        editEmail5 = new javax.swing.JTextField();
+        lblEmail6 = new javax.swing.JLabel();
+        lblEmail7 = new javax.swing.JLabel();
+        lblEmail8 = new javax.swing.JLabel();
+        editEmail6 = new javax.swing.JTextField();
+        editEmail7 = new javax.swing.JTextField();
+        lblEmail9 = new javax.swing.JLabel();
+        editEmail8 = new javax.swing.JTextField();
+        lblEmail10 = new javax.swing.JLabel();
+        editEmail9 = new javax.swing.JTextField();
+        editEmail10 = new javax.swing.JTextField();
+        lblEmail11 = new javax.swing.JLabel();
+        editEmail11 = new javax.swing.JTextField();
+        line4 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -133,89 +136,9 @@ public class InformasiAkun extends javax.swing.JFrame {
             }
         });
 
-        lblEmail.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblEmail.setText("Username");
-
-        editEmail.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editEmail.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        editEmail.setText("baihaqi");
-        editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editEmail.setCaretColor(new java.awt.Color(255, 0, 0));
-        editEmail.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editEmail.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editEmailMouseClicked(evt);
-            }
-        });
-
-        editNamalengkap.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editNamalengkap.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editNamalengkap.setText("Achmad Baihaqi");
-        editNamalengkap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editNamalengkap.setCaretColor(new java.awt.Color(255, 0, 0));
-        editNamalengkap.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editNamalengkap.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editNamalengkapMouseClicked(evt);
-            }
-        });
-
-        lblNamalengkap.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNamalengkap.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNamalengkap.setText("Nama Lengkap");
-
-        editTipeAkun.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editTipeAkun.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editTipeAkun.setText("Baihaqi");
-        editTipeAkun.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editTipeAkun.setCaretColor(new java.awt.Color(255, 0, 0));
-        editTipeAkun.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editTipeAkun.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editTipeAkunMouseClicked(evt);
-            }
-        });
-
-        lblTipeAkun.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTipeAkun.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTipeAkun.setText("Nama Panggilan");
-
         lblEditData.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblEditData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEditData.setText("Informasi Akun Anda");
-
-        editGender.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editGender.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editGender.setText("Jepang");
-        editGender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editGender.setCaretColor(new java.awt.Color(255, 0, 0));
-        editGender.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editGender.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editGenderMouseClicked(evt);
-            }
-        });
-
-        lblGender.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblGender.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblGender.setText("Asal Negara");
-
-        editNamapanggilan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editNamapanggilan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editNamapanggilan.setText("04 Agustus 2003");
-        editNamapanggilan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editNamapanggilan.setCaretColor(new java.awt.Color(255, 0, 0));
-        editNamapanggilan.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editNamapanggilan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editNamapanggilanMouseClicked(evt);
-            }
-        });
-
-        lblNamaPanggilan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblNamaPanggilan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNamaPanggilan.setText("Tanggal Lahir");
 
         lblPhotoProfile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblPhotoProfile.setText("profile");
@@ -223,102 +146,6 @@ public class InformasiAkun extends javax.swing.JFrame {
 
         lblProfile.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblProfile.setText("Photo Profile");
-
-        lblTanggalLahir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblTanggalLahir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTanggalLahir.setText("Jenis Kelamin");
-
-        editTglLahir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editTglLahir.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editTglLahir.setText("Laki-Laki");
-        editTglLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editTglLahir.setCaretColor(new java.awt.Color(255, 0, 0));
-        editTglLahir.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editTglLahir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editTglLahirMouseClicked(evt);
-            }
-        });
-
-        editAlamat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editAlamat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editAlamat.setText("Tokyo");
-        editAlamat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editAlamat.setCaretColor(new java.awt.Color(255, 0, 0));
-        editAlamat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editAlamat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editAlamatMouseClicked(evt);
-            }
-        });
-
-        lblAlamat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblAlamat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAlamat.setText("Asal Kota");
-
-        editAsalNegara.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editAsalNegara.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editAsalNegara.setText("••••••••••••••••");
-        editAsalNegara.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editAsalNegara.setCaretColor(new java.awt.Color(255, 0, 0));
-        editAsalNegara.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editAsalNegara.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editAsalNegaraMouseClicked(evt);
-            }
-        });
-
-        lblAsalNegara.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblAsalNegara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblAsalNegara.setText("Password");
-
-        editPekerjaan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editPekerjaan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editPekerjaan.setText("Software Enginer");
-        editPekerjaan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editPekerjaan.setCaretColor(new java.awt.Color(255, 0, 0));
-        editPekerjaan.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editPekerjaan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editPekerjaanMouseClicked(evt);
-            }
-        });
-
-        lblPekerjaan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblPekerjaan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPekerjaan.setText("Pekerjaan");
-
-        editTglDibuat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editTglDibuat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editTglDibuat.setText("30 Oktober 2020");
-        editTglDibuat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editTglDibuat.setCaretColor(new java.awt.Color(255, 0, 0));
-        editTglDibuat.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editTglDibuat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editTglDibuatMouseClicked(evt);
-            }
-        });
-
-        lblDibuat.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblDibuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDibuat.setText("Dibuat pada");
-
-        editPassword.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        editPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        editPassword.setText("Admin");
-        editPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
-        editPassword.setCaretColor(new java.awt.Color(255, 0, 0));
-        editPassword.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        editPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editPasswordMouseClicked(evt);
-            }
-        });
-
-        lblPassword.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        lblPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPassword.setText("Tipe Akun");
 
         line3.setForeground(new java.awt.Color(0, 0, 0));
 
@@ -400,6 +227,188 @@ public class InformasiAkun extends javax.swing.JFrame {
             }
         });
 
+        lblEmail.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail.setText("Username");
+
+        editEmail.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmailMouseClicked(evt);
+            }
+        });
+
+        editEmail2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail2.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail2.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail2MouseClicked(evt);
+            }
+        });
+
+        lblEmail2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail2.setText("Nama  Lengkap");
+
+        editEmail3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail3.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail3.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail3MouseClicked(evt);
+            }
+        });
+
+        lblEmail3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail3.setText("Jenis Kelamin");
+
+        lblEmail4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail4.setText("Tipe Akun");
+
+        lblEmail1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail1.setText("Asal Kota");
+
+        editEmail1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail1.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail1.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail1MouseClicked(evt);
+            }
+        });
+
+        editEmail4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail4.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail4.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail4MouseClicked(evt);
+            }
+        });
+
+        lblEmail5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail5.setText("Pekerjaan");
+
+        editEmail5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail5.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail5.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail5MouseClicked(evt);
+            }
+        });
+
+        lblEmail6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail6.setText("Tanggal Lahir");
+
+        lblEmail7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail7.setText("Tanggal Dibuat");
+
+        lblEmail8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail8.setText("Asal Negara");
+
+        editEmail6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail6.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail6.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail6MouseClicked(evt);
+            }
+        });
+
+        editEmail7.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail7.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail7.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail7MouseClicked(evt);
+            }
+        });
+
+        lblEmail9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail9.setText("Password");
+
+        editEmail8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail8.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail8.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail8MouseClicked(evt);
+            }
+        });
+
+        lblEmail10.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail10.setText("Email");
+
+        editEmail9.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail9.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail9.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail9MouseClicked(evt);
+            }
+        });
+
+        editEmail10.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail10.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail10.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail10MouseClicked(evt);
+            }
+        });
+
+        lblEmail11.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        lblEmail11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEmail11.setText("Nama  Panggilan");
+
+        editEmail11.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        editEmail11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        editEmail11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
+        editEmail11.setCaretColor(new java.awt.Color(255, 0, 0));
+        editEmail11.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        editEmail11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editEmail11MouseClicked(evt);
+            }
+        });
+
+        line4.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout pnlMainLayout = new javax.swing.GroupLayout(pnlMain);
         pnlMain.setLayout(pnlMainLayout);
         pnlMainLayout.setHorizontalGroup(
@@ -414,58 +423,60 @@ public class InformasiAkun extends javax.swing.JFrame {
                         .addComponent(lblMinimaze, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblClose, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
+                    .addGroup(pnlMainLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(lblEditData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblEditData, javax.swing.GroupLayout.PREFERRED_SIZE, 548, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(editNamalengkap)
-                                        .addComponent(lblNamalengkap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(pnlMainLayout.createSequentialGroup()
-                                            .addComponent(lblPhotoProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(lblProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(pnlMainLayout.createSequentialGroup()
-                                                    .addComponent(lblEditFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(lblHapusFoto)
-                                                    .addGap(0, 0, Short.MAX_VALUE))))
-                                        .addComponent(lblTanggalLahir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editTglLahir)
-                                        .addComponent(editAlamat)
-                                        .addComponent(lblAlamat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editPekerjaan)
-                                        .addComponent(lblPekerjaan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editTglDibuat)
-                                        .addComponent(lblDibuat, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(102, 102, 102)
-                                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(lblTipeAkun, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editTipeAkun, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblNamaPanggilan, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editNamapanggilan, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(editGender, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblGender, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editAsalNegara, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                        .addComponent(lblAsalNegara, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(editPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblPassword, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
-                                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblPhotoProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(editEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(pnlMainLayout.createSequentialGroup()
-                                .addGap(325, 325, 325)
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSimpan)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBatal)))
-                        .addContainerGap(41, Short.MAX_VALUE))))
+                                    .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lblProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(pnlMainLayout.createSequentialGroup()
+                                            .addComponent(lblEditFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(lblHapusFoto)
+                                            .addGap(0, 49, Short.MAX_VALUE)))))
+                            .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(pnlMainLayout.createSequentialGroup()
+                                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSimpan)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnBatal))
+                                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(line3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainLayout.createSequentialGroup()
+                                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(editEmail2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                            .addComponent(lblEmail2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                            .addComponent(lblEmail3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblEmail4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblEmail1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail1, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(editEmail4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                                            .addComponent(lblEmail5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                                        .addGap(71, 71, 71)
+                                        .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lblEmail10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail9, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(editEmail10, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmail11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail11, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmail6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblEmail7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblEmail8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail6, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(editEmail7, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblEmail9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(editEmail8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(line4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
         pnlMainLayout.setVerticalGroup(
             pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,7 +484,7 @@ public class InformasiAkun extends javax.swing.JFrame {
             .addGroup(pnlMainLayout.createSequentialGroup()
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblClose, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(lblMinimaze, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(lblMinimaze, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblKembali, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(lblEditData, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -488,53 +499,59 @@ public class InformasiAkun extends javax.swing.JFrame {
                             .addComponent(lblEditFoto)
                             .addComponent(lblHapusFoto)))
                     .addComponent(lblPhotoProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(editEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblNamalengkap)
+                        .addComponent(lblEmail)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editNamalengkap, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblTanggalLahir)
+                        .addComponent(editEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editTglLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblAlamat)
+                        .addComponent(editEmail2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPekerjaan)
+                        .addComponent(editEmail3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editPekerjaan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDibuat)
+                        .addComponent(editEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editTglDibuat, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
-                        .addComponent(lblTipeAkun)
+                        .addComponent(editEmail4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editTipeAkun, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblNamaPanggilan)
+                        .addComponent(editEmail5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlMainLayout.createSequentialGroup()
+                        .addComponent(lblEmail10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editNamapanggilan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblGender)
+                        .addComponent(editEmail9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editGender, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblAsalNegara)
+                        .addComponent(editEmail10, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editAsalNegara, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblPassword)
+                        .addComponent(editEmail11, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(editEmail6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editEmail7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblEmail7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editEmail8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(line4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEdit)
                     .addComponent(btnSimpan)
@@ -591,117 +608,6 @@ public class InformasiAkun extends javax.swing.JFrame {
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
 
     }//GEN-LAST:event_btnEditActionPerformed
-
-    private void editEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmailMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Email dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editEmailMouseClicked
-
-    private void editNamalengkapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamalengkapMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editNamalengkapMouseClicked
-
-    private void editTipeAkunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTipeAkunMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editTipeAkunMouseClicked
-
-    private void editGenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGenderMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editGenderMouseClicked
-
-    private void editNamapanggilanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamapanggilanMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editNamapanggilanMouseClicked
-
-    private void editTglLahirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglLahirMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editTglLahirMouseClicked
-
-    private void editAlamatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAlamatMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editAlamatMouseClicked
-
-    private void editAsalNegaraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAsalNegaraMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editAsalNegaraMouseClicked
-
-    private void editPekerjaanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPekerjaanMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editPekerjaanMouseClicked
-
-    private void editTglDibuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglDibuatMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editTglDibuatMouseClicked
-
-    private void editPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPasswordMouseClicked
-        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
-        if(isEdit){
-
-        }else{
-            Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_editPasswordMouseClicked
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
         this.btnSimpan.setBackground(new Color(31,34,38));
@@ -795,6 +701,61 @@ public class InformasiAkun extends javax.swing.JFrame {
         y = evt.getY();
     }//GEN-LAST:event_pnlMainMousePressed
 
+    private void editEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmailMouseClicked
+        // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
+        if(isEdit){
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Email dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_editEmailMouseClicked
+
+    private void editEmail2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail2MouseClicked
+
+    private void editEmail3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail3MouseClicked
+
+    private void editEmail1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail1MouseClicked
+
+    private void editEmail4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail4MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail4MouseClicked
+
+    private void editEmail5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail5MouseClicked
+
+    private void editEmail6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail6MouseClicked
+
+    private void editEmail7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail7MouseClicked
+
+    private void editEmail8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail8MouseClicked
+
+    private void editEmail9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail9MouseClicked
+
+    private void editEmail10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail10MouseClicked
+
+    private void editEmail11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmail11MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editEmail11MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -834,38 +795,41 @@ public class InformasiAkun extends javax.swing.JFrame {
     private javax.swing.JButton btnBatal;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSimpan;
-    private javax.swing.JTextField editAlamat;
-    private javax.swing.JTextField editAsalNegara;
     private javax.swing.JTextField editEmail;
-    private javax.swing.JTextField editGender;
-    private javax.swing.JTextField editNamalengkap;
-    private javax.swing.JTextField editNamapanggilan;
-    private javax.swing.JTextField editPassword;
-    private javax.swing.JTextField editPekerjaan;
-    private javax.swing.JTextField editTglDibuat;
-    private javax.swing.JTextField editTglLahir;
-    private javax.swing.JTextField editTipeAkun;
-    private javax.swing.JLabel lblAlamat;
-    private javax.swing.JLabel lblAsalNegara;
+    private javax.swing.JTextField editEmail1;
+    private javax.swing.JTextField editEmail10;
+    private javax.swing.JTextField editEmail11;
+    private javax.swing.JTextField editEmail2;
+    private javax.swing.JTextField editEmail3;
+    private javax.swing.JTextField editEmail4;
+    private javax.swing.JTextField editEmail5;
+    private javax.swing.JTextField editEmail6;
+    private javax.swing.JTextField editEmail7;
+    private javax.swing.JTextField editEmail8;
+    private javax.swing.JTextField editEmail9;
     private javax.swing.JLabel lblClose;
-    private javax.swing.JLabel lblDibuat;
     private javax.swing.JLabel lblEditData;
     private javax.swing.JLabel lblEditFoto;
     private javax.swing.JLabel lblEmail;
-    private javax.swing.JLabel lblGender;
+    private javax.swing.JLabel lblEmail1;
+    private javax.swing.JLabel lblEmail10;
+    private javax.swing.JLabel lblEmail11;
+    private javax.swing.JLabel lblEmail2;
+    private javax.swing.JLabel lblEmail3;
+    private javax.swing.JLabel lblEmail4;
+    private javax.swing.JLabel lblEmail5;
+    private javax.swing.JLabel lblEmail6;
+    private javax.swing.JLabel lblEmail7;
+    private javax.swing.JLabel lblEmail8;
+    private javax.swing.JLabel lblEmail9;
     private javax.swing.JLabel lblHapusFoto;
     private javax.swing.JLabel lblKembali;
     private javax.swing.JLabel lblLeft;
     private javax.swing.JLabel lblMinimaze;
-    private javax.swing.JLabel lblNamaPanggilan;
-    private javax.swing.JLabel lblNamalengkap;
-    private javax.swing.JLabel lblPassword;
-    private javax.swing.JLabel lblPekerjaan;
     private javax.swing.JLabel lblPhotoProfile;
     private javax.swing.JLabel lblProfile;
-    private javax.swing.JLabel lblTanggalLahir;
-    private javax.swing.JLabel lblTipeAkun;
     private javax.swing.JSeparator line3;
+    private javax.swing.JSeparator line4;
     private javax.swing.JPanel pnlLeft;
     private javax.swing.JPanel pnlMain;
     // End of variables declaration//GEN-END:variables

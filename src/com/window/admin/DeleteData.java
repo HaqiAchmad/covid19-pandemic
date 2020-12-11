@@ -1,25 +1,45 @@
 package com.window.admin;
 
+import com.database.Account;
+import com.database.CovidCases;
+import com.media.audio.Audio;
+import com.media.gambar.Gambar;
+import java.awt.Cursor;
+import javax.swing.JOptionPane;
+
 public class DeleteData extends javax.swing.JFrame {
  
     int x, y;
     
-    private int from = 0;
+    private int tabel = 0;
     
     public static final int UPDATE_USER = 1, UPDATE_DUNIA = 2, UPDATE_INDO = 3;
     
     private String data;
     
-    public DeleteData(final int window, final String data) {
+    public DeleteData(final int tabel, final String data) {
         initComponents();
         
-        from = window;
+        this.tabel = tabel;
         this.data = data;
         
         this.setLocationRelativeTo(null);
-        this.lblData.setText("<html><p style=\"color:black;\">'<span style=\"color:rgb(222,34,34);\">"+data+"</span>'</p></html>");
         this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
+        this.lblData.setText("<html><p style=\"color:black;\">'<span style=\"color:rgb(222,34,34);\">"+data+"</span>'</p></html>");
+        
+        // mengatur teks pada JLabel lblTop berdasarkan tabel yang dipilih
+        switch(tabel){
+            case UPDATE_USER:
+                this.lblTop.setText("Apakah Anda Yakin Ingin Menghapus Akun");
+            break;
+            case UPDATE_DUNIA:
+                this.lblTop.setText("Apakah Anda Yakin Ingin Menghapus Negara");
+            break;
+            case UPDATE_INDO:
+                this.lblTop.setText("Apakah Anda Yakin Ingin Menghapus Provinsi");
+            break;
+        }
     }
     
     public DeleteData() {
@@ -31,7 +51,91 @@ public class DeleteData extends javax.swing.JFrame {
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
     }
 
+    /**
+     * Method ini digunakan untuk menghapus data berdasarkan tabel yang dipilih.
+     * 
+     * 
+     * @return 
+     */
+    private boolean deleteData(){
+        
+        // digunakan untuk mengecek apakah data berhasil dihapus atau tidak
+        boolean isDelete;
+        
+        // menghapus data berdasarkan tabel yang dipilih
+        switch(tabel){
+            // jika tabel users yang dipilih
+            case UPDATE_USER:
+                Account deleteAcc = new Account();
+                
+                    // mengecek apakah akun yg akan dihapus sedang digunakan untuk login atau tidak
+                    if(deleteAcc.getActivedUser().equalsIgnoreCase(data)){
+                        JOptionPane.showMessageDialog(null, "Gagal menghapus data karena anda sedang login dengan akun ini!", "Error", JOptionPane.ERROR_MESSAGE);
+                    // mengecek apakah akun yg dihapus adalah akun saya atau bukan
+                    }else if(data.equalsIgnoreCase("baihaqi") || data.equalsIgnoreCase("hakiahmad756@gmail.com")){
+                        JOptionPane.showMessageDialog(null, "Akun dari 'baihaqi' tidak bisa dihapus\nKarena akun tersebut adalah akun milik Developer aplikasi ini!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    else{
+                        // menghapus data
+                        isDelete = deleteAcc.deleteAccount(data);
+                        // mengecek apakah data sudah berhasil dihapus atau tidak
+                        if(isDelete){
+                            return true;
+                        }                        
+                    }
+                deleteAcc.closeConnection(); // menutup koneksi
+            break;
+            // jika tabel kasuscovid_dunia yang dipilih
+            case UPDATE_DUNIA: 
+                CovidCases dataDunia = new CovidCases(CovidCases.KASUS_DUNIA);
+                // menghapus data
+                isDelete = dataDunia.deleteData(data);
+                    // mengecek apakah data sudah berhasil dihapus atau tidak
+                    if(isDelete){
+                        return true;
+                    }
+                dataDunia.closeConnection(); // menutup koneksi
+            break;
+            // jika tabel kasuscovid_indo yang dipilih
+            case UPDATE_INDO:
+                CovidCases dataIndo = new CovidCases(CovidCases.KASUS_INDO);
+                // menghapus data
+                isDelete = dataIndo.deleteData(data);
+                    // mengecek apakah data sudah dihapus atau belum
+                    if(isDelete){
+                        return true;
+                    }
+                dataIndo.closeConnection(); // menutup koneksi
+            break;
+        }
+        
+        return false;
+    }
 
+    /**
+     * Digunakan untuk menutup window
+     */
+    private void kembali(){
+        java.awt.EventQueue.invokeLater(new Runnable(){
+
+            @Override
+            public void run(){
+                switch(tabel){
+                    case UPDATE_USER:
+                        new UpdateUser().setVisible(true);
+                    break;
+                    case UPDATE_DUNIA:
+                        new UpdateCovidDunia().setVisible(true);
+                    break;
+                    case UPDATE_INDO:
+                        new UpdateCovidIndo().setVisible(true);
+                    break;
+                }
+            }
+        });
+        dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,6 +152,14 @@ public class DeleteData extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -190,11 +302,11 @@ public class DeleteData extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void lblCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseEntered
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_ENTERED));
     }//GEN-LAST:event_lblCloseMouseEntered
 
     private void lblCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMouseExited
-
+        this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_BLACK));
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void pnlMainMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlMainMousePressed
@@ -209,31 +321,34 @@ public class DeleteData extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMouseDragged
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
-        // TODO add your handling code here:
+        // merubah cursor ke loading cursor
+        this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        
+        boolean isDelete = this.deleteData();
+        // mengecek apakah data berhasil dihapus atau tidak, jika data behasil dihapus maka window akan diclose
+        if(isDelete){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "'" +data+"' berhasil dihapus dari Database!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            this.kembali();
+        }
+        
+        // mereset cursor
+        this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_btnHapusActionPerformed
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-
-        java.awt.EventQueue.invokeLater(new Runnable(){
-
-            @Override
-            public void run(){
-                switch(from){
-                    case UPDATE_USER:
-                        new UpdateUser().setVisible(true);
-                    break;
-                    case UPDATE_DUNIA:
-                        new UpdateCovidDunia().setVisible(true);
-                    break;
-                    case UPDATE_INDO:
-                        new UpdateCovidIndo().setVisible(true);
-                    break;
-                }
-            }
-        });
-        dispose();
-
+        this.kembali();
     }//GEN-LAST:event_btnBatalActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        
+        System.out.println("Menutup Window UpdateCovidDunia");
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        System.out.println("-->     APLIKASI DITUTUP");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

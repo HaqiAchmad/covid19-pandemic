@@ -61,7 +61,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="valTotalKasus" alignment="1" max="32767" attributes="0"/>
                                       <Component id="lblTotalKasus" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="lblTop" alignment="1" pref="529" max="32767" attributes="0"/>
+                                      <Component id="lblTop" alignment="1" max="32767" attributes="0"/>
                                       <Component id="valTotalSembuh" alignment="1" max="32767" attributes="0"/>
                                       <Component id="lblTotalSembuh" alignment="1" max="32767" attributes="0"/>
                                       <Component id="valTotalKematian" alignment="1" max="32767" attributes="0"/>
@@ -104,7 +104,7 @@
                                       </Group>
                                       <Component id="jScrollPane1" min="-2" pref="477" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -261,7 +261,7 @@
                           <Component id="pnlInfo" alignment="1" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblCopyright" min="-2" pref="463" max="-2" attributes="0"/>
-                              <EmptySpace pref="38" max="32767" attributes="0"/>
+                              <EmptySpace pref="57" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -331,7 +331,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblInfoBenua" max="32767" attributes="0"/>
-                              <Component id="lblInfoTingkatKesembuhan" pref="101" max="32767" attributes="0"/>
+                              <Component id="lblInfoTingkatKesembuhan" max="32767" attributes="0"/>
                               <Component id="lblInfoPopulasi" alignment="0" max="32767" attributes="0"/>
                               <Component id="lblInfoTingkatKematian" max="32767" attributes="0"/>
                               <Component id="lblInfoPeringkatKasus" max="32767" attributes="0"/>
@@ -418,121 +418,193 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoNegara">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Negara"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoPositif">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Kasus Positif"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoSembuh">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Sembuh"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoKematian">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Kematian"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoAktif">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Kasus Aktif"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoKritis">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Kasus Kritis"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoNegara">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": Jepang"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoPositif">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 80.041"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoSembuh">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 72.538"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoKematian">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 1.545"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoAktif">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 5.983"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoKritis">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 166"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoPopulasi">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Populasi "/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoPopulasi">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 126.384.252"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoBenua">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Benua"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoBenua">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": Asia"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoTingkatKesembuhan">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tingkat Kesembuhan"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoTingkatKesembuhan">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 98.5%"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoTingkatKematian">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Tingkat Kematian"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoTingkatKematian">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 2.5%"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoPeringkatKasus">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Kasus terbanyak ke"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoPeringkatKasus">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 40"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTerakhirDiubah">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Terakhir diubah "/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoTerakhirDiubah">
                   <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="12" style="1"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value=": 30 Oktober 2020"/>
                   </Properties>
                 </Component>
@@ -572,7 +644,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="38" green="38" red="e0" type="rgb"/>
+              <Color blue="c" green="c" red="ed" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="Cari Negara : "/>
@@ -595,9 +667,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="21" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="13" green="13" red="14" type="rgb"/>
-            </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Kasus Covid-19 di Negara "/>
           </Properties>
@@ -606,9 +675,6 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="19" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="13" green="13" red="14" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -623,7 +689,7 @@
               <Font name="Dialog" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="2a" green="2a" red="d4" type="rgb"/>
+              <Color blue="c" green="c" red="ed" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Total Kasus"/>
@@ -634,9 +700,6 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ebrima" size="21" style="1"/>
             </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="22" green="20" red="1f" type="rgb"/>
-            </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="80.041"/>
           </Properties>
@@ -645,9 +708,6 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ebrima" size="21" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="22" green="20" red="1f" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="72.538"/>
@@ -659,7 +719,7 @@
               <Font name="Dialog" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="54" green="94" red="3f" type="rgb"/>
+              <Color blue="48" green="bf" red="21" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Sembuh"/>
@@ -669,9 +729,6 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Ebrima" size="21" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="22" green="20" red="1f" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="1.545"/>
@@ -683,7 +740,7 @@
               <Font name="Dialog" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="57" green="52" red="51" type="rgb"/>
+              <Color blue="71" green="55" red="3e" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Kematian"/>

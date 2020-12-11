@@ -37,7 +37,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     /**
      * Digunakan untuk menyimpan data kasus covid yang berbentuk Integer
      */
-    private int positif, sembuh, kematian, aktif, kritis, populasi, tingkatKesembuhan, tingkatKematian, peringkatKasus;
+    private int positif, sembuh, kematian, aktif, kritis, populasi, peringkatKasus;
     /**
      * Digunakan untuk mengatur posisi dari window
      */
@@ -53,7 +53,9 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         this.tabelKasus.getTableHeader().setBackground(new java.awt.Color(255,255,255));
         this.tabelKasus.getTableHeader().setForeground(new java.awt.Color(0, 0, 0));
         
-        showCovidData();
+        if(kasus.isExist(negara)){
+            showCovidData();
+        }
         updateTabel();
     }
     
@@ -69,8 +71,6 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         aktif = kasus.getDataNumber(CovidCases.AKTIF, negara);
         kritis = kasus.getDataNumber(CovidCases.KRITIS, negara);
         populasi = kasus.getDataNumber(CovidCases.POPULASI, negara);
-        tingkatKesembuhan = (int)kasus.getPresentase(sembuh, kematian);
-        tingkatKematian = (int)kasus.getPresentase(kematian, sembuh);
         peringkatKasus = kasus.getPeringkat(negara);
         benua = kasus.getData(CovidCases.BENUA, negara);
         diubah = kasus.getData(CovidCases.DIUBAH, negara);
@@ -96,7 +96,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         
         // menampilkan data kasus covid ke window
         this.lblNegara.setIcon(Gambar.getFlag(bendera));
-        this.lblNegara.setText(negara);
+        this.lblNegara.setText(" "+negara);
         this.valTotalKasus.setText(kasus.addDelim(positif));
         this.valTotalSembuh.setText(kasus.addDelim(sembuh));
         this.valTotalKematian.setText(kasus.addDelim(kematian));
@@ -106,11 +106,13 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         this.valInfoKematian.setText(": " + kasus.addDelim(kematian));
         this.valInfoAktif.setText(": " + kasus.addDelim(aktif));
         this.valInfoKritis.setText(": " + kasus.addDelim(kritis));
-        this.valInfoTingkatKesembuhan.setText(": " + tingkatKesembuhan + "%");
-        this.valInfoTingkatKematian.setText(": " + tingkatKematian + "%");
+        this.valInfoTingkatKesembuhan.setText(": " + kasus.getPresentase(sembuh, kematian) + "%");
+        this.valInfoTingkatKematian.setText(": " + kasus.getPresentase(kematian, sembuh) + "%");
         this.valInfoPeringkatKasus.setText(": " + kasus.addDelim(peringkatKasus));
         this.valInfoBenua.setText(": " + benua);
         this.valInfoTerakhirDiubah.setText(": " + kasus.dateToString(diubah));
+        
+        System.out.println("");
     }
 
     /**
@@ -118,8 +120,10 @@ public class KasusCovidDunia extends javax.swing.JFrame {
      */
     private void updateTabel(){
         tabelKasus.setModel(new javax.swing.table.DefaultTableModel(
-            kasus.getData(fields, keyword), 
-                new String[]{"Negara", "Positif", "Sembuh", "Kematian"}
+            kasus.getData(fields, keyword),
+            new String [] {
+                "Negara", "Positif", "Sembuh", "Kematian"
+            }
         ) {
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -296,52 +300,76 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         lblInfo.setText("Informasi Lengkap");
         lblInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        lblInfoNegara.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoNegara.setText("Negara");
 
+        lblInfoPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoPositif.setText("Kasus Positif");
 
+        lblInfoSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoSembuh.setText("Sembuh");
 
+        lblInfoKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoKematian.setText("Kematian");
 
+        lblInfoAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoAktif.setText("Kasus Aktif");
 
+        lblInfoKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoKritis.setText("Kasus Kritis");
 
+        valInfoNegara.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoNegara.setText(": Jepang");
 
+        valInfoPositif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoPositif.setText(": 80.041");
 
+        valInfoSembuh.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoSembuh.setText(": 72.538");
 
+        valInfoKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoKematian.setText(": 1.545");
 
+        valInfoAktif.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoAktif.setText(": 5.983");
 
+        valInfoKritis.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoKritis.setText(": 166");
 
+        lblInfoPopulasi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoPopulasi.setText("Populasi ");
 
+        valInfoPopulasi.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoPopulasi.setText(": 126.384.252");
 
+        lblInfoBenua.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoBenua.setText("Benua");
 
+        valInfoBenua.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoBenua.setText(": Asia");
 
+        lblInfoTingkatKesembuhan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoTingkatKesembuhan.setText("Tingkat Kesembuhan");
 
+        valInfoTingkatKesembuhan.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoTingkatKesembuhan.setText(": 98.5%");
 
+        lblInfoTingkatKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoTingkatKematian.setText("Tingkat Kematian");
 
+        valInfoTingkatKematian.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoTingkatKematian.setText(": 2.5%");
 
+        lblInfoPeringkatKasus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblInfoPeringkatKasus.setText("Kasus terbanyak ke");
 
+        valInfoPeringkatKasus.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoPeringkatKasus.setText(": 40");
 
+        lblTerakhirDiubah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lblTerakhirDiubah.setText("Terakhir diubah ");
 
+        valInfoTerakhirDiubah.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         valInfoTerakhirDiubah.setText(": 30 Oktober 2020");
 
         javax.swing.GroupLayout pnlInfoLayout = new javax.swing.GroupLayout(pnlInfo);
@@ -369,7 +397,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblInfoBenua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblInfoTingkatKesembuhan, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                    .addComponent(lblInfoTingkatKesembuhan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblInfoPopulasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblInfoTingkatKematian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblInfoPeringkatKasus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -437,7 +465,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                     .addComponent(pnlInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlBoxInfoLayout.createSequentialGroup()
                         .addComponent(lblCopyright, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(38, Short.MAX_VALUE))))
+                        .addContainerGap(57, Short.MAX_VALUE))))
         );
         pnlBoxInfoLayout.setVerticalGroup(
             pnlBoxInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,7 +491,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         });
 
         lblTextKeyword.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        lblTextKeyword.setForeground(new java.awt.Color(224, 56, 56));
+        lblTextKeyword.setForeground(new java.awt.Color(237, 12, 12));
         lblTextKeyword.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblTextKeyword.setText("Cari Negara : ");
 
@@ -473,43 +501,38 @@ public class KasusCovidDunia extends javax.swing.JFrame {
         lblTabelKasus.setText("Kasus Covid-19 di berbagai Negara di Dunia");
 
         lblTop.setFont(new java.awt.Font("Dialog", 1, 21)); // NOI18N
-        lblTop.setForeground(new java.awt.Color(20, 19, 19));
         lblTop.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTop.setText("Kasus Covid-19 di Negara ");
 
         lblNegara.setFont(new java.awt.Font("Dialog", 1, 19)); // NOI18N
-        lblNegara.setForeground(new java.awt.Color(20, 19, 19));
         lblNegara.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNegara.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/media/gambar/icons/ic-bendera-sementara.png"))); // NOI18N
         lblNegara.setText("Jepang");
 
         lblTotalKasus.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblTotalKasus.setForeground(new java.awt.Color(212, 42, 42));
+        lblTotalKasus.setForeground(new java.awt.Color(237, 12, 12));
         lblTotalKasus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalKasus.setText("Total Kasus");
 
         valTotalKasus.setFont(new java.awt.Font("Ebrima", 1, 21)); // NOI18N
-        valTotalKasus.setForeground(new java.awt.Color(31, 32, 34));
         valTotalKasus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         valTotalKasus.setText("80.041");
 
         valTotalSembuh.setFont(new java.awt.Font("Ebrima", 1, 21)); // NOI18N
-        valTotalSembuh.setForeground(new java.awt.Color(31, 32, 34));
         valTotalSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         valTotalSembuh.setText("72.538");
 
         lblTotalSembuh.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblTotalSembuh.setForeground(new java.awt.Color(63, 148, 84));
+        lblTotalSembuh.setForeground(new java.awt.Color(33, 191, 72));
         lblTotalSembuh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalSembuh.setText("Sembuh");
 
         valTotalKematian.setFont(new java.awt.Font("Ebrima", 1, 21)); // NOI18N
-        valTotalKematian.setForeground(new java.awt.Color(31, 32, 34));
         valTotalKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         valTotalKematian.setText("1.545");
 
         lblTotalKematian.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblTotalKematian.setForeground(new java.awt.Color(81, 82, 87));
+        lblTotalKematian.setForeground(new java.awt.Color(62, 85, 113));
         lblTotalKematian.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTotalKematian.setText("Kematian");
 
@@ -540,7 +563,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                                 .addGroup(pnlMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(valTotalKasus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblTotalKasus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblTop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                                    .addComponent(lblTop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(valTotalSembuh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblTotalSembuh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(valTotalKematian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -573,7 +596,7 @@ public class KasusCovidDunia extends javax.swing.JFrame {
                                             .addGap(8, 8, 8))
                                         .addComponent(lblTabelKasus, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 16, Short.MAX_VALUE))))
+                                .addGap(0, 10, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblShowKeyword, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
