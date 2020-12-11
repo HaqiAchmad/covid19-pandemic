@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="undecorated" type="boolean" value="true"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="pnlMain" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="pnlMain" alignment="0" max="32767" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JPanel" name="pnlMain">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="pnlMainMouseDragged"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnlMainMousePressed"/>
+      </Events>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="pnlBoxInfo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="13" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblProvinsi" alignment="1" max="32767" attributes="0"/>
+                              <Component id="valTotalKasus" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTotalKasus" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTop" alignment="1" pref="529" max="32767" attributes="0"/>
+                              <Component id="valTotalSembuh" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTotalSembuh" alignment="1" max="32767" attributes="0"/>
+                              <Component id="valTotalKematian" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblTotalKematian" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="linePemisah" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="lblKembali" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblMinimaze" min="-2" pref="21" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblClose" min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
+                                  <Component id="lblShowKeyword" min="-2" pref="483" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="lblCariProvinsi" min="-2" pref="216" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="searchKeyword" min="-2" pref="235" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="lblTabelKasus" alignment="0" min="-2" pref="469" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jScrollPane1" min="-2" pref="477" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblClose" alignment="1" pref="30" max="32767" attributes="0"/>
+                              <Component id="lblMinimaze" alignment="1" pref="30" max="32767" attributes="0"/>
+                              <Component id="lblKembali" alignment="1" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="lblTabelKasus" min="-2" pref="33" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="searchKeyword" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="lblCariProvinsi" min="-2" pref="24" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblShowKeyword" min="-2" pref="18" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="linePemisah" min="-2" pref="680" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="lblTop" min="-2" pref="36" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblProvinsi" min="-2" pref="57" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblTotalKasus" min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="valTotalKasus" min="-2" pref="37" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblTotalSembuh" min="-2" pref="39" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="valTotalSembuh" min="-2" pref="29" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblTotalKematian" min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="valTotalKematian" min="-2" pref="29" max="-2" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <Component id="pnlBoxInfo" min="-2" max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lblClose">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-close-black.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCloseMouseExited"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblMinimaze">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-minimaze-black.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblMinimazeMouseExited"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="tabelKasus">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="12" style="1"/>
+                </Property>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="4" rowCount="4">
+                    <Column editable="true" title="Provinsi" type="java.lang.Object"/>
+                    <Column editable="true" title="Positif" type="java.lang.Object"/>
+                    <Column editable="true" title="Sembuh" type="java.lang.Object"/>
+                    <Column editable="true" title="Kematian" type="java.lang.Object"/>
+                  </Table>
+                </Property>
+                <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="fa" green="a4" red="1a" type="rgb"/>
+                </Property>
+                <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="f6" green="f6" red="fa" type="rgb"/>
+                </Property>
+                <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                  <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelKasusMouseClicked"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="tabelKasusKeyPressed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="pnlBoxInfo">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
+                <EmptyBorder/>
+              </Border>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pnlInfo" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lblCopyright" min="-2" pref="463" max="-2" attributes="0"/>
+                              <EmptySpace pref="38" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="pnlInfo" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblCopyright" min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="lblCopyright">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Dialog" size="11" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Copyright &#xa9; 2020. Achmad Baihaqi"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblCopyrightMouseExited"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JPanel" name="pnlInfo">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lblInfo" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblInfoWebsite" max="32767" attributes="0"/>
+                              <Component id="lblInfoKasusPertama" alignment="1" max="32767" attributes="0"/>
+                              <Component id="lblInfoProvinsi" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoPositif" alignment="0" pref="93" max="32767" attributes="0"/>
+                              <Component id="lblInfoSembuh" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoKematian" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoAktif" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoPresentase" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="valInfoProvinsi" pref="129" max="32767" attributes="0"/>
+                              <Component id="valInfoAktif" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoKematian" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoSembuh" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoPositif" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoPresentase" max="32767" attributes="0"/>
+                              <Component id="valInfoKasusPertama" max="32767" attributes="0"/>
+                              <Component id="valInfoWebsite" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblInfoKabZonaMerah" max="32767" attributes="0"/>
+                              <Component id="lblInfoKabZonaOren" pref="101" max="32767" attributes="0"/>
+                              <Component id="lblInfoTotalKab" alignment="0" max="32767" attributes="0"/>
+                              <Component id="lblInfoKabZonaHijau" max="32767" attributes="0"/>
+                              <Component id="lblInfoTingkatKesembuhan" max="32767" attributes="0"/>
+                              <Component id="lblInfoTingkatKematian" max="32767" attributes="0"/>
+                              <Component id="lblInfoPeringkat" max="32767" attributes="0"/>
+                              <Component id="lblInfoTerakhirDiubah" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="valInfoTotalKab" max="32767" attributes="0"/>
+                              <Component id="valInfoKabZonaMerah" max="32767" attributes="0"/>
+                              <Component id="valInfoKabZonaHijau" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoTingkatKesembuhan" max="32767" attributes="0"/>
+                              <Component id="valInfoTingkatKematian" pref="126" max="32767" attributes="0"/>
+                              <Component id="valInfoKabZonaOren" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valInfoPeringkat" max="32767" attributes="0"/>
+                              <Component id="valInfoTerahirDiubah" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblInfo" min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoProvinsi" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoProvinsi" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoTotalKab" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoTotalKab" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoPositif" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoPositif" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoKabZonaMerah" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKabZonaMerah" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoSembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoSembuh" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoKabZonaOren" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKabZonaOren" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoKabZonaHijau" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKabZonaHijau" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoAktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoAktif" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoTingkatKesembuhan" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoTingkatKesembuhan" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoPresentase" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoPresentase" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoTingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoTingkatKematian" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblInfoKasusPertama" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoKasusPertama" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblInfoPeringkat" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="valInfoPeringkat" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="valInfoWebsite" alignment="1" min="-2" pref="14" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblInfoWebsite" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblInfoTerakhirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="valInfoTerahirDiubah" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblInfo">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Dialog" size="16" style="1"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="Informasi Lengkap"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                        <LineBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoProvinsi">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Provinsi"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoPositif">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kasus Positif"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoSembuh">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Sembuh"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoKematian">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kematian"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoAktif">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kasus Aktif"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoPresentase">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Presentase Kasus"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoProvinsi">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": Jawa Timur"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoPositif">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 80.041"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoSembuh">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 72.538"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoKematian">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 1.545"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoAktif">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 5.983"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoPresentase">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 166"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoTotalKab">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Total Kabupaten"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoTotalKab">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 32"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoKabZonaMerah">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kab Zona Merah"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoKabZonaMerah">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 10"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoKabZonaOren">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kab Zona Oranye"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoKabZonaOren">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 20"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoKabZonaHijau">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kab Zona Hjau"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoKabZonaHijau">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 2"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoTingkatKesembuhan">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tingkat Kesembuhan"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoTingkatKesembuhan">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 98.2%"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoTingkatKematian">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Tingkat Kematian"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoTingkatKematian">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 2.8%"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoKasusPertama">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kasus Pertama"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoKasusPertama">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 17 Maret 2020"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoPeringkat">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Kasus Terbanyak Ke"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoPeringkat">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 3 dari 34 Provinsi"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoWebsite">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Website"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoWebsite">
+                  <Properties>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="c8" green="52" red="8" type="rgb"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value=": infocovid19.jatimprov..."/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseClicked"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="valInfoWebsiteMouseExited"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblInfoTerakhirDiubah">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Terakhir Diubah"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="valInfoTerahirDiubah">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value=": 2 November 2020"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JSeparator" name="linePemisah">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="0" type="rgb"/>
+            </Property>
+            <Property name="orientation" type="int" value="1"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblShowKeyword">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="11" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Menampilkan data dengan keyword = &quot;&quot;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="searchKeyword">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="12" style="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="searchKeywordKeyTyped"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblCariProvinsi">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="c" green="c" red="ed" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="text" type="java.lang.String" value="Cari Provinsi : "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTabelKasus">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e9" green="71" red="b" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Data Kasus Covid-19 Di Seluruh Provinsi"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTop">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="21" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Kasus Covid-19 di Provinsi  "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblProvinsi">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="19" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-bendera-sementara.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Jawa Timur"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTotalKasus">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="c" green="c" red="ed" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Total Kasus"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="valTotalKasus">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ebrima" size="21" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="80.041"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="valTotalSembuh">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ebrima" size="21" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="72.538"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTotalSembuh">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="48" green="bf" red="21" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Sembuh"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="valTotalKematian">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ebrima" size="21" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="1.545"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblTotalKematian">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="24" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="71" green="55" red="3e" type="rgb"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="Kematian"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblKembali">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="4"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/com/media/gambar/icons/ic-back.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblKembaliMouseClicked"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblKembaliMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lblKembaliMouseExited"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
