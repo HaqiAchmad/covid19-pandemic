@@ -50,7 +50,7 @@ public class Database {
      * Attribute yang digunakan untuk menhubungkan Aplikasi ke <B>Database MySQL</B>
      */
     private static final String DRIVER = "com.mysql.jdbc.Driver",
-                                DB_NAME = "app_covid19tester",
+                                DB_NAME = "aisyah",
                                 URL = "jdbc:mysql://localhost/" + DB_NAME,
                                 USER = "root",
                                 PASS = "";
@@ -60,10 +60,6 @@ public class Database {
      */
     public static final String KASUSCOVID_DUNIA = "kasuscovid_dunia", KASUSCOVID_INDO = "kasuscovid_indo", 
                                USERS = "users", ISLOGIN = "islogin";
-    /**
-     * Digunakan untuk mendapatkan username dan password mysql 
-    */
-    public static String SET_USER = "", SET_PASS = "";
     
     /**
      * Digunakan untuk menghubungkan aplikasi ke <B>Database</B>. 
@@ -101,78 +97,15 @@ public class Database {
                 JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }else if(ex.getMessage().contains("Communications link failure")){
-                JOptionPane.showMessageDialog(null, "MySQL anda belum diaktifkan!!\nSilahkan aktifkan MySQL anda dan buka kembali aplikasi!!", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sepertinya MySQL anda belum diaktifkan!!\nSilahkan aktifkan MySQL anda dan buka kembali aplikasi!!", "Error", JOptionPane.WARNING_MESSAGE);
                 System.exit(0);
             }else if(ex.getMessage().contains("Access denied for user")){
-                if(SET_USER.equalsIgnoreCase("") || SET_PASS.equalsIgnoreCase("")){
-                    JOptionPane.showMessageDialog(null, SET_USER = "  " + SET_PASS);
-                    java.awt.EventQueue.invokeLater(new Runnable(){
-                        
-                        @Override
-                        public void run(){
-                            JOptionPane.showMessageDialog(null, "Sepertinya MySQL adan memiliki Password", "Error", JOptionPane.WARNING_MESSAGE);
-                            new com.window.all.SignInMySQL().setVisible(true);
-                        }
-                    });
-                }else{
-                    this.startConnection(Database.SET_USER, Database.SET_PASS);
-                }
+                JOptionPane.showMessageDialog(null, "Maaf untuk membuka aplikasi ini \nUsername dan password dari MySQL anda harus diatur ke default!\nMohon maaf atas ketidaknyamanan ini!", "Warning", JOptionPane.WARNING_MESSAGE);
             }else if(ex.getMessage().contains("Unknown database")){
-                JOptionPane.showMessageDialog(null, "Klik OK untuk memulihkan Database!", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Klik 'OK' untuk memulihkan Database!", "Error", JOptionPane.WARNING_MESSAGE);
                 restoreDatabase();
             }else{
                 System.out.println(ex.getMessage());
-                JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : "+ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-            }
-        }
-    }
-    
-    /**
-     * Digunakan untuk menghubungkan aplikasi ke <B>Database</B>. 
-     * <BR>
-     * Pertama-tama method akan meregrister Driver yang dipakai.
-     * Driver yang dipakai di aplikasi ini adalah <B>MySQL Driver</B>. Selanjutnya method akan melakukan koneksi ke <B>Database</B>.
-     * Setelah berhasil terkoneksi ke <B>Database</B> method akan membuat object <code>Statement</code>
-     * <BR><BR>
-     * Terdapat dua exception yang mungkin akan terjadi di method ini yaitu <code>ClassNotFoundException</code> dan <code>SQLException</code>.
-     * Exception akan ditangani dengan mendapatkan pesan error dari method <code>getMessage</code> pada kedua exception tersebut.
-     * Beberapa pesan error yang dapat ditanggani di method ini antara lain: 
-     * <UL>
-     * <LI> <B>com.mysql.jdbc.Driver : </B> pesan error ini berarti aplikasi tidak dapat menemukan Driver yang akan dipakai untuk menkoneksikan aplikasi ke <B>Database</B>. 
-     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
-     * <LI> <B>Communications link failure : </B> pesan error ini bearti MySQL pada Komputer user belum diaktifkan. 
-     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
-     * <LI> <B>Access denied for user 'root'@'localhost' (using password: YES) : </B> pesan error ini bearti username atau password pada MySQL di komputer user tidak cocok dengan username dan password yang ada di Aplikasi ini.
-     *      Aplikasi akan secara otomatis keluar sendiri jika mendapatkan pesan error ini. 
-     * <LI> <B>Unknown database" : </B> pesan error ini bearti bahwa database MySQL aplikasi ini tidak ada di komputer user. 
-     *      Method akan memulihkan database secara otomatis dengan method <code>restoreDatabase()</code> jika mendapatkan pesan error ini.
-     * </UL>
-     * <B>Note : </B> Jika pesan error tidak dikenali maka aplikasi akan keluar sendiri.
-     * @param user
-     * @param pass
-     */
-    public void startConnection(final String user, final String pass){
-        try{
-            // Menghubungkan ke database
-            Class.forName(DRIVER); 
-            conn = DriverManager.getConnection(URL, user, pass); 
-            stat = conn.createStatement(); 
-            System.out.println("Berhasil terhubung ke database '" + DB_NAME + "'\n");
-        }catch(ClassNotFoundException | SQLException ex){
-            Audio.play(Audio.SOUND_ERROR);
-            // Menanggani exception yang terjadi dengan cara mendapatkan pesan error dari exception tersebut.
-            if(ex.getMessage().contains("com.mysql.jdbc.Driver")){
-                JOptionPane.showMessageDialog(null, "MySQL Connector tidak dapat ditemukan", "Error", JOptionPane.WARNING_MESSAGE);
-                System.exit(0);
-            }else if(ex.getMessage().contains("Communications link failure")){
-                JOptionPane.showMessageDialog(null, "MySQL anda belum diaktifkan!!", "Error", JOptionPane.WARNING_MESSAGE);
-                System.exit(0);
-            }else if(ex.getMessage().contains("Access denied for user 'root'@'localhost' (using password: YES)")){
-                JOptionPane.showMessageDialog(null, "Sepertinya MySQL adan memiliki Password", "Error", JOptionPane.WARNING_MESSAGE);
-            }else if(ex.getMessage().contains("Unknown database")){
-                JOptionPane.showMessageDialog(null, "Tidak dapat menemukan database '" + DB_NAME + "'", "Error", JOptionPane.WARNING_MESSAGE);
-                restoreDatabase();
-            }else{
                 JOptionPane.showMessageDialog(null, "Terjadi Kesalahan!\n\nError message : "+ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -418,9 +351,11 @@ public class Database {
                 // Membuat Tabel 
                 System.out.println("Tabel " + tabel + " tidak ditemukan!");
                 create = stat.executeUpdate(DefaultDatabase.getStrukturTabel(tabel));
-                // Mengecek apakah tabel  berhasil dibuat atau tidak, jika berhasil maka data tabel akan dipulihkan
+                // Mengecek apakah tabel  berhasil dibuat atau tidak, jika berhasil maka data tabel dan primary key akan dipulihkan
                 if(create == 0){
                     System.out.println("Tabel '" + tabel + "' berhasil dibuat!"); 
+                    // Memmulihkan primary key
+                    restorePrimaryKey(tabel);
                     // Memulihkan data dari tabel 
                      f = new File(fileBackup);
                      // Mengecek apakah file backup tabel ada atau tidak
@@ -446,6 +381,8 @@ public class Database {
                 }
             }else{ // jika tabel ada didalam database
                 System.out.println("\nTabel '" + tabel + "' ditemukan!"); 
+                // Memulihhkan primary key jika primary key tidak ada
+                restorePrimaryKey(tabel);
                 // Mengecek apakah kosong atau tidak, jika kosong maka data akan dipulihkan
                 if(isEmptyTabel(tabel)){
                     System.out.println("Tabel '" + tabel + "' kosong!");
@@ -484,6 +421,38 @@ public class Database {
             }catch(SQLException e){
                 System.out.println(e.getMessage());
             }
+        }
+    }
+    
+    /**
+     * Digunakan untuk memulihkan field yang bersifat Primary Key pada tabel saat tabel baru dipulihkan
+     * Primary key sangat penting bagi aplikasi ini karena digunkan untuk menghindari duplikasi data pada <b>Database</b>.
+     * Method akan mengambil query untuk memulihkan primary key dari method <code>getPrimary</code> dari class <code>DefaultDatabase</code>.
+     * 
+     * @param tabel
+     */
+    public void restorePrimaryKey(final String tabel){
+        try{
+            // digunakan untuk menampung query yg akan digunakan untuk memulihkan primary key
+            String sql = "";
+            // mendapatkan query dari method getPrimary dari class DefaultDatabase
+            switch(tabel){
+                case KASUSCOVID_DUNIA: sql = DefaultDatabase.getPrimaryKey(tabel); break;
+                case KASUSCOVID_INDO: sql = DefaultDatabase.getPrimaryKey(tabel); break;
+                case USERS: sql = DefaultDatabase.getPrimaryKey(tabel); break;
+                case ISLOGIN: sql = DefaultDatabase.getPrimaryKey(tabel); break;
+                default : JOptionPane.showMessageDialog(null, "Input tidak didukung"); break;
+            }
+            // mengeksekusi query
+            int cek = stat.executeUpdate(sql);
+            // mengecek apakah primary key berhasil ditambahka atau tidak
+            if(cek == 0){
+                System.out.println("Primary Key berhasil ditambahkan di tabel " + tabel);
+            }else{
+                JOptionPane.showMessageDialog(null, "Gagal menambahkan Primary Key!");
+            }
+        }catch(SQLException ex){
+            System.out.println("Terjadi kesalahan saat memulihkan Primary key pada tabel " + tabel + " : " + ex.getMessage());
         }
     }
     
@@ -727,6 +696,7 @@ class DefaultDatabase{
                 "  `sembuh` int(11) NOT NULL,\n" +
                 "  `kematian` int(11) NOT NULL,\n" +
                 "  `aktif` int(11) NOT NULL,\n" +
+                "  `populasi` int(11) NOT NULL,\n" +
                 "  `total_kab` int(5) NOT NULL,\n" +
                 "  `kab_zonamerah` int(5) NOT NULL,\n" +
                 "  `kab_zonaoranye` int(5) NOT NULL,\n" +
@@ -772,6 +742,36 @@ class DefaultDatabase{
                 "  `namalengkap` varchar(50) NOT NULL,\n" +
                 "  `email` varchar(40) NOT NULL\n" +
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+    }
+    
+    protected static String getPrimaryKey(final String tabel){
+        // Mengecek input dari user
+        if(tabel.equalsIgnoreCase(Database.KASUSCOVID_DUNIA)){
+            return getPrimary_kasusCovidDunia();
+        }else if(tabel.equalsIgnoreCase(Database.KASUSCOVID_INDO)){
+            return getPrimary_kasusCovidIndo();
+        }else if(tabel.equalsIgnoreCase(Database.USERS)){
+            return getPrimary_users();
+        }else if(tabel.equalsIgnoreCase(Database.ISLOGIN)){
+            return "";
+        }else{
+            return null;
+        }
+    }
+    
+    protected static String getPrimary_kasusCovidDunia(){
+        return  "ALTER TABLE `kasuscovid_dunia`\n" +
+                "  ADD PRIMARY KEY (`negara_idn`,`negara_eng`);";
+    }
+    
+    protected static String getPrimary_kasusCovidIndo(){
+        return  "ALTER TABLE `kasuscovid_indo`\n" +
+                "  ADD PRIMARY KEY (`kode`,`provinsi`,`website`);";
+    }
+    
+    protected static String getPrimary_users(){
+        return  "ALTER TABLE `users`\n" +
+                "  ADD PRIMARY KEY (`username`,`email`);";
     }
     
     /**
