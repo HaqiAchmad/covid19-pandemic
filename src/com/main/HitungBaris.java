@@ -15,7 +15,6 @@ public class HitungBaris {
         "com.window.all.SignIn",
         "com.window.all.SignUp",
         "com.window.all.InformasiAkun",
-        "com.window.all.SignInMySQl",
         "com.window.all.UbahPassword",
         "com.window.all.Beranda",
         "com.window.all.ApaCovid",
@@ -75,7 +74,7 @@ public class HitungBaris {
     
     public static void main(String[] args) throws IOException {
         HitungBaris hitung = new HitungBaris();
-        System.out.println(hitung.countLines(files));
+        System.out.printf("\nTOTAL BARIS : %,d\n",hitung.countLines(files));
         
     }
 }
