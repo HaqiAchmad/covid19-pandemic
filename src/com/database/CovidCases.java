@@ -154,71 +154,7 @@ public class CovidCases extends Database{
         return -2;
     }
     
-    public Object[][] getData(final String[] fields){
-        try{
-            Object[][] obj; // digunakan untuk menyimpan data yang berasal dari tabel
-            int rows = 0;
-            // membuat query yang digunakan untuk mendapatkan data berdasarkan tabel yang dipilih
-            if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
-                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_dunia ORDER BY kasus DESC;";
-            }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
-                sql = "SELECT " + this.getMultipleFields(fields) + " FROM kasuscovid_indo ORDER BY kasus DESC;";
-            }
-            
-            // mendefinisikan object berdasarkan panjang row dan colum yang ada didalam tabel
-            obj = new Object[getRows(sql)][fields.length];
-            // mengeksekusi query
-            res = stat.executeQuery(sql);
-            // mendapatkan semua data yang ada didalam tabel
-            while(res.next()){
-                // menyimpan data dari tabel ke object
-                for (int i = 0; i < fields.length; i++) {
-                    obj[rows][i] = res.getString(i+1);
-                }
-                rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
-            }
-            return obj;
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-            this.restoreTabel(TABEL_SELECTED);
-        }
-        
-        return null;
-    }
-    
     public Object[][] getData(final String[] fields, final String key){
-        try{
-            Object[][] obj;
-            int rows = 0;
-            // membuat query yang digunakan untuk mendapatkan data dari tabel berdasarkan tabel yang dipilih
-            if(TABEL_SELECTED.equalsIgnoreCase(KASUS_DUNIA)){
-                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ key +"%' OR negara_eng LIKE '%"+ key +"%' OR benua LIKE '%"+ key +"%' ORDER BY kasus DESC;";
-            }else if(TABEL_SELECTED.equalsIgnoreCase(KASUS_INDO)){
-                sql = "SELECT " + getMultipleFields(fields) + " FROM kasuscovid_indo WHERE kode LIKE '%"+ key +"%' OR provinsi LIKE '%"+ key +"%' ORDER BY kasus DESC;";
-            }
-            
-            // mendefinisikan object berdasarkan total rows dan cols yang ada didalam tabel
-            obj = new Object[getRows(sql)][fields.length];
-            // mengeksekusi query
-            res = stat.executeQuery(sql);
-            // mendapatkan semua data yang ada didalam tabel
-            while(res.next()){
-                // menyimpan data dari tabel ke object
-                for (int i = 0; i < fields.length; i++) {
-                    obj[rows][i] = res.getString(i+1);
-                }
-                rows++; // rows akan bertambah 1 setiap selesai membaca 1 row pada tabel
-            }
-            return obj;
-        }catch(SQLException ex){
-            Audio.play(Audio.SOUND_ERROR);
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat mengambil data dari database\n" + ex.getMessage(), "Error", JOptionPane.WARNING_MESSAGE);
-            this.restoreTabel(TABEL_SELECTED);
-        }
-        return null;
-    }
-    
-    public Object[][] getData(final String[] fields, final String key, final boolean delim){
         try{
             Object[][] obj;
             String data; // digunakan untuk menyimpan data sementara
@@ -362,7 +298,7 @@ public class CovidCases extends Database{
         
         if(text == null || text.equalsIgnoreCase("")){
             return false;
-        }else if(text.equalsIgnoreCase("n/a")){
+        }else if(text.equalsIgnoreCase("n/a") || text.equalsIgnoreCase("Di Blokir")){
             return true;
         }
         
@@ -434,13 +370,25 @@ public class CovidCases extends Database{
         return -1;
     }
     
-    public double getPresentase(final int sample, final int populasi){
+    public String getPresentase(final int sample, final int populasi){
+        double presentase = 0;
+        
         if(sample < 0 || populasi < 0){
-            return -1;
+            presentase =  -1;
         }else if(sample > populasi){
-            return 100 - (double) populasi / sample * 100;
+            presentase = 100 - (double) populasi / sample * 100;
         }else {
-            return (double) sample / populasi * 100;
+            presentase = (double) sample / populasi * 100;
+        }
+        
+        if(presentase == -1){
+            return "N/A";
+        }else if(presentase <= 9){
+            return Double.toString(presentase).substring(0,3);
+        }else if(presentase >= 10 && presentase <= 99){
+            return Double.toString(presentase).substring(0,4);
+        }else{
+            return Double.toString(presentase).substring(0,3);
         }
     }
     
@@ -484,7 +432,10 @@ public class CovidCases extends Database{
             return String.format("%,d", num);
         }else if(num == -1){
             return "N/A";
-        }else{
+        }else if(num == -5){
+            return "Di Blokir";
+        }
+        else{
             return "Terjadi Error";
         }
             
@@ -496,6 +447,8 @@ public class CovidCases extends Database{
             return String.format("%,d", num);
         }else if(num == -1){
             return "N/A";
+        }else if(num == -5){
+            return "Di Blokir";
         }else{
             return "Terjadi Error";
         }
@@ -511,6 +464,8 @@ public class CovidCases extends Database{
         
         if(num.equalsIgnoreCase("n/a")){
             return "-1";
+        }else if(num.equalsIgnoreCase("Di Blokir")){
+            return "-5";
         }
         
         // angka
@@ -743,6 +698,25 @@ public class CovidCases extends Database{
     }
     
     /**
+     * Data total kabupaten harus >= 1
+     * 
+     * @param totalKab
+     * @return 
+     */
+    public boolean isValidTotalKab(final int totalKab){
+        
+        //  mengecek apakah total kab lebih dari 0 atau tidak
+        if(totalKab >= 1){
+            return true;
+        }else{
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Total Kabupaten harus lebih dari 0", "Data tidak valid!", JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return false;
+    }
+    
+    /**
      *  - Nama Provinsi tidak boleh kosong
      *  - Nama Provinsi harus diantara 4-40 karakter
      *  - Nama Provinsi harus belum terdaftar di database
@@ -876,7 +850,7 @@ public class CovidCases extends Database{
     public static void main(String[] args) {
         
         CovidCases cov = new CovidCases(KASUS_DUNIA);
-        System.out.println(cov.isValidZona(29,56));
+        
         
     }
 }
