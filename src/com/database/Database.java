@@ -744,6 +744,20 @@ class DefaultDatabase{
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
     }
     
+    /**
+     * Method ini akan digunakan untuk memulihkan sebuah field yang primary key nya hilang pada tabel yg ada di <b>Database</b>.
+     * Adapun input yang bisa dimasukan untuk mendapatkan query antara lain : 
+     * <UL>
+     * <LI> <B>KASUSCOVID_DUNIA : </B> akan menghasilkan query untuk memulihkan field yang bersifat primary key pada tabel kasuscovid_dunia
+     * <LI> <B>KASUSCOVID_INDO : </B> akan menghasilkan query untuk memulihkan field yang bersifat primary key pada tabel kasuscovid_indo
+     * <LI> <B>USERS : </B> akan menghasilkan query untuk memulihkan field yang bersifat primary key pada tabel users
+     * <LI> <B>ISLOGIN : </B> akan menhasikaln empty query karena pada tabel islogin tidak mengandung primary key.
+     * </UL>
+     * <B>Note : </B> Jika input yang dimasukan bukan pilihan diatas maka method akan mengembalikan nilai null.
+     * 
+     * @param tabel tabel yang ingin didapatkan query-nya
+     * @return akan mengembalikan query untuk memulihkan primary key
+     */
     protected static String getPrimaryKey(final String tabel){
         // Mengecek input dari user
         if(tabel.equalsIgnoreCase(Database.KASUSCOVID_DUNIA)){
@@ -759,16 +773,31 @@ class DefaultDatabase{
         }
     }
     
+     /**
+     * Akan mengembalikan sebuah query untuk memulihkan field yang bersifat Primary key pada tabel kasuscovid_dunia
+     * 
+     * @return query untuk memulihkan primary key pada tabel kasuscovid_dunia
+     */
     protected static String getPrimary_kasusCovidDunia(){
         return  "ALTER TABLE `kasuscovid_dunia`\n" +
                 "  ADD PRIMARY KEY (`negara_idn`,`negara_eng`);";
     }
     
+     /**
+     * Akan mengembalikan sebuah query untuk memulihkan field yang bersifat Primary key pada tabel kasuscovid_indo
+     * 
+     * @return query untuk memulihkan primary key pada tabel kasuscovid_indo
+     */
     protected static String getPrimary_kasusCovidIndo(){
         return  "ALTER TABLE `kasuscovid_indo`\n" +
                 "  ADD PRIMARY KEY (`kode`,`provinsi`,`website`);";
     }
     
+     /**
+     * Akan mengembalikan sebuah query untuk memulihkan field yang bersifat Primary key pada tabel users
+     * 
+     * @return query untuk memulihkan primary key pada tabel users
+     */
     protected static String getPrimary_users(){
         return  "ALTER TABLE `users`\n" +
                 "  ADD PRIMARY KEY (`username`,`email`);";
