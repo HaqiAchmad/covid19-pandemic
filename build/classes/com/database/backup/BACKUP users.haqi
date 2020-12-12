@@ -1,7 +1,7 @@
 INSERT INTO users VALUES 
 ('aderaihan', 'Ade Raihan Mahsa', 'Raihan', 'aderaihanacaaca@gmail.com', 'L', '2002-11-19', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'aderaihan', '2020-11-18', 'default', 'User'),
 ('agung', 'Agung Tri Laksono', 'Agung', 'agungtrilaksono1287@gmail.com', 'L', '2003-12-13', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'agungtri', '2020-11-18', 'default', 'User'),
-('ananta', 'Ananta Eka Prayoga', 'Ananta', 'anantaprayoga25@gmail.com', 'L', '2002-01-28', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ananta1234', '2020-11-18', 'default', 'User'),
+('aisyah', 'Aisyah Aqila Azam', 'Aisyah Aqila', 'aisyahaqila@gmail.com', 'P', '2003-01-26', 'Tidak Dicantumkan', 'Osaka', 'Japan', 'covid19-2020', '2020-12-12', 'default', 'User'),
 ('ansori', 'Ahmad Ansori', 'Ansori', 'aanblogme@gmail.com', 'L', '2002-05-01', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ansori1234', '2020-11-18', 'default', 'User'),
 ('arifin', 'M. Arifin Mustofa', 'Arifin', 'arifinmmustofa173@gmail.com', 'L', '2003-10-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'arifin1234', '2020-11-18', 'default', 'User'),
 ('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Engineer', 'Osaka', 'Jepang', 'pandemic', '2020-11-18', 'default', 'Admin'),
