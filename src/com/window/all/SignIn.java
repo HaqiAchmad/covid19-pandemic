@@ -376,7 +376,7 @@ public class SignIn extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSignInMouseEntered
 
     private void lblLupaPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblLupaPassMouseClicked
-        UbahPassword ubah = new UbahPassword();
+        UbahPassword ubah = new UbahPassword(UbahPassword.SIGN_IN);
         ubah.setLocation(this.getX(), this.getY());
         System.out.println("Membuka Window UbahPassword");
         

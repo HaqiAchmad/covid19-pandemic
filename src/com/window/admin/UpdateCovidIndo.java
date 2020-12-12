@@ -1609,7 +1609,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void editKodeProvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKodeProvMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Kode Provinsi tidak dapat diedit oleh siapapun!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1619,7 +1620,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void editProvinsiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProvinsiMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Nama Provinsi tidak dapat diedit oleh siapapun!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1669,7 +1671,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void editTotalKabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTotalKabMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Admin tidak diperbolehkan untuk mengedit data total kabupaten!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1719,7 +1722,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void editKasusPertamaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editKasusPertamaMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Kasus pertama adalah tanggal saat Provinsi tersebut pertama kali terpapar Covid-19!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1729,7 +1733,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void editDiubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editDiubahMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Terakhir diubah akan secara otomatis diedit saat tombol 'Simpan' ditekan!.", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);

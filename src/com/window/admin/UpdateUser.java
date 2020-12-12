@@ -1509,7 +1509,7 @@ public class UpdateUser extends javax.swing.JFrame {
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
             Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Username dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Username hanya dapat diubah sekali saja saat akun dibuat!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1520,7 +1520,7 @@ public class UpdateUser extends javax.swing.JFrame {
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
             Audio.play(Audio.SOUND_WARNING);
-            JOptionPane.showMessageDialog(null, "Email dari akun tidak dapat diedit!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Email hanya dapat diubah sekali saja saat akun dibuat!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1530,7 +1530,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editTipeAkunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTipeAkunMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Tipe akun hanya dapat diubah sekali saja saat akun dibuat!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1560,7 +1561,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editTglLahirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglLahirMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Admin tidak diperbolehkan untuk mengedit data Tanggal Lahir dari User", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1570,7 +1572,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editGenderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editGenderMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Admin tidak diperbolehkan untuk mengedit data Jenis Kelamin dari User", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1610,7 +1613,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editPasswordMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Admin tidak diperbolehkan untuk mengedit Password dari User", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
@@ -1620,7 +1624,8 @@ public class UpdateUser extends javax.swing.JFrame {
     private void editTglDibuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglDibuatMouseClicked
         // mengecek apakah isEdit bernilai True atau tidak jika isEdit bernilai True maka pengeditan akan diizinkan
         if(isEdit){
-            
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Tanggal Dibuat adalah tanggal saat akun dibuat!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
         }else{
            Audio.play(Audio.SOUND_WARNING);
            JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);

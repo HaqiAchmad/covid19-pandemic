@@ -716,11 +716,33 @@ public class ApaCovid extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataAppMouseExited
 
     private void lblPhotoProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblPhotoProfileMouseClicked
+        System.out.println("Membuka Window InformasiAkun");
+        InformasiAkun infoAkun = new InformasiAkun(InformasiAkun.APA_COVID);
+        infoAkun.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                infoAkun.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_lblPhotoProfileMouseClicked
 
     private void lblEditProfileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseClicked
+        System.out.println("Membuka Window InformasiAkun");
+        InformasiAkun infoAkun = new InformasiAkun(InformasiAkun.APA_COVID);
+        infoAkun.setLocation(this.getX(), this.getY());
         
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            
+            @Override
+            public void run(){
+                infoAkun.setVisible(true);
+            }
+        });
+        dispose();
     }//GEN-LAST:event_lblEditProfileMouseClicked
 
     private void lblEditProfileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEditProfileMouseEntered

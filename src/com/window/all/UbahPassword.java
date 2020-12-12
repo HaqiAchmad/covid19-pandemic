@@ -15,16 +15,25 @@ import javax.swing.JOptionPane;
 public class UbahPassword extends javax.swing.JFrame {
 
     private final Account acc = new Account();
+    
     private String username, email, newPass;
+    
+    private final int fromWindow;
+    
+    public static final int SIGN_IN = 0, EDIT_AKUN = 1;
+    
     private int x = 0, y = 0;
     /**
      * Digunakan untuk mengecek apakah user yang ingin diubah passwordnya ada atau tidak di dalaml database
      */
     private boolean isFind = false;
     
-    public UbahPassword() {
+    
+    public UbahPassword(final int fromWindow) {
         initComponents();
 
+        this.fromWindow = fromWindow;
+        
         this.setLocationRelativeTo(null);
         this.setIconImage(Gambar.getWindowIcon());
         this.btnUbah.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -34,6 +43,11 @@ public class UbahPassword extends javax.swing.JFrame {
         this.lblClose.setIcon(Gambar.getIcon(Gambar.IC_CLOSE_WHITE));
         this.lblMinimaze.setIcon(Gambar.getIcon(Gambar.IC_MINIMAZE_WHITE));
     }
+
+    private UbahPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -337,15 +351,20 @@ public class UbahPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseClicked
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
-        System.out.println("Membuka Window SignIn");
-        this.dispose();
         java.awt.EventQueue.invokeLater(new Runnable(){
             
             @Override
             public void run(){
-                new SignIn().setVisible(true);
+                if(fromWindow == SIGN_IN){
+                    System.out.println("Membuka Window SignIn");
+                    new SignIn().setVisible(true);
+                }else if(fromWindow == EDIT_AKUN){
+                    System.out.println("Membuka Window InformasiAkun");
+                    new EditAkun().setVisible(true);
+                }
             }
         });
+        this.dispose();
     }//GEN-LAST:event_btnBatalActionPerformed
 
     private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
@@ -384,6 +403,7 @@ public class UbahPassword extends javax.swing.JFrame {
                     // menutup input username dan email
                     inpUsername.setEditable(false);
                     inpEmail.setEditable(false);
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Berhasil memverifikasi bahwa username dan email tersebut adalah milik anda\nSelamat anda sudah diperbolahkan untuk merubah password!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 }else{
                     Audio.play(Audio.SOUND_INFO);
@@ -412,6 +432,7 @@ public class UbahPassword extends javax.swing.JFrame {
                             new SignIn().setVisible(true);
                         }
                     });
+                    Audio.play(Audio.SOUND_INFO);
                     JOptionPane.showMessageDialog(null, "Password dari akun " + username + " berhasil diubah\nSilahkan login kembali dengan akun yang barusan anda ubah password-nya!", "Info", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 }
