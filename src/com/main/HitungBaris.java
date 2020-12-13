@@ -52,7 +52,7 @@ public class HitungBaris {
     private int countLines(final String[] files) throws IOException{
         FileReader f;
         BufferedReader line;
-        String file, buff = "";
+        String file, buff;
         int lines = 0, lineLocal = 0, chars = 0;
         
         for(int i = 0; i < files.length; i++){
