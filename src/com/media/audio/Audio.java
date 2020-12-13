@@ -80,10 +80,4 @@ public class Audio {
         }
     }
     
-    public static void main(String[] args) {
-        
-        Audio.play("sample-1.mp3");
-        System.out.println("thread");
-    
-    }
 }
