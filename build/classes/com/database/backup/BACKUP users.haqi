@@ -1,10 +1,9 @@
 INSERT INTO users VALUES 
-('aderaihan', 'Ade Raihan Mahsa', 'Raihan', 'aderaihanacaaca@gmail.com', 'L', '2002-11-19', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'aderaihan', '2020-11-18', 'default', 'User'),
+('aderaihan', 'Ade Raihan Mahsa', 'Raihan', 'aderaihanacaaca@gmail.com', 'L', '2002-11-19', 'Software Enginer', 'Seoul', 'S. Korea', 'aderaihan', '2020-11-18', 'default', 'User'),
 ('agung', 'Agung Tri Laksono', 'Agung', 'agungtrilaksono1287@gmail.com', 'L', '2003-12-13', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'agungtri', '2020-11-18', 'default', 'User'),
-('aisyah', 'Aisyah Aqila Azam', 'Aisyah Aqila', 'aisyahaqila@gmail.com', 'P', '2003-01-26', 'Tidak Dicantumkan', 'Osaka', 'Japan', 'covid19-2020', '2020-12-12', 'default', 'User'),
-('ansori', 'Ahmad Ansori', 'Ansori', 'aanblogme@gmail.com', 'L', '2002-05-01', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'ansori1234', '2020-11-18', 'default', 'User'),
+('aisyah', 'Aisyah Aqila Azam', 'Aisyah', 'aisyahaqila@gmail.com', 'P', '2003-01-26', 'Tidak Dicantumkan', 'Osaka', 'Japan', 'covid19-2020', '2020-12-12', 'default', 'User'),
 ('arifin', 'M. Arifin Mustofa', 'Arifin', 'arifinmmustofa173@gmail.com', 'L', '2003-10-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'arifin1234', '2020-11-18', 'default', 'User'),
-('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2003-08-04', 'Software Engineer', 'Osaka', 'Jepang', 'pandemic', '2020-11-18', 'default', 'Admin'),
+('baihaqi', 'Achmad Baihaqi', 'Baihaqi', 'hakiahmad756@gmail.com', 'L', '2005-08-11', 'Software Engineer', 'Tokyo (東京)', 'Jepang', 'pandemic', '2020-11-18', 'default', 'Admin'),
 ('bima', 'Fahrezian Arya Bima', 'Bima', 'awal.in45@gmail.com', 'L', '2003-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'bima1234', '2020-11-18', 'default', 'User'),
 ('chrome', 'Google Chrome', 'Chrome', 'google.chrome@gmail.com', 'N', '1994-09-26', 'App Developer', 'Silicon Valey', 'USA', 'google.yahoo.com', '2020-12-10', 'default', 'Admin'),
 ('chuenk', 'M. Nur Kholis Chu Enk Yunani', 'Chu Enk', 'chuenkaisyah15@gmail.com', 'L', '2003-05-02', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'chu1234', '2020-11-18', 'default', 'User'),
@@ -15,9 +14,7 @@ INSERT INTO users VALUES
 ('fatur', 'Fatur Riandy', 'Fatur', 'riyandifatur868@gmail.com', 'L', '2002-09-20', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'faturiandy', '2020-11-18', 'default', 'User'),
 ('halim', 'Halim Bagus Perdana', 'Halim', 'halimpaijo1@gmail.com', 'L', '2002-11-09', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'halimbagus', '2020-11-18', 'default', 'User'),
 ('haqi', 'achmad baihaqi', 'baihaqi', 'hakiahma.@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'password', '2020-11-26', 'default', 'User'),
-('ikan', 'hanya ikan air tawar biasa', 'ikan air tawar', 'masikanlele@gmail.com', 'N', '0001-01-01', 'Tidak Dicantumkan', 'jawa timur', 'indonesia', 'ffffffffffffff', '2020-11-26', 'default', 'User'),
 ('myusername', 'intellij idea community edition and pycharm is nuu', 'intellij idea', 'intellijidea@gmail.com', 'N', '0001-01-01', 'Tidak Dicantumkan', 'jawa timur', 'indonesia', 'netbeans8.0', '2020-12-05', 'default', 'User'),
-('robotai', 'artificial inteligenge', 'artificial', 'airobotic2020@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'machine1234', '2020-11-26', 'default', 'User'),
 ('rozikul', 'Ahmad Rozikul Akbar', 'Rozikul', 'ahmadrozikul76@gmail.com', 'L', '2002-03-26', 'Software Enginer', 'Jawa Timur', 'Indonesia', 'rozikulakbar', '2020-11-18', 'default', 'User'),
-('tesaja', 'baihaqi', 'baihaqi', 'baihaqi.myapps@gmail.com', 'N', '0001-01-01', 'null', 'jawa timur', 'indonesia', 'appjava20', '2020-11-26', 'default', 'User');
+('smkn1kts', 'Achmad Baihaqi', 'Baihaqi', 'smkn1kts@gmail.com', 'N', '2003-08-04', 'Tidak Dicantumkan', 'Osaka', 'Jepang', 'rekayasa_perangkat_lunak', '2020-12-13', 'default', 'User');
 # Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
