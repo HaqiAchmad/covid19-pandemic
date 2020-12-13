@@ -371,7 +371,7 @@ public class CovidCases extends Database{
     }
     
     public String getPresentase(final int sample, final int populasi){
-        double presentase = 0;
+        double presentase;
         
         if(sample < 0 || populasi < 0){
             presentase =  -1;
@@ -846,16 +846,8 @@ public class CovidCases extends Database{
         }
         return false;
     }
-    
-    public static void main(String[] args) {
-        
-        CovidCases cov = new CovidCases(KASUS_DUNIA);
-        
-        
-    }
+   
 }
-
-
 
 /*
 Ketentuan Data
