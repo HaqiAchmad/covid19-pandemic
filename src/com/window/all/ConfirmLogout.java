@@ -3,17 +3,24 @@ package com.window.all;
 import com.database.Account;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Achmad Baihaqi
+ * @since 2020-12-12
+ */
 public class ConfirmLogout extends javax.swing.JFrame {
  
-    int x, y;
+    private int x, y;
     
     private final Account acc = new Account();
     
     public ConfirmLogout() {
         initComponents();
         
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
         this.btnLogout.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -136,7 +143,7 @@ public class ConfirmLogout extends javax.swing.JFrame {
         lblData.setFont(new java.awt.Font("Dialog", 1, 20)); // NOI18N
         lblData.setForeground(new java.awt.Color(222, 34, 34));
         lblData.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblData.setText("Indonesia");
+        lblData.setText("'username'");
 
         lblBottom.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblBottom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -274,6 +281,8 @@ public class ConfirmLogout extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new ConfirmLogout().setVisible(true);
             }

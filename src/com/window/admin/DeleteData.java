@@ -4,12 +4,18 @@ import com.database.Account;
 import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import java.awt.Cursor;
 import javax.swing.JOptionPane;
 
+/**
+ * 
+ * @author Achmad Baihaqi
+ * @since 2020-12-06
+ */
 public class DeleteData extends javax.swing.JFrame {
  
-    int x, y;
+    private int x, y;
     
     private int tabel = 0;
     
@@ -23,6 +29,7 @@ public class DeleteData extends javax.swing.JFrame {
         this.tabel = tabel;
         this.data = data;
         
+        this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
         this.btnHapus.setUI(new javax.swing.plaf.basic.BasicButtonUI());
         this.btnBatal.setUI(new javax.swing.plaf.basic.BasicButtonUI());
@@ -70,9 +77,11 @@ public class DeleteData extends javax.swing.JFrame {
                 
                     // mengecek apakah akun yg akan dihapus sedang digunakan untuk login atau tidak
                     if(deleteAcc.getActivedUser().equalsIgnoreCase(data)){
+                        Audio.play(Audio.SOUND_ERROR);
                         JOptionPane.showMessageDialog(null, "Gagal menghapus data karena anda sedang login dengan akun ini!", "Error", JOptionPane.ERROR_MESSAGE);
                     // mengecek apakah akun yg dihapus adalah akun saya atau bukan
                     }else if(data.equalsIgnoreCase("baihaqi") || data.equalsIgnoreCase("hakiahmad756@gmail.com")){
+                        Audio.play(Audio.SOUND_ERROR);
                         JOptionPane.showMessageDialog(null, "Akun dari 'baihaqi' tidak bisa dihapus\nKarena akun tersebut adalah akun milik Developer aplikasi ini!", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                     else{
@@ -380,6 +389,8 @@ public class DeleteData extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new DeleteData().setVisible(true);
             }

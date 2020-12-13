@@ -573,7 +573,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblInfoWebsite">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Website"/>
+                    <Property name="text" type="java.lang.String" value="Website Resmi"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="valInfoWebsite">

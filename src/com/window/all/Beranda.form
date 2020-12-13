@@ -765,7 +765,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="32.138.014"/>
+            <Property name="text" type="java.lang.String" value="68.603.289"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="valSembuh_Dunia">
@@ -774,7 +774,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="23.708.311"/>
+            <Property name="text" type="java.lang.String" value="47.491.916"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblSembuh_Dunia">
@@ -793,7 +793,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="982.722"/>
+            <Property name="text" type="java.lang.String" value="1.563.834"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAktif_Dunia">
@@ -812,7 +812,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="7.446.981"/>
+            <Property name="text" type="java.lang.String" value="19.547.539"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblKematian_Dunia">
@@ -860,7 +860,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="62.385"/>
+            <Property name="text" type="java.lang.String" value="106.374"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblLastUpdate">
@@ -869,7 +869,7 @@
               <Color blue="a3" green="79" red="2c" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Terakhir diupdate : 30 September 2020"/>
+            <Property name="text" type="java.lang.String" value="Terakhir diupdate : 1 Desember 2020"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAktif_Indo">
@@ -888,7 +888,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="60.064"/>
+            <Property name="text" type="java.lang.String" value="85.345"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblKematian_Indo">
@@ -917,7 +917,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="274.195.355"/>
+            <Property name="text" type="java.lang.String" value="274.787.687"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblKritis_Indo">
@@ -936,7 +936,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="N/A"/>
+            <Property name="text" type="java.lang.String" value="422"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="lineIndoTop">
@@ -991,7 +991,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="262.022"/>
+            <Property name="text" type="java.lang.String" value="586.842"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="valSembuh_Indo">
@@ -1000,7 +1000,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="191.853"/>
+            <Property name="text" type="java.lang.String" value="483.497"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblSembuh_Indo">
@@ -1019,7 +1019,7 @@
               <Font name="Dialog" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="10.105"/>
+            <Property name="text" type="java.lang.String" value="18.000"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblAppName">

@@ -7,6 +7,7 @@ import com.window.admin.DataAplikasi;
 
 import java.awt.Color;
 import java.awt.Cursor;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -225,6 +226,14 @@ public class InformasiAkun extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -756,11 +765,11 @@ public class InformasiAkun extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void btnEditMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseEntered
-//        this.btnEdit_Simpan.setBackground(new Color(33,123,39));
+        this.btnEdit.setBackground(new Color(33,123,39));
     }//GEN-LAST:event_btnEditMouseEntered
 
     private void btnEditMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseExited
-//        this.btnEdit_Simpan.setBackground(new Color(41,180,50));
+        this.btnEdit.setBackground(new Color(41,180,50));
     }//GEN-LAST:event_btnEditMouseExited
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -949,6 +958,16 @@ public class InformasiAkun extends javax.swing.JFrame {
        JOptionPane.showMessageDialog(null, "Silahkan klik tombol 'Edit' terlebih dahulu untuk mengedit sebuah data!!", "Peringatan!", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_editGenderMouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("Menutup Window InformasiAkun");
+        dataUser.closeConnection();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("-->     APLIKASI DITUTUP");
+        dataUser.closeConnection();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -978,6 +997,8 @@ public class InformasiAkun extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new InformasiAkun().setVisible(true);
             }

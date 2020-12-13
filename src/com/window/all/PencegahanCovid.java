@@ -5,6 +5,7 @@ import com.media.gambar.Gambar;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 /**
@@ -818,6 +819,8 @@ public class PencegahanCovid extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new PencegahanCovid().setVisible(true);
             }

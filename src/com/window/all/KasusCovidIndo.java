@@ -12,6 +12,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -390,7 +391,7 @@ public class KasusCovidIndo extends javax.swing.JFrame {
 
         valInfoPeringkat.setText(": 3 dari 34 Provinsi");
 
-        lblInfoWebsite.setText("Website");
+        lblInfoWebsite.setText("Website Resmi");
 
         valInfoWebsite.setForeground(new java.awt.Color(8, 82, 200));
         valInfoWebsite.setText(": infocovid19.jatimprov...");
@@ -913,9 +914,10 @@ public class KasusCovidIndo extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new KasusCovidIndo().setVisible(true);
             }

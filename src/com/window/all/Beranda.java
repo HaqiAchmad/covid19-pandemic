@@ -8,6 +8,7 @@ import com.window.admin.DataAplikasi;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -516,11 +517,11 @@ public class Beranda extends javax.swing.JFrame {
 
         valPositif_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valPositif_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valPositif_Dunia.setText("32.138.014");
+        valPositif_Dunia.setText("68.603.289");
 
         valSembuh_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valSembuh_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valSembuh_Dunia.setText("23.708.311");
+        valSembuh_Dunia.setText("47.491.916");
 
         lblSembuh_Dunia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblSembuh_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -529,7 +530,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valKematian_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valKematian_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valKematian_Dunia.setText("982.722");
+        valKematian_Dunia.setText("1.563.834");
 
         lblAktif_Dunia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblAktif_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -538,7 +539,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valAktif_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valAktif_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valAktif_Dunia.setText("7.446.981");
+        valAktif_Dunia.setText("19.547.539");
 
         lblKematian_Dunia.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblKematian_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -561,11 +562,11 @@ public class Beranda extends javax.swing.JFrame {
 
         valKritis_Dunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valKritis_Dunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valKritis_Dunia.setText("62.385");
+        valKritis_Dunia.setText("106.374");
 
         lblLastUpdate.setForeground(new java.awt.Color(44, 121, 163));
         lblLastUpdate.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblLastUpdate.setText("Terakhir diupdate : 30 September 2020");
+        lblLastUpdate.setText("Terakhir diupdate : 1 Desember 2020");
 
         lblAktif_Indo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblAktif_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -574,7 +575,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valAktif_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valAktif_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valAktif_Indo.setText("60.064");
+        valAktif_Indo.setText("85.345");
 
         lblKematian_Indo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblKematian_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -588,7 +589,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valPopulasi_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valPopulasi_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valPopulasi_Indo.setText("274.195.355");
+        valPopulasi_Indo.setText("274.787.687");
 
         lblKritis_Indo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblKritis_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -597,7 +598,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valKritis_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valKritis_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valKritis_Indo.setText("N/A");
+        valKritis_Indo.setText("422");
 
         lineIndoTop.setBackground(new java.awt.Color(16, 15, 15));
         lineIndoTop.setForeground(new java.awt.Color(16, 15, 15));
@@ -627,11 +628,11 @@ public class Beranda extends javax.swing.JFrame {
 
         valPositif_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valPositif_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valPositif_Indo.setText("262.022");
+        valPositif_Indo.setText("586.842");
 
         valSembuh_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valSembuh_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valSembuh_Indo.setText("191.853");
+        valSembuh_Indo.setText("483.497");
 
         lblSembuh_Indo.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
         lblSembuh_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -640,7 +641,7 @@ public class Beranda extends javax.swing.JFrame {
 
         valKematian_Indo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         valKematian_Indo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        valKematian_Indo.setText("10.105");
+        valKematian_Indo.setText("18.000");
 
         lblAppName.setFont(new java.awt.Font("Dialog", 1, 15)); // NOI18N
         lblAppName.setText("Covid-19 Pandemic");
@@ -1240,10 +1241,11 @@ public class Beranda extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Beranda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new Beranda().setVisible(true);
             }

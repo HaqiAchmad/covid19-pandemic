@@ -19,6 +19,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.util.Random;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,6 +54,7 @@ public class DataAplikasi extends javax.swing.JFrame {
      */
     private int totalUser = 14565346, totalPria = 8634971, totalWanita = 5940370, userIndo = 11542654, 
                 userLuar = 3022692, akunUser = 14565130, online = 75454;
+    
     private int x, y;
     /**
      * Digunakan untuk merandom data dari user
@@ -678,7 +680,7 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblDataUser.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblDataUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataUser.setText("Lihat Data User");
+        lblDataUser.setText("Data Pengguna Aplikasi");
         lblDataUser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblDataUser_totalUser.setText("Total User");
@@ -814,7 +816,7 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblDataCovidDunia.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblDataCovidDunia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataCovidDunia.setText("Lihat Data Covid-19 Dunia");
+        lblDataCovidDunia.setText("Data Kasus Covid-19 Dunia");
         lblDataCovidDunia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblLinkDataCovidDunia.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -871,7 +873,7 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblDataCovidDunia_diubah.setText("Terakhir Diubah");
 
-        valDataCovidDunia_diubah.setText(": 05 November 2020");
+        valDataCovidDunia_diubah.setText(": 15 November 2020");
 
         javax.swing.GroupLayout pnlDataCovidDuniaLayout = new javax.swing.GroupLayout(pnlDataCovidDunia);
         pnlDataCovidDunia.setLayout(pnlDataCovidDuniaLayout);
@@ -960,7 +962,7 @@ public class DataAplikasi extends javax.swing.JFrame {
 
         lblDataCovidIndo.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         lblDataCovidIndo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblDataCovidIndo.setText("Lihat Data Covid-19 Indonesia");
+        lblDataCovidIndo.setText("Data Kasus Covid-19 Indonesia");
         lblDataCovidIndo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblLinkDataCovidIndonesia.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
@@ -1574,10 +1576,11 @@ public class DataAplikasi extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(DataAplikasi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new DataAplikasi().setVisible(true);
             }

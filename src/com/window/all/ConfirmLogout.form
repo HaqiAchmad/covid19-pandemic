@@ -199,7 +199,7 @@
               <Color blue="22" green="22" red="de" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Indonesia"/>
+            <Property name="text" type="java.lang.String" value="&apos;username&apos;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lblBottom">

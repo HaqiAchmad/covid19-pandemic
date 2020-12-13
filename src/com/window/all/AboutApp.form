@@ -1221,7 +1221,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valUkuran">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 21 Mb"/>
+                <Property name="text" type="java.lang.String" value=": 25 Mb"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblTotalDownload">
@@ -1271,7 +1271,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDiupdate">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 1 Desember 2020"/>
+                <Property name="text" type="java.lang.String" value=": 13 Desember 2020"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblBahasa">

@@ -649,7 +649,7 @@
                   <Font name="Dialog" size="14" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Lihat Data User"/>
+                <Property name="text" type="java.lang.String" value="Data Pengguna Aplikasi"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder/>
@@ -882,7 +882,7 @@
                   <Font name="Dialog" size="14" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Lihat Data Covid-19 Dunia"/>
+                <Property name="text" type="java.lang.String" value="Data Kasus Covid-19 Dunia"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder/>
@@ -1004,7 +1004,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDataCovidDunia_diubah">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 05 November 2020"/>
+                <Property name="text" type="java.lang.String" value=": 15 November 2020"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -1132,7 +1132,7 @@
                   <Font name="Dialog" size="14" style="1"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Lihat Data Covid-19 Indonesia"/>
+                <Property name="text" type="java.lang.String" value="Data Kasus Covid-19 Indonesia"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                     <LineBorder/>

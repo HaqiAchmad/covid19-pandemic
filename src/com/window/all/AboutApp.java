@@ -13,7 +13,17 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Properties;
 import java.util.Random;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -40,10 +50,11 @@ public class AboutApp extends javax.swing.JFrame {
                          fotoProfile = acc.getDataAccount(acc.getActivedUser(), Account.FOTO_PROFILE),
                          tipeAkun = acc.getDataAccount(acc.getActivedUser(), Account.TYPE);
     /**
-     * Digunakan untuk menyimpan data info app yang berbentuk String
+     * Digunakan untuk menggirim ratting yang diberikan user
      */
-    private final String NAMA_APP = "Covid-19 Pandemic", VERSI_APP = "1.0", UKURAN_APP = "17 Mb", RILIS = "14 November 2020", 
-                         UPDATE = "1 Desember 2020", BAHASA = "Java", DATABASE = "MySQL", DEVELOPER = "Achmad Baihaqi";
+    private static final String RECIPIENT = "hakiahmad756@gmail.com", 
+                                GMAIL = "baihaqi.myapps@gmail.com", 
+                                PASSWORD = "$->myapps.java(2020);";
     
     private int totalDownload = 14565346, penggunaOnline = 75654;
     /**
@@ -508,6 +519,53 @@ public class AboutApp extends javax.swing.JFrame {
         }
     }
         
+    /**
+     * Digunakan untuk mengirimkan email dari user ke hakiahmad756@gmail.com. 
+     * Email dapat berisi ratting dari user atau laporan bahwa user mengedit database
+     * 
+     * @param subject subject dari email
+     * @param htmlcode isi dari email
+     */
+    public void sendGmail(final String subject, final String htmlcode){
+            
+        System.out.println("Mengirim email ke " + RECIPIENT);
+
+        // membuat properti object
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        // membuat session
+        Session session = Session.getInstance(props, new Authenticator(){
+
+            @Override 
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(GMAIL, PASSWORD);
+            }
+
+        });
+        
+        // mendebug session
+        session.setDebug(true);
+
+        try{
+            // membuat email yang akan dikirim
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(GMAIL)); // mengatur pengirim email
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress(RECIPIENT)); // mengatur tipe pesan dan penerima email
+            message.setSubject(subject); // mengatur subject dari email
+            message.setContent(htmlcode, "text/html"); // mengatur isi dari email
+
+            Transport.send(message); // mengirimkan email 
+            System.out.println("Email sukses terkirim ke " + RECIPIENT);
+
+        }catch (MessagingException ex) {
+            System.out.println("Terjadi kesalahan saat akan menggirim Gmail : " + ex.getMessage());
+        }
+
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1272,7 +1330,7 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblUkuranApp.setText("   Ukuran Aplikasi");
 
-        valUkuran.setText(": 21 Mb");
+        valUkuran.setText(": 25 Mb");
 
         lblTotalDownload.setText("   Total Download");
 
@@ -1292,7 +1350,7 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblDiupdate.setText("   Diupdate pada");
 
-        valDiupdate.setText(": 1 Desember 2020");
+        valDiupdate.setText(": 13 Desember 2020");
 
         lblBahasa.setText("   Bahasa pemrograman");
 
@@ -1707,6 +1765,26 @@ public class AboutApp extends javax.swing.JFrame {
                 chooseRatting3.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 chooseRatting4.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
                 chooseRatting5.setIcon(Gambar.getIcon("ic-aboutapp-star.png"));
+                /*
+                   Mengecek apakah user terhubung ke internet atau tidak,
+                   jika user terhubung ke internet maka ratting akan dikirim melalui email
+                */
+                if(this.isConnectInternet()){
+                    
+                    // menggirim ratting melalui email
+                    new Thread(new Runnable(){
+                        
+                        @Override
+                        public void run(){
+                            // membuat subject dan isi gmail
+                            String subject = "" + ratting + " bintang dari " + acc.getActivedUser() + " (" + acc.getDataAccount(acc.getActivedUser(), Account.NAMA_LENGKAP) + ") pada " + acc.dateToString(acc.getDateNow()),
+                                   htmlcode = "<h2>" + acc.getDataAccount(acc.getActivedUser(), Account.EMAIL) + " Memberi "+ratting+" bintang ke aplikasi Covid-19 Pandemic.</h2>";
+                            // menggirim gmail
+                            sendGmail(subject, htmlcode);
+                        }
+                    }).start();
+                }
+                
                // memainkan efek dari update ratting
                 updateRatting();
             }else{
@@ -1918,6 +1996,8 @@ public class AboutApp extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new AboutApp().setVisible(true);
             }

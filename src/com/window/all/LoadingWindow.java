@@ -80,6 +80,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                         Thread.sleep(delay);
                     }
                     
+                    // jika user sudah login maka window Beranda akan dibuka
                      if(acc.isLogin()){
                         dispose();
                         java.awt.EventQueue.invokeLater(new Runnable(){
@@ -89,6 +90,7 @@ public class LoadingWindow extends javax.swing.JFrame {
                                 new com.window.all.Beranda().setVisible(true);
                             }
                         });
+                    // jika user belum login maka window SignIn akan dibuka
                     }else{
                         dispose();
                         java.awt.EventQueue.invokeLater(new Runnable(){
@@ -228,6 +230,8 @@ public class LoadingWindow extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new LoadingWindow().setVisible(true);
             }

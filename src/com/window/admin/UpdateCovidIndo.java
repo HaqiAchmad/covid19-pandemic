@@ -3,12 +3,13 @@ package com.window.admin;
 import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
-import com.sun.glass.events.KeyEvent;
 import com.window.all.Beranda;
+import com.sun.glass.events.KeyEvent;
+
 import java.awt.Color;
 import java.awt.Cursor;
-
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -1583,9 +1584,11 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
     private void inpCariProvinsiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariProvinsiKeyTyped
         // mendapatkan provinsi yang dicari oleh user
         keyword = this.inpCariProvinsi.getText();
+        System.out.println("\nMencari provinsi dengan keyword = '" + keyword + "'");
         // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
         int row = dataIndo.getRows("SELECT * FROM kasuscovid_indo WHERE kode LIKE '%"+ keyword +"%' OR provinsi LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
         // mereset lbl show keyword
+        System.out.println("Menampilkan " + row + " provinsi dengan keyword = '"+keyword+"'");
         this.lblKeyword.setText("Menampilkan "+ row +" provinsi dengan keyword = \""+keyword+"\"");
         // mereset tabel
         dataTabel();
@@ -1781,6 +1784,8 @@ public class UpdateCovidIndo extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new UpdateCovidIndo().setVisible(true);
             }

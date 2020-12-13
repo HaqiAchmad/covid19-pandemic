@@ -1,17 +1,17 @@
 package com.window.admin;
 
 import com.database.Account;
-import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.Beranda;
+
 import java.awt.Color;
 import java.awt.Cursor;
-
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -48,8 +48,6 @@ public class AddDataUser extends javax.swing.JFrame {
         
         this.setIconImage(Gambar.getWindowIcon());
         this.setLocationRelativeTo(null);
-//        this.lblShowProfile.setText("");
-//        this.lblShowProfile.setIcon(Gambar.scaleImage(new java.io.File("src\\com\\media\\gambar\\lambang\\lambang-negara.jpeg"), 55, 60));
         this.inpTanggalLahir.setDate(new Date(2003, 7, 4));
         
         this.copyrightEffect();
@@ -171,11 +169,10 @@ public class AddDataUser extends javax.swing.JFrame {
      */
     private boolean tambahData(){
         // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
-        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
-        // digunakan untuk mendapatkan tanggal lahir
         SimpleDateFormat fm = new SimpleDateFormat("YYYY-MM-dd");
         // isValid digunakan untuk mengecek apakah data yang akan ditambahkan  valid atau tidak
-        boolean isValids = false;
+        // isExist digunakan untuk mengecek apakah negara yang dimasukan user ada atau tidak didalam database
+        boolean isValids = false, isExist;
         
         // mendapatkan data dari input JTextField
         username = this.inpUsername.getText();
@@ -243,7 +240,7 @@ public class AddDataUser extends javax.swing.JFrame {
                             if(acc.isValidAlamat(alamat)){
                                 changeColor(this.inpAlamat, this.lblAlamat, true);
                                 // mengecek apakah negara ada atau tidak 
-                                if(dataNegara.isExist(negara)){
+                                if(acc.isValidAsalNegara(negara)){
                                     changeColor(this.inpNegara, this.lblNegara, true);
                                     // mengecek apakah pekerjaan valid atau tidak
                                     if(acc.isValidPekerjaan(pekerjaan)){
@@ -270,8 +267,6 @@ public class AddDataUser extends javax.swing.JFrame {
                                         changeColor(this.inpPekerjaan, this.lblPekerjaan, false);
                                     }
                                 }else{
-                                    Audio.play(Audio.SOUND_WARNING);
-                                    JOptionPane.showMessageDialog(null, "'" + negara + "' negara tersebut tidak ditemukan!", "Warning", JOptionPane.WARNING_MESSAGE);
                                     changeColor(this.inpNegara, this.lblNegara, false);
                                 }
                             }else{
@@ -712,8 +707,8 @@ public class AddDataUser extends javax.swing.JFrame {
         inpTanggalLahir.setBackground(new java.awt.Color(255, 255, 255));
         inpTanggalLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 106, 255)));
         inpTanggalLahir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        inpTanggalLahir.setMaxSelectableDate(new java.util.Date(1609437701000L));
-        inpTanggalLahir.setMinSelectableDate(new java.util.Date(-2209010299000L));
+        inpTanggalLahir.setMaxSelectableDate(new java.util.Date(11833840901000L));
+        inpTanggalLahir.setMinSelectableDate(new java.util.Date(-5364683899000L));
 
         inpKonnPassword.setFont(new java.awt.Font("Dialog", 1, 13)); // NOI18N
         inpKonnPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -961,7 +956,7 @@ public class AddDataUser extends javax.swing.JFrame {
 
     private void inpAddFotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inpAddFotoMouseClicked
         Audio.play(Audio.SOUND_INFO);
-        JOptionPane.showMessageDialog(null, "Fitur 'Edit Bendera' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Fitur 'Tambah Foto' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_inpAddFotoMouseClicked
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
@@ -1172,6 +1167,8 @@ public class AddDataUser extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new AddDataUser().setVisible(true);
             }

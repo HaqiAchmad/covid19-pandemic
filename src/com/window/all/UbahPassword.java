@@ -3,6 +3,7 @@ package com.window.all;
 import com.database.Account;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
+
 import javax.swing.JOptionPane;
 
 
@@ -33,6 +34,11 @@ public class UbahPassword extends javax.swing.JFrame {
         initComponents();
 
         this.fromWindow = fromWindow;
+        
+        // jika window sebelumnya adalah editAkun maka tombol singup akan tidak terlihat
+        if(fromWindow == EDIT_AKUN){
+            this.lblSignUp.setVisible(false);
+        }
         
         this.setLocationRelativeTo(null);
         this.setIconImage(Gambar.getWindowIcon());
@@ -520,6 +526,8 @@ public class UbahPassword extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new UbahPassword().setVisible(true);
             }

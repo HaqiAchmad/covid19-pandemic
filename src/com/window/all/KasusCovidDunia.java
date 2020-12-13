@@ -5,6 +5,7 @@ import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 
 import com.sun.glass.events.KeyEvent;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -824,6 +825,8 @@ public class KasusCovidDunia extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new KasusCovidDunia().setVisible(true);
             }

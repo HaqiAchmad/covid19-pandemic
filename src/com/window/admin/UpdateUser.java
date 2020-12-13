@@ -1,10 +1,10 @@
 package com.window.admin;
 
 import com.database.Account;
-import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.Beranda;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.KeyEvent;
@@ -224,8 +224,6 @@ public class UpdateUser extends javax.swing.JFrame {
      * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
      */
     private boolean saveData(){
-        // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
-        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
         // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
         boolean isValids = false, isSave = false;
@@ -247,7 +245,7 @@ public class UpdateUser extends javax.swing.JFrame {
                 if(dataUser.isValidAlamat(eAlamat)){
                     changeColor(this.editAlamat, this.lblAlamat, true);
                     // mengecek apakah negara yg dimasukan user ada atau tidak
-                    if(dataNegara.isExist(eNegara)){
+                    if(dataUser.isValidAsalNegara(eNegara)){
                         changeColor(this.editAsalNegara, this.lblAsalNegara, true);
                         // mengecek apakah pekerjaan valid atau tidak
                         if(dataUser.isValidPekerjaan(ePekerjaan)){
@@ -258,8 +256,6 @@ public class UpdateUser extends javax.swing.JFrame {
                             changeColor(this.editPekerjaan, this.lblPekerjaan, false);
                         }
                     }else{
-                        Audio.play(Audio.SOUND_WARNING);
-                        JOptionPane.showMessageDialog(null, "Tidak dapat menemukan negara '"+eNegara+"'.", "Warning", JOptionPane.INFORMATION_MESSAGE);
                         changeColor(this.editAsalNegara, this.lblAsalNegara, false);
                     }
                 }else{
@@ -1467,9 +1463,11 @@ public class UpdateUser extends javax.swing.JFrame {
     private void inpCariUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inpCariUserKeyTyped
         // mendapatkan keyword yang diinputkan user melalui inpCariUser
         this.keyword = inpCariUser.getText();
+        System.out.println("\nMencari user dengan keyword = '" + keyword + "'");
         // mendapatkan total akun yang karakternya mirip dengan keyword yg diinputkan user
         int row = dataUser.getTotalAkun("SELECT * FROM users WHERE username LIKE '%"+keyword+"%' OR namalengkap LIKE '%"+keyword+"%' OR namapanggilan LIKE '%"+keyword+"%' OR email LIKE '%"+keyword+"%' OR type LIKE '%"+keyword+"%'");
         // mereset lblKeyword
+        System.out.println("Menampilan " + row + " user dengan keyword = '" + keyword + "'");
         this.lblKeyword.setText("Menampilkan "+row+" data dengan keyword = \""+keyword+"\"");
         // mereset data tabel berdasarkan keyword yang dimasukan user
         dataTabel();
@@ -1671,6 +1669,8 @@ public class UpdateUser extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new UpdateUser().setVisible(true);
             }

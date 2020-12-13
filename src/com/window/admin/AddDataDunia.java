@@ -4,11 +4,12 @@ import com.database.CovidCases;
 import com.media.audio.Audio;
 import com.media.gambar.Gambar;
 import com.window.all.Beranda;
+
 import java.awt.Color;
 import java.awt.Cursor;
-
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -1024,7 +1025,7 @@ public class AddDataDunia extends javax.swing.JFrame {
 
     private void lblInpBenderaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblInpBenderaMouseClicked
         Audio.play(Audio.SOUND_INFO);
-        JOptionPane.showMessageDialog(null, "Fitur 'Edit Bendera' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Fitur 'Tambah Bendera' untuk saat ini belum tersedia!", "Info", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_lblInpBenderaMouseClicked
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
@@ -1235,6 +1236,8 @@ public class AddDataDunia extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new AddDataDunia().setVisible(true);
             }

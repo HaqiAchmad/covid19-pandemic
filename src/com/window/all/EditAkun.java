@@ -1,7 +1,6 @@
 package com.window.all;
 
 import com.database.Account;
-import com.database.CovidCases;
 import com.media.gambar.Gambar;
 import com.media.audio.Audio;
 
@@ -9,6 +8,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -34,7 +34,7 @@ public class EditAkun extends javax.swing.JFrame {
     /**
      * Digunakan untuk menyimpan hasil dari edit data akun
      */
-    private String eNamaLengkap, eNamaPanggilan, ePekerjaan, eAlamat, eNegara;
+    private String eNamaLengkap, eNamaPanggilan, ePekerjaan, eAlamat, eNegara, eTanggalLahir, eGender;
     
     private int x, y;
     
@@ -85,27 +85,25 @@ public class EditAkun extends javax.swing.JFrame {
      * @return Jika proses edit berhasil maka akan mengembalikan nilai <b>True</b>. Tapi jika gagal maka akan mengembalikan nilai <b>False</b>. 
      */
     private boolean editData(){
-        // digunakan untuk mengecek apakah negara yang dimasukan ada atau tidak
-        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
         // digunakan untuk mendapatkan tanggal lahir
         SimpleDateFormat fm = new SimpleDateFormat("YYYY-MM-dd");
         // isValid digunakan untuk mengecek apakah data yang diedit valid atau tidak
         // isSave digunakan untuk mengecek semua data sudah tersimpan atau belum
         boolean isValids = false, isSave = false;
         
-        // mendapatkan data dari input JTextField
-        namaLengkap = this.editNamalengkap.getText();
-        namaPanggilan = this.editNamapanggilan.getText();
-        alamat = this.editAlamat.getText();
-        negara = this.editAsalNegara.getText();
-        pekerjaan = this.editPekerjaan.getText();
+        // mendapatkan data yang diedit
+        this.eNamaLengkap = this.editNamalengkap.getText();
+        this.eNamaPanggilan = this.editNamapanggilan.getText();
+        this.eAlamat = this.editAlamat.getText();
+        this.eNegara = this.editAsalNegara.getText();
+        this.ePekerjaan = this.editPekerjaan.getText();
         
         // mendapatkan data dari gender dari JComboBox
         switch(this.editGender.getSelectedIndex()){
-            case 0: this.gender = "N"; break;
-            case 1: this.gender = "L"; break;
-            case 2: this.gender = "P"; break;
-            default: this.gender = "N"; break;
+            case 0: this.eGender = "N"; break;
+            case 1: this.eGender = "L"; break;
+            case 2: this.eGender = "P"; break;
+            default: this.eGender = "N"; break;
         }
         
         
@@ -114,9 +112,9 @@ public class EditAkun extends javax.swing.JFrame {
             jika input tanggal lahir kosong maka kemungkinan akan menghasilkan error
         */ 
         try{
-             this.tanggalLahir = String.valueOf(fm.format(this.editTanggalLahir.getDate()));
+             this.eTanggalLahir = String.valueOf(fm.format(this.editTanggalLahir.getDate()));
         }catch(NullPointerException e){
-            this.tanggalLahir = "0001-01-01";
+            this.eTanggalLahir = "0001-01-01";
             System.out.println("Terjadi kesalahan saat mengambil tanggal lahir : " + e.getMessage());
         }
         
@@ -127,86 +125,71 @@ public class EditAkun extends javax.swing.JFrame {
          * Jika data sudah valid semua maka variabel isValids nilai-nya akan berubah menjadi True
          */
         
-        // mengecek username valid atau tidak
-        if(dataUser.isValidUsername(this.username)){
-            changeColor(this.editUsername, this.lblUsername, true);
-            // mengecek email valid atau tidak
-            if(dataUser.isValidEmail(this.email)){
-                changeColor(this.editEmail, this.lblEmail, true);
-                // mengecek nama lengkap valid atau tidak
-                if(dataUser.isValidNamalengkap(this.namaLengkap)){
-                    changeColor(this.editNamalengkap, this.lblNamalengkap, true);
-                    // mengecek nama panggilan valid atau tidak
-                    if(dataUser.isValidNamapanggilan(this.namaPanggilan)){
-                        changeColor(this.editNamapanggilan, this.lblNamapanggilan, true);
-                        // mengecek tanggal lahir valid atau tidak
-                        if(dataUser.isValidUmur(tanggalLahir)){
-                            // mengubah warna line border pada JDateChoose ke warna biru
-                            this.editTanggalLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(0,106,255)));
-                            this.lblTanggalLahir.setForeground(new Color(0,0,0));
-                            // mengecek apakah alamat valid atau tidak
-                            if(dataUser.isValidAlamat(alamat)){
-                                changeColor(this.editAlamat, this.lblAlamat, true);
-                                // mengecek apakah negara ada atau tidak 
-                                if(dataNegara.isExist(negara)){
-                                    changeColor(this.editAsalNegara, this.lblAsalNegara, true);
-                                    // mengecek apakah pekerjaan valid atau tidak
-                                    if(dataUser.isValidPekerjaan(pekerjaan)){
-                                        changeColor(this.editPekerjaan, this.lblPekerjaan, true);
-                                            // mengecek apakah password valid atau tidak
-                                        if(dataUser.isValidPassword(password)){
-                                            changeColor(this.editPassword, this.lblPassword, true);
-                                            // semua data sudah valid dan var isValids akan berubah menjadi True
-                                            isValids = true;
-                                        }else{
-                                            changeColor(this.editPassword, this.lblPassword, false);
-                                        }                                        
-                                    }else{
-                                        changeColor(this.editPekerjaan, this.lblPekerjaan, false);
-                                    }
-                                }else{
-                                    Audio.play(Audio.SOUND_WARNING);
-                                    JOptionPane.showMessageDialog(null, "'" + negara + "' negara tersebut tidak ditemukan!", "Warning", JOptionPane.WARNING_MESSAGE);
-                                    changeColor(this.editAsalNegara, this.lblAsalNegara, false);
-                                }
+        // mengecek apakah nama lengkap valid atau tidak
+        if(dataUser.isValidNamalengkap(this.eNamaLengkap)){
+            changeColor(this.editNamalengkap, this.lblNamalengkap, true);
+            // mengecek apakah nama panggilan valid atau tidak
+            if(dataUser.isValidNamapanggilan(this.eNamaPanggilan)){
+                changeColor(this.editNamapanggilan, this.lblNamapanggilan, true);
+                // mengecek apakah tanggal lahir valid atau tidak
+                if(dataUser.isValidUmur(this.eTanggalLahir)){
+                    // mengubah warna line border pada JDateChoose ke warna biru
+                    this.editTanggalLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(0,106,255)));
+                    this.editTanggalLahir.setForeground(new Color(0,0,0));
+                    // mengecek apakah alamat valid atau tidak
+                    if(dataUser.isValidAlamat(this.eAlamat)){
+                        changeColor(this.editAlamat, this.lblAlamat, true);
+                        // mengecek apakah negara yang dimasukan ada atau tidak didalam database
+                        if(dataUser.isValidAsalNegara(this.eNegara)){
+                            changeColor(this.editAsalNegara, this.lblAsalNegara, true);
+                            // mengecek apakah pekerjaan valid atau tidak
+                            if(dataUser.isValidPekerjaan(this.ePekerjaan)){
+                                changeColor(this.editPekerjaan, this.lblPekerjaan, true);
+                                // semua data sudah valid dan var isValids akan bernilai True
+                                isValids = true;
                             }else{
-                                changeColor(this.editAlamat, this.lblAlamat, false);
+                                changeColor(this.editPekerjaan, this.lblPekerjaan, false);
                             }
                         }else{
-                            // mengubah warna line border pada JDateChoose ke warna merah 
-                            this.editTanggalLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(255,0,0)));
-                            this.lblTanggalLahir.setForeground(new Color(255,255,255));
+                            changeColor(this.editAsalNegara, this.lblAsalNegara, false);
                         }
                     }else{
-                        changeColor(this.editNamapanggilan, this.lblNamapanggilan, false);
+                        changeColor(this.editAlamat, this.lblAlamat, false);
                     }
                 }else{
-                    changeColor(this.editNamalengkap, this.lblNamalengkap, false);
+                    // mengubah warna line border pada JDateChoose ke warna merah 
+                    this.editTanggalLahir.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(255,0,0)));
+                    this.editTanggalLahir.setForeground(new Color(255,255,255));
                 }
             }else{
-                changeColor(this.editEmail, this.lblEmail, false);
+                changeColor(this.editNamapanggilan, this.lblNamapanggilan, false);
             }
         }else{
-            changeColor(this.editUsername, this.lblUsername, false);
+            changeColor(this.editNamalengkap, this.lblNamalengkap, false);
         }
         
-        // mengubah cursor ke cursor loading
         this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         
         // mengecek apakah semua data yang diedit valid atau tidak, jika valid maka data akan disimpan
         if(isValids){
-            // menyimpan data dari nama lengkap
-            if(dataUser.editAccount(username, Account.NAMA_LENGKAP, eNamaLengkap)){
-                // menyimpan data dari nama panggilan
-                if(dataUser.editAccount(username, Account.NAMA_PANGGILAN, eNamaPanggilan)){
-                    // menyimpan data dari alamat
-                    if(dataUser.editAccount(username, Account.ALAMAT, eAlamat)){
-                        // menyimpan data dari negara
-                        if(dataUser.editAccount(username, Account.NEGARA, eNegara)){
-                            // menyimpan data dari pekerjaan
-                            if(dataUser.editAccount(username, Account.PEKERJAAN, ePekerjaan)){
-                                // data sudah tersimpan semua dan variabel isSave bernilai True
-                                isSave = true;   
+            // menyimpan data nama lengkap
+            if(dataUser.editAccount(this.username, Account.NAMA_LENGKAP, this.eNamaLengkap)){
+                // menyimpan data nama panggilan 
+                if(dataUser.editAccount(this.username, Account.NAMA_PANGGILAN, this.eNamaPanggilan)){
+                    // menyimpan data jenis kelamin
+                    if(dataUser.editAccount(this.username, Account.GENDER, this.eGender)){
+                        // menyimpan data tanggal lahir
+                        if(dataUser.editAccount(this.username, Account.TGL_LAHIR, this.eTanggalLahir)){
+                            // menyimpan data alamat
+                            if(dataUser.editAccount(this.username, Account.ALAMAT, this.eAlamat)){
+                                // menyimpan data asal negara
+                                if(dataUser.editAccount(this.username, Account.NEGARA, this.eNegara)){
+                                    // menyimpan data pekerjaan
+                                    if(dataUser.editAccount(this.username, Account.PEKERJAAN, this.ePekerjaan)){
+                                        // semua data sudah tersimpan dan var isSave akan berubah menjadi TRue
+                                        isSave = true;
+                                    }
+                                }
                             }
                         }
                     }
@@ -222,17 +205,17 @@ public class EditAkun extends javax.swing.JFrame {
          // jika proses penyimpanan data gagal
          }else if(isValids && !isSave){
              // mereset data yang diedit ke data sebelumnya
-             dataUser.editAccount(this.username, Account.NAMA_LENGKAP, this.namaLengkap);
-             dataUser.editAccount(this.username, Account.NAMA_PANGGILAN, this.namaPanggilan);
-             dataUser.editAccount(this.username, Account.ALAMAT, this.alamat);
-             dataUser.editAccount(this.username, Account.NEGARA, this.negara);
-             dataUser.editAccount(this.username, Account.PEKERJAAN, this.pekerjaan);
+             dataUser.editAccount(this.username, Account.NAMA_LENGKAP, this.eNamaLengkap);
+             dataUser.editAccount(this.username, Account.NAMA_PANGGILAN, this.eNamaPanggilan);
+             dataUser.editAccount(this.username, Account.GENDER, this.gender);
+             dataUser.editAccount(this.username, Account.TGL_LAHIR, this.tanggalLahir);
+             dataUser.editAccount(this.username, Account.ALAMAT, this.eAlamat);
+             dataUser.editAccount(this.username, Account.NEGARA, this.eNegara);
+             dataUser.editAccount(this.username, Account.PEKERJAAN, this.ePekerjaan);
          }
         
-        // mereest cursor ke cursor default
         this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        
-        return false; // akan mereturn false jika terjadi kesalahan akan menambahkan data
+        return false; // akan mereturn false jika terjadi kesalahan saat mengedit/menyimpan data
     }
     
     /**
@@ -371,6 +354,14 @@ public class EditAkun extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
         pnlMain.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -890,17 +881,22 @@ public class EditAkun extends javax.swing.JFrame {
     }//GEN-LAST:event_lblCloseMouseExited
 
     private void btnSimpanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseEntered
-//        this.btnEdit_Simpan.setBackground(new Color(33,123,39));
+        this.btnSimpan.setBackground(new Color(31,34,38));
+        this.btnBatal.setBackground(new Color(34,119,237));
     }//GEN-LAST:event_btnSimpanMouseEntered
 
     private void btnSimpanMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSimpanMouseExited
-//        this.btnEdit_Simpan.setBackground(new Color(41,180,50));
+        this.btnSimpan.setBackground(new Color(34,119,237));
+        this.btnBatal.setBackground(new Color(220,41,41));
     }//GEN-LAST:event_btnSimpanMouseExited
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         boolean isSave = this.editData();
         // jika edit data berhasil maka window EditAkun akan ditutup dan window Informasi Akun akan dibuka
         if(isSave){
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Selamat akun anda berhasil diperbaharui!", "Informasi", JOptionPane.INFORMATION_MESSAGE);
+            // membuka window InformasiAkun
             System.out.println("Membuka Window InformasiAkun");
             InformasiAkun infoAkun = new InformasiAkun(InformasiAkun.BERANDA);
             infoAkun.setLocation(this.getX(), this.getY());
@@ -918,10 +914,12 @@ public class EditAkun extends javax.swing.JFrame {
 
     private void btnBatalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseEntered
         this.btnBatal.setBackground(new Color(31,34,38));
+        this.btnSimpan.setBackground(new Color(220,41,41));
     }//GEN-LAST:event_btnBatalMouseEntered
 
     private void btnBatalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBatalMouseExited
         this.btnBatal.setBackground(new Color(220,41,41));
+        this.btnSimpan.setBackground(new Color(34,119,237));
     }//GEN-LAST:event_btnBatalMouseExited
 
     private void btnBatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBatalActionPerformed
@@ -1004,7 +1002,8 @@ public class EditAkun extends javax.swing.JFrame {
     }//GEN-LAST:event_pnlMainMousePressed
 
     private void editUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editUsernameMouseClicked
-
+            Audio.play(Audio.SOUND_WARNING);
+            JOptionPane.showMessageDialog(null, "Username hanya dapat diubah sekali saja saat akun dibuat!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_editUsernameMouseClicked
 
     private void editNamalengkapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamalengkapMouseClicked
@@ -1020,7 +1019,8 @@ public class EditAkun extends javax.swing.JFrame {
     }//GEN-LAST:event_editPekerjaanMouseClicked
 
     private void editTipeAkunMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTipeAkunMouseClicked
-
+        Audio.play(Audio.SOUND_WARNING);
+        JOptionPane.showMessageDialog(null, "Tipe akun hanya dapat diubah sekali saja saat akun dibuat!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_editTipeAkunMouseClicked
 
     private void editAsalNegaraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editAsalNegaraMouseClicked
@@ -1044,11 +1044,13 @@ public class EditAkun extends javax.swing.JFrame {
     }//GEN-LAST:event_editPasswordMouseClicked
 
     private void editTglDibuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editTglDibuatMouseClicked
-      
+        Audio.play(Audio.SOUND_WARNING);
+        JOptionPane.showMessageDialog(null, "Tanggal Dibuat adalah tanggal saat akun dibuat!", "Peringatan!", JOptionPane.WARNING_MESSAGE);      
     }//GEN-LAST:event_editTglDibuatMouseClicked
 
     private void editEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editEmailMouseClicked
-
+        Audio.play(Audio.SOUND_WARNING);
+        JOptionPane.showMessageDialog(null, "Email hanya dapat diubah sekali saja saat akun dibuat!", "Pesan", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_editEmailMouseClicked
 
     private void editNamapanggilanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editNamapanggilanMouseClicked
@@ -1091,6 +1093,16 @@ public class EditAkun extends javax.swing.JFrame {
         this.lblLoginAsDeveloper.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }//GEN-LAST:event_lblLoginAsDeveloperMouseExited
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("Menutup Window EditAkun");
+        dataUser.closeConnection();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("-->     APLIKASI DITUTUP");
+        dataUser.closeConnection();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -1121,6 +1133,8 @@ public class EditAkun extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            
+            @Override
             public void run() {
                 new EditAkun().setVisible(true);
             }
