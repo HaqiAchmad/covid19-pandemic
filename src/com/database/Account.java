@@ -584,6 +584,35 @@ public class Account extends Database{
         return false;
     }
     
+    public boolean isValidAsalNegara(String negara){
+        // digunkan untuk mengecek apakah negara yg dinputkan user terdapat didalam database atau tidak
+        CovidCases dataNegara = new CovidCases(CovidCases.KASUS_DUNIA);
+        // mengecek apakah negara kosong atau tidak
+        if(!negara.equals("")){
+            // panjang dari negara harus diantara 2 sampai 35 karakter
+            if(negara.length() >= 2 && negara.length() <= 35){
+                // mengecek apakah negara yang dimasukan user ada atau tidak didalam datbase
+                if(dataNegara.isExist(negara)){
+                    // menutup koneksi pada object CovidCases
+                    dataNegara.closeConnection();
+                    return true;
+                }else{
+                    Audio.play(Audio.SOUND_INFO);
+                    JOptionPane.showMessageDialog(null, "'" + negara + "' negara tersebut tidak ditemukan!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+                Audio.play(Audio.SOUND_INFO);
+                JOptionPane.showMessageDialog(null, "Panjang dari nama negara harus diantara 2 sampai 35 karakter!", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }else{
+            Audio.play(Audio.SOUND_INFO);
+            JOptionPane.showMessageDialog(null, "Negara tidak boleh kosong!", "Info", JOptionPane.INFORMATION_MESSAGE);
+        }
+        // menutup koneksi pada object CovidCases
+        dataNegara.closeConnection();
+        return false;
+    }
+    
     public boolean isValidPassword(String password){
         // mengecek apakah password kosong atau tidak
         if(password == null){
