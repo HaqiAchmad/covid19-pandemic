@@ -33,4 +33,4 @@ INSERT INTO kasuscovid_indo VALUES
 ('Sumbar', 'Sumatra Barat', 19251, 15638, 363, 3250, 5321500, 12, 0, 0, 0, '2020-03-26', '2020-11-27', 'corona.sumbarprov.go.id', 'lambang-sumatra-barat.png'),
 ('Sumsel', 'Sumatra Selatan', 9300, 7504, 494, 1302, 8267000, 13, 0, 0, 0, '2020-03-24', '2020-11-27', 'corona.sumselprov.go.id', 'lambang-sumatra-selatan.png'),
 ('Sumut', 'Sumatra Utara', 15235, 0, 600, 2034, 14262100, 25, 0, 0, 0, '2020-03-18', '2020-11-27', 'corona.sulutprov.go.id', 'lambang-sumatra-utara.png');
-# Copyright Â© 2020. Achmad Baihaqi. All Rights Reserved.
+# Copyright © 2020. Achmad Baihaqi. All Rights Reserved.
