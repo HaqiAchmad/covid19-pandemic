@@ -746,8 +746,10 @@ public class KasusCovidDunia extends javax.swing.JFrame {
     private void searchKeywordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeywordKeyTyped
         // mendapatkan negara yang dicari oleh user
         keyword = this.searchKeyword.getText();
+        System.out.println("\nMencari negara dengan keyword = '" + keyword + "'");
         // mendapatkan total data yang karakternya mirip degan negara yang sedang dicari user
         int row = kasus.getRows("SELECT * FROM kasuscovid_dunia WHERE negara_idn LIKE '%"+ keyword +"%' OR negara_eng LIKE '%"+ keyword +"%' OR benua LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
+        System.out.println("Menampilkan " + row + " negara dengan keyword = '"+keyword+"'");
         // mereset lbl show keyword
         this.lblShowKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
         // mereset tabel
