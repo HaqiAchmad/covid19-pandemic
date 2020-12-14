@@ -159,6 +159,7 @@ public class InformasiAkun extends javax.swing.JFrame {
         }else if(gender.equalsIgnoreCase("P")){
             this.editGender.setText("Perempuan");
         }else{
+            this.editGender.setText("Tidak Dicantumkan");
         }
         
         // jika pekerjaan bernilai null maka akan ditampilkan menjadi 'Tidak Dicantumkan'
