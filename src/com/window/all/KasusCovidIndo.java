@@ -113,7 +113,7 @@ public class KasusCovidIndo extends javax.swing.JFrame {
         
         // menampilkan data kasus covid ke window
         this.lblProvinsi.setIcon(Gambar.getLambangProvinsi(lambang));
-        this.lblProvinsi.setText(provinsi);
+        this.lblProvinsi.setText(" " +provinsi);
         this.valTotalKasus.setText(kasus.addDelim(positif));
         this.valTotalSembuh.setText(kasus.addDelim(sembuh));
         this.valTotalKematian.setText(kasus.addDelim(kematian));
@@ -801,8 +801,10 @@ public class KasusCovidIndo extends javax.swing.JFrame {
     private void searchKeywordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeywordKeyTyped
         // mendapatkan provinsi yang dicari oleh user
         keyword = this.searchKeyword.getText();
+        System.out.println("\nMencari provinsi dengan keyword = '" + keyword + "'");
         // mendapatkan total data yang karakternya mirip degan provinsi yang sedang dicari user
         int row = kasus.getRows("SELECT * FROM kasuscovid_indo WHERE provinsi LIKE '%"+ keyword +"%' OR kode LIKE '%"+ keyword +"%' ORDER BY kasus DESC;");
+        System.out.println("Menampilkan " + row + " provinsi dengan keyword = '"+keyword+"'");
         // mereset lbl show keyword
         this.lblShowKeyword.setText("Menampilkan "+ row +" data dengan keyword = \""+keyword+"\"");
         // mereset tabel
