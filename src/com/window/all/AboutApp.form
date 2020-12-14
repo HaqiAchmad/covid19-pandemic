@@ -917,8 +917,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblIconGmail" max="32767" attributes="0"/>
                           <Component id="lblGmail" pref="92" max="32767" attributes="0"/>
+                          <Component id="lblIconGmail" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1241,7 +1241,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valPengguna">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 75.656 Pengguna"/>
+                <Property name="text" type="java.lang.String" value=": 75.656 Online"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblNamaApp">
@@ -1261,7 +1261,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDirilis">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 14 November 2020"/>
+                <Property name="text" type="java.lang.String" value=": 14 Desember 2020"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDiupdate">
@@ -1271,7 +1271,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="valDiupdate">
               <Properties>
-                <Property name="text" type="java.lang.String" value=": 13 Desember 2020"/>
+                <Property name="text" type="java.lang.String" value=": 15 Desember 2020"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lblBahasa">
