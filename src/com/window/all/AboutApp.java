@@ -400,7 +400,7 @@ public class AboutApp extends javax.swing.JFrame {
                         }
                         Thread.sleep(400 + rand.nextInt(5000));
                         // menampilkan data pengguna online ke window
-                        valPengguna.setText(String.format(": %,d Pengguna", penggunaOnline));
+                        valPengguna.setText(String.format(": %,d Online", penggunaOnline));
                     }
                 }catch(InterruptedException iex){
                     System.out.println("Error guys : " + iex.getMessage());
@@ -1266,8 +1266,8 @@ public class AboutApp extends javax.swing.JFrame {
             .addGroup(pnlKontakLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                    .addComponent(lblGmail, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                    .addComponent(lblIconGmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlKontakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblIconWA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1338,7 +1338,7 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblPengguna.setText("   Pengguna saat ini");
 
-        valPengguna.setText(": 75.656 Pengguna");
+        valPengguna.setText(": 75.656 Online");
 
         lblNamaApp.setText("   Nama Aplikasi");
 
@@ -1346,11 +1346,11 @@ public class AboutApp extends javax.swing.JFrame {
 
         lblDirilis.setText("   Dirilis pada");
 
-        valDirilis.setText(": 14 November 2020");
+        valDirilis.setText(": 14 Desember 2020");
 
         lblDiupdate.setText("   Diupdate pada");
 
-        valDiupdate.setText(": 13 Desember 2020");
+        valDiupdate.setText(": 15 Desember 2020");
 
         lblBahasa.setText("   Bahasa pemrograman");
 
