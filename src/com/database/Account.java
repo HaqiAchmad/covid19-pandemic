@@ -23,6 +23,10 @@ public class Account extends Database{
      */
     private File file;
     /**
+     * Folder yang akan digunakan untuk menyimpan data-data dari user
+    */
+    private final File folderUser = new File("C:\\ProgramData\\Punya Haqi\\Covid-19 Pandemic 1.0\\database\\users\\");
+    /**
      * Digunakan untuk mendapatkan waktu saat ini seperti tanggal, bulan dan tahun
      */
     private final LocalDateTime lc = LocalDateTime.now();
@@ -77,7 +81,7 @@ public class Account extends Database{
                                     if(create > 0){
                                         System.out.println("Akun sukses dibuat!\n");
                                         //membuat folder baru yang digunakan untuk menyimpan data user
-                                        file = new File("src\\com\\database\\users\\" + email + "\\profile");
+                                        file = new File(this.folderUser.getPath() + "\\" + email + "\\profile");
                                         file.mkdirs();
                                         // membackup database
                                         this.backupDatabase();
@@ -130,7 +134,7 @@ public class Account extends Database{
                     if(login > 0){
                         System.out.println("Login dengan akun " + user + " berhasil dilakukan!\n");
                         // mengecek apakah folder penyimpanan data akun ada atau tidak, jika tidak maka akan dibuat
-                        file = new File("src\\com\\database\\users\\" + getDataAccount(user, Account.EMAIL) + "\\profile");
+                        file = new File(folderUser.getPath() + "\\" + getDataAccount(user, Account.EMAIL) + "\\profile");
                         if(!file.exists()){
                             file.mkdirs();
                         }
